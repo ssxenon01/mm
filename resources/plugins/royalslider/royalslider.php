@@ -60,5 +60,5 @@ curl_close($ch);
 echo "$data";
 }
 }
-add_action('wp_head', 'jqueryj_head');
+//add_action('wp_head', 'jqueryj_head');
 ?>
