@@ -1,0 +1,4 @@
+<?php
+class Sabai_Addon_PaidListings_Model_OrderGateway extends Sabai_Addon_PaidListings_Model_Base_OrderGateway
+{
+}

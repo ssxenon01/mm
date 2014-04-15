@@ -1,0 +1,4 @@
+<?php
+class Sabai_Addon_GoogleMaps_Model_GeocodeGateway extends Sabai_Addon_GoogleMaps_Model_Base_GeocodeGateway
+{
+}

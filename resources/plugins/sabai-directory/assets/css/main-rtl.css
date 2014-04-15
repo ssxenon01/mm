@@ -1,0 +1,27 @@
+.sabai-directory-review-helpful-yesno .sabai-btn {margin-left:0; margin-right:3px;}
+
+.sabai-directory-activity-inline li {margin-left:7px !important; margin-right:0 !important;}
+
+.sabai-directory-labels {text-align:right;}
+.sabai-directory-taxonomy a {margin:0; margin-left:5px;}
+
+.sabai-directory-website,
+.sabai-directory-social {float:right; margin-left:7px; margin-right:0;}
+
+.sabai-directory-rating-average {margin-right:2px; margin-left:0;}
+.sabai-entity-bundle-type-directory-listing .sabai-directory-rating-average {margin-right:3px; margin-left:0;}
+.sabai-directory-rating-count {margin-right:3px; margin-left:0;}
+
+.sabai-directory-listing-infobox .sabai-directory-images {float:right;}
+.sabai-directory-listing-infobox .sabai-directory-main {float:left;}
+
+.sabai-directory-photobox {border-left:1px solid #ccc; border-right:1px solid #ddd;}
+.sabai-directory-photo-stats {text-align:left;}
+.sabai-directory-photo-stats span {margin-right:5px; margin-left:0;}
+.sabai-directory-photo-actions {right:auto; left:15px; margin-left:-15px; margin-right:0;}
+.sabai-directory-photobox:hover .sabai-directory-photo-actions {margin-left:0;}
+
+.sabai-directory-map-header {padding:2px 5px 2px 0;}
+.sabai-directory-search-results div.sabai-entity-bundle-type-directory-listing.sabai-directory-listing-featured {padding-left:0; padding-right:5px;}
+
+.sabai-directory-slider .sabai-entity-entities {direction:rtl;}

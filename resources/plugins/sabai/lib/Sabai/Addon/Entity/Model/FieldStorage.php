@@ -1,0 +1,8 @@
+<?php
+class Sabai_Addon_Entity_Model_FieldStorage extends Sabai_Addon_Entity_Model_Base_FieldStorage
+{
+}
+
+class Sabai_Addon_Entity_Model_FieldStorageRepository extends Sabai_Addon_Entity_Model_Base_FieldStorageRepository
+{
+}

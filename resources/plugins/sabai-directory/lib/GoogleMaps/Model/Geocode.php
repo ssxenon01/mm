@@ -1,0 +1,8 @@
+<?php
+class Sabai_Addon_GoogleMaps_Model_Geocode extends Sabai_Addon_GoogleMaps_Model_Base_Geocode
+{
+}
+
+class Sabai_Addon_GoogleMaps_Model_GeocodeRepository extends Sabai_Addon_GoogleMaps_Model_Base_GeocodeRepository
+{
+}

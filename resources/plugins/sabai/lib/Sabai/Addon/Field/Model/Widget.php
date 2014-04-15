@@ -1,0 +1,8 @@
+<?php
+class Sabai_Addon_Field_Model_Widget extends Sabai_Addon_Field_Model_Base_Widget
+{
+}
+
+class Sabai_Addon_Field_Model_WidgetRepository extends Sabai_Addon_Field_Model_Base_WidgetRepository
+{
+}

@@ -1,0 +1,8 @@
+<?php
+class Sabai_Addon_PaidListings_Model_Feature extends Sabai_Addon_PaidListings_Model_Base_Feature
+{
+}
+
+class Sabai_Addon_PaidListings_Model_FeatureRepository extends Sabai_Addon_PaidListings_Model_Base_FeatureRepository
+{
+}

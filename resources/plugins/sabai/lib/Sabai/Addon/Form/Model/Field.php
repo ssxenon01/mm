@@ -1,0 +1,7 @@
+<?php
+class Sabai_Addon_Form_Model_Field extends Sabai_Addon_Form_Model_Base_Field{
+}
+
+class Sabai_Addon_Form_Model_FieldRepository extends Sabai_Addon_Form_Model_Base_FieldRepository
+{
+}

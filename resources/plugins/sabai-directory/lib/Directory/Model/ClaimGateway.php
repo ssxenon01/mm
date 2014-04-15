@@ -1,0 +1,4 @@
+<?php
+class Sabai_Addon_Directory_Model_ClaimGateway extends Sabai_Addon_Directory_Model_Base_ClaimGateway
+{
+}

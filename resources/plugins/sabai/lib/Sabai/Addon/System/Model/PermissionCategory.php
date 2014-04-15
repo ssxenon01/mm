@@ -1,0 +1,8 @@
+<?php
+class Sabai_Addon_System_Model_PermissionCategory extends Sabai_Addon_System_Model_Base_PermissionCategory
+{
+}
+
+class Sabai_Addon_System_Model_PermissionCategoryRepository extends Sabai_Addon_System_Model_Base_PermissionCategoryRepository
+{
+}

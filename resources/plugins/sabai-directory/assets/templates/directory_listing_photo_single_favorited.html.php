@@ -1,0 +1,1 @@
+<?php $this->renderTemplate('directory_listing_photo_single_summary', array('entity' => $entity, 'id' => $id, 'class' => $class, 'links' => $links));?>

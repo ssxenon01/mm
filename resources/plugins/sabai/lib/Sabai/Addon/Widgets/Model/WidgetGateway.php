@@ -1,0 +1,4 @@
+<?php
+class Sabai_Addon_Widgets_Model_WidgetGateway extends Sabai_Addon_Widgets_Model_Base_WidgetGateway
+{
+}

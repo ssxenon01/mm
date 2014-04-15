@@ -1,0 +1,3 @@
+<?php echo $CSS;?>
+<?php echo $JS;?>
+<?php echo $CONTENT;?>

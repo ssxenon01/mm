@@ -1,0 +1,1 @@
+<div class="sabai-error"><?php printf(__('Template file directory_listing_tab_%s.html.php does not exist.', 'sabai-directory'), $tab_name);?></div>

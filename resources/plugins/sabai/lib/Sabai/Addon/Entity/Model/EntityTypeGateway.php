@@ -1,0 +1,4 @@
+<?php
+class Sabai_Addon_Entity_Model_EntityTypeGateway extends Sabai_Addon_Entity_Model_Base_EntityTypeGateway
+{
+}
