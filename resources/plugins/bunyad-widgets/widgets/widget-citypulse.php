@@ -5,7 +5,7 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 	public function __construct()
 	{
 		parent::__construct(
-			'xenon-citypulse-widget',
+			'bunyad-citypulse-widget',
 			'Xenon - CityPulse',
 			array('description' => 'Recent gallery with thumbnail.', 'classname' => 'citypulse')
 		);
