@@ -48,6 +48,7 @@ $bunyad = Bunyad::core()->init(array(
 		'text' => 'WP_Widget_Text',
 		'latest-posts' => array('class' => 'Bunyad_LatestPosts_Widget', 'name' => __('Latest Posts', 'bunyad')),
 		'flickr' => array('class' => 'Bunyad_Flickr_Widget', 'name' => __('Flickr Images', 'bunyad')),
+		'city-pulse' => array('class' => 'Bunyad_CityPulse_Widget', 'name' => __('CityPulse', 'bunyad')),
 		'ads' => array('class' => 'Bunyad_Ads_Widget', 'name' => __('Advertisement', 'bunyad')),
 		'latest-reviews' => array('class' => 'Bunyad_LatestReviews_Widget', 'name' => __('Latest Reviews', 'bunyad'))
 	),
