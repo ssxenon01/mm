@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Sabai
-Description: Sabai is a web application framework for WordPress.
-Author: onokazu
-Author URI: http://codecanyon.net/user/onokazu/portfolio
-Text Domain: sabai
+Plugin Name: BD
+Description: Business Directory Plugin.
+Author: xenon
+Author URI: http://pantera.mn
+Text Domain: bd
 Domain Path: /languages
-Version: 1.2.18
+Version: 1
 */
 
 function sabai_wordpress_run()
