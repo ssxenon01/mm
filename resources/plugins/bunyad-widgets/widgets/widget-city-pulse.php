@@ -75,7 +75,7 @@ class Bunyad_CityPulse_Widget extends WP_Widget
 
                     <div class="flickr_badge_image">
                         <a href="<?php the_permalink(); ?>">
-                            <img src="<?php echo echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>"  />
+                            <img src="<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>"  />
                         </a>
                     </div>
 
