@@ -7,7 +7,7 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 		parent::__construct(
 			'xenon-citypulse-widget',
 			'Xenon - CityPulse',
-			array('description' => 'Recent gallery with thumbnail.', 'classname' => 'bunyad-flickr')
+			array('description' => 'Recent gallery with thumbnail.', 'classname' => 'citypulse')
 		);
 		
 		add_action('save_post', array($this, 'flush_widget_cache'));
@@ -37,7 +37,7 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 		ob_start();
 		extract($args);
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts', 'bunyad-widgets') : $instance['title'], $instance, $this->id_base);
+		$title = apply_filters('widget_title', empty($instance['title']) ? __('CityPulse', 'bunyad-widgets') : $instance['title'], $instance, $this->id_base);
 		if (empty($instance['number']) || !$number = absint($instance['number'])) {
  			$number = 5;
 		}
