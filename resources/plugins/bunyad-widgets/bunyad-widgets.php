@@ -3,7 +3,7 @@
 Plugin Name: Bunyad Widgets
 Plugin URI: http://theme-sphere.com
 Description: Bunyad Widgets add several widgets for ThemeSphere themes like SmartMag, Risala.
-Version: 1.0.2
+Version: 4
 Author: ThemeSphere
 Author URI: http://theme-sphere.com
 License: GPL2
@@ -20,7 +20,7 @@ class Bunyad_Widgets
 		load_plugin_textdomain('bunyad-widgets', false, basename(dirname(__FILE__)) . '/languages');
 		
 		$widgets = apply_filters('bunyad-active-widgets', array(
-			'about', 'twitter', 'latest-posts', 'social-count', 'popular-posts', 'tabbed-recent', 'flickr' ,'citypulse'
+			'about', 'twitter', 'latest-posts', 'social-count', 'popular-posts', 'tabbed-recent', 'flickr' ,'city-pulse'
 		));
 		
 		// activate widgets

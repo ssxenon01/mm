@@ -1,11 +1,11 @@
 <?php
 
-class Bunyad_Citypulse_Widget extends WP_Widget
+class Bunyad_CityPulse_Widget extends WP_Widget
 {
 	public function __construct()
 	{
 		parent::__construct(
-			'bunyad-citypulse-widget',
+			'bunyad-city-pulse-widget',
 			'Xenon - CityPulse',
 			array('description' => 'Recent gallery with thumbnail.', 'classname' => 'citypulse')
 		);
@@ -18,7 +18,7 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 	// code below is modified from default
 	public function widget($args, $instance) 
 	{
-		$cache = get_transient('xenon-widget-citypulse');
+		$cache = get_transient('bunyad-widget-city-pulse');
 		
 		if (!is_array($cache)) {
 			$cache = array();
@@ -55,9 +55,9 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 		$r = new WP_Query($query_args);
 		
 		// do custom loop if available
-		if (has_action('xenon-widget-citypulse_loop')):
+		if (has_action('bunyad-widget-city-pulse_loop')):
 
-			do_action('xenon-widget-citypulse_loop', $args, $r);
+			do_action('bunyad-widget-city-pulse_loop', $args, $r);
 		
 		elseif ($r->have_posts()):
 ?>
@@ -92,7 +92,7 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 
 		$cache[$args['widget_id']] = ob_get_flush();
 		
-		set_transient('xenon-widget-citypulse', $cache);
+		set_transient('bunyad-widget-city-pulse', $cache);
 	}
 
 	public function update($new, $old) 
@@ -108,7 +108,7 @@ class Bunyad_Citypulse_Widget extends WP_Widget
 
 	public function flush_widget_cache() 
 	{
-		delete_transient('xenon-widget-citypulse');
+		delete_transient('bunyad-widget-city-pulse');
 	}
 
 	public function form($instance)
