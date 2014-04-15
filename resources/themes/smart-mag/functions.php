@@ -17,7 +17,7 @@ $bunyad = Bunyad::core()->init(array(
 	'meta_prefix' => '_bunyad',
 
 	// widgets enabled
-	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr', 'ads', 'latest-reviews', 'bbp-login'),
+	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr', 'ads', 'latest-reviews', 'bbp-login','city-pulse'),
 	'post_formats' => array('gallery', 'image', 'video', 'audio'),
 
 	'shortcode_config' => array(
