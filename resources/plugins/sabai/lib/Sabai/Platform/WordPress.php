@@ -936,7 +936,7 @@ class Sabai_Platform_WordPress extends Sabai_Platform
     public function onAdminInitAction()
     {
         // Run autoupdater
-        if (current_user_can('update_plugins')) {
+        /*if (current_user_can('update_plugins')) {
             $sabai_plugins = $this->getSabaiPlugins();
             
             // Enable update notification if any license key is set
@@ -965,9 +965,9 @@ class Sabai_Platform_WordPress extends Sabai_Platform
             
             // Add a hook to clear cache of upgradable add-ons when plugins are installed/updated/uninstalled
             add_action('delete_site_transient_update_plugins', array($this, 'onDeleteSiteTransientUpdatePluginsAction'));
-        }
+        }*/
         // Invoke add-ons
-        $this->getSabai()->doEvent('SabaiPlatformWordPressAdminInit');
+//        $this->getSabai()->doEvent('SabaiPlatformWordPressAdminInit');
     }
 
     public function onWidgetsInitAction()

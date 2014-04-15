@@ -18,10 +18,10 @@ class Sabai_Addon_WordPress extends Sabai_Addon
             '/wordpress/permalink' => array(
                 'controller' => 'Permalink',
             ),
-            '/wordpress/verify-license' => array(
+            /*'/wordpress/verify-license' => array(
                 'type' => Sabai::ROUTE_CALLBACK,
                 'controller' => 'VerifyLicense',
-            ),
+            ),*/
         );
     }
 
