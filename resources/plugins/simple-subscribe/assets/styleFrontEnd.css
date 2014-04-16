@@ -10,6 +10,10 @@
 .widgetGuts dl,
 .widgetGuts dd,
 .widgetGuts dt { margin: 0; }
+.widgetGuts dd:first-child{
+    display:block;
+}
+
 .widgetGuts dd,
 .widgetGuts dt { margin-bottom: 15px;display: inline-block; }
 .widgetGuts .success,
