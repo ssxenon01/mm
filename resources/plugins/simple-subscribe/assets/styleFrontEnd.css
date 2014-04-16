@@ -27,6 +27,21 @@
 	line-height: 1.3em;
 	list-style: none;
 }
+.widgetGuts input
+{
+    background: #1f2c38;
+    color: #c5c7cb;
+    border: 0;
+    font-size: inherit;
+    padding: 7px 14px;
+    outline: 0;
+}
+.widgetGuts input.button
+{
+    background: #2a3c4c;
+    padding: 8px 14px;
+    font-weight: 600;
+}
 .widgetGuts .success li,
 .widgetGuts .error li { padding-left: 0; margin-left: 0; }
 .widgetGuts .success { color: #fff; margin-top: 0; margin-bottom: 15px; }
