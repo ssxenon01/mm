@@ -10,7 +10,7 @@
 .widgetGuts dl,
 .widgetGuts dd,
 .widgetGuts dt { margin: 0; }
-.widgetGuts dd:first-child{
+.widgetGuts dt:first-child{
     display:block;
 }
 
