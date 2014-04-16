@@ -28,8 +28,8 @@ class Forms
     {
         $form = new Form('subscriptionFront' . $widgetId);
         // Subscriber
-        $form->addText('email', 'Your e-mail address')
-            ->setRequired('E-mail address is requried.')
+        $form->addText('email', 'Имэйл хаягаа оруулна уу')
+            ->setRequired('Имэйл хаяг хоосон байна.')
             ->addRule(Form::EMAIL, 'Таны имэйл хаяг буруу байна.');
         if(array_key_exists('firstName', $fields)){ $form->addText('firstName', 'First Name'); }
         if(array_key_exists('lastName', $fields)){ $form->addText('lastName', 'Last Name'); }
