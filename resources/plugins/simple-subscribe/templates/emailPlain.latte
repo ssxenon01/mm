@@ -6,7 +6,7 @@
 --------------------------------------------------------
 
 <p n:if=$social>
-Connect with us:
+Бидэнтэй холбогдох:
 
 {foreach $social as $key => $item}
 		{$key|lower|capitalize}:  {$item}
@@ -15,5 +15,5 @@ Connect with us:
 --------------------------------------------------------
 </p>
 <p n:if="$unSubscribe">
-Would you like to unsubscribe from this digest? {$unSubscribe}
+Бүртгэлээс гарахыг хүсвэл дараах холбоос дээр дарна уу {$unSubscribe}
 </p>

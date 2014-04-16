@@ -11,7 +11,7 @@
 .widgetGuts dd,
 .widgetGuts dt { margin: 0; }
 .widgetGuts dd,
-.widgetGuts dt { margin-bottom: 15px; }
+.widgetGuts dt { margin-bottom: 15px;display: inline-block; }
 .widgetGuts .success,
 .widgetGuts .error
 {
