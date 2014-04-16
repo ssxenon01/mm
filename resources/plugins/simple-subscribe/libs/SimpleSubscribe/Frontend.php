@@ -34,7 +34,7 @@ class FrontEnd
             try{
                 $subscribers = \SimpleSubscribe\RepositorySubscribers::getInstance();
                 $subscribers->add($form->getValues());
-                $widgetMessage = '<strong>Thank you for your subscription!</strong> Confirmation e-mail was sent to your e-mail address!';
+                $widgetMessage = '<strong>Бүртгүүлсэнд баярлалаа!</strong> Таны имэйл хаяг руу баталгаажуулалт илгээгдсэн!';
                 $form->setValues(array(),TRUE);
             } catch (RepositarySubscribersException $e){
                 $form->addError($e->getMessage());

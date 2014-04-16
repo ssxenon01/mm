@@ -30,7 +30,7 @@ class Forms
         // Subscriber
         $form->addText('email', 'Your e-mail address')
             ->setRequired('E-mail address is requried.')
-            ->addRule(Form::EMAIL, 'Your e-mail address must be valid.');
+            ->addRule(Form::EMAIL, 'Таны имэйл хаяг буруу байна.');
         if(array_key_exists('firstName', $fields)){ $form->addText('firstName', 'First Name'); }
         if(array_key_exists('lastName', $fields)){ $form->addText('lastName', 'Last Name'); }
         if(array_key_exists('age', $fields)){
@@ -65,9 +65,9 @@ class Forms
     public static function unsubscriptionForm($widget = FALSE, $widgetId = '')
     {
         $form = new Form('unsubscriptionFront' . $widgetId);
-        $form->addText('email', 'Your e-mail address')
-            ->setRequired('To unsubscribe, you need to fill in your e-mail address.')
-            ->addRule(Form::EMAIL, 'Your e-mail address must be valid.');
+        $form->addText('email', 'И-Мэйл Хаягаа оруулна уу')
+            ->setRequired('Бүргэлээс хасагдахын тулд та өөрийн имэйл хаягыг оруулна уу.')
+            ->addRule(Form::EMAIL, 'Таны имэйл хаяг буруу байна.');
         $form->addSubmit('submit', 'Unsubscribe')->setAttribute('class', 'subscribeButton');
         // swap renderer for widgets
         if($widget == TRUE){
@@ -97,10 +97,10 @@ class Forms
         }
         $form = new Form('emailPreview');
         // Subscriber
-        $form->addText('email', 'E-mail')
+        $form->addText('email', 'ИМэйл')
             ->setDefaultValue($defaultEmail)
-            ->setRequired('E-mail address is requried.')
-            ->addRule(Form::EMAIL, 'Must be valid e-mail address');
+            ->setRequired('Имэйл хаяг хоосон байна.')
+            ->addRule(Form::EMAIL, 'ИМэйл формат буруу байна');
         $form->addCheckbox('post', 'Post Digest')->setDefaultValue(1);
         $form->addCheckbox('subscription', 'Subscription Confirmation')->setDefaultValue(0);
         // Submit

@@ -43,8 +43,11 @@
 .widgetGuts input.button
 {
     background: #2a3c4c;
-    padding: 8px 14px;
+    padding: 4px 8px;
     font-weight: 600;
+    color: #c5c7cb;
+    border: 0;
+    font-size: inherit;
 }
 .widgetGuts .success li,
 .widgetGuts .error li { padding-left: 0; margin-left: 0; }
