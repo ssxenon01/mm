@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Sabai\n"
 "Report-Msgid-Bugs-To: http://sabaiapps.com/\n"
 "POT-Creation-Date: 2013-01-10 18:51+0900\n"
-"PO-Revision-Date: 2014-04-15 00:05+0800\n"
-"Last-Translator: Gundsambuu <ssxenon01@gmail.com>\n"
+"PO-Revision-Date: 2014-04-17 18:00+0800\n"
+"Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: xenon <ssxenon01@gmail.com>\n"
 "Language: mn\n"
 "MIME-Version: 1.0\n"
@@ -486,28 +486,28 @@ msgid "ID"
 msgstr ""
 
 msgid "Content type"
-msgstr ""
+msgstr "Өгөгдлийн төрөл"
 
 msgid "Slug"
 msgstr ""
 
 msgid "Text input field"
-msgstr ""
+msgstr "Текст талбар"
 
 msgid "Hidden field"
-msgstr ""
+msgstr "Нууц талбар"
 
 msgid "Field size"
-msgstr ""
+msgstr "Талбарын хэмжээ"
 
 msgid "Small"
-msgstr ""
+msgstr "Жижиг"
 
 msgid "Medium"
-msgstr ""
+msgstr "Дунд"
 
 msgid "Large"
-msgstr ""
+msgstr "Том"
 
 msgid "This post is featured."
 msgstr "Энэ бол онцлох."
@@ -562,26 +562,27 @@ msgstr "Бүх %s"
 
 #, php-format
 msgid "Unfeatured %d content post(s)"
-msgstr ""
+msgstr "Онцолох бус %d нийтлэл"
 
 msgid "Date/Time picker"
-msgstr ""
+msgstr "Он/Сар сонгогч"
 
 msgid "Set current date selected by default"
-msgstr ""
+msgstr "Одоогын цагыг автоматаар авна"
 
 msgid ""
 "Check this option to set the current date (and time if time is eabled) "
 "selected by default if the field has not been selected yet."
 msgstr ""
+"Энэ сонголтыг сонгосноор хэрэглэгчийн тухайн үеийн цагийг автоматаар авна."
 
 #, php-format
 msgid "The date must be later than %s."
-msgstr ""
+msgstr "Огноо %s ээс хойш байна"
 
 #, php-format
 msgid "The date must be earlier than %s."
-msgstr ""
+msgstr "Огноо %s ээс өмнө байна."
 
 msgid "Hour"
 msgstr "Цаг"
@@ -599,7 +600,7 @@ msgid "Now"
 msgstr "Одоо"
 
 msgid "Deselect"
-msgstr ""
+msgstr "Хасах"
 
 msgid "Please select a date."
 msgstr "Огноо сонгоно уу."
@@ -623,39 +624,41 @@ msgid "Date must be earlier than %s."
 msgstr "Огноо %s ээс өмнө байна."
 
 msgid "Enable time (hour and minute)"
-msgstr ""
+msgstr "Цагтай (цаг болон минут)"
 
 msgid ""
 "Check this option to allow the user to enter the time (hour and minute) as "
 "well as the date."
-msgstr ""
+msgstr "Энэ сонголтыг сонгосноор хэрэглэгч цаг минутыг огноотой хамт оруулна."
 
 msgid "Restrict dates"
-msgstr ""
+msgstr "Он сараар хязгаарлах"
 
 msgid "Check this option to set the range of allowed dates for this field."
 msgstr ""
+"Энэ сонголтыг сонгосноор хэрэглэгчийн оруулах огноод эхлэх болон дуусах "
+"огноо тавьна."
 
 msgid "Minimum date:"
-msgstr ""
+msgstr "Эхлэх огноо:"
 
 msgid "Maximum date:"
-msgstr ""
+msgstr "Дуусах огноо:"
 
 msgid "The date must be later than the minimum date."
-msgstr ""
+msgstr "Огноо заасан хугацаанаас хойш байх ёстой."
 
 msgid "Guest author field"
 msgstr ""
 
 msgid "visible to anonymous users only"
-msgstr ""
+msgstr "Зөвхөн нэвтрээгүй хэрэглэгчид харагдана"
 
 msgid "Hide the Website field"
-msgstr ""
+msgstr "Вебсайт талбарыг нуу"
 
 msgid "Hide the header message"
-msgstr ""
+msgstr "Толгой текстийг нуу"
 
 msgid "E-mail"
 msgstr "И-Мэйл"
@@ -679,7 +682,7 @@ msgid ""
 msgstr ""
 
 msgid "The email address may not be used."
-msgstr ""
+msgstr "Имайл хаяг ашиглагдахгүй байж болно."
 
 #, php-format
 msgid "%s posted %s"
@@ -687,11 +690,11 @@ msgstr ""
 
 #, php-format
 msgid "last edited %s"
-msgstr ""
+msgstr "сүүлд засварласан: %s"
 
 #, php-format
 msgid "last active %s"
-msgstr ""
+msgstr "Сүүлд идэвхитэй: %s"
 
 msgid "No"
 msgstr "Үгүй"
@@ -706,157 +709,157 @@ msgid "File Settings"
 msgstr "Файлын тохиргоо"
 
 msgid "Add More"
-msgstr ""
+msgstr "Нэмэх"
 
 msgid "The value must be greater than the \"Minimum\" value."
-msgstr ""
+msgstr "\"Хамгын бага\" утгаас илүү байх хэрэгтэй."
 
 msgid "ON/OFF"
-msgstr ""
+msgstr "АСААХ/УНТРААХ"
 
 msgid "CAPTCHA"
 msgstr ""
 
 msgid "Choice"
-msgstr ""
+msgstr "Сонголт"
 
 msgid "Options"
-msgstr ""
+msgstr "Сонголтууд"
 
 msgid "HTML"
 msgstr ""
 
 msgid "Link"
-msgstr ""
+msgstr "Холбоос"
 
 msgid "Open in the same window"
-msgstr ""
+msgstr "Нэг цонхонд нээх"
 
 msgid "Open in a new window"
-msgstr ""
+msgstr "Шинэ цонхонд нээх"
 
 msgid "Add rel=\"nofollow\""
 msgstr ""
 
 msgid "Number"
-msgstr ""
+msgstr "Тоо"
 
 msgid "Minimum"
-msgstr ""
+msgstr "Хамгийн бага"
 
 msgid "The minimun value allowed in this field."
-msgstr ""
+msgstr "Энэ талбарт орох хамгын бага утга"
 
 msgid "Maximum"
-msgstr ""
+msgstr "Хамгийн их"
 
 msgid "The maximum value allowed in this field."
-msgstr ""
+msgstr "Энэ талбарт орох хамгын их утга."
 
 msgid "Decimals"
-msgstr ""
+msgstr "Бутархай тоо"
 
 msgid "The number of digits to the right of the decimal point."
-msgstr ""
+msgstr "Таслалаас хойш авах тоо"
 
 msgid "0 (no decimals)"
-msgstr ""
+msgstr "0 (Бутархай биш)"
 
 msgid "Field prefix"
-msgstr ""
+msgstr "Талбарын өмнө"
 
 msgid "Example: $, #, -"
-msgstr ""
+msgstr "Жишээ нь: ₮,#,-"
 
 msgid "Field suffix"
-msgstr ""
+msgstr "Талбарын төгсгөлд"
 
 msgid "Example: km, %, g"
-msgstr ""
+msgstr "Жишээ нь: км, %"
 
 msgid "Section Break"
 msgstr ""
 
 msgid "Single Line Text"
-msgstr ""
+msgstr "Нэг мөрт текст"
 
 msgid "Minimum length"
-msgstr ""
+msgstr "Тэмдэгтийн тоо багадаа"
 
 msgid "The minimum length of value in characters."
-msgstr ""
+msgstr "Тэмдэгтийн урт"
 
 msgid "Maximum length"
-msgstr ""
+msgstr "Тэмдэгтийн тоо ихдээ"
 
 msgid "The maximum length of value in characters."
-msgstr ""
+msgstr "Тэмдэгтийн урт"
 
 msgid "Character validation"
-msgstr ""
+msgstr "Тэмдэгт шалгуур"
 
 msgid "Allow only integer numbers"
-msgstr ""
+msgstr "Зөвхөн бүхэл тоо зөвшөөр"
 
 msgid "Allow only alphabetic characters"
-msgstr ""
+msgstr "Зөвхөн үсэг зөвшөөр"
 
 msgid "Allow only alphanumeric characters"
-msgstr ""
+msgstr "Зөвхөн үсэг тоо зөвшөөр"
 
 msgid "Allow only lowercase characters"
-msgstr ""
+msgstr "Зөвхөн жижиг үсэг зөвшөөр"
 
 msgid "Allow only uppercase characters"
-msgstr ""
+msgstr "Зөвхөн том үсэг зөвшөөр"
 
 msgid "Must be a valid URL"
-msgstr ""
+msgstr "Зөв URL байна"
 
 msgid "Must be a valid e-mail address"
-msgstr ""
+msgstr "Зөв имэйл байна"
 
 msgid "Must match a regular expression"
-msgstr ""
+msgstr "regex т таарна"
 
 msgid "No validation"
-msgstr ""
+msgstr "Шалгуур байхгүй"
 
 msgid "Regular Expression"
-msgstr ""
+msgstr "REGEX"
 
 msgid "Example: /^[0-9a-z]+$/i"
-msgstr ""
+msgstr "Жишээ нь: /^[0-9a-z]+$/i"
 
 msgid "Paragraph Text"
-msgstr ""
+msgstr "Параграф текст"
 
 msgid "Do not remove leading and trailing white spaces"
-msgstr ""
+msgstr "Толгой сүүлний хоосон зайг үлдээнэ"
 
 msgid ""
 "Leading and trailing white spaces are removed from the value the user "
 "entered. Check this option if you do not want this to happen automatically."
-msgstr ""
+msgstr "Толгой сүүлд өгсөн хоосон зайг автоматаар  устгана."
 
 msgctxt "field type"
 msgid "User"
-msgstr ""
+msgstr "Хэрэгэлэгч"
 
 msgid "Single checkbox"
-msgstr ""
+msgstr "Нэг чекбокс"
 
 msgid "Checkbox label"
-msgstr ""
+msgstr "Чекбогсын нэр"
 
 msgid "Enter the label displayed next to the checkbox."
-msgstr ""
+msgstr "Чекбоксд харуулах текстыг оруул."
 
 msgid "Make this field checked by default"
-msgstr ""
+msgstr "Автоматаар сонгогдсон байх"
 
 msgid "Checkboxes"
-msgstr ""
+msgstr "Чекбоксууд"
 
 msgid "Display inline"
 msgstr ""
@@ -868,25 +871,25 @@ msgid "HTML fragment"
 msgstr ""
 
 msgid "Link field"
-msgstr ""
+msgstr "Холбоос талбар"
 
 msgid "Link Title:"
-msgstr ""
+msgstr "Холбоос гарчиг"
 
 msgid "Radio buttons"
-msgstr ""
+msgstr "Радио товч"
 
 msgid "Select list"
-msgstr ""
+msgstr "Сонгох жагсаалт"
 
 msgid "Textarea field"
-msgstr ""
+msgstr "Текс"
 
 msgid "Rows"
-msgstr ""
+msgstr "Мөр"
 
 msgid "Set current user selected by default"
-msgstr ""
+msgstr "Одоогийн хэрэглэгчийн автоматаар сонгоно"
 
 msgid ""
 "Check this option to set the current user selected by default if the field "
@@ -903,38 +906,40 @@ msgid ""
 msgstr ""
 
 msgid "Add Field"
-msgstr ""
+msgstr "Талбар нэмэх"
 
 msgid "Invalid field type."
-msgstr ""
+msgstr "Буруу талбарын төрөл"
 
 msgid "Next"
-msgstr ""
+msgstr "Дараах"
 
 msgid "Form element type"
-msgstr ""
+msgstr "Формын элемэнтийн төрөл"
 
 msgid ""
 "Select the type of form element you would like to present to the user when "
 "editing this field."
-msgstr ""
+msgstr "Хэрэглэгчийг засварлах үед дүрлэх формын элемэнтийг сонгоно уу."
 
 msgid "Field name"
-msgstr ""
+msgstr "Талбарын нэр"
 
 msgid ""
 "Enter a machine readable name for this form field. Only lowercase "
 "alphanumeric characters and underscores are allowed."
 msgstr ""
+"Системд уншигдахуйц формын талбар. Зөвхөн жижиг үсэг тоо болон зураас "
+"зөвшөөрнө."
 
 msgid "Settings"
-msgstr ""
+msgstr "Тохиргоо"
 
 msgid "Visibility Settings"
-msgstr ""
+msgstr "Харагдах тохиргоо"
 
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Ерөнхий тохиргоо"
 
 msgid "Label"
 msgstr ""
@@ -952,53 +957,53 @@ msgid "Disabled"
 msgstr "хаасан"
 
 msgid "Maximum number of values"
-msgstr ""
+msgstr "Хамгийн их утга"
 
 msgid ""
 "Maximum number of values users can enter for this field. The \"Unlimited\" "
 "option will display an \"Add another item\" link so the users can add as "
 "many values as they like."
-msgstr ""
+msgstr "Хэрэглэгчийн оруулж болох хамгийн их утга. "
 
 msgid "Maximum number of values users can enter for this field."
-msgstr ""
+msgstr "Энэ талбарт хэрэглэгчийн оруулж болох хамгийн их утга."
 
 msgid ""
 "Select user roles to which this field is visible when submitting the form."
-msgstr ""
+msgstr "Үүрэг дээр суурилан аль талбар харагдахыг сонгоно уу."
 
 msgid "Admin label"
-msgstr ""
+msgstr "Админ шошго"
 
 msgid ""
 "The admin label will be used in place of the field label anywhere in the "
 "admin where the name of the field is displayed."
-msgstr ""
+msgstr "Зөвхөн админ энэ хэсгийг харна"
 
 msgid "Default value"
-msgstr ""
+msgstr "Үндсэн утга"
 
 msgid "Unlimited"
-msgstr ""
+msgstr "Хязгааргүй"
 
 msgid "The field name is already in use by another field."
-msgstr ""
+msgstr "Талбарын нэрийг ашиглаж байна."
 
 msgid "Basic Settings"
-msgstr ""
+msgstr "Энгийн тохиргоо"
 
 msgid "Form element type:"
-msgstr ""
+msgstr "Формын элемэнтийн төрөл:"
 
 msgid "Invalid field."
-msgstr ""
+msgstr "Буруу талбар"
 
 #, php-format
 msgid "%s (hidden)"
-msgstr ""
+msgstr "%s (нуусан)"
 
 msgid "(hidden)"
-msgstr ""
+msgstr "(нуусан)"
 
 msgid "Manage Fields"
 msgstr "Талбарын тохиргоо"
@@ -1075,7 +1080,7 @@ msgid "Disable pretty URLs"
 msgstr "Уншигдах URL ыг хаах"
 
 msgid "The path must be different fom the other two."
-msgstr ""
+msgstr "Зам нь нөгөө хоёрооо өөр байна."
 
 msgid "You have already uploaded enough files!"
 msgstr "Та хангалттай олон файл хуулсан байна!"
@@ -1175,162 +1180,162 @@ msgid "File %s (%s) already exists."
 msgstr "Файл %s (%s) үүссэн байна."
 
 msgid "Failed saving file to the upload directory."
-msgstr ""
+msgstr "Файлыг хуулах үед алдаа гарлаа."
 
 msgid "Allowed file extensions may not be empty."
-msgstr ""
+msgstr "Зөвшөөрөх файлын өргөтгөл. Хоосон байж болохгүй."
 
 msgid "Invalid file extension."
-msgstr ""
+msgstr "Буруу файлын өргөтгөл."
 
 #, php-format
 msgid "File with file extension %s is not allowed."
-msgstr ""
+msgstr "%s өргөтгөлтэй файлыг зөвшөөрөхгзүй."
 
 msgid "No matching mime types for the file were found."
-msgstr ""
+msgstr "Энэ файлд таарах төрөл олдсонгүй."
 
 #, php-format
 msgid "Image file with file extension %s is not allowed."
-msgstr ""
+msgstr "%s өргөтгөлтэй зургийн төрлийг зөвшөөрөхгүй."
 
 #, php-format
 msgid ""
 "File type associated with file extension %s (%s) was not found or is not "
 "allowed."
-msgstr ""
+msgstr "%s (%s) өргөтгөлтэй файлыг зөвшөөрөгдөөгүй."
 
 #, php-format
 msgid "File size may not exceed %s KB."
-msgstr ""
+msgstr "Файлын хэмжээ %s КБ аас хэтрэхгүй."
 
 msgid "Failed detecting image dimensions."
-msgstr ""
+msgstr "Зургийн хэмжээг тооцоолж чадсангүй."
 
 #, php-format
 msgid "Image size must not be larger than W%d x H%d pixels."
-msgstr ""
+msgstr "Зургийн хэмжээ W%d x H%d ээс их байж болохгүй."
 
 #, php-format
 msgid "Image size must be larger than W%d x H%d pixels."
-msgstr ""
+msgstr "Зургийн хэмжээ W%d x H%d ээс бага байж болохгүй."
 
 #, php-format
 msgid "Supported file formats: %s"
-msgstr ""
+msgstr "Дэмжих файлын төрлүүд: %s"
 
 msgid "There are currently no files uploaded."
-msgstr ""
+msgstr "Одоогоор файл хуулаагүй байна."
 
 msgid "Thumbnail"
-msgstr ""
+msgstr "Хумсан зураг"
 
 msgid "Size"
-msgstr ""
+msgstr "Хэмжээ"
 
 #, php-format
 msgid "You may not upload more than %d files."
-msgstr ""
+msgstr "Та %d ээс олон зураг оруулж болохгүй."
 
 msgid "Select File"
-msgstr ""
+msgstr "Файл сонгоно уу"
 
 #, php-format
 msgid "You may not upload more than %d file."
 msgid_plural "You may not upload more than %d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Та %d ээс олон зураг оруулж болохгүй"
+msgstr[1] "Та %d ээс олон зураг оруулж болохгүй"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Цуцлах"
 
 msgid "Retry"
-msgstr ""
+msgstr "Ахин оролд"
 
 msgid "Upload failed"
-msgstr ""
+msgstr "Хуулалт амжилтгүй"
 
 msgid "Drop files here to upload"
-msgstr ""
+msgstr "Файлаа энд чирч хуулна уу"
 
 msgid "Processing..."
-msgstr ""
+msgstr "Боловсруулж байна..."
 
 #, php-format
 msgid "Failed fetching content of file %s."
-msgstr ""
+msgstr "%s файлын өгөгдлийг уншиж чадсангүй."
 
 #, php-format
 msgid "Failed generating hash value for file %s."
-msgstr ""
+msgstr "%s д хаш үүсгэж чадсангүй."
 
 #, php-format
 msgid "Deleted %d expired file upload token(s)."
-msgstr ""
+msgstr "%d дууссан файл хуулах токенийг устгасан."
 
 #, php-format
 msgid "Failed saving file %s to the upload directory."
-msgstr ""
+msgstr "%s файлыг хавтасд хуулж чадсангүй."
 
 #, php-format
 msgid "File %s does not exist."
-msgstr ""
+msgstr "%s файл үүсээгүй байна."
 
 #, php-format
 msgid "Failed opening stream for file %s."
-msgstr ""
+msgstr "%s файлыг нээж чадсангүй."
 
 msgid "File Attachments"
-msgstr ""
+msgstr "Хавсаргасан файл"
 
 msgid "This post has one or more files attached."
-msgstr ""
+msgstr "Энэ нийтлэлд файл хавсаргасан байна."
 
 msgid "This post has one or more images attached."
-msgstr ""
+msgstr "Энэ нийтлэлд зураг хаваргасан байна."
 
 msgid "cancel"
-msgstr ""
+msgstr "цуцал"
 
 #, php-format
 msgid "Sort by %s"
-msgstr ""
+msgstr "Эрэмблэхдээ %s"
 
 msgid "Selection required."
-msgstr ""
+msgstr "Сонголт шаардлагатай."
 
 msgid "Invalid option selected."
-msgstr ""
+msgstr "Буруу сонголт."
 
 #, php-format
 msgid "Maximum of %d selections allowed."
-msgstr ""
+msgstr "Хамгийн ихдээ %d сонголт зөвшөөрнө."
 
 msgid "No records found."
-msgstr ""
+msgstr "Юу ч алга."
 
 msgid "Value"
-msgstr ""
+msgstr "Утга"
 
 msgid "Please fill out this field."
-msgstr ""
+msgstr "Энэ талбарыг бөглөнө үү."
 
 #, php-format
 msgid "The input value did not match the regular expression: %s"
-msgstr ""
+msgstr "Оруулсан утга %s regex т таарахгүй байна."
 
 msgid "Selection is required for this field."
-msgstr ""
+msgstr "Энэ талбарт сонголт шаардлагатай."
 
 #, php-format
 msgid "Maximum of %d selections is allowed for this field."
-msgstr ""
+msgstr "Энэ талбарт хамгийн ихдээ %d сонголт зөвшөөрнө."
 
 msgid "Submit"
-msgstr ""
+msgstr "Илгээх"
 
 msgid "Invalid token"
-msgstr ""
+msgstr "Буруу токен"
 
 msgid "An error occurred while processing the form field."
 msgstr "Формын талбар оруулахад алдаа гарлаа."
@@ -1568,19 +1573,19 @@ msgid "Add-on %s has been deleted."
 msgstr ""
 
 msgid "Enable this email notification"
-msgstr ""
+msgstr "Имэйл мэдэгдэлийг идэвхижүүлэх"
 
 #, php-format
 msgid ""
 "Enter the message that should be sent with this notification. Available "
 "template tags: %s"
-msgstr ""
+msgstr "Мэдэгдэлтэй явах зурвасыг оруулна уу. боломжит : %s"
 
 msgid "Subject"
-msgstr ""
+msgstr "Гарчиг"
 
 msgid "User Roles"
-msgstr ""
+msgstr "Хэрэглэгчийн эрх"
 
 msgid "Select the user roles to which this email notification is sent."
 msgstr ""
@@ -1645,15 +1650,15 @@ msgstr ""
 
 #, php-format
 msgid "Sent From: %s"
-msgstr ""
+msgstr "Илгээсэн: %s"
 
 #, php-format
 msgid "Sent to: %s <%s>"
-msgstr ""
+msgstr "Хүлээн авагч: %s <%s>"
 
 #, php-format
 msgid "Sent to: %s <%s> and %d other recipient(s)"
-msgstr ""
+msgstr "Хүлээн авагч: %s <%s> болон өөр %d"
 
 #, php-format
 msgid "Original Subject: %s"
@@ -1827,11 +1832,11 @@ msgstr ""
 
 #, php-format
 msgid "Select %s"
-msgstr ""
+msgstr "%s сонго"
 
 #, php-format
 msgid "Parent %s"
-msgstr ""
+msgstr "Эцэг %s"
 
 #, php-format
 msgid "The following %s do not exist: %s"
@@ -1842,12 +1847,12 @@ msgstr ""
 
 #, php-format
 msgid "%s List"
-msgstr ""
+msgstr "%s жагсаалт"
 
 #, php-format
 msgctxt "Delete taxonomy term page title"
 msgid "Delete %s"
-msgstr ""
+msgstr "%s - г устгах"
 
 #, php-format
 msgid "%s count"
@@ -1855,55 +1860,55 @@ msgstr ""
 
 #, php-format
 msgid "Edit this %s"
-msgstr ""
+msgstr "%s г засварлах"
 
 #, php-format
 msgid "Delete this %s"
-msgstr ""
+msgstr "%s г устгах"
 
 #, php-format
 msgid "Assign %s"
-msgstr ""
+msgstr "%s г оноох"
 
 #, php-format
 msgid "Remove %s"
-msgstr ""
+msgstr "%s ийг устгах"
 
 #, php-format
 msgctxt "Filter"
 msgid "All %s"
-msgstr ""
+msgstr "Бүх %s"
 
 msgid "Date added"
-msgstr ""
+msgstr "Оруулсан огноо"
 
 msgid "Date flagged"
-msgstr ""
+msgstr "Тэмдэглэсэн огноо"
 
 msgid "Yes / No"
-msgstr ""
+msgstr "Тийм / Үгүй"
 
 msgid "Rating"
-msgstr ""
+msgstr "Үнэлгээ"
 
 msgid "Recent"
-msgstr ""
+msgstr "Сүүлчийн"
 
 msgid "Sort by most recent flags"
-msgstr ""
+msgstr "Хамгийн сүүлд тэмдэглэснээр эрэмблэ"
 
 msgid "Sort by highest spam score"
-msgstr ""
+msgstr "Хамгийн өндөр спам оноотойгоор эрэмблэ"
 
 msgctxt "sort"
 msgid "Flags"
-msgstr ""
+msgstr "Тэмдэглэгээ"
 
 msgid "Sort by most flagged"
-msgstr ""
+msgstr "Хамгийн их тэмдэглэснээр эрэмблэ"
 
 msgid "Are you sure you want to ignore all the flags submitted?"
-msgstr ""
+msgstr "Бүх тэмдэглэгээг үл тоох уу?"
 
 msgid "Ignore Flags"
 msgstr ""
@@ -2096,39 +2101,39 @@ msgid ""
 msgstr ""
 
 msgid "Verify"
-msgstr ""
+msgstr "Шалгах"
 
 #, php-format
 msgid "Add New %s"
-msgstr ""
+msgstr "%s Шинээр нэмэх"
 
 #, php-format
 msgid "New %s"
-msgstr ""
+msgstr "Шинэ %s"
 
 #, php-format
 msgid "Search %s"
-msgstr ""
+msgstr "%s Хайх"
 
 #, php-format
 msgid "No %s found"
-msgstr ""
+msgstr "%s олдсонгүй"
 
 #, php-format
 msgid "No %s found in Trash"
-msgstr ""
+msgstr "Хогийн саванд : %s олдсонгүй"
 
 #, php-format
 msgid "All %s"
-msgstr ""
+msgstr "Бүх %s"
 
 #, php-format
 msgid "New %s Name"
-msgstr ""
+msgstr "Шинэ %s нэр"
 
 #, php-format
 msgid "Parent %s:"
-msgstr ""
+msgstr "Эцэг %s:"
 
 #, php-format
 msgid "Update %s"
@@ -2166,68 +2171,68 @@ msgstr ""
 #, php-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d жил"
+msgstr[1] "%d жил"
 
 #, php-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d секундын өмнө"
+msgstr[1] "%d секундын өмнө"
 
 #, php-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d секунд"
+msgstr[1] "%d секунд"
 
 #, php-format
 msgid "Last week"
 msgid_plural "%d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Өнгөрсөн долоо хоногт"
+msgstr[1] "%d долоо хоногийн өмнө"
 
 #, php-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d долоо хоног"
+msgstr[1] "%d долоо хоног"
 
 #, php-format
 msgid "Yesterday"
 msgid_plural "%d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Өчигдөр"
+msgstr[1] "%d өдрийн өмнө"
 
 #, php-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d өдөр"
+msgstr[1] "%d өдөр"
 
 #, php-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d цагийн өмнө"
+msgstr[1] "%d цагийн өмнө"
 
 #, php-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d цаг"
+msgstr[1] "%d цаг"
 
 #, php-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d минутын өмнө"
+msgstr[1] "%d минутын өмнө"
 
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d минут"
+msgstr[1] "%d минут"
 
 msgid "F j, Y g:i a"
 msgstr ""
@@ -2255,7 +2260,7 @@ msgid "Addon %s requires %s to be installed and active."
 msgstr ""
 
 msgid "Previous"
-msgstr ""
+msgstr "Өмнөх"
 
 msgid " "
 msgstr ""
