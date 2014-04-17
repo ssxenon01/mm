@@ -103,23 +103,23 @@ add_action( 'in_admin_header', 'wp_admin_bar_render', 0 );
  * @param WP_Admin_Bar $wp_admin_bar
  */
 function wp_admin_bar_wp_menu( $wp_admin_bar ) {
-	$wp_admin_bar->add_menu( array(
+	/*$wp_admin_bar->add_menu( array(
 		'id'    => 'wp-logo',
 		'title' => '<span class="ab-icon"></span>',
 		'href'  => self_admin_url( 'about.php' ),
 		'meta'  => array(
 			'title' => __('About WordPress'),
 		),
-	) );
+	) );*/
 
 	if ( is_user_logged_in() ) {
 		// Add "About WordPress" link
-		$wp_admin_bar->add_menu( array(
+		/*$wp_admin_bar->add_menu( array(
 			'parent' => 'wp-logo',
 			'id'     => 'about',
 			'title'  => __('About WordPress'),
 			'href'  => self_admin_url( 'about.php' ),
-		) );
+		) );*/
 	}
 
 	// Add WordPress.org link
