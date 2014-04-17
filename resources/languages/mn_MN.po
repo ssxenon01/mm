@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-17 16:49+0800\n"
+"PO-Revision-Date: 2014-04-17 16:53+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -16954,7 +16954,7 @@ msgstr "Сайтад зочлох"
 #: wp-admin/admin-header.php:122
 #, qt-format
 msgid "Howdy, <a href=\"%1$s\" title=\"Edit your profile\">%2$s</a>"
-msgstr "Howdy, <a href=\"%1$s\" title=\"Өөрийн профайлыг засварлах\">%2$s</a>"
+msgstr "<a href=\"%1$s\" title=\"Өөрийн профайлыг засварлах\">%2$s</a>"
 
 #: wp-admin/admin-header.php:123
 msgid "Log Out"
@@ -17046,6 +17046,9 @@ msgstr ""
 #: wp-includes/admin-bar.php:244
 msgid "Edit My Profile"
 msgstr "Профайл Засварлах"
+
+msgid "Repeat New Password"
+msgstr "Нууц үг (давтан)"
 
 #~ msgid "Comment History"
 #~ msgstr "Сэтгэгдэл"
