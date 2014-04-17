@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-17 21:14+0800\n"
+"PO-Revision-Date: 2014-04-17 21:24+0800\n"
 "Last-Translator: Gundsambuu <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -589,7 +589,7 @@ msgstr ""
 
 #: wp-admin/edit-tag-form.php:14
 msgid "You did not select an item for editing."
-msgstr "Та ангилалын нэрийг оруулаагүй байна. "
+msgstr "Та ангиллын нэрийг оруулаагүй байна. "
 
 #: wp-admin/import/mt.php:39
 msgid ""
@@ -665,7 +665,7 @@ msgstr ""
 
 #: wp-admin/includes/file.php:22
 msgid "Tag Template"
-msgstr "Тэмдэглэгээний загвар"
+msgstr "Тэмдэглээний загвар"
 
 #: wp-admin/options-general.php:154
 msgid ""
@@ -1919,7 +1919,7 @@ msgstr "Өнгө сонгох"
 
 #: wp-admin/export.php:98
 msgid "Restrict Category"
-msgstr "Ангилалыг хязгаарлах"
+msgstr "Ангиллыг хязгаарлах"
 
 #: wp-admin/export.php:68
 msgid "Restrict Date"
@@ -3366,15 +3366,15 @@ msgstr "&#8220;%s&#8221; хавсралтыг засварлах гэсэн та
 
 #: wp-includes/functions.php:2481
 msgid "Your attempt to add this category has failed."
-msgstr "Энэ ангилалыг нэмэх гэсэн таны оролдлого амжилтгүй."
+msgstr "Энэ ангиллыг нэмэх гэсэн таны оролдлого амжилтгүй."
 
 #: wp-includes/functions.php:2482
 msgid "Your attempt to delete this category: &#8220;%s&#8221; has failed."
-msgstr "&#8220;%s&#8221; ангилалыг устгах гэсэн таны оролдлого амжилтгүй"
+msgstr "&#8220;%s&#8221; ангиллыг устгах гэсэн таны оролдлого амжилтгүй"
 
 #: wp-includes/functions.php:2483
 msgid "Your attempt to edit this category: &#8220;%s&#8221; has failed."
-msgstr "&#8220;%s&#8221; ангилалыг засварлах гэсэн таны оролдлого амжилтгүй"
+msgstr "&#8220;%s&#8221; ангиллыг засварлах гэсэн таны оролдлого амжилтгүй"
 
 #: wp-includes/functions.php:2485
 msgid "Your attempt to delete this comment: &#8220;%s&#8221; has failed."
@@ -6085,7 +6085,7 @@ msgstr "хогийн сав руу зөөсөн."
 
 #: wp-includes/script-loader.php:236
 msgid "Separate multiple categories with commas."
-msgstr "Олон ангилалыг таслалаар салгах"
+msgstr "Олон ангиллыг таслалаар салгах"
 
 #: wp-includes/script-loader.php:261
 msgctxt "password strength"
@@ -6094,7 +6094,7 @@ msgstr "Дунд зэрэг"
 
 #: wp-includes/script-loader.php:286
 msgid "Tags used on this post:"
-msgstr "Энэ нийтлэл дээр ашиглаж буй тэмдэглэгээ:"
+msgstr "Энэ нийтлэл дээр ашиглаж буй тэмдэглээ:"
 
 #: wp-includes/script-loader.php:293
 msgid "Publish on:"
@@ -6174,7 +6174,7 @@ msgstr ""
 
 #: wp-includes/taxonomy.php:33
 msgid "Post Tag"
-msgstr "Нийтлэлийн тэмдэглэгээ"
+msgstr "Нийтлэлийн тэмдэглээ"
 
 #: wp-includes/taxonomy.php:367 wp-includes/taxonomy.php:439
 #: wp-includes/taxonomy.php:563 wp-includes/taxonomy.php:748
@@ -6533,7 +6533,7 @@ msgstr ""
 #, qt-format
 msgid "Check your inbox at <strong>%1$s</strong> and click the link given."
 msgstr ""
-"Дууссан! <strong>%1$s</strong> холбоос эсвэл холбоосын ангилалыг импортлосон."
+"Дууссан! <strong>%1$s</strong> холбоос эсвэл холбоосын ангиллыг импортлосон."
 
 #: wp-signup.php:300
 msgid ""
@@ -6550,7 +6550,7 @@ msgid ""
 "Check your inbox at <strong>%s</strong> and click the link given. It should "
 "arrive within 30 minutes."
 msgstr ""
-"Дууссан! <strong>%s</strong> холбоос эсвэл холбоосын ангилалыг импортлосон."
+"Дууссан! <strong>%s</strong> холбоос эсвэл холбоосын ангиллыг импортлосон."
 
 #: wp-signup.php:365
 msgid "Still waiting for your email?"
@@ -7331,7 +7331,7 @@ msgstr "Шинэ холбоос нэмэх"
 
 #: wp-admin/link-category.php:64
 msgid "Edit Category"
-msgstr "Ангилалыг засварлах"
+msgstr "Ангиллыг засварлах"
 
 #: wp-admin/link-manager.php:18 wp-admin/link-manager.php:49
 #: wp-admin/link.php:18
@@ -7355,7 +7355,7 @@ msgstr "Холбоосыг хайх"
 
 #: wp-admin/link-manager.php:122
 msgid "View all Categories"
-msgstr "Бүх ангилалыг харах"
+msgstr "Бүх ангиллыг харах"
 
 #: wp-admin/link-manager.php:128
 msgid "Order by Link ID"
@@ -8505,7 +8505,7 @@ msgstr ""
 
 #: wp-admin/options-permalink.php:222
 msgid "Category base"
-msgstr "Ангилалыг нэмсэн."
+msgstr "Ангиллыг нэмсэн."
 
 #: wp-admin/options-permalink.php:226
 msgid "Tag base"
@@ -10047,7 +10047,7 @@ msgstr "← Бүх хэрэглэгч рүү буцах"
 
 #: wp-admin/widgets.php:33 wp-includes/functions.php:2985
 msgid "Widgets"
-msgstr ""
+msgstr "Виджетүүд"
 
 #: wp-admin/widgets.php:37
 msgid ""
@@ -11557,23 +11557,23 @@ msgstr "Холбоосын ангилал"
 
 #: wp-admin/edit-link-categories.php:56
 msgid "Category added."
-msgstr "Ангилалыг нэмсэн."
+msgstr "Ангиллыг нэмсэн."
 
 #: wp-admin/edit-link-categories.php:57
 msgid "Category deleted."
-msgstr "Ангилалыг устгасан."
+msgstr "Ангиллыг устгасан."
 
 #: wp-admin/edit-link-categories.php:58
 msgid "Category updated."
-msgstr "Ангилалыг шинэчилсэн."
+msgstr "Ангиллыг шинэчилсэн."
 
 #: wp-admin/edit-link-categories.php:59
 msgid "Category not added."
-msgstr "Ангилалыг нэмээгүй."
+msgstr "Ангиллыг нэмээгүй."
 
 #: wp-admin/edit-link-categories.php:61
 msgid "Categories deleted."
-msgstr "Ангилалыг устгасан."
+msgstr "Ангиллыг устгасан."
 
 #: wp-admin/edit-link-categories.php:77 wp-admin/edit-link-categories.php:79
 msgid "Search Categories"
@@ -11601,7 +11601,7 @@ msgid ""
 "that category. Instead, links that were only assigned to the deleted "
 "category are set to the category <strong>%s</strong>."
 msgstr ""
-"<strong>Тэмдэглэл:</strong><br />Ангилалыг устгахад тухайн ангилал доторх "
+"<strong>Тэмдэглэл:</strong><br />Ангиллыг устгахад тухайн ангилал доторх "
 "холбоосуудыг устгахгүй. Устгаж буй ангилал доторх холбоосуудыг <strong>%s</"
 "strong> ангилал руу шилжүүлнэ"
 
@@ -11613,7 +11613,7 @@ msgstr "Холбоосын ангилал нэмэх"
 #: wp-admin/edit-link-categories.php:200
 #: wp-admin/edit-link-category-form.php:72
 msgid "Link Category name"
-msgstr "Холбоосын ангилалын нэр"
+msgstr "Холбоосын ангиллын нэр"
 
 #: wp-admin/edit-link-categories.php:205
 #: wp-admin/edit-link-category-form.php:77
@@ -11648,8 +11648,7 @@ msgstr "Ангилал нэмэх"
 #: wp-admin/edit-link-category-form.php:14
 msgid ""
 "You do not have sufficient permissions to edit link categories for this blog."
-msgstr ""
-"Танд энэ блогийн холбоосын ангилалыг засварлах зөвшөөрөл байхгүй байна."
+msgstr "Танд энэ блогийн холбоосын ангиллыг засварлах зөвшөөрөл байхгүй байна."
 
 #: wp-admin/edit-link-category-form.php:26
 msgid "Edit Link Category"
@@ -11708,7 +11707,7 @@ msgstr "Дээд төвшний"
 
 #: wp-admin/edit-link-form.php:50
 msgid "Link added."
-msgstr "Ангилалыг нэмсэн."
+msgstr "Ангиллыг нэмсэн."
 
 #: wp-admin/edit-link-form.php:77 wp-admin/includes/nav-menu.php:89
 #: wp-admin/includes/plugin-install.php:308
@@ -11817,7 +11816,7 @@ msgstr ""
 
 #: wp-includes/link-template.php:679
 msgid "Edit Tag"
-msgstr "Тэмдэглэгээ засварлах"
+msgstr "Тэмдэглээ засварлах"
 
 #: wp-admin/edit-tags.php:169
 msgid "Item added."
@@ -11850,7 +11849,7 @@ msgid ""
 "that category. Instead, posts that were only assigned to the deleted "
 "category are set to the category <strong>%s</strong>."
 msgstr ""
-"<strong>Тэмдэглэл:</strong><br />Ангилалыг устгахад тухайн ангилал доторх "
+"<strong>Тэмдэглэл:</strong><br />Ангиллыг устгахад тухайн ангилал доторх "
 "нийтлэлүүдийг устгахгүй. Устгаж буй ангилал доторх нийтлэлүүдийг <strong>%s</"
 "strong> ангилал руу шилжүүлнэ."
 
@@ -11966,7 +11965,7 @@ msgstr "Бүх сэтгэгдлийн төрлийг харуулах"
 
 #: wp-admin/edit.php:341
 msgid "View all categories"
-msgstr "Бүх ангилалыг харах"
+msgstr "Бүх ангиллыг харах"
 
 #: wp-admin/edit.php:369 wp-admin/ms-sites.php:434 wp-admin/ms-users.php:152
 msgid "List View"
@@ -11999,7 +11998,7 @@ msgid ""
 "posts, pages, comments, custom fields, categories, and tags."
 msgstr ""
 "WordPress экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom "
-"field, ангилал болон тэмдэглээ</strong> импортлох."
+"field, ангилал болон тэмлдэглэгээ</strong> импортлох."
 
 #: wp-admin/export.php:62
 msgid ""
@@ -12333,14 +12332,14 @@ msgstr "Ангилал импортлох"
 
 #: wp-admin/import/dotclear.php:180 wp-admin/import/textpattern.php:180
 msgid "Importing Categories..."
-msgstr "Ангилалыг импортлож байна..."
+msgstr "Ангиллыг импортлож байна..."
 
 #: wp-admin/import/dotclear.php:200 wp-admin/import/textpattern.php:204
 #, qt-format
 msgid "Done! <strong>%1$s</strong> category imported."
 msgid_plural "Done! <strong>%1$s</strong> categories imported."
-msgstr[0] "Дууссан! <strong>%1$s</strong> ангилалыг импортлосон."
-msgstr[1] "Дууссан! <strong>%1$s</strong> ангилалыг импортлосон."
+msgstr[0] "Дууссан! <strong>%1$s</strong> ангиллыг импортлосон."
+msgstr[1] "Дууссан! <strong>%1$s</strong> ангиллыг импортлосон."
 
 #: wp-admin/import/dotclear.php:203 wp-admin/import/textpattern.php:207
 msgid "No Categories to Import!"
@@ -12388,8 +12387,8 @@ msgstr "Холбоосыг импортлож байна..."
 #: wp-admin/import/dotclear.php:473
 msgid "Done! <strong>%s</strong> link or link category imported."
 msgid_plural "Done! <strong>%s</strong> links or link categories imported."
-msgstr[0] "Дууссан! <strong>%1$s</strong> ангилалыг импортлосон."
-msgstr[1] "Дууссан! <strong>%1$s</strong> ангилалыг импортлосон."
+msgstr[0] "Дууссан! <strong>%1$s</strong> ангиллыг импортлосон."
+msgstr[1] "Дууссан! <strong>%1$s</strong> ангиллыг импортлосон."
 
 #: wp-admin/import/dotclear.php:477 wp-admin/import/textpattern.php:484
 msgid "No Links to Import!"
@@ -13205,7 +13204,7 @@ msgstr "Тэмдэглээтэй нэг ч нийтлэл олдсонгүй!"
 msgid "Done! <strong>%s</strong> tag to post relationships were read."
 msgid_plural "Done! <strong>%s</strong> tags to post relationships were read."
 msgstr[0] "Дууссан! <strong>%s</strong> тэмдэглээг уншсан."
-msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглэгээг уншсэн."
+msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглээг уншсэн."
 
 #: wp-admin/import/stp.php:96 wp-admin/import/utw.php:123
 msgid "Step 2"
@@ -13219,7 +13218,7 @@ msgstr "Тэмдэглээг нийтлэлд нэмж байна"
 msgid "Done! <strong>%s</strong> tag was added!"
 msgid_plural "Done! <strong>%s</strong> tags were added!"
 msgstr[0] "Дууссан! <strong>%s</strong> тэмдэглээг нэмсэн!"
-msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглэгээг нэмсэн!"
+msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглээг нэмсэн!"
 
 #: wp-admin/import/stp.php:112 wp-admin/import/utw.php:159
 msgid "Step 3"
@@ -13366,7 +13365,7 @@ msgstr "Нэг ч тэмдэглээ олдсонгүй!"
 msgid "Done! <strong>%s</strong> tag were read."
 msgid_plural "Done! <strong>%s</strong> tags were read."
 msgstr[0] "Дууссан! <strong>%s</strong> тэмдэглээг уншсан."
-msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглэгээг уншсэн."
+msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглээг уншсэн."
 
 #: wp-admin/import/utw.php:102
 msgid "The following tags were found:"
@@ -13386,7 +13385,7 @@ msgstr "Тэмдэглээг нийтлэлд нэмж байна"
 msgid "Done! <strong>%s</strong> tag were added!"
 msgid_plural "Done! <strong>%s</strong> tags were added!"
 msgstr[0] "Дууссан! <strong>%s</strong> тэмдэглээг нэмсэн!"
-msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглэгээг нэмсэн!"
+msgstr[1] "Дууссан! <strong>%s</strong> тэмдэглээг нэмсэн!"
 
 #: wp-admin/import/utw.php:178
 msgid "Step 4"
@@ -13508,7 +13507,7 @@ msgstr ""
 
 #: wp-admin/import/wp-cat2tag.php:31
 msgid "Categories to Tags"
-msgstr "Ангилалыг тэмдэглээ рүү хөрвүүлэх"
+msgstr "Ангиллыг тэмдэглээ рүү хөрвүүлэх"
 
 #: wp-admin/import/wp-cat2tag.php:32
 msgid "Tags to Categories"
@@ -13517,8 +13516,8 @@ msgstr "Тэмдэглээнээс ангилал руу"
 #: wp-admin/import/wp-cat2tag.php:68
 msgid "Convert Category to Tag."
 msgid_plural "Convert Categories (%d) to Tags."
-msgstr[0] "Ангилалыг тэмдэглээ рүү хөрвүүлэх"
-msgstr[1] "Ангилалыг тэмдэглээ рүү хөрвүүлэх"
+msgstr[0] "Ангиллыг тэмдэглээ рүү хөрвүүлэх"
+msgstr[1] "Ангиллыг тэмдэглээ рүү хөрвүүлэх"
 
 #: wp-admin/import/wp-cat2tag.php:70
 msgid ""
@@ -13553,18 +13552,18 @@ msgid ""
 "* This category is also a tag. Converting it will add that tag to all posts "
 "that are currently in the category."
 msgstr ""
-"* Ангилал нь бас тэмдэглээ юм. Ангилалыг тэмдэглээ рүү хөрвүүлэхэд тухайн "
+"* Ангилал нь бас тэмдэглээ юм. Ангиллыг тэмдэглээ рүү хөрвүүлэхэд тухайн "
 "тэмдэглээг одооны ангилал дотор байгаа бүх нийтлэлд нэмнэ."
 
 #: wp-admin/import/wp-cat2tag.php:131
 msgid "Convert Categories to Tags"
-msgstr "Ангилалыг тэмдэглээ рүү хөрвүүлэх"
+msgstr "Ангиллыг тэмдэглээ рүү хөрвүүлэх"
 
 #: wp-admin/import/wp-cat2tag.php:144
 msgid "Convert Tag to Category."
 msgid_plural "Convert Tags (%d) to Categories."
-msgstr[0] "Ангилалыг тэмдэглээ рүү хөрвүүлэх."
-msgstr[1] "(%d) ангилалыг тэмдэглэгээ рүү хөрвүүлэх."
+msgstr[0] "Ангиллыг тэмдэглээ рүү хөрвүүлэх."
+msgstr[1] "(%d) ангиллыг тэмдэглээ рүү хөрвүүлэх."
 
 #: wp-admin/import/wp-cat2tag.php:146
 msgid ""
@@ -13607,7 +13606,7 @@ msgstr "%s ангилал байхгүй байна!"
 
 #: wp-admin/import/wp-cat2tag.php:255
 msgid "Converting category <strong>%s</strong> ... "
-msgstr "<strong>%s</strong> ангилалыг хөрвүүлж байна... "
+msgstr "<strong>%s</strong> ангиллыг хөрвүүлж байна... "
 
 #: wp-admin/import/wp-cat2tag.php:278 wp-admin/import/wp-cat2tag.php:321
 #: wp-admin/import/wp-cat2tag.php:407
@@ -13634,7 +13633,7 @@ msgstr "Дууссан,та үргэлж <a href=\"%s\">илүүг хөрвүү�
 
 #: wp-admin/import/wp-cat2tag.php:365
 msgid "Converting tag <strong>%s</strong> ... "
-msgstr "<strong>%s</strong> ангилалыг хөрвүүлж байна... "
+msgstr "<strong>%s</strong> ангиллыг хөрвүүлж байна... "
 
 #: wp-admin/import/wp-cat2tag.php:389
 msgid "All posts were added to the category with the same name."
@@ -14421,7 +14420,7 @@ msgstr "Архив"
 
 #: wp-admin/includes/file.php:23
 msgid "Category Template"
-msgstr "Ангилалын хэв"
+msgstr "Ангиллын хэв"
 
 #: wp-admin/includes/file.php:24 wp-admin/includes/meta-boxes.php:533
 msgid "Page Template"
@@ -15403,7 +15402,7 @@ msgstr "+ Шинэ ангилал нэмэх"
 
 #: wp-admin/includes/meta-boxes.php:643
 msgid "New category name"
-msgstr "Шинэ ангилалын нэр"
+msgstr "Шинэ ангиллын нэр"
 
 #: wp-admin/includes/meta-boxes.php:344
 msgid ""
@@ -15664,7 +15663,7 @@ msgstr "RSS хаяг"
 
 #: wp-admin/includes/meta-boxes.php:847
 msgid "Notes"
-msgstr "Тэмдэглэгээ"
+msgstr "Тэмдэглээ"
 
 #: wp-admin/includes/meta-boxes.php:851
 #: wp-admin/includes/plugin-install.php:310
@@ -16772,7 +16771,7 @@ msgstr "&raquo;"
 msgid ""
 "Can&#8217;t delete the <strong>%s</strong> category: this is the default one"
 msgstr ""
-"<strong>%s</strong> ангилалыг устгаж чадсангүй: энэ нь өгөгдмөл ангилал байна"
+"<strong>%s</strong> ангиллыг устгаж чадсангүй: энэ нь өгөгдмөл ангилал байна"
 
 #: wp-admin/admin-ajax.php:450
 msgid "Comment %d does not exist"
@@ -16780,7 +16779,7 @@ msgstr "Сэтгэгдэл %d байхгүй байна"
 
 #: wp-admin/admin-ajax.php:513 wp-admin/includes/taxonomy.php:119
 msgid "You did not enter a category name."
-msgstr "Та ангилалын нэрийг оруулаагүй байна. "
+msgstr "Та ангиллын нэрийг оруулаагүй байна. "
 
 #: wp-admin/admin-ajax.php:554 wp-admin/admin-ajax.php:1305
 msgid "An error has occured. Please reload the page and try again."
@@ -16868,7 +16867,7 @@ msgstr "Булхайцаад&#8217; аан?"
 
 #: wp-admin/admin-ajax.php:1150 wp-admin/edit-link-categories.php:60
 msgid "Category not updated."
-msgstr "Ангилалыг шинэчлээгүй."
+msgstr "Ангиллыг шинэчлээгүй."
 
 #: wp-admin/admin-ajax.php:1165 wp-admin/admin-ajax.php:1172
 #: wp-admin/edit-tags.php:173
@@ -17052,6 +17051,12 @@ msgstr "Нууц үг (давтан)"
 
 msgid "All Pages"
 msgstr "Бүх хуудсууд"
+
+msgid "Theme Settings"
+msgstr "Загварын тохиргоо"
+
+msgid "Customize"
+msgstr "Өөрчлөх"
 
 #~ msgid "Comment History"
 #~ msgstr "Сэтгэгдэл"
@@ -17506,7 +17511,7 @@ msgstr "Бүх хуудсууд"
 #~ msgstr "Бичих тохиргоо"
 
 #~ msgid "Generator Meta Tag"
-#~ msgstr "Ангилалыг тэмдэглээ рүү хөрвүүлэх."
+#~ msgstr "Ангиллыг тэмдэглээ рүү хөрвүүлэх."
 
 #~ msgid "EditURI Header"
 #~ msgstr "Зургийн цомог засварлах"
@@ -17670,7 +17675,7 @@ msgstr "Бүх хуудсууд"
 #~ msgstr "Ангилал хайх"
 
 #~ msgid "Edit Contact Form"
-#~ msgstr "Ангилалыг засварлах"
+#~ msgstr "Ангиллыг засварлах"
 
 #~ msgid "Contact Forms"
 #~ msgstr "харилцах хаяг"
@@ -17706,7 +17711,7 @@ msgstr "Бүх хуудсууд"
 #~ msgstr "Бичлэгийг хадгалсан."
 
 #~ msgid "Contact form deleted."
-#~ msgstr "Ангилалыг устгасан."
+#~ msgstr "Ангиллыг устгасан."
 
 #~ msgid "Support"
 #~ msgstr "Экспортлох"
@@ -18238,9 +18243,6 @@ msgstr "Бүх хуудсууд"
 #~ msgid "Suggested Fonts"
 #~ msgstr "Санал болголт"
 
-#~ msgid "Theme Settings"
-#~ msgstr "Хумсан зургийн тохиргоо"
-
 #~ msgid "Category: \"%s\""
 #~ msgstr "Ангилал:"
 
@@ -18589,10 +18591,10 @@ msgstr "Бүх хуудсууд"
 #~ msgstr "Хуудсыг шинэчилсэн."
 
 #~ msgid "Tag not added."
-#~ msgstr "Ангилалыг нэмээгүй."
+#~ msgstr "Ангиллыг нэмээгүй."
 
 #~ msgid "Tag not updated."
-#~ msgstr "Ангилалыг шинэчлээгүй."
+#~ msgstr "Ангиллыг шинэчлээгүй."
 
 #~ msgid "Tags deleted."
 #~ msgstr "Хэрэглэгчийг устгасан."
@@ -18687,9 +18689,6 @@ msgstr "Бүх хуудсууд"
 
 #~ msgid "Update Theme"
 #~ msgstr "Загварыг шинэчлэх"
-
-#~ msgid "Customize &#8220;%s&#8221;"
-#~ msgstr "&#8220;%s&#8221-г харах;"
 
 #~ msgid "Update Translations"
 #~ msgstr "Шинэчлэлийн сонголтууд"
@@ -19095,11 +19094,11 @@ msgstr "Бүх хуудсууд"
 #~ msgid "All Comments"
 #~ msgstr "Сэтгэгдэл зөвшөөрөх"
 
-#~ msgid "Installed Plugins"
-#~ msgstr "Суулгасан нэмэлт"
+msgid "Installed Plugins"
+msgstr "Суулгасан нэмэлт"
 
-#~ msgid "All Users"
-#~ msgstr "Хэрэглэгчид"
+msgid "All Users"
+msgstr "Хэрэглэгчид"
 
 #~ msgid ""
 #~ "<a href=\"http://codex.wordpress.org/Dashboard_My_Sites_Screen\" target="
@@ -20036,7 +20035,7 @@ msgstr "Бүх хуудсууд"
 #~ msgstr "Хуудсыг харах"
 
 #~ msgid "View Category"
-#~ msgstr "Ангилалыг засварлах"
+#~ msgstr "Ангиллыг засварлах"
 
 #~ msgid "New Tag Name"
 #~ msgstr "Шинэ хуудас"
