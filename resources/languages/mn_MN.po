@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-17 15:28+0800\n"
+"PO-Revision-Date: 2014-04-17 16:40+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -9773,15 +9773,15 @@ msgstr "&mdash; Өөрчлөлт байхгүй &mdash;"
 
 #: wp-admin/user-edit.php:245 wp-admin/user-new.php:205
 msgid "First Name"
-msgstr "Анхны хуудас"
+msgstr "Нэр"
 
 #: wp-admin/user-edit.php:250 wp-admin/user-new.php:209
 msgid "Last Name"
-msgstr "Блогийн нэр"
+msgstr "Овог"
 
 #: wp-admin/user-edit.php:255
 msgid "Nickname"
-msgstr "сайтыннэр"
+msgstr "ник нэр"
 
 #: wp-admin/user-edit.php:255 wp-admin/user-edit.php:294
 #: wp-admin/user-new.php:195 wp-admin/user-new.php:200
@@ -9807,11 +9807,11 @@ msgstr "Тухай"
 
 #: wp-admin/user-edit.php:315
 msgid "About the user"
-msgstr "Програм хангамжийн тухай"
+msgstr "Хэрэглэгчийн тухай"
 
 #: wp-admin/user-edit.php:319
 msgid "Biographical Info"
-msgstr "газар зүйн"
+msgstr "Ерөнхий мэдээлэл"
 
 #: wp-admin/user-edit.php:321
 msgid ""
@@ -9831,11 +9831,11 @@ msgstr ""
 
 #: wp-admin/user-edit.php:331
 msgid "Type your new password again."
-msgstr "[%s] Таны нууц үг"
+msgstr "Нууц үгээ ахин оруулна уу."
 
 #: wp-admin/user-edit.php:350
 msgid "Additional Capabilities"
-msgstr "Зураг нэмэх"
+msgstr "Нэмэлт боломжууд"
 
 #: wp-admin/user-edit.php:369
 msgid "Update Profile"
@@ -9926,7 +9926,7 @@ msgstr "(хоёр дахин, шаардлагатай)"
 
 #: wp-admin/user-new.php:228
 msgid "Send Password?"
-msgstr "Нууц үгээ алдсан"
+msgstr "Нууц үг илгээх үү?"
 
 #: wp-admin/user-new.php:229
 msgid "Send this password to the new user by email."
@@ -9934,7 +9934,7 @@ msgstr ""
 
 #: wp-admin/user-new.php:246
 msgid "Skip Confirmation Email"
-msgstr "Нэвтрэлт амжилгүй боллоо"
+msgstr "Баталгаажуулах Имэйлийг алгасах"
 
 #: wp-admin/user-new.php:247
 msgid ""
@@ -9955,7 +9955,7 @@ msgstr ""
 
 #: wp-admin/users.php:146
 msgid "Delete Users"
-msgstr "Мөр устгах"
+msgstr "Хэрэглэгчийг устгах"
 
 #: wp-admin/users.php:147
 msgid "You have specified these users for deletion:"
@@ -9977,11 +9977,11 @@ msgstr "<em>%s</em>-н нийтлэл болон холбоосыг яах ёс�
 
 #: wp-admin/includes/ms.php:225 wp-admin/users.php:179
 msgid "Delete all posts and links."
-msgstr "%s доторх бүх нийтлэлийг харах"
+msgstr "Бүх нийтлэл болон холбоосыг устгах."
 
 #: wp-admin/includes/ms.php:227 wp-admin/users.php:181
 msgid "Attribute all posts and links to:"
-msgstr "%s доторх бүх нийтлэлийг харах"
+msgstr "Бүх нийтлэл болон холбоос:"
 
 #: wp-admin/includes/ms.php:237 wp-admin/users.php:184
 msgid "Confirm Deletion"
@@ -10086,7 +10086,7 @@ msgstr ""
 
 #: wp-admin/widgets.php:138
 msgid "No Sidebars Defined"
-msgstr "Хажуу багана"
+msgstr "Хажуу багана алга"
 
 #: wp-admin/widgets.php:140
 msgid ""
