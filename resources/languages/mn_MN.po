@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-14 15:10+0800\n"
+"PO-Revision-Date: 2014-04-17 15:28+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -3135,7 +3135,7 @@ msgstr "Унагаж дүрслэх"
 
 #: wp-includes/default-widgets.php:283
 msgid "Log in/out, admin, feed and WordPress links"
-msgstr ""
+msgstr "Нэвтрэх гарах болон админ холбоосууд"
 
 #: wp-includes/default-widgets.php:298
 msgid "Syndicate this site using RSS 2.0"
@@ -3257,7 +3257,7 @@ msgstr "Тэмдэглээн үүл"
 
 #: wp-includes/deprecated.php:62
 msgid "new WordPress Loop"
-msgstr ""
+msgstr "Шинэ давталт"
 
 #: wp-includes/deprecated.php:987
 msgid "Last updated"
@@ -16937,8 +16937,7 @@ msgstr ""
 #: wp-admin/admin-footer.php:23
 msgid ""
 "Thank you for creating with <a href=\"http://wordpress.org/\">WordPress</a>."
-msgstr ""
-"<a href=\"http://wordpress.org/\">WordPress</a> -р үүсгэж буйд баярлалаа."
+msgstr "Тусламж хэрэгтэй бол ssxenon01@gmail хаягаар холбоо барина уу."
 
 #: wp-admin/admin-footer.php:23
 msgid "<a href=\"http://codex.wordpress.org/\">Documentation</a>"
