@@ -54,7 +54,7 @@ function wp_dashboard_setup() {
 	}
 
 	// WordPress News
-	wp_add_dashboard_widget( 'dashboard_primary', __( 'WordPress News' ), 'wp_dashboard_primary' );
+//	wp_add_dashboard_widget( 'dashboard_primary', __( 'WordPress News' ), 'wp_dashboard_primary' );
 
 	// Hook to register new widgets
 	// Filter widget order
