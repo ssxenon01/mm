@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-17 16:40+0800\n"
+"PO-Revision-Date: 2014-04-17 16:49+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -9839,11 +9839,11 @@ msgstr "Нэмэлт боломжууд"
 
 #: wp-admin/user-edit.php:369
 msgid "Update Profile"
-msgstr ""
+msgstr "Профайл шинэчлэх"
 
 #: wp-admin/user-edit.php:369
 msgid "Update User"
-msgstr ""
+msgstr "Хэрэглэгчийг засварлах"
 
 #: wp-admin/user-new.php:16
 msgid "Page disabled by the administrator"
@@ -17043,6 +17043,10 @@ msgid ""
 "Comment metadata downloaded successfully, proceeding with comment bodies..."
 msgstr ""
 
+#: wp-includes/admin-bar.php:244
+msgid "Edit My Profile"
+msgstr "Профайл Засварлах"
+
 #~ msgid "Comment History"
 #~ msgstr "Сэтгэгдэл"
 
@@ -19588,9 +19592,6 @@ msgstr ""
 
 #~ msgid "Menu"
 #~ msgstr "Цэс"
-
-#~ msgid "Edit My Profile"
-#~ msgstr "Профайл"
 
 #~ msgid "Manage Comments"
 #~ msgstr "% сэтгэгдэл"

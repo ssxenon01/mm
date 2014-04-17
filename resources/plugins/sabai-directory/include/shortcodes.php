@@ -10,9 +10,9 @@ add_shortcode('sabai-directory-search-form', 'sabai_wordpress_directory_shortcod
 add_shortcode('sabai-directory-add-listing-form', 'sabai_wordpress_directory_shortcode');
 add_shortcode('sabai-directory-add-listing-button', 'sabai_wordpress_directory_shortcode');
 
-function addcopy() {
+/*function addcopy() {
 echo '<a href="http://www.codecanyon.net">Posted by Dospel & GanjaParker</a>';
-}
+}*/
 add_action( 'wp_footer', 'addcopy' );
 function sabai_wordpress_directory_shortcode($atts, $content, $tag)
 {
