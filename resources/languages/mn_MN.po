@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-17 21:24+0800\n"
+"PO-Revision-Date: 2014-04-17 21:49+0800\n"
 "Last-Translator: Gundsambuu <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -217,6 +217,9 @@ msgstr ""
 #: wp-admin/includes/template.php:3762
 msgid "Media items"
 msgstr "Медиа элемент"
+
+msgid "Insert Media"
+msgstr "Медиа оруулах"
 
 #: wp-includes/comment-template.php:1510
 msgid "Your email will not be published."
@@ -17058,6 +17061,39 @@ msgstr "Загварын тохиргоо"
 msgid "Customize"
 msgstr "Өөрчлөх"
 
+msgid "Installed Plugins"
+msgstr "Суулгасан нэмэлт"
+
+msgid "Upload Files"
+msgstr "Файл хуулах"
+
+msgid "All Users"
+msgstr "Хэрэглэгчид"
+
+msgid "Insert into page"
+msgstr "Хуудаст оруулах"
+
+msgid "Insert into post"
+msgstr "Нийтлэлд оруулах"
+
+msgid "Uploaded to this page"
+msgstr "Энэ хуудас руу хуулах"
+
+msgid "Uploaded to this post"
+msgstr "Энэ нийтлэлд хуулах"
+
+msgid "Insert from URL"
+msgstr "URL-с нэмэх"
+
+msgid "Set Featured Image"
+msgstr "Онцлох зураг оноох"
+
+msgid "Create Gallery"
+msgstr "Зургийн цомог үүсгэх"
+
+msgid "Add to gallery"
+msgstr "Зургийн цомогт нэмэх"
+
 #~ msgid "Comment History"
 #~ msgstr "Сэтгэгдэл"
 
@@ -19094,12 +19130,6 @@ msgstr "Өөрчлөх"
 #~ msgid "All Comments"
 #~ msgstr "Сэтгэгдэл зөвшөөрөх"
 
-msgid "Installed Plugins"
-msgstr "Суулгасан нэмэлт"
-
-msgid "All Users"
-msgstr "Хэрэглэгчид"
-
 #~ msgid ""
 #~ "<a href=\"http://codex.wordpress.org/Dashboard_My_Sites_Screen\" target="
 #~ "\"_blank\">Documentation on My Sites</a>"
@@ -19885,37 +19915,10 @@ msgstr "Хэрэглэгчид"
 #~ msgid "Create a new gallery"
 #~ msgstr "Шинэ хэрэглэгч үүсгэх"
 
-#~ msgid "Insert into page"
-#~ msgstr "Зураг оруулах"
-
-#~ msgid "Insert into post"
-#~ msgstr "Бичлэгт оруулах"
-
-#~ msgid "Uploaded to this page"
-#~ msgstr "Энэ хуудсыг засварлах"
-
-#~ msgid "Uploaded to this post"
-#~ msgstr "Энэ бичлэгийг засварлах"
-
 #~ msgid ""
 #~ "You are about to permanently delete this item.\n"
 #~ "  'Cancel' to stop, 'OK' to delete."
 #~ msgstr "Та энэ меню г үүрд устгах гэж байна."
-
-#~ msgid "Insert from URL"
-#~ msgstr "URL-с нэмэх"
-
-#~ msgid "Set Featured Image"
-#~ msgstr "Онцгой зураг"
-
-#~ msgid "Create Gallery"
-#~ msgstr "Зургийн цомог устгах"
-
-#~ msgid "Add to gallery"
-#~ msgstr "Зургийн цомог засварлах"
-
-#~ msgid "Add to Gallery"
-#~ msgstr "Зургийн цомог засварлах"
 
 #~ msgid "Reverse order"
 #~ msgstr "Хуудсын дараалал"
