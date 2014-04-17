@@ -13,7 +13,7 @@ add_shortcode('sabai-directory-add-listing-button', 'sabai_wordpress_directory_s
 /*function addcopy() {
 echo '<a href="http://www.codecanyon.net">Posted by Dospel & GanjaParker</a>';
 }*/
-add_action( 'wp_footer', 'addcopy' );
+//add_action( 'wp_footer', 'addcopy' );
 function sabai_wordpress_directory_shortcode($atts, $content, $tag)
 {
     require WP_PLUGIN_DIR . '/sabai/include/common.php';
