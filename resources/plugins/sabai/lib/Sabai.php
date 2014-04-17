@@ -450,9 +450,9 @@ abstract class Sabai extends SabaiFramework_Application_Http
             $this->_platform->setCache($data, 'sabai_addons_loaded', 0);
         }
 
-        /*if (empty($data['addons'])) {
+        if (empty($data['addons'])) {
             throw new Sabai_NotInstalledException();
-        }*/
+        }
 
         $this->_addonsLoaded = array();
         $this->_addonsLoadedTimestamp = $data['timestamp'];

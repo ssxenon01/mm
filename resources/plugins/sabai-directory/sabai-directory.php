@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: Business Directory
-Plugin URI: http://pantera.mn
-Description: Business directory plugin.
-Author: gundee @ pantera
-Author URI: http://pantera.mn
-Text Domain: xenon-directory
+Plugin Name: SabaiDirectory 
+Plugin URI: http://codecanyon.net/user/onokazu/portfolio?ref=Harem3d
+Description: Business directory plugin for WordPress.
+Author: somi @ ariyan.org
+Author URI: http://codecanyon.net/user/onokazu/portfolio?ref=Harem3d
+Text Domain: sabai-directory
 Domain Path: /languages
-Version: 1
+Version: 1.2.18
 */
 if (is_admin()) {
     include_once dirname(__FILE__) . '/include/activate.php';
