@@ -233,7 +233,7 @@ function wp_dashboard_right_now() {
 
 	?>
 	</ul>
-	<p><?php printf( __( 'WordPress %1$s running %2$s theme.' ), get_bloginfo( 'version', 'display' ), $theme_name ); ?></p>
+
 	<?php
 
 	// Check if search engines are asked not to index this site.
