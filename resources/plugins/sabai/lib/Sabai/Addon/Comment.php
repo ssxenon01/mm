@@ -5,7 +5,7 @@ class Sabai_Addon_Comment extends Sabai_Addon
                Sabai_Addon_Field_ITypes,
                Sabai_Addon_Content_IPermissions
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     const POST_STATUS_PUBLISHED = 0, POST_STATUS_HIDDEN = 1, POST_STATUS_FEATURED = 2;
     const VOTE_FLAG_VALUE_SPAM = 5, VOTE_FLAG_VALUE_OFFENSIVE = 6, VOTE_FLAG_VALUE_OFFTOPIC = 2, VOTE_FLAG_VALUE_OTHER = 0;
                 
@@ -40,6 +40,7 @@ class Sabai_Addon_Comment extends Sabai_Addon
                     'title_callback' => true,
                     'callback_path' => 'comment',
                     'access_callback' => true,
+                    'format' => array(':comment_id' => '\d+'),
                 );
                 $routes[$base_path . '/comments/:comment_id/edit'] = array(
                     'controller' => 'EditComment',
@@ -82,7 +83,7 @@ class Sabai_Addon_Comment extends Sabai_Addon
             case 'comment':
                 if ((!$id = $context->getRequest()->asStr('comment_id'))
                     || (!$context->comment = $this->getModel('Post')->fetchById($id))
-                    || ($context->comment->isHidden() && !$this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_manage'))
+                    || ($context->comment->isHidden() && !$this->_application->HasPermission($context->entity->getBundleName() . '_manage'))
                 ) {
                     return false;
                 }
@@ -93,29 +94,29 @@ class Sabai_Addon_Comment extends Sabai_Addon
                     $context->setUnauthorizedError($this->_application->Entity_Url($context->entity, '/comments/add'));
                     return false;
                 }
-                return $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_add')
+                return $this->_application->HasPermission($context->entity->getBundleName() . '_comment_add')
                     || $context->entity->getAuthorId() === $this->_application->getUser()->id; // Owner of entity can always add comment
             case 'edit_comment':
-                return $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_edit_any')
-                    || ($context->is_comment_owner && $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_edit_own'));
+                return $this->_application->HasPermission($context->entity->getBundleName() . '_comment_edit_any')
+                    || ($context->is_comment_owner && $this->_application->HasPermission($context->entity->getBundleName() . '_comment_edit_own'));
             case 'delete_comment':
                 return $this->_application->getUser()->isAdministrator()
-                    || ($context->is_comment_owner && $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_delete_own'));
+                    || ($context->is_comment_owner && $this->_application->HasPermission($context->entity->getBundleName() . '_comment_delete_own'));
             case 'hide_comment':
-                return $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_manage');
+                return $this->_application->HasPermission($context->entity->getBundleName() . '_manage');
             case 'vote_comment':
                 if ($context->comment->vote_disabled) {
                     return false;
                 }
-                return $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_vote')
+                return $this->_application->HasPermission($context->entity->getBundleName() . '_comment_vote')
                     && (!$context->is_comment_owner
-                           || $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_vote_own') // requires additional permission to vote for own comment
+                           || $this->_application->HasPermission($context->entity->getBundleName() . '_comment_vote_own') // requires additional permission to vote for own comment
                        );
             case 'flag_comment':
                 if ($context->comment->flag_disabled) {
                     return false;
                 }
-                return $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_comment_flag');
+                return $this->_application->HasPermission($context->entity->getBundleName() . '_comment_flag');
         }
     }
 

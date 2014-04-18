@@ -28,6 +28,6 @@ class Sabai_Addon_System_Controller_UserProfile extends Sabai_Controller
             }
         }
         $context->addTemplate('system_userprofile')
-            ->setAttributes(array('activities' => $activity));
+            ->setAttributes(array('profile' => $this->getPlatform()->getUserProfileHtml($context->identity->id), 'activities' => $activity));
     }
 }

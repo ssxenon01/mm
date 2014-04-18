@@ -32,6 +32,12 @@ class SabaiFramework_Application_Url implements ArrayAccess
     {
         $this->_data[$name] = $value;
     }
+    
+    public function set($name, $value)
+    {
+        $this->_data[$name] = $value;
+        return $this;
+    }
 
     public function __toString()
     {

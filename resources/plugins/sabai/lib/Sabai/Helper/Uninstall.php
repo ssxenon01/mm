@@ -11,6 +11,10 @@ class Sabai_Helper_Uninstall extends Sabai_Helper
         if (!isset($log)) $log = new ArrayObject();
         $log[] = 'Uninstalling Sabai...';
         
+        $log[] = 'clearing cache...';
+        $application->getPlatform()->clearCache();
+        $log[] = 'done...';
+        
         // Uninstall all addons
         if ($addons = $application->getModel('Addon', 'System')->fetch()) {
             $log[] = 'uninstalling installed addons...';

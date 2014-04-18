@@ -78,9 +78,9 @@ abstract class Sabai_Platform
     abstract public function getDBConnection();
     abstract public function getDBTablePrefix();
     abstract public function mail($to, $subject, $body, array $attachments = null, $bodyHtml = null);
-    abstract public function setSessionVar($name, $value);
-    abstract public function getSessionVar($name);
-    abstract public function deleteSessionVar($name);
+    abstract public function setSessionVar($name, $value, $userId = null);
+    abstract public function getSessionVar($name, $userId = null);
+    abstract public function deleteSessionVar($name, $userId = null);
     abstract public function setUserOption($userId, $name, $value);
     abstract public function getUserOption($userId, $name, $default = null);
     abstract public function deleteUserOption($userId, $name);
@@ -99,8 +99,10 @@ abstract class Sabai_Platform
     abstract public function getOption($name, $default = null);
     abstract public function deleteOption($name);
     abstract public function getDateFormat();
-    abstract public function getCustomTemplateDir();
-    abstract public function getCustomTemplateDirUrl();
+    abstract public function getCustomAssetsDir();
+    abstract public function getCustomAssetsDirUrl();
+    abstract public function getUserProfileHtml($userId);
+    abstract public function resizeImage($imgPath, $destPath, $width, $height, $crop = false);
     /**
      * @return int
      */

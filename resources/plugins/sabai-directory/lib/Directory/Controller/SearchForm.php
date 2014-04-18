@@ -21,8 +21,11 @@ class Sabai_Addon_Directory_Controller_SearchForm extends Sabai_Controller
             $context->category_bundle = $this->Directory_DirectoryList('category');
         }
         if (!isset($context->no_loc)) {
-            $attr['no_loc'] = false;
-        }        
+            $context->no_loc = false;
+        }
+        if (!isset($context->button)) {
+            $context->button = 'sabai-btn-primary';
+        }
         $context->addTemplate('directory_searchform');
     }
 }

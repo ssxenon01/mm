@@ -38,7 +38,7 @@ class Sabai_Addon_Taxonomy_Helper_SelectDropdown extends Sabai_Helper
             return '';
         }
         if (isset($options['default_text'])) {
-            array_unshift($html, '<option>' . Sabai::h($options['default_text']) . '</option>');
+            array_unshift($html, '<option value="'. $options['parent'] .'">' . Sabai::h($options['default_text']) . '</option>');
         }
         if (isset($options['class'])) {
             array_unshift($html, '<select name="'. $options['name'] .'" class="'. $options['class'] .'">');

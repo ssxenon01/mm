@@ -277,7 +277,7 @@ abstract class Sabai_RoutingController extends SabaiFramework_Application_Routin
             // Convert dynamic route parts to actual values
             $last_valid_route_matched['forward'] = strtr($last_valid_route_matched['forward'], $dynamic_route_keys);
         } else {
-            if ($last_valid_route_matched['type'] == Sabai::ROUTE_INLINE_TAB
+            if (@$last_valid_route_matched['type'] == Sabai::ROUTE_INLINE_TAB
                 && !$context->getRequest()->isPostMethod()
                 && $context->getContainer() === '#sabai-content'
             ) {

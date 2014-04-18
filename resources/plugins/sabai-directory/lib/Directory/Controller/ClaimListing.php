@@ -40,7 +40,7 @@ class Sabai_Addon_Directory_Controller_ClaimListing extends Sabai_Addon_Form_Mul
                 '#size' => 30,
             ),
             'comment' => array(
-                '#required' => true,
+                '#required' => $this->Entity_Addon($context->entity)->getConfig('claims', 'no_comment') ? false : true,
                 '#type' => 'markdown_textarea',
                 '#title' => __('Comment', 'sabai-directory'),
                 '#description' => __('Please provide additional information that will allow us to verify your claim.', 'sabai-directory'),
@@ -105,7 +105,7 @@ class Sabai_Addon_Directory_Controller_ClaimListing extends Sabai_Addon_Form_Mul
         return $claim->commit();
     }
     
-    protected function _complete(Sabai_Context $context, Sabai_Addon_Form_Form $form)
+    protected function _complete(Sabai_Context $context, array $formStorage)
     {       
         $context->addTemplate('form_results')
             ->setAttributes(array(

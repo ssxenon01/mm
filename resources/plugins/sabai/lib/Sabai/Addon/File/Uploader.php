@@ -187,30 +187,39 @@ class Sabai_Addon_File_Uploader
             }
         }
 
-        if ($upload && isset($this->_uploadDir)) {
-            $this->_addon->getApplication()->ValidateDirectory($this->_uploadDir, true);
-
-            if ($this->_hashUploadFileName) {
-                // Get a unique file name for new file in the upload directory
-                if (!$file_name = self::_getUniqueFileName($file, $this->_uploadDir, $this->_uploadFileNamePrefix, $this->_uploadFileNameMaxLength)) {
-                    throw new Sabai_RuntimeException(sprintf(__('Could not get unique file name for file %s.', 'sabai'), $file['name']));
-                }
-            } else {
-                $file_name = $file['name'];
-                if (file_exists($this->_uploadDir . '/' . $file_name)) {
-                    throw new Sabai_RuntimeException(sprintf(__('File %s (%s) already exists.', 'sabai'), $file_name, $this->_uploadDir . '/' . $file_name));
-                }
-            }
-            $file_path = $this->_uploadDir . '/' . $file_name;
-            if (!@move_uploaded_file($file['tmp_name'], $file_path)) {
-                throw new Sabai_RuntimeException(__('Failed saving file to the upload directory.', 'sabai'));
-            }
-            @chmod($file_path, $this->_uploadFilePermission);
-            $file['saved_file_name'] = $file_name;
-            $file['saved_file_path'] = $file_path;
+        if ($upload) {
+            $this->_doUploadFile($file);
         }
 
         return $file;
+    }
+    
+    protected function _doUploadFile(&$file)
+    {
+        if (!isset($this->_uploadDir)) {
+            return;
+        }
+            
+        $this->_addon->getApplication()->ValidateDirectory($this->_uploadDir, true);
+
+        if ($this->_hashUploadFileName) {
+            // Get a unique file name for new file in the upload directory
+            if (!$file_name = self::_getUniqueFileName($file, $this->_uploadDir, $this->_uploadFileNamePrefix, $this->_uploadFileNameMaxLength)) {
+                throw new Sabai_RuntimeException(sprintf(__('Could not get unique file name for file %s.', 'sabai'), $file['name']));
+            }
+        } else {
+            $file_name = $file['name'];
+            if (file_exists($this->_uploadDir . '/' . $file_name)) {
+                throw new Sabai_RuntimeException(sprintf(__('File %s (%s) already exists.', 'sabai'), $file_name, $this->_uploadDir . '/' . $file_name));
+            }
+        }
+        $file_path = $this->_uploadDir . '/' . $file_name;
+        if (!@move_uploaded_file($file['tmp_name'], $file_path)) {
+            throw new Sabai_RuntimeException(__('Failed saving file to the upload directory.', 'sabai'));
+        }
+        @chmod($file_path, $this->_uploadFilePermission);
+        $file['saved_file_name'] = $file_name;
+        $file['saved_file_path'] = $file_path;
     }
 
     protected function _checkExtensionAndMimeType(&$file)

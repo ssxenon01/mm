@@ -26,7 +26,7 @@ class Sabai_Addon_Entity_Helper_Form extends Sabai_Helper
         $super_user_roles = array_keys($application->SuperUserRoles());
 
         // Construct form settings
-        $form = array('#name' => 'entity_form', '#entity_type' => $entity_type, '#bundle' => $bundle);
+        $form = array('#inherits' => array('entity_form'), '#entity_type' => $entity_type, '#bundle' => $bundle);
         if ($wrap) {
             $form[$wrap] = array('#tree' => true);
         }
@@ -40,6 +40,8 @@ class Sabai_Addon_Entity_Helper_Form extends Sabai_Helper
             // Form fields will be populated after the form submission is validated, so do not populate them here.
             $do_not_populate_fields = true;
         }
+        
+        $fields = array();
         foreach ($bundle->Fields->with('FieldConfig') as $field) {
             if (!$field->getFieldWidget() || $field->getFieldDisabled()) continue;
              
@@ -69,7 +71,10 @@ class Sabai_Addon_Entity_Helper_Form extends Sabai_Helper
                     continue; // the current user does not have a role that is permitted to view this field
                 }
             }
+            $fields[$field->getFieldName()] = $field;
+        }
 
+        foreach ($application->doFilter('EntityFormFields', $fields, array(isset($entity) ? $entity : $bundleName, $admin)) as $field_name => $field) {
             $ifieldwidget = $application->Field_WidgetImpl($field->getFieldWidget());
             $field_value = null;
             if ($admin) {
@@ -88,17 +93,17 @@ class Sabai_Addon_Entity_Helper_Form extends Sabai_Helper
                 '#required' => $field->getFieldRequired(),
                 '#collapsible' => false,
             );
-            if (isset($values[$field->getFieldName()])) {
-                if (is_array($values[$field->getFieldName()])
-                    && array_key_exists(0, $values[$field->getFieldName()])
+            if (isset($values[$field_name])) {
+                if (is_array($values[$field_name])
+                    && array_key_exists(0, $values[$field_name])
                 ) {
-                    $field_value = $values[$field->getFieldName()];
+                    $field_value = $values[$field_name];
                 }
             } elseif (isset($entity)) {
                 if (!$field->isPropertyField()) {
-                    $field_value = $entity->getFieldValue($field->getFieldName());
+                    $field_value = $entity->getFieldValue($field_name);
                 } else {
-                    $field_value = $entity->getProperty($field->getFieldName());
+                    $field_value = $entity->getProperty($field_name);
                     if ($field_value !== null) {
                         $field_value = array($field_value);
                     }
@@ -111,7 +116,7 @@ class Sabai_Addon_Entity_Helper_Form extends Sabai_Helper
                     if (!isset($repeatable['group_fields']) || $repeatable['group_fields'] !== false) {
                         $form_ele['#class'] = 'sabai-form-group';
                     }
-                    if (isset($field_value)) {
+                    if (!empty($field_value)) {
                         $field_element_count = count($field_value);
                         for ($i = 0; $i < $field_element_count; ++$i) {
                             if (!$form_ele[$i] = $this->_getEntityFormElement($application, $bundle, $field, $i, empty($do_not_populate_fields) ? array_shift($field_value) : null, !isset($entity))) {
@@ -178,9 +183,9 @@ class Sabai_Addon_Entity_Helper_Form extends Sabai_Helper
                 }
             }
             if ($wrap) {
-                $form[$wrap][$field->getFieldName()] = $form_ele;
+                $form[$wrap][$field_name] = $form_ele;
             } else {
-                $form[$field->getFieldName()] = $form_ele;
+                $form[$field_name] = $form_ele;
             }
         }
 

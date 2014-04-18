@@ -45,6 +45,7 @@ class Sabai_Addon_Directory_Controller_Admin_ListingClaims extends Sabai_Addon_F
                 '#header' => array(
                     'id' => __('Claim ID', 'sabai-directory'),
                     'date' => __('Claim Date', 'sabai-directory'),
+                    'type' => __('Claim Type', 'sabai-directory'),
                     'listing' => __('Listing', 'sabai-directory'),
                     'user' => __('User', 'sabai-directory'),
                     'comment' => __('Comment', 'sabai-directory'),
@@ -67,10 +68,11 @@ class Sabai_Addon_Directory_Controller_Admin_ListingClaims extends Sabai_Addon_F
             $form['claims']['#options'][$claim->id] = array(
                 'id' => $this->LinkToModal('<strong class="sabai-row-title">' . $claim->getLabel() . '</strong>', $this->Url($context->getRoute() . $claim->id), array('no_escape' => true, 'width' => 470), array('title' => sprintf(__('Claim %s', 'sabai-directory'), $claim->getLabel()))),
                 'date' => $this->Date($claim->created),
+                'type' => $claim->type === 'new' ? __('New listing', 'sabai-directory') : __('Existing listing', 'sabai-directory'),
                 'user' => $this->UserIdentityLinkWithThumbnailSmall($claim->User),
                 'comment' => $claim->getSummary(100),
                 'status' => sprintf('<span class="sabai-label %s">%s</span>', $claim->getStatusLabelClass(), $claim->getStatusLabel()),
-                'listing' => $claim->Entity ? ($claim->Entity->isPublished() ? $this->LinkTo($claim->Entity->getTitle(), $this->Entity_Bundle($claim->Entity)->getPath() . '/' . $claim->Entity->getId()) : Sabai::h($claim->Entity->getTitle())) : '',
+                'listing' => $claim->Entity ? $this->LinkTo($claim->Entity->getTitle(), $this->Entity_Bundle($claim->Entity)->getPath() . '/' . $claim->Entity->getId()) : '',
             );
             if (!in_array($claim->status, array('approved', 'rejected'))) {
                 $form['claims']['#options_disabled'][] = $claim->id;

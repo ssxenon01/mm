@@ -40,12 +40,14 @@ class Sabai_Addon_Form_Field_Fieldset extends Sabai_Addon_Form_Field_AbstractFie
                     $_data['#disabled'] = true;
                 }
                 $_data['#tree_allow_override'] = $data['#tree_allow_override'];
-                $elements[] = $form->createElement($_data['#type'], $_name, $_data);
+                if ($element = $form->createElement($_data['#type'], $_name, $_data)) {
+                    $elements[] = $element;
+                }
             }
         }
         $data['#value'] = $data['#default_value'] = null;
 
-        return $form->createHTMLQuickformElement('group', $name, $data['#label'], $elements, $data['#position']);
+        return empty($elements) ? null : $form->createHTMLQuickformElement('group', $name, $data['#label'], $elements, $data['#position']);
     }
 
     public function formFieldOnSubmitForm($name, &$value, array &$data, Sabai_Addon_Form_Form $form)

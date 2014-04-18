@@ -8,7 +8,7 @@ class Sabai_Addon_Content extends Sabai_Addon
                Sabai_Addon_System_IPermissionCategories,
                Sabai_Addon_System_IPermissions
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     const POST_STATUS_PUBLISHED = 'published', POST_STATUS_DRAFT = 'draft', POST_STATUS_PENDING = 'pending', POST_STATUS_TRASHED = 'trashed',
         TRASH_TYPE_SPAM = 1, TRASH_TYPE_OFFTOPIC = 2, TRASH_TYPE_OTHER = 3;
                 
@@ -428,7 +428,7 @@ class Sabai_Addon_Content extends Sabai_Addon
                     // Show link to any user
                     return true;
                 }
-                if (!$this->_application->getUser()->hasPermission($context->bundle->name . '_add')) {
+                if (!$this->_application->HasPermission($context->bundle->name . '_add')) {
                     if ($this->_application->getUser()->isAnonymous()) {        
                         $context->setUnauthorizedError($route['path']);
                     }
@@ -486,7 +486,7 @@ class Sabai_Addon_Content extends Sabai_Addon
                     // Show link to any user
                     return true;
                 }
-                if (!$this->_application->getUser()->hasPermission($context->child_bundle->name . '_add')) {
+                if (!$this->_application->HasPermission($context->child_bundle->name . '_add')) {
                     if ($this->_application->getUser()->isAnonymous()) {
                         $context->setUnauthorizedError($route['path']);
                     }
@@ -510,21 +510,21 @@ class Sabai_Addon_Content extends Sabai_Addon
                 $this->_application->Entity_LoadFields($context->entity);
                 return true;
             case 'edit_post':
-                return $this->_application->getUser()->hasPermission($context->bundle->name . '_edit_any')
+                return $this->_application->HasPermission($context->bundle->name . '_edit_any')
                     || ($this->_application->Content_IsAuthor($context->entity, $this->_application->getUser())
-                           && $this->_application->getUser()->hasPermission($context->bundle->name . '_edit_own'));
+                           && $this->_application->HasPermission($context->bundle->name . '_edit_own'));
             case 'edit_child_post':
-                return $this->_application->getUser()->hasPermission($context->child_bundle->name . '_edit_any')
+                return $this->_application->HasPermission($context->child_bundle->name . '_edit_any')
                     || ($this->_application->Content_IsAuthor($context->entity, $this->_application->getUser())
-                           && $this->_application->getUser()->hasPermission($context->child_bundle->name . '_edit_own'));
+                           && $this->_application->HasPermission($context->child_bundle->name . '_edit_own'));
             case 'trash_post':
-                return $this->_application->getUser()->hasPermission($context->bundle->name . '_manage')
+                return $this->_application->HasPermission($context->bundle->name . '_manage')
                     || ($this->_application->Content_IsAuthor($context->entity, $this->_application->getUser())
-                           && $this->_application->getUser()->hasPermission($context->bundle->name . '_trash_own'));
+                           && $this->_application->HasPermission($context->bundle->name . '_trash_own'));
             case 'trash_child_post':
-                return $this->_application->getUser()->hasPermission($context->child_bundle->name . '_manage')
+                return $this->_application->HasPermission($context->child_bundle->name . '_manage')
                     || ($this->_application->Content_IsAuthor($context->entity, $this->_application->getUser())
-                           && $this->_application->getUser()->hasPermission($context->child_bundle->name . '_trash_own'));
+                           && $this->_application->HasPermission($context->child_bundle->name . '_trash_own'));
         }
     }
 
@@ -770,6 +770,10 @@ class Sabai_Addon_Content extends Sabai_Addon
                 'access_callback' => true,
                 'callback_path' => 'restore_post',
             );
+            $routes[$bundle->getPath() . '/_autocomplete'] = array(
+                'controller' => 'Autocomplete',
+                'type' => Sabai::ROUTE_CALLBACK,
+            );
         }   
 
         return $routes;
@@ -783,10 +787,6 @@ class Sabai_Addon_Content extends Sabai_Addon
                     return false;
                 }
                 $context->bundle = $bundle;
-                // Set icon if any
-                if (!empty($context->bundle->info['icon'])) {
-                    $context->setIcon($context->bundle->info['icon']);
-                }
                 // Add current addon's template directory
                 $context->addTemplateDir($this->_application->getPlatform()->getAssetsDir($this->_application->getAddon($context->bundle->addon)->getPackage()) . '/templates');
                 return true;
@@ -795,10 +795,6 @@ class Sabai_Addon_Content extends Sabai_Addon
                     return false;
                 }
                 $context->child_bundle = $bundle;
-                // Set icon if any
-                if (!empty($context->child_bundle->info['icon'])) {
-                    $context->setIcon($context->child_bundle->info['icon']);
-                }
                 return true;
             case 'edit_post':
                 if ((!$id = $context->getRequest()->asInt('entity_id'))
@@ -875,9 +871,19 @@ class Sabai_Addon_Content extends Sabai_Addon
         
     public function onEntityUpdateContentEntity($bundle, $entity, &$values)
     {
-        // update activity timestamp only when the title and/or the body are modified
-        if (isset($values['content_body']) || isset($values['content_post_title'])) {
-            if (!isset($values['content_activity'])) {
+        if (!isset($values['content_activity'])) {
+            // update activity timestamp only when the title, body, or another specific field is modified
+            if (!$updated = isset($values['content_body']) || isset($values['content_post_title'])) {
+                if (!empty($bundle->info['content_activity'])) {
+                    foreach ((array)$bundle->info['content_activity'] as $activity) {
+                        if (isset($values[$activity])) {
+                            $updated = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if ($updated) {   
                 $values['content_activity'] = array(
                     array(
                         'active_at' => time(),

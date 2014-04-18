@@ -5,7 +5,6 @@ class Sabai_Addon_Entity_Helper_LoadFields extends Sabai_Helper
     {
         if ($entityType instanceof Sabai_Addon_Entity_IEntity) {
             if ($entityType->isFieldsLoaded() && !$force) {
-                // Fields are alrady loaded
                 return;
             }
             $entities = array($entityType->getId() => $entityType);
@@ -28,8 +27,7 @@ class Sabai_Addon_Entity_Helper_LoadFields extends Sabai_Helper
     protected function _loadEntityFields(Sabai $application, $entityType, array $entities, $fieldStorage = null)
     {
         $entities_by_bundle = $field_values_by_bundle = $field_types_by_bundle = array();
-        foreach ($entities as $entity_id => $entity) {
-            
+        foreach ($entities as $entity_id => $entity) {     
             $entities_by_bundle[$entity->getBundleName()][$entity_id] = $entity;
         }
         $bundles = $application->Entity_BundleCollection(array_keys($entities_by_bundle))->with('Fields', 'FieldConfig');

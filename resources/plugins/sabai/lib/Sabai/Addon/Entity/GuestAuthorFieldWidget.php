@@ -58,6 +58,9 @@ abstract class Sabai_Addon_Entity_GuestAuthorFieldWidget implements Sabai_Addon_
         $is_guest = $this->_addon->getApplication()->getUser()->isAnonymous();
         $is_edit = isset($value);
         if (!$is_guest) {
+            if (!$this->_addon->getApplication()->getUser()->isAdministrator()) {
+                return;
+            }
             if (!$is_edit) {
                 // This field is for guest authors only unless editing an existing field
                 return array();
@@ -139,6 +142,7 @@ abstract class Sabai_Addon_Entity_GuestAuthorFieldWidget implements Sabai_Addon_
                     '#title' => __('IP Address', 'sabai'),
                     '#value' => $value['ip'],
                     '#weight' => 15,
+                    '#disabled' => true,
                 ),
                 'user_agent' => array(
                     '#type' => 'textarea',
@@ -146,6 +150,7 @@ abstract class Sabai_Addon_Entity_GuestAuthorFieldWidget implements Sabai_Addon_
                     '#title' => __('User Agent', 'sabai'),
                     '#value' => $value['user_agent'],
                     '#weight' => 20,
+                    '#disabled' => true,
                 ),
             );
         } else {

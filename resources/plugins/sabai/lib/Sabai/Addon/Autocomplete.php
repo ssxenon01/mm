@@ -2,7 +2,7 @@
 class Sabai_Addon_Autocomplete extends Sabai_Addon
     implements Sabai_Addon_Form_IFields
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
             
     public function isUninstallable($currentVersion)
     {

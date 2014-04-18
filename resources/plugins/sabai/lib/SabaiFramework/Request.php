@@ -140,7 +140,7 @@ abstract class SabaiFramework_Request
      */
     public function has($name)
     {
-        return array_key_exists($name, $this->_params);
+        return isset($name, $this->_params[$name]);
     }
 
     /**

@@ -3,7 +3,7 @@ require_once 'Sabai/Platform.php';
 
 class Sabai_Platform_WordPress extends Sabai_Platform
 {
-    const VERSION = '1.2.18';
+    const VERSION = '1.2.29';
     private $_mainContent, $_mainRoute, $_template, $_userToBeDeleted, $_sessionTransient = true, $_sessionTransientLifetime = 1800;
     private static $_instances = array();
 
@@ -17,10 +17,10 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         if (!isset(self::$_instances[$pluginName])) {
             self::$_instances[$pluginName] = new self($pluginName);
             if (defined('SABAI_WORDPRESS_SESSION_TRANSIENT')) {
-                self::$_instances[$pluginName]->_sessionTransient = SABAI_WORDPRESS_SESSION_TRANSIENT;
+                self::$_instances[$pluginName]->_sessionTransient = (bool)SABAI_WORDPRESS_SESSION_TRANSIENT;
             }
-            if (defined('SABAI_WORDPRESS_SESSION_TRANSIENT_LIFETIME')) {
-                self::$_instances[$pluginName]->_sessionTransientLifetime = SABAI_WORDPRESS_SESSION_TRANSIENT_LIFETIME;
+            if (self::$_instances[$pluginName]->_sessionTransient && defined('SABAI_WORDPRESS_SESSION_TRANSIENT_LIFETIME')) {
+                self::$_instances[$pluginName]->_sessionTransientLifetime = (int)SABAI_WORDPRESS_SESSION_TRANSIENT_LIFETIME;
             }
         }
         return self::$_instances[$pluginName];
@@ -204,10 +204,16 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         return $this;
     }
 
-    public function setSessionVar($name, $value)
+    public function setSessionVar($name, $value, $userId = null)
     {
         $name = $GLOBALS['wpdb']->prefix . $name;
         if ($this->_sessionTransient) {
+            if (isset($userId)) {
+                if (empty($userId)) {
+                    return $this;
+                }
+                $name .= ':' . $userId;
+            }
             $this->setCache($value, 'session_' . $name, $this->_sessionTransientLifetime);
         } else {
             $_SESSION[$this->_sabaiName][$name] = $value;
@@ -215,10 +221,16 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         return $this;
     }
 
-    public function getSessionVar($name)
+    public function getSessionVar($name, $userId = null)
     {
         $name = $GLOBALS['wpdb']->prefix . $name;
         if ($this->_sessionTransient) {
+            if (isset($userId)) {
+                if (empty($userId)) {
+                    return;
+                }
+                $name .= ':' . $userId;
+            }
             $ret = $this->getCache('session_' . $name);
             return $ret === false ? null : $ret;
         }
@@ -227,10 +239,16 @@ class Sabai_Platform_WordPress extends Sabai_Platform
             : null;
     }
 
-    public function deleteSessionVar($name)
+    public function deleteSessionVar($name, $userId = null)
     {
         $name = $GLOBALS['wpdb']->prefix . $name;
         if ($this->_sessionTransient) {
+            if (isset($userId)) {
+                if (empty($userId)) {
+                    return;
+                }
+                $name .= ':' . $userId;
+            }
             $this->deleteCache('session_' . $name);
         } else {
             if (isset($_SESSION[$this->_sabaiName][$name])) {
@@ -367,14 +385,28 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         return (int)get_option('gmt_offset');
     }
     
-    public function getCustomTemplateDir()
+    public function getCustomAssetsDir()
     {
-        return get_stylesheet_directory() . '/sabai';
+        return WP_CONTENT_DIR  . '/sabai/assets';
     }
     
-    public function getCustomTemplateDirUrl()
+    public function getCustomAssetsDirUrl()
     {    
-        return get_stylesheet_directory_uri() . '/sabai';
+        return WP_CONTENT_URL . '/sabai/assets';
+    }
+    
+    public function getUserProfileHtml($userId)
+    {
+        return nl2br(get_the_author_meta('description', $userId));
+    }
+    
+    public function resizeImage($imgPath, $destPath, $width, $height, $crop = false)
+    {
+        $img = wp_get_image_editor($imgPath);
+        if (!is_wp_error($img)) {
+            $img->resize($width, $height, $crop);
+            $img->save($destPath);
+        }
     }
 
     public function run()
@@ -411,7 +443,9 @@ class Sabai_Platform_WordPress extends Sabai_Platform
             if (0 !== strpos($request_path, $site_path))  {// is a valid path requested?
                 // Sabai page was not requested, so clear flash messages that might
                 // have been saved in the session during previous requests.
-                $this->deleteSessionVar('system_flash');
+                if ($user_id = get_current_user_id()) {
+                    $this->deleteSessionVar('system_flash', $user_id);
+                }
                 return false;
             }
             $page_request_path = substr($request_path, strlen($site_path)); // get the requested page path
@@ -440,7 +474,9 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         if (false === $sabai_page_requested) {
             // Sabai page was not requested, so clear flash messages that might
             // have been saved in the session during previous requests.
-            $this->deleteSessionVar('system_flash');
+            if ($user_id = get_current_user_id()) {
+                $this->deleteSessionVar('system_flash', $user_id);
+            }
             return false;
         }
 
@@ -504,6 +540,7 @@ class Sabai_Platform_WordPress extends Sabai_Platform
             do {
                 if (isset($page_slugs[0][$slug])
                     && !empty($page_slugs[2][$slug]) // make sure page ID is set so that page exists
+                    && 'publish' === get_post_status($page_slugs[2][$slug]) // make sure the page is published
                 ) {
                     return $page_slugs[0][$slug];
                 }
@@ -647,11 +684,14 @@ class Sabai_Platform_WordPress extends Sabai_Platform
     public function onAdminMenuAction()
     {
         // Allow super users and users with the manage_sabai capability to access sabai settings page
-        add_options_page('Sabai', 'Sabai', is_super_admin() ? 'install_plugins' : 'manage_sabai', 'sabai/settings', array($this, 'runAdmin'));
+        add_options_page('Sabai', 'Sabai', current_user_can('install_plugins') ? 'install_plugins' : 'manage_sabai', 'sabai/settings', array($this, 'runAdmin'));
         
         // Allow super users and users with the manage_sabai_content capability to access sabai content administration pages
-        $capability = is_super_admin() ? 'install_plugins' : 'manage_sabai_content';
-        if (!current_user_can($capability)) {
+        if (current_user_can('install_plugins')) {
+            $capability = 'install_plugins';
+        } elseif (current_user_can('manage_sabai_content')) {
+            $capability = 'manage_sabai_content';
+        } else {
             return;
         }
         
@@ -801,7 +841,7 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         require_once 'Sabai.php';
 
         if (!Sabai::started()) {
-            Sabai::start(get_option('blog_charset', 'UTF-8'), get_locale(), false, defined('SABAI_WORDPRESS_PAGE_PARAM') ? 'SABAI_WORDPRESS_PAGE_PARAM' : 'p');
+            Sabai::start(get_option('blog_charset', 'UTF-8'), get_locale(), !$this->_sessionTransient, defined('SABAI_WORDPRESS_PAGE_PARAM') ? SABAI_WORDPRESS_PAGE_PARAM : 'p');
         }
         if (!$sabai = Sabai::exists($this->_sabaiName)) {
             $sabai = $this->_createSabai();
@@ -849,8 +889,8 @@ class Sabai_Platform_WordPress extends Sabai_Platform
             ->setHelper('SiteToSystemTime', array($this, 'siteToSystemTimeHelper'))
             ->setHelper('Slugify', array($this, 'slugifyHelper'));
         // Add custom helper directory if exists
-        if (is_dir($custom_helper_dir = get_stylesheet_directory() . '/sabai/helpers')) {
-            $sabai->getHelperBroker()->addHelperDir(get_stylesheet_directory() . '/sabai/helpers', 'Sabai_Platform_WordPress_Helper_');
+        if (is_dir($custom_helper_dir = WP_CONTENT_DIR . '/sabai/helpers')) {
+            $sabai->getHelperBroker()->addHelperDir(WP_CONTENT_DIR . '/sabai/helpers', 'Sabai_Platform_WordPress_Helper_');
         }
         if (class_exists('BuddyPress', false)) {
             $sabai->getHelperBroker()->setHelper('UserIdentityUrl', array($this, 'bpUserIdentityUrlHelper'));
@@ -1060,7 +1100,12 @@ class %s extends Sabai_Platform_WordPress_Widget {
                 wp_enqueue_style($sabai_plugin_name . '-rtl', $this->getAssetsUrl($sabai_plugin_name) . '/css/main-rtl.css', array($sabai_plugin_name), $addons_last_update);
             }
         }
-        wp_enqueue_script('sabai', $this->getAssetsUrl() . '/js/jquery.sabai.js', array('jquery'));
+        // Add custom stylesheet by theme
+        if (file_exists($this->getCustomAssetsDir() . '/style.css')) {
+            wp_enqueue_style('sabai-wordpress', $this->getCustomAssetsDirUrl() . '/style.css', array('sabai'), $addons_last_update);
+        }
+        // Add JS
+        wp_enqueue_script('sabai', $this->getAssetsUrl() . '/js/sabai.js', array('jquery'));
     }
     
     public function onAdminPrintStylesAction()
@@ -1118,7 +1163,7 @@ class %s extends Sabai_Platform_WordPress_Widget {
 
     public function onTheContentFilter($content)
     {
-        return $this->_mainContent;
+        return $GLOBALS['wp_query']->get_queried_object_id() == $GLOBALS['post']->ID ? $this->_mainContent : $content;
     }
 
     public function onDeleteUserAction($userId)
@@ -1337,7 +1382,13 @@ class %s extends Sabai_Platform_WordPress_Widget {
     {
         return Sabai_Platform_WordPress_Shortcode::render($this, $path, $attributes);
     }
-        
+
+    public function activate()
+    {
+        require_once 'Sabai/Platform/WordPress/include/activate.php';
+        sabai_platform_wordpress_activate($this);
+    }
+
     public function activatePlugin($pluginName, $primaryAddonName)
     {
         require_once 'Sabai/Platform/WordPress/include/activate_plugin.php';

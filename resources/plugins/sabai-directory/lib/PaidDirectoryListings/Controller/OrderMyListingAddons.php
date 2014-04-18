@@ -23,9 +23,9 @@ class Sabai_Addon_PaidDirectoryListings_Controller_OrderMyListingAddons extends 
         return $this->PaidListings_ConfirmOrderForm($context->entity, $formStorage['values']['order']['plan'], $this->getAddon()->getConfig('paypal'));
     }
     
-    protected function _complete(Sabai_Context $context, Sabai_Addon_Form_Form $form)
+    protected function _complete(Sabai_Context $context, array $formStorage)
     {
-        $order = $this->getModel('Order', 'PaidListings')->fetchById($form->storage['order_id']);
+        $order = $this->getModel('Order', 'PaidListings')->fetchById($formStorage['order_id']);
         if (!$order) {
             return; // this should not happen
         }

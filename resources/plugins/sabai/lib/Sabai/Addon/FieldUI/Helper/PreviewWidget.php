@@ -16,6 +16,7 @@ class Sabai_Addon_FieldUI_Helper_PreviewWidget extends Sabai_Helper
         // Init widget settings
         $widget_settings = $field->getFieldWidgetSettings() + (array)$iwidget->fieldWidgetGetInfo('default_settings');
         $is_hidden = $iwidget->fieldWidgetGetInfo('is_hidden');
+        $is_fieldset = $iwidget->fieldWidgetGetInfo('is_fieldset') || $iwidget->fieldWidgetGetInfo('repeatable');
         $title = $field->getFieldTitle();
         if ($is_hidden) {
             $title = strlen($title) ? sprintf(__('%s (hidden)', 'sabai'), $title) : __('(hidden)', 'sabai');
@@ -48,6 +49,7 @@ class Sabai_Addon_FieldUI_Helper_PreviewWidget extends Sabai_Helper
         return sprintf(
             '<div class="sabai-fieldui-widget-preview%1$s%8$s">
   <div class="sabai-fieldui-widget-label"%2$s>%3$s%4$s</div>
+  <div class="sabai-fieldui-widget-description"%9$s>%7$s</div>
   <div class="sabai-fieldui-widget-form">%5$s</div>
   <div class="sabai-fieldui-widget-description"%6$s>%7$s</div>
 </div>',
@@ -56,9 +58,10 @@ class Sabai_Addon_FieldUI_Helper_PreviewWidget extends Sabai_Helper
             Sabai::h($title),
             $field->getFieldRequired() ? '<span class="sabai-fieldui-widget-required">*</span>' : '',
             $preview,
-            !strlen($description) || $iwidget->fieldWidgetGetInfo('disable_preview_description') ? ' style="display:none;"' : '',
+            $is_fieldset || !strlen($description) || $iwidget->fieldWidgetGetInfo('disable_preview_description') ? ' style="display:none;"' : '',
             $description,
-            $field->getFieldDisabled() ? ' sabai-fieldui-widget-preview-disabled' : ''
+            $field->getFieldDisabled() ? ' sabai-fieldui-widget-preview-disabled' : '',
+            $is_fieldset ? '' : ' style="display:none;"'
         );
     }
 }

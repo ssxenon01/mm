@@ -25,7 +25,14 @@ class Sabai_Helper_UpgradeAddon extends Sabai_Helper
         $addon->version = $new_version;
         $addon->events = $_addon->getEvents();
         $config += $addon->getParams();
-        $config += $_addon->getDefaultConfig();
+        $default_config = $_addon->getDefaultConfig();
+        $config += $default_config;
+        foreach (array_keys($default_config) as $default_config_name) {
+            if (is_array($default_config[$default_config_name])) {
+                settype($config[$default_config_name], 'array');
+                $config[$default_config_name] += $default_config[$default_config_name];
+            }
+        }
         $addon->setParams($config, array(), false);
         $addon->commit();
         

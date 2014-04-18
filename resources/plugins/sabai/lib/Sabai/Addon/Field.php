@@ -3,7 +3,7 @@ class Sabai_Addon_Field extends Sabai_Addon
     implements Sabai_Addon_Field_ITypes,
                Sabai_Addon_Field_IWidgets
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     const COLUMN_TYPE_INTEGER = 'integer', COLUMN_TYPE_BOOLEAN = 'boolean', COLUMN_TYPE_VARCHAR = 'text',
         COLUMN_TYPE_TEXT = 'clob', COLUMN_TYPE_FLOAT = 'float', COLUMN_TYPE_DECIMAL = 'decimal';
                 

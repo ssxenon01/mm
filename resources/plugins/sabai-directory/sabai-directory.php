@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: SabaiDirectory 
-Plugin URI: http://codecanyon.net/user/onokazu/portfolio?ref=Harem3d
+Plugin Name: SabaiDirectory
+Plugin URI: http://codecanyon.net/user/onokazu/portfolio
 Description: Business directory plugin for WordPress.
-Author: somi @ ariyan.org
-Author URI: http://codecanyon.net/user/onokazu/portfolio?ref=Harem3d
+Author: onokazu
+Author URI: http://codecanyon.net/user/onokazu/portfolio
 Text Domain: sabai-directory
 Domain Path: /languages
-Version: 1.2.18
+Version: 1.2.29
 */
 if (is_admin()) {
     include_once dirname(__FILE__) . '/include/activate.php';

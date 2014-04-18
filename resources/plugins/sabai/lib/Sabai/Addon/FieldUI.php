@@ -2,7 +2,7 @@
 class Sabai_Addon_FieldUI extends Sabai_Addon
     implements Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {
@@ -66,10 +66,10 @@ class Sabai_Addon_FieldUI extends Sabai_Addon
         $leave_confirm = __('You have made changes but it has not been saved. You must submit the form for the changes to be saved permanently.', 'sabai');
         $delete_confirm = __('Are you sure?', 'sabai');
         $response->addJs(sprintf('SABAI.FieldUI.adminFields({submitConfirm:"%s", leaveConfirm:"%s", deleteFieldConfirm: "%s"});', $submit_confirm, $leave_confirm, $delete_confirm))
-            ->addJsFile($this->_application->getPlatform()->getAssetsUrl() . '/js/fieldui_admin_fields.js', 'sabai-fieldui-admin-fields', 'sabai')
-            ->addCssFile($this->_application->getPlatform()->getAssetsUrl() . '/css/fieldui_admin_fields.css', 'sabai-fieldui-admin-fields');
+            ->addJsFile($this->_application->getPlatform()->getAssetsUrl() . '/js/sabai-fieldui-admin-fields.js', 'sabai-fieldui-admin-fields', 'sabai')
+            ->addCssFile($this->_application->getPlatform()->getAssetsUrl() . '/css/sabai-fieldui-admin-fields.css', 'sabai-fieldui-admin-fields');
         if ($this->_application->getPlatform()->isLanguageRTL()) {
-            $response->addCssFile($this->_application->getPlatform()->getAssetsUrl() . '/css/fieldui_admin_fields-rtl.css', 'sabai-fieldui-admin-fields-rtl');
+            $response->addCssFile($this->_application->getPlatform()->getAssetsUrl() . '/css/sabai-fieldui-admin-fields-rtl.css', 'sabai-fieldui-admin-fields-rtl');
         }
     }
     

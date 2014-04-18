@@ -12,6 +12,9 @@ class Sabai_Addon_Form_Field_Text extends Sabai_Addon_Form_Field_AbstractField
                 $data['#value'] = implode($data['#separator'], $data['#value']);
             }
         }
+        if (isset($data['#placeholder'])) {
+            $data['#attributes']['placeholder'] = $data['#placeholder'];
+        }
         
         $this->_addon->initTextFormElementSettings($form, $data);
 

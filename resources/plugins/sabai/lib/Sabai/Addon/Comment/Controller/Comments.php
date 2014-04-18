@@ -3,7 +3,7 @@ class Sabai_Addon_Comment_Controller_Comments extends Sabai_Controller
 {
     protected function _doExecute(Sabai_Context $context)
     {
-        if ($this->getUser()->hasPermission($context->entity->getBundleName() . '_manage')) {
+        if ($this->HasPermission($context->entity->getBundleName() . '_manage')) {
             $comments = $this->getModel('Post')
                 ->entityId_is($context->entity->getId())
                 ->fetch(0, 0, array('published_at'), array('ASC'));

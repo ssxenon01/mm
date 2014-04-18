@@ -98,4 +98,79 @@ class SabaiFramework_DB_MDB2Schema extends MDB2_Schema
 
         return $parser->database_definition;
     }
+    
+    /**
+     * Overrides the parent method so that it does not check if database exists, which disconnects the current connection
+     */
+    function updateDatabase($current_schema, $previous_schema = false,
+                            $variables = array(), $disable_query = false,
+                            $overwrite_old_schema_file = false)
+    {
+        $current_definition = $this->parseDatabaseDefinition($current_schema, false, $variables,
+                                                             $this->options['fail_on_invalid_names']);
+
+        if (PEAR::isError($current_definition)) {
+            return $current_definition;
+        }
+
+        $previous_definition = false;
+        if ($previous_schema) {
+            $previous_definition = $this->parseDatabaseDefinition($previous_schema, true, $variables,
+                                                                  $this->options['fail_on_invalid_names']);
+            if (PEAR::isError($previous_definition)) {
+                return $previous_definition;
+            }
+        }
+
+        if ($previous_definition) {
+           /* $dbExists = $this->db->databaseExists($current_definition['name']);
+            if (PEAR::isError($dbExists)) {
+                return $dbExists;
+            }
+
+            if (!$dbExists) {
+                 return $this->raiseError(MDB2_SCHEMA_ERROR, null, null,
+                    'database to update does not exist: '.$current_definition['name']);
+            }*/
+
+            $changes = $this->compareDefinitions($current_definition, $previous_definition);
+            if (PEAR::isError($changes)) {
+                return $changes;
+            }
+
+            if (is_array($changes)) {
+                $this->db->setOption('disable_query', $disable_query);
+                $result = $this->alterDatabase($current_definition, $previous_definition, $changes);
+                $this->db->setOption('disable_query', false);
+                if (PEAR::isError($result)) {
+                    return $result;
+                }
+                $copy = true;
+                if ($this->db->options['debug']) {
+                    $result = $this->dumpDatabaseChanges($changes);
+                    if (PEAR::isError($result)) {
+                        return $result;
+                    }
+                }
+            }
+        } else {
+            $this->db->setOption('disable_query', $disable_query);
+            $result = $this->createDatabase($current_definition);
+            $this->db->setOption('disable_query', false);
+            if (PEAR::isError($result)) {
+                return $result;
+            }
+        }
+
+        if ($overwrite_old_schema_file
+            && !$disable_query
+            && is_string($previous_schema) && is_string($current_schema)
+            && !copy($current_schema, $previous_schema)) {
+
+            return $this->raiseError(MDB2_SCHEMA_ERROR, null, null,
+                'Could not copy the new database definition file to the current file');
+        }
+
+        return MDB2_OK;
+    }
 }

@@ -6,7 +6,7 @@ class Sabai_Addon_Voting extends Sabai_Addon
                Sabai_Addon_Content_IPermissions,
                Sabai_Addon_Form_IFields
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     
     const FLAG_VALUE_SPAM = 5, FLAG_VALUE_OFFENSIVE = 6, FLAG_VALUE_OFFTOPIC = 2, FLAG_VALUE_OTHER = 0;
                 
@@ -77,14 +77,14 @@ class Sabai_Addon_Voting extends Sabai_Addon
                 $context->voting_tag = $route['data']['tag'];
                 if ($route['data']['check_perms']) {
                     // Check permission
-                    if (!$this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_voting_' . $context->voting_tag)) {
+                    if (!$this->_application->HasPermission($context->entity->getBundleName() . '_voting_' . $context->voting_tag)) {
                         $context->setError(__('You do not have the permission to perform this action.', 'sabai'));
                         return false;
                     }
                     if ($route['data']['check_own']) {
                         // Require additional permission to vote for own post
                         if ($context->entity->getAuthorId() === $this->_application->getUser()->id
-                            && !$this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_voting_own_' . $context->voting_tag)
+                            && !$this->_application->HasPermission($context->entity->getBundleName() . '_voting_own_' . $context->voting_tag)
                         ) {
                             $context->setError(__('You do not have the permission to perform this action.', 'sabai'));
                             return false;
@@ -94,7 +94,7 @@ class Sabai_Addon_Voting extends Sabai_Addon
                 return true;
             case 'ignore_flags':
                 // Require content moderation permission
-                return $this->_application->getUser()->hasPermission($context->entity->getBundleName() . '_manage');
+                return $this->_application->HasPermission($context->entity->getBundleName() . '_manage');
         }
     }
 
@@ -192,12 +192,12 @@ class Sabai_Addon_Voting extends Sabai_Addon
             ) {
                 continue;
             }
-            $ret['voting_' . $tag] = $settings['vote_permission_label'];
+            $ret['voting_' . $tag] = $this->_application->Translate($settings['vote_permission_label']);
             if (!empty($settings['vote_own_permission_label'])) {
-                $ret['voting_own_' . $tag] = $settings['vote_own_permission_label'];
+                $ret['voting_own_' . $tag] = $this->_application->Translate($settings['vote_own_permission_label']);
             }
             if (!empty($settings['require_vote_down_permission'])) {
-                $ret['voting_down_' . $tag] = $settings['vote_down_permission_label'];
+                $ret['voting_down_' . $tag] = $this->_application->Translate($settings['vote_down_permission_label']);
             }
         }
         return $ret;
@@ -282,9 +282,9 @@ class Sabai_Addon_Voting extends Sabai_Addon
                     'allow_empty' => false,
                     'require_vote_permissions' => true,
                     'require_vote_down_permission' => true,
-                    'vote_permission_label' => __('Vote up %s', 'sabai'),
-                    'vote_own_permission_label' => __('Vote up own %s', 'sabai'),
-                    'vote_down_permission_label' => __('Vote down %s', 'sabai'),
+                    'vote_permission_label' => _n_noop('Vote up %s', 'sabai'),
+                    'vote_own_permission_label' => _n_noop('Vote up own %s', 'sabai'),
+                    'vote_down_permission_label' => _n_noop('Vote down %s', 'sabai'),
                 ),
                 'weight' => 99,
                 'max_num_items' => 1, // Only 1 entry per entity should be created
@@ -334,8 +334,8 @@ class Sabai_Addon_Voting extends Sabai_Addon
                     'allow_multiple' => true,
                     'require_vote_permissions' => true,
                     'require_vote_down_permission' => false,
-                    'vote_permission_label' => __('Rate %s', 'sabai'),
-                    'vote_own_permission_label' => __('Rate own %s', 'sabai'),
+                    'vote_permission_label' => _n_noop('Rate %s', 'sabai'),
+                    'vote_own_permission_label' => _n_noop('Rate own %s', 'sabai'),
                 ),
                 'weight' => 99,
                 'max_num_items' => 1, // Only 1 entry per entity should be created
@@ -384,7 +384,7 @@ class Sabai_Addon_Voting extends Sabai_Addon
                     'allow_empty' => true,
                     'require_vote_permissions' => true,
                     'require_vote_down_permission' => false,
-                    'vote_permission_label' => __('Flag %s', 'sabai'),
+                    'vote_permission_label' => _n_noop('Flag %s', 'sabai'),
                     'form_title' => __('Reason for flagging', 'sabai'),
                     'form_options' => $this->_application->Voting_FlagOptions(),
                     'form_other_option' => self::FLAG_VALUE_OTHER,
@@ -397,7 +397,8 @@ class Sabai_Addon_Voting extends Sabai_Addon
                 'weight' => 99,
                 'max_num_items' => 1, // Only 1 entry per entity should be created
             ),
-            Sabai_Addon_Entity::FIELD_REALM_ALL
+            Sabai_Addon_Entity::FIELD_REALM_ALL,
+            true
         );
     }
     
@@ -520,7 +521,7 @@ class Sabai_Addon_Voting extends Sabai_Addon
         
         if (!empty($bundle->info['voting_flag'])) {
             if ($displayMode === 'full') {
-                if ($this->_application->getUser()->hasPermission($entity->getBundleName() . '_voting_flag')) {
+                if ($this->_application->HasPermission($entity->getBundleName() . '_voting_flag')) {
                     $links['voting_flag'] = $this->_application->LinkToModal(
                         isset($bundle->info['voting_flag']['button_label']) ? $bundle->info['voting_flag']['button_label'] : __('Flag', 'sabai'),
                         $this->_application->Entity_Url($entity, '/vote/flag/form', array('update_target_id' => $id)),
@@ -531,7 +532,7 @@ class Sabai_Addon_Voting extends Sabai_Addon
             }
         
             if (($flag_count = $entity->getSingleFieldValue('voting_flag', 'count'))
-                && $this->_application->getUser()->hasPermission($entity->getBundleName() . '_manage')
+                && $this->_application->HasPermission($entity->getBundleName() . '_manage')
             ) {
                 // Let the moderators know that this content has been flagged
                 $classes[] = 'sabai-voting-content-flagged';

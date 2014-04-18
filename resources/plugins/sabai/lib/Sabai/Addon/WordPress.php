@@ -3,7 +3,7 @@ class Sabai_Addon_WordPress extends Sabai_Addon
     implements Sabai_Addon_System_IAdminRouter,
                Sabai_Addon_Field_IWidgets
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {
@@ -21,6 +21,9 @@ class Sabai_Addon_WordPress extends Sabai_Addon
             '/wordpress/verify-license' => array(
                 'type' => Sabai::ROUTE_CALLBACK,
                 'controller' => 'VerifyLicense',
+            ),
+            '/settings/wordpress' => array(
+                'controller' => 'Settings',
             ),
         );
     }
@@ -280,7 +283,7 @@ class Sabai_Addon_WordPress extends Sabai_Addon
     {
         $this->_application->getPlatform()->deleteCache('wordpress_addon_updates');
     }
-    
+
     public function onContentPostBodyFilter(&$body, $entity)
     {
         if (!$entity->getAuthorId()) {
@@ -293,8 +296,10 @@ class Sabai_Addon_WordPress extends Sabai_Addon
                 $author = $owner;
             }
         }
-        if ($this->_application->IsAdministrator($author)) {
-            $body = do_shortcode($body);
+        if (!$author->isAnonymous()) {
+            if (!empty($this->_config['do_user_shortcode']) || $this->_application->IsAdministrator($author)) {
+                $body = do_shortcode($body);
+            }
         }
     }
 
@@ -303,5 +308,32 @@ class Sabai_Addon_WordPress extends Sabai_Addon
         if ($entity->getAuthorId() && $this->_application->IsAdministrator($this->_application->UserIdentity($entity->getAuthorId()))) {
             $body = do_shortcode($body);
         }
+    }
+    
+    public function getDefaultConfig()
+    {
+        return array(
+            'do_user_shortcode' => false,
+        );
+    }
+    
+    public function hasSettingsPage($currentVersion)
+    {
+        return array('url' => '/settings/wordpress', 'modal' => true, 'modal_width' => 600);
+    }
+    
+    public function onEntityViewEntity(Sabai_Addon_Entity_Entity $entity)
+    {
+        add_filter('body_class', array($this, 'addBodyClass'));
+    }
+    
+    public function addBodyClass($classes)
+    {
+        if (isset($GLOBALS['sabai_content_entity'])) {
+            $classes[] = 'sabai-entity-id-' . $GLOBALS['sabai_content_entity']->getId();
+            $classes[] = 'sabai-entity-bundle-name-' . $GLOBALS['sabai_content_entity']->getBundleName();
+            $classes[] = 'sabai-entity-bundle-type-' . $GLOBALS['sabai_content_entity']->getBundleType();
+        }
+        return $classes;
     }
 }

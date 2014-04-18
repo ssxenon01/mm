@@ -9,7 +9,7 @@ $has_title = isset($form_arr['elements']['taxonomy_term_title']['elements']['tax
 if ($has_title) {
     $title = $form_arr['elements']['taxonomy_term_title']['elements']['taxonomy_term_title[0]'][0]['value'];
     if ($title_error = @$form_arr['elements']['taxonomy_term_title']['elements']['taxonomy_term_title[0]'][0]['error']) {
-        $errors[] = printf(__('%s Title: %s', 'sabai'), Sabai::h($this->Translate($bundle->label_singular, 1, 'sabai')), Sabai::h($title_error));
+        $errors[] = printf(__('%s Title: %s', 'sabai'), Sabai::h($this->Entity_BundleLabel($bundle)), Sabai::h($title_error));
     }
     unset($form_arr['elements']['taxonomy_term_title']);
 }
@@ -17,7 +17,7 @@ $has_body = isset($form_arr['elements']['taxonomy_body']['elements']['taxonomy_b
 if ($has_body) {
     $body = $form_arr['elements']['taxonomy_body']['elements']['taxonomy_body[0]'][0]['value'];
     if ($body_error = @$form_arr['elements']['taxonomy_body']['elements']['taxonomy_body[0]'][0]['error']) {
-        $errors[] = sprintf(__('%s Description: %s', 'sabai'), Sabai::h($this->Translate($bundle->label_singular, 1, 'sabai')), Sabai::h($body_error));
+        $errors[] = sprintf(__('%s Description: %s', 'sabai'), Sabai::h($this->Entity_BundleLabel($bundle)), Sabai::h($body_error));
     }
     $body_rows = @$form_arr['elements']['taxonomy_body']['elements']['taxonomy_body[0]'][0]['rows'];
     unset($form_arr['elements']['taxonomy_body']);
@@ -29,7 +29,10 @@ foreach ($form_arr['elements'] as $element) {
     if (isset($element[0])) {
         $element = $element[0];
     }
-	if ($element['type'] === 'hidden' || $element['type'] === 'static' || strpos($element['name'], '_') === 0) {
+	if ($element['type'] === 'hidden'
+        || strpos($element['name'], '_') === 0
+        || ($element['type'] === 'static' && false === strpos($element['html'], '<input') && false === strpos($element['html'], '<select') && false === strpos($element['html'], '<textarea'))
+    ) {
 		if ($element['type'] === 'hidden') {
 			$hidden_values[$element['name']] = $element['value'];
 		}
@@ -50,7 +53,7 @@ add_meta_box(
     'side',
     'high',
     isset($entity)
-        ? array($hidden_values, $this->LinkToModal(__('Delete', 'sabai'), $bundle->getPath() . '/' . $entity->getId() . '/delete', array('width' => 470, 'loadingImage' => false), array('title' => sprintf(_x('Delete this %s', 'Delete taxonomy term modal window title', 'sabai'), $this->Translate($bundle->label_singular, 1, 'sabai')), 'class' => 'submitdelete deletion')), __('Update', 'sabai'), $entity, $submit_actions)
+        ? array($hidden_values, $this->LinkToModal(__('Delete', 'sabai'), $bundle->getPath() . '/' . $entity->getId() . '/delete', array('width' => 470, 'loadingImage' => false), array('title' => sprintf(_x('Delete this %s', 'Delete taxonomy term modal window title', 'sabai'), $this->Entity_BundleLabel($bundle)), 'class' => 'submitdelete deletion')), __('Update', 'sabai'), $entity, $submit_actions)
         : array($hidden_values, $this->LinkTo(__('Cancel', 'sabai'), $bundle->getPath(), array(), array('class' => 'submitdelete deletion')), __('Publish', 'sabai'), null, $submit_actions)
 );
 wp_enqueue_script('postbox');

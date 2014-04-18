@@ -16,7 +16,8 @@ class Sabai_Addon_System_Controller_UserAutocomplete extends Sabai_Controller
 
         $limit = 10;
         $offset = ($context->getRequest()->asInt(Sabai::$p, 1) - 1) * $limit;
-        $context->identities = $this->getPlatform()->getUserIdentityFetcher()->search($term, $limit, $offset);
+        $method = $context->getRequest()->asBool('search_by_name') ? 'searchByName' : 'search';
+        $context->identities = $this->getPlatform()->getUserIdentityFetcher()->$method($term, $limit, $offset);
         $context->addTemplate('system_userautocomplete');
     }
 }

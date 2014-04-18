@@ -165,30 +165,56 @@ abstract class SabaiFramework_User_IdentityFetcher
      */
     public function search($term, $limit = 0, $offset = 0, $sort = null, $order = null)
     {
-        $order = in_array(@$order, array('ASC', 'DESC')) ? $order : 'ASC';
-        switch (@$sort) {
-            case 'name':
-                $sort = $this->_nameField;
-                break;
-            case 'username':
-                $sort = $this->_usernameField;
-                break;
-            case 'email':
-                $sort = $this->_emailField;
-                break;
-            case 'url':
-                $sort = $this->_urlField;
-                break;
-            case 'timestamp':
-                $sort = $this->_timestampField;
-                break;
-            default:
-                $sort = $this->_idField;
-                break;
-        }
-        $identities = $this->_doSearch($term, intval($limit), intval($offset), $sort, $order);
+        $identities = $this->_doSearch(
+            $term,
+            intval($limit),
+            intval($offset),
+            $this->_getFieldName($sort),
+            $order === 'DESC' ? 'DESC' : 'ASC'
+        );
 
         return new ArrayObject($identities);
+    }
+    
+    /**
+     * Searches user identity objects by name
+     *
+     * @return ArrayObject
+     * @param string $term
+     * @param int $limit
+     * @param int $offset
+     * @param string $sort
+     * @param string $order
+     */
+    public function searchByName($term, $limit = 0, $offset = 0, $sort = null, $order = null)
+    {
+        $identities = $this->_doSearchByName(
+            $term,
+            intval($limit),
+            intval($offset),
+            $this->_getFieldName($sort),
+            $order === 'DESC' ? 'DESC' : 'ASC'
+        );
+
+        return new ArrayObject($identities);
+    }
+    
+    protected function _getFieldName($field)
+    {
+        switch ($field) {
+            case 'name':
+                return $this->_nameField;
+            case 'username':
+                return $this->_usernameField;
+            case 'email':
+                return $this->_emailField;
+            case 'url':
+                return $this->_urlField;
+            case 'timestamp':
+                return $this->_timestampField;
+            default:
+                return $this->_idField;
+        }
     }
 
     /**
@@ -213,6 +239,18 @@ abstract class SabaiFramework_User_IdentityFetcher
      * @param string $order
      */
     abstract protected function _doSearch($term, $limit, $offset, $sort, $order);
+    
+    /**
+     * Searches user identity objects by name
+     *
+     * @return array
+     * @param string $term
+     * @param int $limit
+     * @param int $offset
+     * @param string $sort
+     * @param string $order
+     */
+    abstract protected function _doSearchByName($term, $limit, $offset, $sort, $order);
 
     /**
      * Counts user identities

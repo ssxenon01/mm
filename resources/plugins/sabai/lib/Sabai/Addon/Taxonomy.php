@@ -8,7 +8,7 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                Sabai_Addon_System_IPermissionCategories,
                Sabai_Addon_System_IPermissions
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {
@@ -33,33 +33,31 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
             $routes[$bundle->getPath() . '/_autocomplete'] = array(
                 'controller' => 'Autocomplete',
                 'type' => Sabai::ROUTE_CALLBACK,
-                'access_callback' => true,
-                'callback_path' => 'autocomplete',
             );
             $routes[$bundle->getPath() . '/sitemap'] = array(
                 'controller' => 'Sitemap',
                 'type' => Sabai::ROUTE_CALLBACK,
             );
-            $routes[$bundle->getPath() . '/:term_name'] = array(
+            $routes[$bundle->getPath() . '/:slug'] = array(
                 'controller' => 'ViewTerm',
-                'format' => array(':term_name' => '.+'),
+                'format' => array(':slug' => '[a-z0-9~\.:_\-%]+'),
                 'access_callback' => true,
                 'title_callback' => true,
                 'callback_path' => 'view_term',
             );
-            $routes[$bundle->getPath() . '/:term_name/edit'] = array(
+            $routes[$bundle->getPath() . '/:slug/edit'] = array(
                 'controller' => 'EditTerm',
                 'access_callback' => true,
                 'title_callback' => true,
                 'callback_path' => 'edit_term',
             );
-            $routes[$bundle->getPath() . '/:term_name/delete'] = array(
+            $routes[$bundle->getPath() . '/:slug/delete'] = array(
                 'controller' => 'DeleteTerm',
                 'access_callback' => true,
                 'title_callback' => true,
                 'callback_path' => 'delete_term',
             );
-            $routes[$bundle->getPath() . '/:term_name/feed'] = array(
+            $routes[$bundle->getPath() . '/:slug/feed'] = array(
                 'controller' => 'TermFeed',
             );
         }
@@ -76,10 +74,10 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                 }
                 return true;
             case 'view_term':
-                $term_name = $context->getRequest()->asStr('term_name');
-                $term_name = mb_convert_encoding(rawurldecode($term_name), SABAI_CHARSET, 'auto');
-                if (!strlen($term_name)
-                    || (!$term = $this->getModel('Term')->entityBundleName_is($context->taxonomy_bundle->name)->name_is($term_name)->fetchOne())
+                $slug = $context->getRequest()->asStr('slug');
+                if (!strlen($slug)
+                    || (!$slug = rawurldecode($slug))
+                    || (!$term = $this->getModel('Term')->entityBundleName_is($context->taxonomy_bundle->name)->name_is($slug)->fetchOne())
                 ) {
                     return false;
                 }
@@ -97,11 +95,9 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                 }
                 return true;
             case 'edit_term':
-                return $this->_application->getUser()->hasPermission($context->taxonomy_bundle->name . '_edit');
+                return $this->_application->HasPermission($context->taxonomy_bundle->name . '_edit');
             case 'delete_term':
-                return $this->_application->getUser()->hasPermission($context->taxonomy_bundle->name . '_delete');
-            case 'autocomplete':
-                return true;
+                return $this->_application->HasPermission($context->taxonomy_bundle->name . '_delete');
         }
     }
 
@@ -158,6 +154,10 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                 'title_callback' => true,
                 'callback_path' => 'delete_term',
             );
+            $routes[$bundle->getPath() . '/_autocomplete'] = array(
+                'controller' => 'Autocomplete',
+                'type' => Sabai::ROUTE_CALLBACK,
+            );
         }   
 
         return $routes;
@@ -171,12 +171,6 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                     return false;
                 }
                 $context->taxonomy_bundle = $taxonomy_bundle;
-                if ($accessType === Sabai::ROUTE_ACCESS_CONTENT) {
-                    // Set icon if any
-                    if (!empty($context->taxonomy_bundle->info['icon'])) {
-                        $context->setIcon($context->taxonomy_bundle->info['icon']);
-                    }
-                }
                 return true;
             case 'edit_term':
                 if ((!$id = $context->getRequest()->asInt('entity_id'))
@@ -388,7 +382,7 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
         $bundles = array();
         foreach ($names as $name) {
             $bundles[$name] = $addon->taxonomyGetTaxonomy($name)->taxonomyGetInfo();
-            $bundles[$name]['permalink_path'] = '';
+            $bundles[$name]['permalink_path'] = $bundles[$name]['path'];
         }
         $this->_application->getAddon('Entity')->createEntityBundles($addon, 'taxonomy', $bundles);
         // Reload system routing tables to reflect changes
@@ -412,7 +406,7 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
             $bundles = array();
             foreach ($names as $name) {
                 $bundles[$name] = $addon->taxonomyGetTaxonomy($name)->taxonomyGetInfo();
-                $bundles[$name]['permalink_path'] = '';
+                $bundles[$name]['permalink_path'] = $bundles[$name]['path'];
             }
             $this->_application->getAddon('Entity')->updateEntityBundles($addon, 'taxonomy', $bundles);
         }
@@ -684,10 +678,10 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
         $user = $this->_application->getUser();
         if ($user->isAnonymous()) return;
         
-        if ($user->hasPermission($entity->getBundleName() . '_edit')) {
+        if ($this->_application->HasPermission($entity->getBundleName() . '_edit')) {
             $links['taxonomy_edit_tag'] = $this->_application->LinkTo(__('Edit', 'sabai'), $this->_application->Entity_Url($entity, '/edit'), array('icon' => 'edit'), array('title' => sprintf(__('Edit this %s', 'sabai'), $this->_application->Entity_BundleLabel($bundle, true))));
         }
-        if ($user->hasPermission($entity->getBundleName() . '_delete')) {
+        if ($this->_application->HasPermission($entity->getBundleName() . '_delete')) {
             $links['taxonomy_delete_tag'] = $this->_application->LinkToModal(__('Delete', 'sabai'), $this->_application->Entity_Url($entity, '/delete'), array('width' => 470, 'icon' => 'trash'), array('title' => sprintf(__('Delete this %s', 'sabai'), $this->_application->Entity_BundleLabel($bundle, true))));
         }
     }
@@ -724,17 +718,19 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                 }
                 $form['entities']['#options'][$entity_id][$taxonomy_bundle->type] = implode(', ', $terms);
             }
-            if (!empty($taxonomy_bundle->info['taxonomy_hierarchical'])) {
-                $form[Sabai_Addon_Form::FORM_SUBMIT_BUTTON_NAME]['action']['#options']['assign_term_' . $taxonomy_bundle->type] = sprintf(__('Assign %s', 'sabai'), $taxonomy_bundle_label_singular);
-                $form[Sabai_Addon_Form::FORM_SUBMIT_BUTTON_NAME]['action']['#options']['remove_term_' . $taxonomy_bundle->type] = sprintf(__('Remove %s', 'sabai'), $taxonomy_bundle_label_singular);
+            if (!empty($taxonomy_bundle->info['taxonomy_hierarchical'])
+                && ($options = $this->_application->Taxonomy_Tree($taxonomy_bundle))
+            ) {  
+                $form[Sabai_Addon_Form::FORM_SUBMIT_BUTTON_NAME]['action']['#options']['taxonomy_assign_' . $taxonomy_bundle->type] = sprintf(__('Assign %s', 'sabai'), $taxonomy_bundle_label_singular);
+                $form[Sabai_Addon_Form::FORM_SUBMIT_BUTTON_NAME]['action']['#options']['taxonomy_remove_' . $taxonomy_bundle->type] = sprintf(__('Remove %s', 'sabai'), $this->_application->Entity_BundleLabel($taxonomy_bundle, false));
                 $form[Sabai_Addon_Form::FORM_SUBMIT_BUTTON_NAME]['taxonomy_' . $taxonomy_bundle->type] = array(
                     '#type' => 'select',
                     '#default_value' => null,
                     '#multiple' => false,
-                    '#options' => $options = $this->_application->Taxonomy_Tree($taxonomy_bundle),
+                    '#options' => $options,
                     '#weight' => 2,
                     '#states' => array(
-                        'visible' => array('select[name="action"]' => array('type' => 'value', 'value' => 'assign_term_' . $taxonomy_bundle->type)),
+                        'visible' => array('select[name="action"]' => array('type' => 'value', 'value' => 'taxonomy_assign_' . $taxonomy_bundle->type)),
                     ),
                     '#tree' => false,
                 );
@@ -777,23 +773,22 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
     
     public function updateEntities(Sabai_Addon_Form_Form $form)
     {
-        if (!empty($form->values['entities'])) {
-            if ((0 !== strpos($form->values['action'], 'assign_term_'))
-                && (0 !== strpos($form->values['action'], 'remove_term_'))
-            ) {
-                return;
-            }
-            if (strpos($form->values['action'], 'remove_term_') === 0) {
-                // Remove term
-                $taxonomy_type = substr($form->values['action'], strlen('remove_term_'));
-                $this->_removeTerm($form->values['entities'], $taxonomy_type);
-            } else {
-                // Assign selected term
-                $taxonomy_type = substr($form->values['action'], strlen('assign_term_'));
-                $term_id = $form->values['taxonomy_' . $taxonomy_type];
-                if (!empty($term_id)) {
-                    $this->_assignTerm($form->values['entities'], $taxonomy_type, $term_id);
-                }
+        if (empty($form->values['entities'])
+            || 0 !== strpos($form->values['action'], 'taxonomy_')
+        ) {
+            return;
+        }
+        
+        if (strpos($form->values['action'], 'taxonomy_remove_') === 0) {
+            // Remove terms
+            $taxonomy_type = substr($form->values['action'], strlen('taxonomy_remove_'));
+            $this->_removeTerms($form->values['entities'], $taxonomy_type);
+        } elseif (strpos($form->values['action'], 'taxonomy_assign_') === 0) {
+            // Assign selected term
+            $taxonomy_type = substr($form->values['action'], strlen('taxonomy_assign_'));
+            $term_id = $form->values['taxonomy_' . $taxonomy_type];
+            if (!empty($term_id)) {
+                $this->_assignTerm($form->values['entities'], $taxonomy_type, $term_id);
             }
         }
     }
@@ -808,7 +803,7 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
         }
     }
     
-    protected function _removeTerm($entities, $taxonomyType)
+    protected function _removeTerms($entities, $taxonomyType)
     {
         foreach ($this->_application->Entity_Entities('content', $entities) as $entity) {
             if (!$entity->getSingleFieldValue($taxonomyType)) {
@@ -820,7 +815,7 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
  
     public function onSabaiWebResponseRenderHtmlLayout(Sabai_Context $context, Sabai_WebResponse $response, &$content)
     { 
-        $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl() . '/js/taxonomy.js', 'sabai-taxonomy', array('sabai', 'select2'));
+        $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl() . '/js/sabai-taxonomy.js', 'sabai-taxonomy', array('sabai', 'select2'));
     }  
     
     public function entityGetWidgetNames()

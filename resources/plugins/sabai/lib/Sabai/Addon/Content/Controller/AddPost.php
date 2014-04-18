@@ -31,13 +31,12 @@ class Sabai_Addon_Content_Controller_AddPost extends Sabai_Addon_Form_Controller
     {
         $entity = $this->getAddon('Entity')->createEntity($context->bundle, array('content_post_status' => $this->_getContentPostStatus($context)) + $form->values);
         if ($entity->isPublished()) {
-            $url = $this->Entity_Url($entity);
+            $context->setSuccess($this->Entity_Url($entity));
         } else {
-            // redirect to listing page
-            $url = $context->bundle->getPath();
-            $context->addFlash(__('Thanks for your submission, we will review it and get back with you.', 'sabai'));
+            $context->addTemplate('form_results')->setAttributes(array(
+                'success' => __('Thanks for your submission, we will review it and get back with you.', 'sabai'),
+            ));
         }
-        $context->setSuccess($url);
         
         // Set cookie to track guest user
         if ($this->getUser()->isAnonymous()) {
@@ -49,7 +48,7 @@ class Sabai_Addon_Content_Controller_AddPost extends Sabai_Addon_Form_Controller
     
     protected function _getContentPostStatus(Sabai_Context $context)
     {
-        return $this->getUser()->hasPermission($context->bundle->name . '_add2') // can post without approval?
+        return $this->HasPermission($context->bundle->name . '_add2') // can post without approval?
             ? Sabai_Addon_Content::POST_STATUS_PUBLISHED
             : Sabai_Addon_Content::POST_STATUS_PENDING;
     }

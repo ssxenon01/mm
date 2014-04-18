@@ -98,6 +98,7 @@ Regards,
             ),
             'listing_approved' => array(
                 'type' => 'user',
+                'has_guest_author' => true,
                 'title' => __('Listing Approved Notification Email', 'sabai-directory'),
                 'description' => __('If enabled, a notification email is sent to the user when a listing the user has submitted is approved.', 'sabai-directory'),
                 'tags' => $this->_getListingTags(),

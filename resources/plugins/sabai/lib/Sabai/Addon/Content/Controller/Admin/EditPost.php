@@ -66,9 +66,6 @@ class Sabai_Addon_Content_Controller_Admin_EditPost extends Sabai_Addon_Form_Con
             '#title' => __('Author', 'sabai'),
             '#default_value' => $context->entity->getAuthorId(),
         );
-        // This will allow form name to be generated from the controller name
-        $form['#inherits'] = array($form['#name']);
-        unset($form['#name']);
         
         return $form;
     }

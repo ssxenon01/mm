@@ -5,6 +5,7 @@ class Sabai_Addon_Directory_Controller_GeoLocate extends Sabai_Addon_Directory_C
     protected function _doExecute(Sabai_Context $context)
     {
         $context->template = 'directory_listings_geolocate';
+        $context->country = $this->getAddon()->getConfig('search', 'country');
         parent::_doExecute($context);
     }
     

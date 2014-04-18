@@ -3,7 +3,7 @@ class Sabai_Addon_Form_Field_Grid extends Sabai_Addon_Form_Field_AbstractField
 {
     public function formFieldGetFormElement($name, array &$data, Sabai_Addon_Form_Form $form)
     {
-        if (!isset($data['#template'])) {
+        if (!isset($data['#template']) && empty($data['#disable_template_override'])) {
         // Modify template slightly so that the field decription is displayed at the top of the table.
             $data['#template'] = '<div<!-- BEGIN id --> id="{id}"<!-- END id --> class="{class_prefix}form-field<!-- BEGIN class --> {class}<!-- END class -->">
   <!-- BEGIN label --><div class="{class_prefix}form-field-label"><span>{label}</span><!-- BEGIN required --><span class="{class_prefix}form-field-required">*</span><!-- END required --></div><!-- END label -->

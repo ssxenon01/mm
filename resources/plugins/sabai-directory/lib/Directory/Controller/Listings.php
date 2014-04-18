@@ -2,7 +2,7 @@
 class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Controller_ListPosts
 {
     protected $_template = 'directory_listings', $_sortContainer = '#sabai-directory-listings', $_scrollTo = '#sabai-directory-listings',
-        $_center, $_swne, $_settings, $_isGeolocate = false, $_viewport;
+        $_center = array(), $_swne, $_settings, $_isGeolocate = false, $_viewport, $_geocodeError;
     
     protected function _doExecute(Sabai_Context $context)
     {
@@ -14,9 +14,12 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
         $this->_settings['distances'] = array(0, 1, 2, 5, 10, 20, 50, 100);
         // Init views
         if (empty($this->_settings['map']['disable'])) {
-            $this->_settings['views'] = array('list', 'map');
+            $this->_settings['views'] = array('list', 'grid', 'map');
+            if ($this->isMobile()) {
+                $this->_settings['map']['list_show'] = false;
+            }
         } else {
-            $this->_settings['views'] = array('list');
+            $this->_settings['views'] = array('list', 'grid');
             $this->_settings['map']['list_show'] = false;
         }
         
@@ -78,30 +81,36 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
             }
         }
         
-        // Geolocation?
-        if (($is_geolocate = $context->getRequest()->asBool('is_geolocate'))
-            && isset($this->_center)
-            && ($geocode = $this->GoogleMaps_Geocode(implode(',', $this->_center), true))
-        ) {
-            // Set address to fill the location input text field and display the distance selection dropdown
-            $this->_settings['address'] = $geocode->address;
-            $this->_isGeolocate = true;
-        } else {
-            // Fetch center lat/lng from address
-            if (strlen($this->_settings['address'])
-                && ($geocode = $this->GoogleMaps_Geocode($this->_settings['address']))
+        try {
+            // Geolocation?
+            if (($is_geolocate = $context->getRequest()->asBool('is_geolocate'))
+                && $this->_center
             ) {
-                $this->_center = array($geocode->lat, $geocode->lng);
-                // Fetch viewport if no distance speficied
-                if (empty($this->_settings['distance']) && $geocode->viewport && ($viewport = explode(',', $geocode->viewport))) {
-                    $this->_viewport = array(array($viewport[0], $viewport[1]), array($viewport[2], $viewport[3]));
+                $geocode = $this->GoogleMaps_Geocode(implode(',', $this->_center), true);
+                // Set address to fill the location input text field and display the distance selection dropdown
+                $this->_settings['address'] = $geocode->address;
+                $this->_isGeolocate = true;
+                $this->_settings['map']['options']['force_fit_bounds'] = true;
+            } else {
+                // Fetch center lat/lng from address
+                if (strlen($this->_settings['address'])
+                ) {
+                    $geocode = $this->GoogleMaps_Geocode($this->_settings['address']);
+                    $this->_center = array($geocode->lat, $geocode->lng);
+                    // Fetch viewport if no distance speficied
+                    if (empty($this->_settings['distance']) && $geocode->viewport && ($viewport = explode(',', $geocode->viewport))) {
+                        $this->_viewport = array(array($viewport[0], $viewport[1]), array($viewport[2], $viewport[3]));
+                    }
                 }
+                $this->_settings['map']['options']['force_fit_bounds'] = false;
             }
+        } catch (Sabai_Addon_Google_GeocodeException $e) {
+            $this->_geocodeError = $e->getMessage();
         }
         
         parent::_doExecute($context);
         $distances = array();
-        if (strlen($this->_settings['address'])) {
+        if (!$this->_geocodeError && strlen($this->_settings['address'])) {
             foreach ($this->_settings['distances'] as $distance) {
                 $distances[$distance] = $this->LinkToRemote(
                     empty($distance) ? __('None', 'sabai-directory') : sprintf($this->_settings['is_mile'] ? _n('%d mile', '%d miles', $distance, 'sabai-directory') : _n('%d kilometer', '%d kilometers', $distance, 'sabai-directory'), $distance),
@@ -118,6 +127,7 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
             'center' => $this->_center,
             'is_drag' => $context->getRequest()->asBool('is_drag'),
             'is_geolocate' => $is_geolocate,
+            'geocode_error' => $this->_geocodeError,
         ));
         // Load partial content if request is ajax
         if ($context->getRequest()->isAjax() === '#sabai-directory-listings') {
@@ -132,6 +142,11 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
                 'label' => __('List', 'sabai-directory'),
                 'icon' => 'th-list',
                 'title' => __('Switch to list view', 'sabai-directory'),
+            ),
+            'grid' => array(
+                'label' => __('Grid', 'sabai-directory'),
+                'icon' => 'th-large',
+                'title' => __('Switch to grid view', 'sabai-directory'),
             ),
             'map' => array(
                 'label' => __('Map', 'sabai-directory'),
@@ -211,7 +226,7 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
         }
         return $this->Directory_ListingsQuery(
             $query,
-            isset($this->_center) ? $this->_center : $this->_settings['address'],
+            $this->_center,
             $this->_settings['keywords'],
             $this->_settings['category'],
             $sort,
@@ -234,7 +249,7 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
             'sorts' => isset($config['display']['sorts']) ? $config['display']['sorts'] : null,
             'sort' => $config['display']['sort'],
             'view' => $config['display']['view'],
-            'distance' => 0,
+            'distance' => isset($config['search']['radius']) ? $config['search']['radius'] : 0,
             'is_mile' => @$config['map']['distance_mode'] === 'mil',
             'address' => '',
             'keywords' => array(),
@@ -244,6 +259,8 @@ class Sabai_Addon_Directory_Controller_Listings extends Sabai_Addon_Content_Cont
             'scroll_list' => false,
             'feature' => !isset($config['display']['stick_featured']) || !empty($config['display']['stick_featured']),  // for compat with 1.2.17 or lower
             'search' => $config['search'],
+            'buttons' => $config['display']['buttons'],
+            'grid_columns' => $config['display']['grid_columns']
         );
     }
     

@@ -64,7 +64,7 @@ abstract class Sabai_Addon_PaidListings_Controller_AddPlan extends Sabai_Addon_F
                     '#type' => 'textfield',
                     '#title' => __('Price', 'sabai-directory'),
                     '#numeric' => true,
-                    '#size' => 5,
+                    '#size' => 10,
                     '#required' => true,
                     '#field_prefix' => $this->PaidListings_Currencies($this->_getCurrency($context), false),
                 ),
@@ -110,9 +110,9 @@ abstract class Sabai_Addon_PaidListings_Controller_AddPlan extends Sabai_Addon_F
         $plan->commit();
     }
   
-    protected function _complete(Sabai_Context $context, Sabai_Addon_Form_Form $form)
+    protected function _complete(Sabai_Context $context, array $formStorage)
     {
-        $context->setSuccess($this->_getPlansUrl($context, array('type' => $form->storage['values']['select_plan_type']['plan_type'])));
+        $context->setSuccess($this->_getPlansUrl($context, array('type' => $formStorage['values']['select_plan_type']['plan_type'])));
     }
     
     protected function _getPlansUrl(Sabai_Context $context, array $params)

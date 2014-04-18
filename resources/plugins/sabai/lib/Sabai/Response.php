@@ -45,6 +45,8 @@ abstract class Sabai_Response extends SabaiFramework_Application_HttpResponse
             'SITE_URL' => $this->_application->getPlatform()->getHomeUrl(),
             'SITE_EMAIL' => $this->_application->getPlatform()->getSiteEmail(),
             'SITE_ADMIN_URL' => $this->_application->getPlatform()->getSiteAdminUrl(),
+            'IS_MOBILE' => $this->_application->isMobile(),
+            'IS_TABLET' => $this->_application->isTablet(),
         );
     }
 

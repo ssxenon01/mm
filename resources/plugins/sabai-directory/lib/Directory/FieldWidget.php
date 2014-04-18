@@ -39,6 +39,7 @@ class Sabai_Addon_Directory_FieldWidget implements Sabai_Addon_Field_IWidget
                         'autopopulate_website' => false,
                     ),
                     'disable_edit_required' => true,
+                    'is_fieldset' => true,
                 );
                 break;
             case 'directory_social':
@@ -53,6 +54,7 @@ class Sabai_Addon_Directory_FieldWidget implements Sabai_Addon_Field_IWidget
                     ),
                     'disable_edit_required' => true,
                     'enable_edit_disabled' => true,
+                    'is_fieldset' => true,
                 );
                 break;
             case 'directory_claim':
@@ -95,7 +97,7 @@ class Sabai_Addon_Directory_FieldWidget implements Sabai_Addon_Field_IWidget
                     'hide_website_field' => array(
                         '#type' => 'checkbox',
                         '#title' => __('Disable website field', 'sabai-directory'),
-                        '#default_value' => !empty($settings['hide_fax_field']),
+                        '#default_value' => !empty($settings['hide_website_field']),
                     ),
                     'require_phone' => array(
                         '#type' => 'checkbox',
@@ -168,7 +170,7 @@ class Sabai_Addon_Directory_FieldWidget implements Sabai_Addon_Field_IWidget
                         '#default_value' => !empty($settings['autopopulate_email']),
                         '#states' => array(
                             'visible' => array(
-                                sprintf('input[name="%s[hide_website_email][]"]', $this->_addon->getApplication()->Form_FieldName($parents)) => array(
+                                sprintf('input[name="%s[hide_email_field][]"]', $this->_addon->getApplication()->Form_FieldName($parents)) => array(
                                     'type' => 'checked',
                                     'value' => false,
                                 ),

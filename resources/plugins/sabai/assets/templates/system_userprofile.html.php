@@ -1,8 +1,8 @@
-<div class="sabai-system-user-profile sabai-clearfix">
+<div class="sabai-system-user-info">
     <div class="sabai-system-user-avatar">
         <?php echo $this->UserIdentityThumbnailMedium($identity);?>
     </div>
-    <div class="sabai-system-user-info">
+    <div class="sabai-system-user-contact">
         <h3><?php Sabai::_h($identity->name);?></h3>
         <ul>
 <?php if ($identity->url):?>
@@ -11,6 +11,9 @@
         </ul>
     </div>
 </div>
+<?php if ($profile):?>
+<div class="sabai-system-user-profile"><?php echo $profile;?></div>
+<?php endif;?>
 <?php if (!empty($activities)):?>
 <div class="sabai-system-user-activities">
 <?php   if (count($activities) > 1):?>

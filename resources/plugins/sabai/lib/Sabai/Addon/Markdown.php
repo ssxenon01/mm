@@ -5,7 +5,7 @@ class Sabai_Addon_Markdown extends Sabai_Addon
                Sabai_Addon_Form_IFields,
                Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {
@@ -79,6 +79,8 @@ class Sabai_Addon_Markdown extends Sabai_Addon
     {
         return new Sabai_Addon_Markdown_FormField($this, $type);
     }
+    
+    /* End implementation of Sabai_Addon_Form_IFields */
     
     public function hasSettingsPage($currentVersion)
     {

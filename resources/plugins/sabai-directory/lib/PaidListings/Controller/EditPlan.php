@@ -52,7 +52,7 @@ abstract class Sabai_Addon_PaidListings_Controller_EditPlan extends Sabai_Addon_
                     '#type' => 'textfield',
                     '#title' => __('Price', 'sabai-directory'),
                     '#numeric' => true,
-                    '#size' => 5,
+                    '#size' => 10,
                     '#required' => true,
                     '#field_prefix' => $this->PaidListings_Currencies($this->_getCurrency($context), false),
                     '#default_value' => $context->plan->price,

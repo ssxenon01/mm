@@ -69,7 +69,7 @@ abstract class SabaiFramework_Application_HttpResponse extends SabaiFramework_Ap
         return isset($this->_headers[$name]);
     }
 
-    public function send(SabaiFramework_Application_HttpContext $context)
+    public function send(SabaiFramework_Application_Context $context)
     {
         switch ($context->getStatus()) {
             case SabaiFramework_Application_Context::STATUS_SUCCESS:

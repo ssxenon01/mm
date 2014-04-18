@@ -15,10 +15,10 @@ class Sabai_EventDispatcher extends SabaiFramework_EventDispatcher
         $this->_application = $application;
     }
 
-    public function dispatch($eventType, $eventArgs = array(), $listenerName = null)
+    public function dispatch($eventType, array $eventArgs = array())
     {
         //try {
-            parent::dispatch($eventType, $eventArgs, $listenerName);
+            parent::dispatch($eventType, $eventArgs);
         //} catch (Exception $e) {
             // Event listeners should never halt the execution of the main script, so catch all possible exceptions and log them
           //  $this->_application->getHelperBroker()->callHelper('LogError', array($e));

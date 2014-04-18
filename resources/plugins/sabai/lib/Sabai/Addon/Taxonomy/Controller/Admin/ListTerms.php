@@ -31,7 +31,7 @@ class Sabai_Addon_Taxonomy_Controller_Admin_ListTerms extends Sabai_Addon_Form_C
         );
         $filter = 'all';
         $sortable_headers = array('title', 'created');
-        $sort = $context->getRequest()->asStr('sort', '', array_keys($sortable_headers));
+        $sort = $context->getRequest()->asStr('sort', '', $sortable_headers);
         $order = $context->getRequest()->asStr('order', 'DESC', array('ASC', 'DESC'));
         $url_params = array('filter' => $filter, 'sort' => $sort, 'order' => $order);
         if ($context->bundle) {
@@ -99,7 +99,7 @@ class Sabai_Addon_Taxonomy_Controller_Admin_ListTerms extends Sabai_Addon_Form_C
                 'filter' => $filter, 
                 'url_params' => $url_params,
                 'pager' => isset($pager) ? $pager : null,
-                'links' => $this->_getLinks($context),
+                'links' => $this->doFilter('TaxonomyAdminTermsLinks', $this->_getLinks($context), array($context->taxonomy_bundle)),
             ));
 
         return $form;

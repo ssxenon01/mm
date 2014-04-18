@@ -18,6 +18,9 @@ class Sabai_Addon_Entity_Helper_RenderField extends Sabai_Helper
             }
             $fieldSettings = $fieldType->getFieldSettings();
             $fieldType = $fieldType->getFieldType();
+            $options = isset($fieldSettings) ? $fieldSettings : $options;
+        } elseif (!is_string($fieldType)) {
+            return '';
         }
         
         return $this->$fieldType($application, $entity, $fieldSettings, $fieldValues, $options);
@@ -25,7 +28,10 @@ class Sabai_Addon_Entity_Helper_RenderField extends Sabai_Helper
     
     protected function string(Sabai $application, Sabai_Addon_Entity_IEntity $entity, array $fieldSettings, array $fieldValues, $options)
     {
-        $ret = array_map(array('Sabai', 'h'), $fieldValues);
+        $ret = array();
+        foreach ($fieldValues as $value) {
+            $ret[] = @$fieldSettings['prefix'] . Sabai::h($value) . @$fieldSettings['suffix'];
+        }
         if (!isset($options['separator'])) {
             $options['separator'] = ', ';
         } elseif ($options['separator'] === false) {
@@ -36,7 +42,10 @@ class Sabai_Addon_Entity_Helper_RenderField extends Sabai_Helper
     
     protected function number(Sabai $application, Sabai_Addon_Entity_IEntity $entity, array $fieldSettings, array $fieldValues, $options)
     {
-        $ret = array_map(array('Sabai', 'h'), $fieldValues);
+        $ret = array();
+        foreach ($fieldValues as $value) {
+            $ret[] = @$fieldSettings['prefix'] . round($value, $fieldSettings['decimals']) . @$fieldSettings['suffix'];
+        }
         if (!isset($options['separator'])) {
             $options['separator'] = ', ';
         } elseif ($options['separator'] === false) {
@@ -94,25 +103,25 @@ class Sabai_Addon_Entity_Helper_RenderField extends Sabai_Helper
         if (count($fieldValues) > 1) {
             $ret = array('<ul>');
             foreach ($fieldValues as $value) {
-                $ret[] = sprintf(
-                    '<li><a href="%s"%s%s>%s</a></li>',
-                    Sabai::h($value['url']),
-                    $fieldSettings['target'] === '_blank' ? ' target="_blank"' : '',
-                    empty($fieldSettings['nofollow']) ? '' : ' rel="nofollow"',
-                    strlen($value['title']) ? Sabai::h($value['title']) : Sabai::h($value['url'])
-                );
+                $ret[] = '<li>' . $this->_link($fieldSettings, $value) . '</li>';
             }
             $ret[] = '</ul>';
             return implode(PHP_EOL, $ret);
         }
-        
-        $value = $fieldValues[0];
+
+        return $this->_link($fieldSettings, $fieldValues[0]);
+    }
+    
+    protected function _link(array $fieldSettings, $value)
+    {
         return sprintf(
             '<a href="%s"%s%s>%s</a>',
             Sabai::h($value['url']),
             $fieldSettings['target'] === '_blank' ? ' target="_blank"' : '',
             empty($fieldSettings['nofollow']) ? '' : ' rel="nofollow"',
-            strlen($value['title']) ? Sabai::h($value['title']) : Sabai::h($value['url'])
+            !empty($fieldSettings['title']['no_custom']) && isset($fieldSettings['title']['default']) && strlen($fieldSettings['title']['default'])
+                ? Sabai::h($fieldSettings['title']['default'])
+                : (strlen($value['title']) ? Sabai::h($value['title']) : Sabai::h($value['url']))
         );
     }
     

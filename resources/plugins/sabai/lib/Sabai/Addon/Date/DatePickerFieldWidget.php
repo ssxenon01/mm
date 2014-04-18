@@ -17,6 +17,7 @@ class Sabai_Addon_Date_DatePickerFieldWidget implements Sabai_Addon_Field_IWidge
                 'default_settings' => array(
                     'current_date_selected' => true,
                 ),
+                'is_fieldset' => true,
             );
         }
 
@@ -46,9 +47,6 @@ class Sabai_Addon_Date_DatePickerFieldWidget implements Sabai_Addon_Field_IWidge
             '#disable_time' => empty($field_settings['enable_time']),
             '#default_value' => $value,
         );
-        if (!empty($field_settings['date_range'])) {
-            $ret['#element_validate'] = array(array(array($this, 'validateDate'), array($parents, $field_settings['date_range_min'], $field_settings['date_range_max'])));
-        }
     }
     
     public function fieldWidgetGetPreview(Sabai_Addon_Field_IField $field, array $settings)
@@ -60,27 +58,13 @@ class Sabai_Addon_Date_DatePickerFieldWidget implements Sabai_Addon_Field_IWidge
         }
         $field_settings = $field->getFieldSettings();
         if (empty($field_settings['enable_time'])) {
-            return sprintf('<input type="text" disabled="disabled" size="15" value="%s" />', $date);
+            return sprintf('<input type="text" disabled="disabled" size="10" value="%s" />', $date);
         }
-        return sprintf('<input type="text" disabled="disabled" size="15" value="%s" /><input type="text" disabled="disabled" size="5" placeholder="HH:MM" value="%s" />', $date, $time);
+        return sprintf('<input type="text" disabled="disabled" size="10" value="%s" /><input type="text" disabled="disabled" size="5" placeholder="HH:MM" value="%s" />', $date, $time);
     }
 
     public function fieldWidgetGetEditDefaultValueForm($fieldType, array $fieldSettings, array $settings, array $parents = array())
     {
 
-    }
-
-    public function validateDate($form, &$value, $element, $parents, $min, $max)
-    {
-        if (!empty($value)) {
-            if ($value < $min) {
-                $error = sprintf(__('The date must be later than %s.', 'sabai'), $this->_addon->getApplication()->DateTime($min));
-                $form->setError($error, $element);
-            }
-            if ($value > $max) {
-                $error = sprintf(__('The date must be earlier than %s.', 'sabai'), $this->_addon->getApplication()->DateTime($max));
-                $form->setError($error, $element);
-            }
-        }
     }
 }

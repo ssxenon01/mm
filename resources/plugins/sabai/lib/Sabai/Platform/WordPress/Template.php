@@ -2,7 +2,7 @@
 class Sabai_Platform_WordPress_Template
 {
     private $_title, $_pageSummary, $_pageUrl, $_pageBreadcrumbs, $_css = '', $_js = '', $_htmlHead = '', $_htmlHeadTitle, $_siteName = '',
-        $_isFilteringSabaiPage, $_sep, $_seplocation;
+        $_isFilteringSabaiPage;
 
     // The following is required which is to be set by the add_filter method
     public $wp_filter_id;
@@ -24,9 +24,10 @@ class Sabai_Platform_WordPress_Template
         add_filter('wpseo_title', array($this, 'onWpSeoTitleFilter'), 99);
         add_filter('wpseo_metadesc', array($this, 'onWpSeoMetaDescFilter'), 99);
         add_filter('wpseo_breadcrumb_links', array($this, 'onWpSeoBreadcrumbLinksFilter'), 99, 1);
-        add_filter('wpseo_canonical', array($this, 'onWpSeoCanonicalFilter'), 99);
+        add_filter('wpseo_canonical', array($this, 'onCanonicalFilter'), 99);
         add_filter('aioseop_title_page', array($this, 'onAioSeoPTitlePageFilter'), 99);
         add_filter('aioseop_description', array($this, 'onAioSeoPDescFilter'), 99);
+        add_filter('aioseop_canonical_url', array($this, 'onCanonicalFilter'), 99);
     }
 
     public function onWpHeadAction()
@@ -54,8 +55,6 @@ class Sabai_Platform_WordPress_Template
                 }
             }
         }
-        $this->_sep = $sep;
-        $this->_seplocation = $seplocation;
         return $seplocation === 'right' ? $this->_htmlHeadTitle . ' ' . $sep . ' ' : ' ' . $sep . ' ' . $this->_htmlHeadTitle;
     }
 
@@ -104,9 +103,11 @@ class Sabai_Platform_WordPress_Template
         if (!isset($this->_htmlHeadTitle) || false === $this->_htmlHeadTitle) {
             return $title;
         }
-        return $this->_seplocation === 'right'
-            ? $this->_htmlHeadTitle . ' ' . $this->_sep . ' ' . $this->_siteName
-            : $this->_siteName . ' ' . $this->_sep . ' ' . $this->_htmlHeadTitle;
+        global $wp_query;
+        $page = $wp_query->get_queried_object();
+        $page->post_title = $this->_htmlHeadTitle;
+        $options = get_option('wpseo_titles');
+        return wpseo_replace_vars($options['title-page'], $page);
     }
     
     public function onWpSeoBreadcrumbLinksFilter($links)
@@ -125,7 +126,7 @@ class Sabai_Platform_WordPress_Template
             : $desc;
     }
     
-    public function onWpSeoCanonicalFilter($url)
+    public function onCanonicalFilter($url)
     {
         return isset($this->_pageUrl) ? (string)$this->_pageUrl : $url;
     }

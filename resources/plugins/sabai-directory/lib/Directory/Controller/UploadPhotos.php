@@ -92,7 +92,7 @@ class Sabai_Addon_Directory_Controller_UploadPhotos extends Sabai_Addon_Form_Con
                     $this->_application->getAddon('Entity')->createEntity(
                         $this->getAddon()->getPhotoBundleName(),
                         array(
-                            'content_post_status' => $status = $this->_getContentPostStatus($context),
+                            'content_post_status' => $this->_getContentPostStatus($context),
                             'content_post_title' => $new_photo_title,
                             'file_image' => array('id' => $new_photo_id),
                             'content_parent' => $context->entity->getId()
@@ -120,13 +120,6 @@ class Sabai_Addon_Directory_Controller_UploadPhotos extends Sabai_Addon_Form_Con
         if (!empty($deleted_photos) || !empty($new_photos)) {
             // Update parent listing
             $this->getAddon('Content')->updateParentPost($context->entity, false, true, true);
-            // Show flash if any new pending photos
-            if (!empty($new_photos)
-                && $status === Sabai_Addon_Content::POST_STATUS_PENDING
-            ) {
-                $context->addFlash(__('Thanks for your submission, we will review it and get back with you.', 'sabai-directory'));
-                $url = $this->Entity_Url($context->entity);
-            }
         }
         
         $context->setSuccess($url);
@@ -134,7 +127,7 @@ class Sabai_Addon_Directory_Controller_UploadPhotos extends Sabai_Addon_Form_Con
     
     protected function _getContentPostStatus(Sabai_Context $context)
     {
-        return $this->getUser()->hasPermission($this->getAddon()->getPhotoBundleName() . '_add2')
+        return $this->HasPermission($this->getAddon()->getPhotoBundleName() . '_add2')
             ? Sabai_Addon_Content::POST_STATUS_PUBLISHED
             : Sabai_Addon_Content::POST_STATUS_PENDING;
     }

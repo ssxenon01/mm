@@ -10,7 +10,7 @@ class Sabai_Addon_Directory_Controller_AddReview extends Sabai_Addon_Content_Con
             '#markup' => $this->Entity_Permalink($context->entity),
         );
         // Add photo upload field if the user has a valid permission
-        if ($this->getUser()->hasPermission($this->getAddon()->getPhotoBundleName() . '_add')) {
+        if ($this->HasPermission($this->getAddon()->getPhotoBundleName() . '_add')) {
             $photo_config = $this->getAddon()->getConfig('photo');
             if ($photo_config['max_num_review'] > 0) {
                 $form['photos'] = array(
@@ -37,16 +37,7 @@ class Sabai_Addon_Directory_Controller_AddReview extends Sabai_Addon_Content_Con
     public function submitForm(Sabai_Addon_Form_Form $form, Sabai_Context $context)
     {
         $review = parent::submitForm($form, $context);
-        
-        if ($review->isPublished()) {
-            // Cast vote for the parent listing
-            $this->Voting_CastVote(
-                $context->entity,
-                'rating',
-                $review->getSingleFieldValue('directory_rating'),
-                array('name' => '', 'reference_id' => $review->getId(), 'user_id' => $review->getAuthorId())
-            );
-        }
+
         // Create photo entities
         if (isset($form->settings['photos']) && !empty($form->values['photos'])) {
             foreach ($form->values['photos'] as $file) {

@@ -1,8 +1,8 @@
 .sabai-entity-entities > .sabai-entity-bundle-type-directory-listing,
 .sabai-entity-entities > .sabai-entity-bundle-type-directory-listing-review,
 .sabai-entity-entities > .sabai-entity-bundle-type-directory-listing-photo {margin:0; padding:1em 0; border-bottom:1px solid #ccc;}
-.sabai-directory-search-results div.sabai-entity-bundle-type-directory-listing:first-child {border-top:1px solid #ccc;}
-.sabai-directory-search-results div.sabai-entity-bundle-type-directory-listing.sabai-directory-listing-featured {background-color: #ffffe0; border-color:#ebe4c9;}
+.sabai-entity-entities > .sabai-entity-bundle-type-directory-listing:first-child {border-top:1px solid #ccc;}
+.sabai-entity-entities > .sabai-entity-bundle-type-directory-listing.sabai-directory-listing-featured {background-color: #ffffe0; border-color:#ebe4c9;}
 .sabai-entity-entities > .sabai-directory-listing-featured {padding-left:5px;}
 .sabai-directory-slider .sabai-entity-entities > .sabai-entity-bundle-type-directory-listing {border-bottom:0; padding:1em;}
 
@@ -35,7 +35,10 @@
 .sabai-directory-comments {font-size:12px;}
 .sabai-directory-add-review-form > strong {display:block; font-size:1.3em; margin-bottom:0.7em;}
 
+.sabai-directory-phone > span:first-child .sabai-directory-separator {display:none;}
+
 .sabai-directory-website,
+.sabai-directory-email,
 .sabai-directory-social {float:left; margin-right:7px;}
 
 .sabai-directory-rating-average {margin-left:2px; font-weight:bold; color:#f36d33;}
@@ -44,6 +47,7 @@
 
 .sabai-directory-images {text-align:center;}
 .sabai-directory-thumbnails {margin-top:5px;}
+.sabai-directory-listing-column .sabai-directory-images {height:150px; margin: 0 0 5px 0;}
 
 .sabai-entity-bundle-type-directory-listing.sabai-entity-mode-full .sabai-directory-main {margin-bottom:20px;}
 .sabai-entity-bundle-type-directory-listing.sabai-entity-mode-summary .sabai-directory-info {font-size:0.9em; margin-bottom:0;}
@@ -151,7 +155,9 @@
 .sabai-directory-field:last-child {margin-bottom:0;}
 .sabai-file-row.sabai-directory-pending td {background-color:#dfdfdf;}
 
-.sabai-directory-slider {direction:ltr;}.sabai-content-label.sabai-directory-listing-claimed {background-color:#228b22;}
+.sabai-directory-slider {direction:ltr;}
+.sabai-directory-listing-column {text-align:center; margin-bottom:1em;}
+.sabai-content-label.sabai-directory-listing-claimed {background-color:#228b22;}
 .sabai-content-icon.sabai-directory-listing-claimed {color:#228b22;}
 i.sabai-icon-twitter-sign {color:#33ccff;}
 i.sabai-icon-facebook-sign {color:#3b5998;}

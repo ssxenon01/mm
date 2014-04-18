@@ -1,7 +1,7 @@
 <?php
 class Sabai_Addon_Form_Form
 {
-    public $settings, $values, $storage, $rebuild = false, $redirect;
+    public $settings, $values, $storage, $rebuild = false, $redirect, $redirectMessage;
     protected $_addon, $_htmlquickform, $_elements, $_errors, $_clickedButton,
         $_submitSuccess = false, $_defaultElementType = 'markup', $_js = array(), $_renderer, $_rendered = array();
     protected static $_defaultElementSettings = array(
@@ -69,13 +69,9 @@ class Sabai_Addon_Form_Form
         $this->_extractAndSortElementSettings($this->settings, $this->_elements, $this->values, null);
         foreach (array_keys($this->_elements['#children']) as $weight) {
             foreach (array_keys($this->_elements['#children'][$weight]) as $ele_key) {
-                $this->_htmlquickform->addElement(
-                    $this->createElement(
-                        $this->_elements['#children'][$weight][$ele_key]['#type'],
-                        $ele_key,
-                        $this->_elements['#children'][$weight][$ele_key]
-                    )
-                );
+                if ($element = $this->createElement($this->_elements['#children'][$weight][$ele_key]['#type'], $ele_key, $this->_elements['#children'][$weight][$ele_key])) {
+                    $this->_htmlquickform->addElement($element);
+                }
             }
         }
 
@@ -122,7 +118,7 @@ class Sabai_Addon_Form_Form
         }
 
         // Get the element
-        $element = $this->_addon->getApplication()->Form_FieldImpl($type)->formFieldGetFormElement($name, $data, $this);
+        if (!$element = $this->_addon->getApplication()->Form_FieldImpl($type)->formFieldGetFormElement($name, $data, $this)) return;
 
         // Has this element already been processed?
         if (!empty($data['#processed'])) return $element;
@@ -187,15 +183,11 @@ class Sabai_Addon_Form_Form
             if (0 === strpos($key, '#')) continue;
 
             $settings[$key] = $settings[$key] + self::$_defaultElementSettings;
-            if (empty($settings[$key]['#default_value_assigned'])) {
-                if (is_array($values) && array_key_exists($key, $values)) {
-                    $settings[$key]['#default_value'] = $values[$key];
-                    $_values = !isset($settings[$key]['#tree']) || $settings[$key]['#tree'] ? $values[$key] : $values;
-                } else {
-                    $_values = !isset($settings[$key]['#tree']) || $settings[$key]['#tree'] ? null : $values;
-                }
+            if (is_array($values) && array_key_exists($key, $values)) {
+                $settings[$key]['#default_value'] = $values[$key];
+                $_values = !isset($settings[$key]['#tree']) || $settings[$key]['#tree'] ? $values[$key] : $values;
             } else {
-                $_values = null;
+                $_values = !isset($settings[$key]['#tree']) || $settings[$key]['#tree'] ? null : $values;
             }
             $weight = intval(@$settings[$key]['#weight']);
             $elements['#children'][$weight][$key] = $settings[$key];
@@ -266,7 +258,8 @@ class Sabai_Addon_Form_Form
 
     public function isSubmitted()
     {
-        return is_array($this->values) && isset($this->values[Sabai_Addon_Form::FORM_BUILD_ID_NAME]);
+        return is_array($this->values)
+            && ($this->settings['#build_id'] === false || isset($this->values[Sabai_Addon_Form::FORM_BUILD_ID_NAME]));
     }
 
     public function isSubmitSuccess()
@@ -364,7 +357,7 @@ class Sabai_Addon_Form_Form
         if (!empty($this->settings['#submit'])) {
             ksort($this->settings['#submit']);
             foreach (array_keys($this->settings['#submit']) as $key) {
-                foreach ($this->settings['#submit'][$key] as $callback) {
+                foreach ((array)$this->settings['#submit'][$key] as $callback) {
                     // Catch errors that might occur and show them as form error
                     try {
                         $this->_addon->getApplication()->CallUserFuncArray($callback, array($this));
@@ -407,7 +400,7 @@ class Sabai_Addon_Form_Form
                 } catch (Exception $e) {
                     // Do not display system error messages to the user
                     $this->_addon->getApplication()->LogError($e);
-                    $this->setError(__('An error occurred while processing the form field.', 'sabai'), $ele_data);
+                    $this->setError(__('An error occurred while processing the form.', 'sabai'), $ele_data);
                 }
 
                 // Any error?
@@ -424,7 +417,7 @@ class Sabai_Addon_Form_Form
                     } catch (Exception $e) {
                         // Do not display system error messages to the user
                         $this->_addon->getApplication()->LogError($e);
-                        $this->setError(__('An error occurred while processing the form field.', 'sabai'), $ele_data);
+                        $this->setError(__('An error occurred while processing the form.', 'sabai'), $ele_data);
                     }
                 }
             }
@@ -577,7 +570,7 @@ class Sabai_Addon_Form_Form
                 } catch (Exception $e) {
                     // Do not display system error messages to the user
                     $this->_addon->getApplication()->LogError($e);
-                    $this->setError(__('An error occurred while rendering the form.', 'sabai'));
+                    $this->setError(__('An error occurred while processing the form.', 'sabai'));
                 }
             }
         }

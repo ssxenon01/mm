@@ -3,6 +3,12 @@ class Sabai_Addon_Entity_Model_Field extends Sabai_Addon_Entity_Model_Base_Field
     implements Sabai_Addon_Field_IField
 {
     private $_data;
+    
+    public function __toString()
+    {
+        $title = $this->getFieldTitle();
+        return strlen($title) ? $title : $this->getFieldAdminTitle();
+    }
 
     public function getFieldId()
     {

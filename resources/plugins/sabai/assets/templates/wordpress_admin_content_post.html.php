@@ -10,7 +10,7 @@ $has_title = isset($form_arr['elements']['content_post_title']['elements']['cont
 if ($has_title) {
     $title = $form_arr['elements']['content_post_title']['elements']['content_post_title[0]'][0]['value'];
     if ($title_error = @$form_arr['elements']['content_post_title']['elements']['content_post_title[0]'][0]['error']) {
-        $errors[] = sprintf(__('%s Title: %s', 'sabai'), Sabai::h($this->Translate($bundle->label_singular, 1, 'sabai')), Sabai::h($title_error));
+        $errors[] = sprintf(__('%s Title: %s', 'sabai'), Sabai::h($this->Entity_BundleLabel($bundle)), Sabai::h($title_error));
     }
     unset($form_arr['elements']['content_post_title']);
 }
@@ -19,7 +19,7 @@ $has_body = isset($form_arr['elements']['content_body']['elements']['content_bod
 if ($has_body) {
     $body = $form_arr['elements']['content_body']['elements']['content_body[0]'][0]['value'];
     if ($body_error = @$form_arr['elements']['content_body']['elements']['content_body[0]'][0]['error']) {
-        $errors[] = sprintf(__('%s Content: %s', 'sabai'), Sabai::h($this->Translate($bundle->label_singular, 1, 'sabai')), Sabai::h($body_error));
+        $errors[] = sprintf(__('%s Content: %s', 'sabai'), Sabai::h($this->Entity_BundleLabel($bundle)), Sabai::h($body_error));
     }
     $body_rows = @$form_arr['elements']['content_body']['elements']['content_body[0]'][0]['rows'];
     unset($form_arr['elements']['content_body']);
@@ -56,7 +56,10 @@ foreach ($form_arr['elements'] as $element) {
         $element = $element[0];
     }
 	
-	if ($element['type'] === 'hidden' || $element['type'] === 'static' || strpos($element['name'], '_') === 0) {
+	if ($element['type'] === 'hidden'
+        || strpos($element['name'], '_') === 0
+        || ($element['type'] === 'static' && false === strpos($element['html'], '<input') && false === strpos($element['html'], '<select') && false === strpos($element['html'], '<textarea'))
+    ) {
 		if ($element['type'] === 'hidden') {
 			$hidden_values[$element['name']] = $element['value'];
 		}

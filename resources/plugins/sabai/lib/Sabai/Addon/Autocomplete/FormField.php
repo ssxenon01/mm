@@ -33,11 +33,11 @@ class Sabai_Addon_Autocomplete_FormField implements Sabai_Addon_Form_IField
         );
         
         // Load default items and noscript options
-        if (is_array($data['#default_value']) && !empty($data['#default_value']) && empty($data['#default_items']) && isset($data['#default_items_callback'])) {
+        if (!empty($data['#default_value']) && empty($data['#default_items']) && isset($data['#default_items_callback'])) {
             if (!isset($data['#noscript']['#options'])) $data['#noscript']['#options'] = array();
-            $this->_addon->getApplication()->CallUserFuncArray($data['#default_items_callback'], array($data['#default_value'], &$data['#default_items'], &$data['#noscript']['#options']));
+            $this->_addon->getApplication()->CallUserFuncArray($data['#default_items_callback'], array((array)$data['#default_value'], &$data['#default_items'], &$data['#noscript']['#options']));
         }
-        
+
         if (!isset($data['#noscript']['#type'])
             || !in_array($data['#noscript']['#type'], array('textfield', 'select'))
         ) {
@@ -184,8 +184,8 @@ class Sabai_Addon_Autocomplete_FormField implements Sabai_Addon_Form_IField
         $js = array();
         foreach (self::$_elements[$form->settings['#id']] as $element) {
             $js[] = sprintf(
-                'jQuery("#%1$s-container").show().siblings("noscript").remove();
-        jQuery("#%1$s").select2({
+                '$("#%1$s-container").show().siblings("noscript").remove();
+        $("#%1$s").select2({
             allowClear: true,
             width:"%17$s",
             placeholder: "%2$s",

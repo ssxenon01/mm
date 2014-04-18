@@ -2,7 +2,7 @@
 class Sabai_Addon_PayPal_Controller_Ipn extends Sabai_Controller
 {    
     protected function _doExecute(Sabai_Context $context)
-    {   
+    {
         // reading posted data from directly from $_POST causes serialization 
         // issues with array data in POST
         // reading raw POST data from input stream instead.

@@ -163,6 +163,7 @@ class Sabai_Addon_Content_EntityType implements Sabai_Addon_Entity_IType
         $entities = array();
         foreach ($this->_addon->getModel('Post')
             ->entityBundleName_is($bundle->name)
+            ->status_is(Sabai_Addon_Content::POST_STATUS_PUBLISHED)
             ->title_contains($keyword)
             ->fetch($limit, $offset, $sort, $order)
             ->with('User')

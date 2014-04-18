@@ -12,7 +12,7 @@ class Sabai_Addon_Date_Helper_Scripts extends Sabai_Helper
             }
         }
         // Load script to instantiate date/time pickers
-        $scripts[] = $application->getPlatform()->getAssetsUrl() . '/js/datetimepicker.js';
+        $scripts[] = $application->getPlatform()->getAssetsUrl() . '/js/sabai-date-datetimepicker.js';
         
         return $scripts;
     }

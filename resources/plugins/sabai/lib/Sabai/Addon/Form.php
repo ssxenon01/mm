@@ -2,7 +2,7 @@
 class Sabai_Addon_Form extends Sabai_Addon
     implements Sabai_Addon_Form_IFields
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     const FORM_BUILD_ID_NAME = '_sabai_form_build_id', FORM_SUBMIT_BUTTON_NAME = '_sabai_form_submit';
 
     private static $_forms = array();
@@ -172,10 +172,13 @@ class Sabai_Addon_Form extends Sabai_Addon
                 return false;
             }
         } elseif (!empty($element['#url'])) {
-            if (strpos($value, '//') === 0 && !empty($element['#allow_url_no_protocol'])) {
-                $value_to_check = 'http:' . $value;
-            } else {
-                $value_to_check = $value;
+            $value_to_check = $value;
+            if (0 === strpos($value, '//')) {
+                if (!empty($element['#allow_url_no_protocol'])) {
+                    $value_to_check = 'http:' . $value;
+                }
+            } elseif (false === strpos($value, '://')) {
+                $value_to_check = $value = 'http://' . $value;
             }
             // Add a temporary fix for php 5.2.13/5.3.2 returning false for URLs containing hyphens
             $php_version = substr(PHP_VERSION, 0, strpos(PHP_VERSION, '-')); // remove extra version info
@@ -224,7 +227,7 @@ class Sabai_Addon_Form extends Sabai_Addon
         if (!empty($element['#integer']) || !empty($element['#numeric'])) {
             if (!empty($element['#min_value'])) {
                 if ($value < $element['#min_value']) {
-                    $form->setError(sprintf(__('The value must be greater than %s.', 'sabai'), $element['#min_value']), $errorElementName);
+                    $form->setError(sprintf(__('The value must be equal or greater than %s.', 'sabai'), $element['#min_value']), $errorElementName);
                 }
             }
             if (!empty($element['#max_value'])) {

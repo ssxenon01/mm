@@ -4,7 +4,7 @@
         <?php echo $this->Content_RenderTitle($entity);?>
     </div>
     <div class="sabai-directory-images">
-        <?php echo $this->File_ThumbnailLink($entity, $photo->file_image[0], array('link_entity' => true));?>
+        <?php echo $this->File_ThumbnailLink($entity, $photo->file_image[0], array('link_entity' => true, 'title' => $entity->getTitle()));?>
     </div>
 <?php else:?>
 <div class="sabai-directory-listing-infobox sabai-directory-listing-infobox-noimage sabai-clearfix">
@@ -33,16 +33,16 @@
                 <?php Sabai::_h($entity->directory_location[0]['address']);?>
             </div>
 <?php endif;?>
-<?php if (!empty($entity->directory_contact[0]['phone'])):?>
+<?php if (!empty($entity->directory_contact[0]['has_phone'])):?>
             <div class="sabai-directory-phone">
+<?php   if (!empty($entity->directory_contact[0]['phone'])):?>
                 <span class="sabai-directory-tel"><?php Sabai::_h($entity->directory_contact[0]['phone']);?></span>
+<?php   endif;?>
 <?php   if (!empty($entity->directory_contact[0]['mobile'])):?>
-                <span> / </span>
-                <span class="sabai-directory-mobile"><?php printf(__('%s (Mobile)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['mobile']));?></span>
+                <span class="sabai-directory-mobile"><span class="sabai-directory-separator"> / </span><?php printf(__('%s (Mobile)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['mobile']));?></span>
 <?php   endif;?>
 <?php   if (!empty($entity->directory_contact[0]['fax'])):?>
-                <span> / </span>
-                <span class="sabai-directory-fax"><?php printf(__('%s (Fax)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['fax']));?></span>
+                <span class="sabai-directory-fax"><span class="sabai-directory-separator"> / </span><?php printf(__('%s (Fax)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['fax']));?></span>
 <?php   endif;?>
             </div>
 <?php endif;?>

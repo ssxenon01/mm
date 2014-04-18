@@ -1,10 +1,10 @@
-<div id="<?php echo $id;?>" class="<?php echo $class;?> sabai-clearfix sabai-row-fluid">
+<div id="<?php echo $id;?>" class="<?php echo $class;?> sabai-clearfix">
     <div class="sabai-row-fluid">
         <div class="sabai-span3 sabai-directory-images">
 <?php if (!empty($entity->data['directory_photos'][0])): $photo = $entity->data['directory_photos'][0];?>
-            <?php echo $this->File_ThumbnailLink($entity, $photo->file_image[0], array('link_entity' => true));?>
+            <?php echo $this->File_ThumbnailLink($entity, $photo->file_image[0], array('link_entity' => true, 'title' => $entity->getTitle()));?>
 <?php else:?>
-            <img src="<?php echo $this->ImageUrl('no_image_small.png');?>" alt="" />
+            <img src="<?php echo $this->NoImageUrl(true);?>" alt="" />
 <?php endif;?>
         </div>
         <div class="sabai-span9 sabai-directory-main">
@@ -31,16 +31,16 @@
                     <?php Sabai::_h($entity->directory_location[0]['address']);?>
                 </div>
 <?php endif?>
-<?php if (!empty($entity->directory_contact[0]['phone'])):?>
+<?php if (!empty($entity->directory_contact[0]['has_phone'])):?>
                 <div class="sabai-directory-phone">
+<?php   if (!empty($entity->directory_contact[0]['phone'])):?>
                     <span class="sabai-directory-tel"><?php Sabai::_h($entity->directory_contact[0]['phone']);?></span>
+<?php   endif;?>
 <?php   if (!empty($entity->directory_contact[0]['mobile'])):?>
-                    <span> / </span>
-                    <span class="sabai-directory-mobile"><?php printf(__('%s (Mobile)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['mobile']));?></span>
+                    <span class="sabai-directory-mobile"><span class="sabai-directory-separator"> / </span><?php printf(__('%s (Mobile)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['mobile']));?></span>
 <?php   endif;?>
 <?php   if (!empty($entity->directory_contact[0]['fax'])):?>
-                    <span> / </span>
-                    <span class="sabai-directory-fax"><?php printf(__('%s (Fax)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['fax']));?></span>
+                    <span class="sabai-directory-fax"><span class="sabai-directory-separator"> / </span><?php printf(__('%s (Fax)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['fax']));?></span>
 <?php   endif;?>
                 </div>
 <?php endif;?>

@@ -139,7 +139,7 @@ class Sabai_Addon_Markdown_FormField implements Sabai_Addon_Form_IField
             $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/Markdown.Converter.js',
             $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/Markdown.Sanitizer.js',
             $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/Markdown.Editor.js',
-            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/markdown.js',
+            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/sabai-markdown-editor.js',
             implode(PHP_EOL, $js)
         ));
     }

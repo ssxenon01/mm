@@ -87,12 +87,8 @@ abstract class SabaiFramework_Model_EntityRepository
         }
 
         $collection = $this->_getCollection($this->_model->getGateway($this->_name)->selectById($id));
-        $entity = $collection->getFirst();
-        if ($entity) {
-            $this->_model->cacheEntity($entity);
-        }
         if (!$returnCollection) {
-            return $entity;
+            return $collection->getFirst();
         }
         $collection->rewind();
         return $collection;
@@ -165,6 +161,13 @@ abstract class SabaiFramework_Model_EntityRepository
         $criteria = !isset($this->_criteria) ? new SabaiFramework_Criteria_Empty() : $this->_criteria;
         unset($this->_criteria);
         return $this->countByCriteria($criteria);
+    }
+    
+    public function delete()
+    {
+        $criteria = !isset($this->_criteria) ? new SabaiFramework_Criteria_Empty() : $this->_criteria;
+        unset($this->_criteria);
+        return $this->_model->getGateway($this->getName())->deleteByCriteria($criteria);
     }
 
     /**

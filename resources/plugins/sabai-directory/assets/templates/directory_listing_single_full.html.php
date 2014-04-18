@@ -18,7 +18,7 @@
             </div>
 <?php   ++$i; endwhile;?>
 <?php else:?>
-            <img src="<?php echo $this->ImageUrl('no_image.png');?>" alt="" />
+            <img src="<?php echo $this->NoImageUrl();?>" alt="" />
 <?php endif;?>
         </div>
         <div class="sabai-span8 sabai-directory-main">
@@ -40,21 +40,24 @@
 <?php if (!empty($entity->directory_location[0]['address'])):?>
                 <div class="sabai-directory-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><?php Sabai::_h($entity->directory_location[0]['address']);?></div>
 <?php endif;?>
-<?php if (!empty($entity->directory_contact[0]['phone'])):?>
+<?php if (!empty($entity->directory_contact[0]['has_phone'])):?>
                 <div class="sabai-directory-phone">
-                    <span class="sabai-directory-tel" itemprop="telephone"><?php Sabai::_h($entity->directory_contact[0]['phone']);?></span>
+<?php   if (!empty($entity->directory_contact[0]['phone'])):?>
+                    <span class="sabai-directory-tel" itemprop="telephone"><a href="tel:<?php Sabai::_h($entity->directory_contact[0]['phone']);?>"><?php Sabai::_h($entity->directory_contact[0]['phone']);?></a></span>
+<?php   endif;?>
 <?php   if (!empty($entity->directory_contact[0]['mobile'])):?>
-                    <span> / </span>
-                    <span class="sabai-directory-mobile" itemprop="telephone"><?php printf(__('%s (Mobile)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['mobile']));?></span>
+                    <span class="sabai-directory-mobile" itemprop="telephone"><span class="sabai-directory-separator"> / </span><a href="tel:<?php Sabai::_h($entity->directory_contact[0]['mobile']);?>"><?php printf(__('%s (Mobile)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['mobile']));?></a></span>
 <?php   endif;?>
 <?php   if (!empty($entity->directory_contact[0]['fax'])):?>
-                    <span> / </span>
-                    <span class="sabai-directory-fax" itemprop="faxnumber"><?php printf(__('%s (Fax)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['fax']));?></span>
+                    <span class="sabai-directory-fax" itemprop="faxnumber"><span class="sabai-directory-separator"> / </span><?php printf(__('%s (Fax)', 'sabai-directory'), Sabai::_h($entity->directory_contact[0]['fax']));?></span>
 <?php   endif;?>
                 </div>
 <?php endif;?>
 <?php if (!empty($entity->directory_contact[0]['website'])):?>
-                <div class="sabai-directory-website"><a href="<?php Sabai::_h($entity->directory_contact[0]['website']);?>" target="_blank" rel="nofollow external"><?php Sabai::_h($entity->directory_contact[0]['website']);?></a></div>
+                <div class="sabai-directory-website"><a href="<?php Sabai::_h($entity->directory_contact[0]['website']);?>" target="_blank" rel="nofollow external"><?php Sabai::_h(mb_strimwidth($entity->directory_contact[0]['website'], 0, 30, '...'));?></a></div>
+<?php endif;?>
+<?php if (!empty($entity->directory_contact[0]['email'])):?>
+                <div class="sabai-directory-email"><a href="mailto:<?php Sabai::_h($entity->directory_contact[0]['email']);?>" target="_blank" rel="nofollow external"><?php Sabai::_h(mb_strimwidth($entity->directory_contact[0]['email'], 0, 30, '...'));?></a></div>
 <?php endif;?>
 <?php if (!empty($entity->directory_social[0])):?>
                 <div class="sabai-directory-social">

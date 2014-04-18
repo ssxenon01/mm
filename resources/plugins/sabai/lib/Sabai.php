@@ -8,10 +8,10 @@ abstract class Sabai extends SabaiFramework_Application_Http
     private $_isRunning = false, $_db,
         $_eventDispatcher, $_platform, $_user, $_currentAddonName = 'System',
         $_addons = array(), $_addonsLoaded = array(), $_addonsLoadedTimestamp,
-        $_modRewriteFormat;
+        $_userDevice;
 
     // System version constants
-    const VERSION = '2.0.5dev373', PACKAGE = 'sabai', PHP_VERSION_MIN = '5.2.0', PHP_VERSION_MAX = '', MYSQL_VERSION_MIN = '5.0.3';
+    const VERSION = '2.0.5dev534', PACKAGE = 'sabai', PHP_VERSION_MIN = '5.2.0', PHP_VERSION_MAX = '', MYSQL_VERSION_MIN = '5.0.3';
 
     // Route type constants
     const ROUTE_NORMAL = 0, ROUTE_TAB = 1, ROUTE_MENU = 2, ROUTE_CALLBACK = 3, ROUTE_INLINE_TAB = 4,
@@ -69,45 +69,22 @@ abstract class Sabai extends SabaiFramework_Application_Http
         $helper_broker->addHelperDir(dirname(__FILE__) . '/Sabai/Helper', 'Sabai_Helper_');
         $this->setHelperBroker($helper_broker);
         $this->_eventDispatcher = new Sabai_EventDispatcher($this);
-    }
-
-    public function setModRewriteFormat($modRewriteFormat, $script)
-    {
-        $this->_modRewriteFormat[$script] = $modRewriteFormat;
-
-        return $this;
-    }
-
-    /**
-     * Creates an application URL from an array of options.
-     *
-     * @param array $options
-     * @return string
-     */
-    public function createUrl(array $options = array())
-    {
-        $options += array(
-            'script_url' => null,
-            'route' => '',
-            'params' => array(),
-            'fragment' => '',
-            'script' => null,
-            'separator' => '&amp;',
-            'mod_rewrite' => true,
-        );
-        if (!isset($options['script_url'])) {
-            $route = rtrim($options['route'], '/');
-            $script_name = isset($options['script']) && isset($this->_scriptUrls[$options['script']]) ? $options['script'] : $this->_currentScriptName;
-            if (!isset($this->_modRewriteFormat[$script_name]) || !$options['mod_rewrite']) {
-                $options['script_url'] = $this->getScriptUrl($script_name);
-                // Append route data to request parameters if not the root route
-                if ($route) $options['params'][$this->getRouteParam()] = $route;
-            } else {
-                $options['script_url'] = sprintf($this->_modRewriteFormat[$script_name], $route);
+        
+        if (!$user_device = $this->_platform->getCookie('sabai_user_device')) {
+            if (!class_exists('Mobile_Detect')) {
+                require 'Mobile/Detect.php';
             }
+            $md = new Mobile_Detect();
+            if ($md->isMobile()) {
+                $user_device = 'mobile';
+            } elseif ($md->isTablet()) {
+                $user_device = 'tablet';
+            } else {
+                $user_device = 'pc';
+            }
+            $this->_platform->setCookie('sabai_user_device', $user_device, time() + 2592000); // cache for 30 days
         }
-
-        return new SabaiFramework_Application_Url($options['script_url'], $options['params'], $options['fragment'], $options['separator']);
+        $this->_userDevice = $user_device;
     }
 
     public function loadAddons()
@@ -129,7 +106,7 @@ abstract class Sabai extends SabaiFramework_Application_Http
         return $this;
     }
 
-    public function run(SabaiFramework_Application_Controller $controller, Sabai_Context $context, $route = null)
+    public function run(SabaiFramework_Application_Controller $controller, SabaiFramework_Application_Context $context, $route = null)
     {
         $this->_isRunning = true;
 
@@ -153,6 +130,16 @@ abstract class Sabai extends SabaiFramework_Application_Http
     {
         return $this->_platform->getSabaiName() === 'sabai';
     }
+    
+    public function isMobile()
+    {
+        return $this->_userDevice === 'mobile';
+    }
+    
+    public function isTablet()
+    {
+        return $this->_userDevice === 'tablet';
+    }    
 
     /**
      *

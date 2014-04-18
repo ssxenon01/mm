@@ -2,16 +2,7 @@
 class Sabai_Addon_Content_Controller_ViewPost extends Sabai_Addon_Entity_Controller_ViewEntity
 {    
     protected function _doExecute(Sabai_Context $context)
-    {
-        if (!isset($this->_template)) {
-            $bundle_type = $context->entity->getBundleType();
-            if ($context->entity->isFeatured()) {
-                $this->_template = array($bundle_type . '_single_full', $bundle_type . '_single_full_featured');
-            } else {
-                $this->_template = $bundle_type . '_single_full';
-            }
-        }
-        
+    {        
         parent::_doExecute($context);
         
         // Increment view count

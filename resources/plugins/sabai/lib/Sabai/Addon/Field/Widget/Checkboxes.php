@@ -10,6 +10,7 @@ class Sabai_Addon_Field_Widget_Checkboxes extends Sabai_Addon_Field_Widget_Abstr
             'default_settings' => array(
                 'inline' => false,
             ),
+            'is_fieldset' => true,
         );
     }
 
@@ -58,7 +59,7 @@ class Sabai_Addon_Field_Widget_Checkboxes extends Sabai_Addon_Field_Widget_Abstr
         if ($settings['inline']) {
             return implode('&nbsp;&nbsp;', $ret);
         }
-        return '<div>' . implode('</div><div>', $ret) . '</div>';
+        return implode('<br />', $ret);
     }
 
     public function fieldWidgetGetEditDefaultValueForm($fieldType, array $fieldSettings, array $settings, array $parents = array())

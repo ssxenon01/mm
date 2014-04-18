@@ -1,7 +1,7 @@
 <?php
 class Sabai_Addon_Widgets extends Sabai_Addon
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {

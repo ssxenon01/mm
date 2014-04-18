@@ -16,12 +16,13 @@ class Sabai_Addon_File_FieldWidget implements Sabai_Addon_Field_IWidget
             'field_types' => array('file_file', 'file_image'),
             'accept_multiple' => true,
             'default_settings' => array(
-                'max_file_size' => 1000,
+                'max_file_size' => 1024,
                 'allowed_extensions' => array('txt', 'pdf', 'zip'),
                 'thumbnail' => true,
                 'large_image' => true,
                 'medium_image' => true,
             ),
+            'is_fieldset' => true,
         );
 
         return isset($key) ? @$info[$key] : $info;

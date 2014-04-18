@@ -5,7 +5,7 @@ class Sabai_Addon_Field_Widget_Textfield extends Sabai_Addon_Field_Widget_Abstra
     {
         return array(
             'label' => __('Text input field', 'sabai'),
-            'field_types' => array('string', 'integer', 'number'),
+            'field_types' => array('string', 'number'),
             'default_settings' => array(
                 'size' => null,
                 'field_prefix' => null,
@@ -71,21 +71,14 @@ class Sabai_Addon_Field_Widget_Textfield extends Sabai_Addon_Field_Widget_Abstra
                 $form['#field_prefix'] = isset($settings['field_prefix']) && strlen($settings['field_prefix']) ? $settings['field_prefix'] : null;
                 $form['#field_suffix'] = isset($settings['field_suffix']) && strlen($settings['field_suffix']) ? $settings['field_suffix'] : null;
                 break;
-            case 'integer':
             case 'number':
                 $form['#field_prefix'] = isset($field_settings['prefix']) && strlen($field_settings['prefix']) ? $field_settings['prefix'] : null;
                 $form['#field_suffix'] = isset($field_settings['suffix']) && strlen($field_settings['suffix']) ? $field_settings['suffix'] : null;
                 $form['#min_value'] = isset($field_settings['min']) && strlen($field_settings['min']) ? $field_settings['min'] : null;
                 $form['#max_value'] = isset($field_settings['max']) && strlen($field_settings['max']) ? $field_settings['max'] : null;
-                if ($field->getFieldType() === 'integer') {
-                    $form['#integer'] = true;
-                    $form['#min_value'] = isset($field_settings['min']) ? intval($field_settings['min']) : null;
-                    $form['#max_value'] = isset($field_settings['max']) ? intval($field_settings['max']) : null;
-                } else {
-                    $form['#numeric'] = true;
-                    $form['#min_value'] = isset($field_settings['min']) && is_numeric($field_settings['min']) ? $field_settings['min'] : null;
-                    $form['#max_value'] = isset($field_settings['max']) && is_numeric($field_settings['max']) ? $field_settings['max'] : null;
-                }
+                $form['#integer'] = true;
+                $form['#min_value'] = isset($field_settings['min']) ? intval($field_settings['min']) : null;
+                $form['#max_value'] = isset($field_settings['max']) ? intval($field_settings['max']) : null;
                 if (!isset($form['#size'])) {
                     $form['#size'] = 20;
                 }
@@ -103,9 +96,9 @@ class Sabai_Addon_Field_Widget_Textfield extends Sabai_Addon_Field_Widget_Abstra
                 $suffix = isset($settings['field_suffix']) && strlen($settings['field_suffix']) ? sprintf('<span class="sabai-form-field-suffix">%s</span>', $settings['field_suffix']) : '';
                 break;
             case 'number':
-			case 'integer':
                 $prefix = isset($field_settings['prefix']) && strlen($field_settings['prefix']) ? sprintf('<span class="sabai-form-field-prefix">%s</span>', $field_settings['prefix']) : '';
                 $suffix = isset($field_settings['suffix']) && strlen($field_settings['suffix']) ? sprintf('<span class="sabai-form-field-suffix">%s</span>', $field_settings['suffix']) : '';
+                break;
             default:
                 $prefix = $suffix = '';
 		}

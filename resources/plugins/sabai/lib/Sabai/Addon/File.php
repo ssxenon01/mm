@@ -7,7 +7,7 @@ class Sabai_Addon_File extends Sabai_Addon
                Sabai_Addon_Field_IWidgets,
                Sabai_Addon_File_IStorage
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     
     protected $_path;
         
@@ -161,6 +161,7 @@ class Sabai_Addon_File extends Sabai_Addon
 
         // Put file to storage
         $this->getStorage()->fileStoragePut($file->name, $file_content, array(
+            'type' => $file->type,
             'is_image' => $file->is_image,
             'width' => $file->width,
             'height' => $file->height,
@@ -261,13 +262,81 @@ class Sabai_Addon_File extends Sabai_Addon
             $thumbnail_dir = $this->getThumbnailDir();
             $this->_application->ValidateDirectory($thumbnail_dir, true);
         }
+        
+        $upload_file = $upload_dir . '/' . $name;
 
-        if (false === file_put_contents($upload_dir . '/' . $name, $content)) {
+        if (false === file_put_contents($upload_file, $content)) {
             throw new Sabai_RuntimeException(sprintf(__('Failed saving file %s to the upload directory.', 'sabai'), $name));
         }
-        
+ 
         if ($options['is_image']) {
-            require_once $this->_path . '/lib/WideImage/WideImage.php';
+            // Read EXIF data and adjust orientation
+            if (function_exists('exif_read_data')
+                && ($exif = @exif_read_data($upload_file))
+                && !empty($exif['Orientation'])
+            ) {
+                switch (intval($exif['Orientation'])) {
+                    case 6:
+                        $rotate = 90;
+                        break;
+                    case 3:
+                        $rotate = 180;
+                        break;
+                    case 8:
+                        $rotate = 270;
+                        break;
+                    default:
+                        $rotate = false;
+                }
+                if ($rotate) {
+                    if (extension_loaded('imagick') && class_exists('Imagick') && class_exists('ImagickPixel')) {
+                        $imagick = new Imagick();
+                        $imagick->readImage($upload_file);
+                        $imagick->rotateImage(new ImagickPixel(), $rotate);
+                        $imagick->setImageOrientation(defined('imagick::ORIENTATION_TOPLEFT') ? imagick::ORIENTATION_TOPLEFT : 1);
+                        $imagick->writeImage();
+                        $imagick->clear();
+                        $imagick->destroy();
+                    } elseif (extension_loaded('gd') && function_exists('gd_info')) {
+                        // No Imagick, fallback to GD
+                        // GD needs negative degrees
+                        $rotate = -$rotate;
+
+                        switch ($options['type']) {
+                            case 'image/jpeg':
+                                if (($source = imagecreatefromjpeg($upload_file))
+                                    && ($rotated = imagerotate($source, $rotate, 0))
+                                ) {
+                                    imagejpeg($rotated, $upload_file);
+                                    imagedestroy($source);
+                                    imagedestroy($rotated);
+                                }
+                                break;
+                            case 'image/png':
+                                if (($source = imagecreatefrompng($upload_file))
+                                    && ($rotated = imagerotate($source, $rotate, 0))
+                                ) {
+                                    imagepng($rotated, $upload_file);
+                                    imagedestroy($source);
+                                    imagedestroy($rotated);
+                                }
+                                break;
+                            case 'image/gif':
+                                if (($source = imagecreatefromgif($upload_file))
+                                    && ($rotated = imagerotate($source, $rotate, 0))
+                                ) {
+                                    imagegif($rotated, $upload_file);
+                                    imagedestroy($source);
+                                    imagedestroy($rotated);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            } 
+
             if (!isset($options['thumbnail']) || $options['thumbnail'] !== false) {
                 $thumbnail_width = empty($options['thumbnail_width']) ? $this->_config['thumbnail_width'] : $options['thumbnail_width'];
                 $thumbnail_height = empty($options['thumbnail_height']) ? $this->_config['thumbnail_height'] : $options['thumbnail_height'];
@@ -275,23 +344,22 @@ class Sabai_Addon_File extends Sabai_Addon
                     // Do not resize if smaller than the requested dimension
                     file_put_contents($thumbnail_dir . '/' . $name, $content);
                 } else {
-                    if (@$this->_config['resize_method'] === 'scale') {
-                        WideImage::load($content)->resize($this->_config['thumbnail_width'], $this->_config['thumbnail_height'])
-                            ->saveToFile($thumbnail_dir . '/' . $name);
-                    } else {
-                        WideImage::load($content)->resize($this->_config['thumbnail_width'], $this->_config['thumbnail_height'], 'outside')
-                            ->crop('center', 'center', $this->_config['thumbnail_width'], $this->_config['thumbnail_width'])
-                            ->saveToFile($thumbnail_dir . '/' . $name);
-                    }
+                    $this->_application->getPlatform()->resizeImage(
+                        $upload_file,
+                        $thumbnail_dir . '/' . $name,
+                        $this->_config['thumbnail_width'],
+                        $this->_config['thumbnail_height'],
+                        @$this->_config['resize_method'] === 'crop'
+                    );
                 }
             }
             if (!empty($options['medium_image'])) {
                 $medium_image_width = empty($options['medium_image_width']) ? $this->_config['image_medium_width'] : $options['medium_image_width'];
-                WideImage::load($content)->resizeDown($medium_image_width)->saveToFile($upload_dir . '/m_' . $name);
+                $this->_application->getPlatform()->resizeImage($upload_file, $upload_dir . '/m_' . $name, $medium_image_width, null);
             }
             if (!empty($options['large_image'])) {
                 $large_image_width = empty($options['large_image_width']) ? $this->_config['image_large_width'] : $options['large_image_width'];
-                WideImage::load($content)->resizeDown($large_image_width)->saveToFile($upload_dir . '/l_' . $name);
+                $this->_application->getPlatform()->resizeImage($upload_file, $upload_dir . '/l_' . $name, $large_image_width, null);
             }
         }
     }
@@ -515,6 +583,9 @@ class Sabai_Addon_File extends Sabai_Addon
                 'controller' => 'Settings',
                 'title_callback' => true,
                 'callback_path' => 'settings'
+            ),
+            '/sabai/file/upload' => array(
+                'controller' => 'UploadFile',
             ),
         );
     }

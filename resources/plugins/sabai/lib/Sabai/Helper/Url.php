@@ -1,7 +1,7 @@
 <?php
 class Sabai_Helper_Url extends Sabai_Helper
 {
-    public function help(Sabai $application, $route = '', array $params = array(), $fragment = '', $separator = '&amp;', $script = null)
+    public function help(Sabai $application, $route = '', array $params = array(), $fragment = '', $separator = '&amp;', $script = null, $secure = false)
     {
         if ($route instanceof SabaiFramework_Application_Url) return $route;
 
@@ -31,7 +31,7 @@ class Sabai_Helper_Url extends Sabai_Helper
                     $route = $params[$application->getRouteParam()];
                     unset($params[$application->getRouteParam()]);
 
-                    return $this->_getUrl($application, $route, $params, $fragment, $separator, $script);
+                    return $this->_getUrl($application, $route, $params, $fragment, $separator, $script, $secure);
                 }
             }
 
@@ -43,14 +43,15 @@ class Sabai_Helper_Url extends Sabai_Helper
                 'script_url' => $url,
                 'params' => $params,
                 'fragment' => $fragment,
-                'separator' => $separator
+                'separator' => $separator,
+                'secure' => $secure,
             ));
         }
 
-        return $this->_getUrl($application, $route, $params, $fragment, $separator, $script);
+        return $this->_getUrl($application, $route, $params, $fragment, $separator, $script, $secure);
     }
 
-    protected function _getUrl($application, $route, $params, $fragment, $separator, $script)
+    protected function _getUrl($application, $route, $params, $fragment, $separator, $script, $secure)
     {
         return $application->createUrl(array(
             'route' => $route,
@@ -58,6 +59,7 @@ class Sabai_Helper_Url extends Sabai_Helper
             'fragment' => $fragment,
             'separator' => $separator,
             'script' => $script,
+            'secure' => $secure,
         ));
     }
 }

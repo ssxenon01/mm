@@ -5,7 +5,7 @@ class Sabai_WebResponse extends Sabai_Response
         $_js, $_jsRaw, $_jsFiles = array(), $_jsIndex = 5,
         $_css = array(), $_cssFiles = array(), $_cssIndex = 5, $_cssFileIndices = array();
 
-    public function send(Sabai_Context $context)
+    public function send(SabaiFramework_Application_Context $context)
     {
         $this->_application->doEvent('SabaiWebResponseSend', array($context, $this));
 
@@ -65,96 +65,107 @@ class Sabai_WebResponse extends Sabai_Response
         // Redirect
         $this->sendHeader('Location', $success_url);
     }
-
-    protected function _sendError(SabaiFramework_Application_Context $context)
+    
+    public function getError(SabaiFramework_Application_Context $context)
     {
-        $error_url = $context->getErrorUrl();
+        $url = $context->getErrorUrl();
+        $messages = array();
         switch ($context->getErrorType()) {
             case Sabai_Context::ERROR_BAD_REQUEST:
-                $error_message = __('Your browser sent a request that this server could not understand.', 'sabai');
+                $messages[] = __('Your browser sent a request that this server could not understand.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_UNAUTHORIZED:
-                $error_message = null;
-                if (!$error_url) {
+                if (!$url) {
                     // Get requested URL
-                    $error_url = $context->getRequest()->url();
+                    $url = $context->getRequest()->url();
                 }
-                $error_url = $this->_application->LoginUrl((string)$this->_application->Url($error_url));
-                if ($context->getRequest()->isAjax()) {
-                    $error_message = sprintf(__('You must <a href="%s">login</a> to perform the requested action.', 'sabai'), $error_url);
-                    $error_url = null;
+                $url = $this->_application->LoginUrl((string)$this->_application->Url($url));
+                if ($context->getRequest()->isAjax()
+                    || strpos($context->getContainer(), '#sabai-embed') === 0
+                ) {
+                    $messages[] = sprintf(__('You must <a href="%s">login</a> to perform the requested action.', 'sabai'), $url);
+                    $url = null;
                 }
                 break;
 
             case Sabai_Context::ERROR_FORBIDDEN:
-                $error_message = __('Your request may not be processed.', 'sabai');
+                $messages[] = __('Your request may not be processed.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_NOT_FOUND:
-                $error_message = __('The requested page was not found.', 'sabai');
+                $messages[] = __('The requested page was not found.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_METHOD_NOT_ALLOWED:
-                $error_message = __('The requested method is not allowed.', 'sabai');
+                $messages[] = __('The requested method is not allowed.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_NOT_ACCEPTABLE:
-                $error_message = __('The requested page is not acceptable by the browser.', 'sabai');
+                $messages[] = __('The requested page is not acceptable by the browser.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_NOT_IMPLEMENTED:
-                $error_message = __('The requested method is not implemented.', 'sabai');
+                $messages[] = __('The requested method is not implemented.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_SERVICE_UNAVAILABLE:
-                $error_message = __('The server is currently unable to handle the request. Please try again later.', 'sabai');
+                $messages[] = __('The server is currently unable to handle the request. Please try again later.', 'sabai');
                 break;
 
             case Sabai_Context::ERROR_INTERNAL_SERVER_ERROR:
             default:
-                $error_message = __('The server encountered an error processing your request.', 'sabai');
+                $messages[] = __('The server encountered an error processing your request.', 'sabai');
         }
 
         // Append detailed error message if any set
         if ($error = $context->getErrorMessage()) {
-            $error_message = $error;
+            $messages[] = $error;
         }
         
         // Always convert URL to SabaiFramework_Application_Url
-        if (isset($error_url)) {
-            $error_url = $this->_application->Url($error_url);
+        if (isset($url)) {
+            $url = $this->_application->Url($url);
         }
+        
+        return array('url' => $url, 'messages' => $messages);
+    }
+
+    protected function _sendError(SabaiFramework_Application_Context $context)
+    {
+        $error = $this->getError($context);
 
         if ($context->getRequest()->isAjax()) {
             // Save error message as flash if redirection URL is set
-            if (isset($error_url) && $error_message) {
-                $context->addFlash($error_message, Sabai_Context::FLASH_ERROR);
+            if (isset($error['url']) && !empty($error['messages'])) {
+                foreach ($error['messages'] as $message) {
+                    $context->addFlash($message, Sabai_Context::FLASH_ERROR);
+                }
             }
 
             // Send error response as json
             $this->sendStatusHeader($context->getErrorType());
             $this->sendHeader('Content-type', 'application/json; charset=' . $context->getCharset());
             echo json_encode(array(
-                'message' => $error_message,
-                'url' => (string)$error_url,
+                'messages' => $error['messages'],
+                'url' => (string)$error['url'],
             ));
 
             return;
         }
 
-        if (!isset($error_url)) {
+        if (!isset($error['url'])) {
             if ((string)$context->getRoute() === '/') {
                 // An error occurred on the top page. Throw an exception to prevent redirection loop.
                 throw new RuntimeException(__('The server encountered an error processing your request.', 'sabai'));
             }
-            $error_url = $this->_application->Url(); // redirect to the top page
+            $error['url'] = $this->_application->Url(); // redirect to the top page
         }
 
-        if ($error_message) {
-            $context->addFlash($error_message, Sabai_Context::FLASH_ERROR);
+        foreach ($error['messages'] as $message) {
+            $context->addFlash($message, Sabai_Context::FLASH_ERROR);
         }
-        $this->sendHeader('Location', $error_url);
+        $this->sendHeader('Location', $error['url']);
     }
 
     protected function _sendView(SabaiFramework_Application_Context $context)
@@ -270,7 +281,8 @@ class Sabai_WebResponse extends Sabai_Response
             if ((!$inline_tab_current = $context->getRequest()->asStr(Sabai_Request::$inlineTabParam, false))
                 || !isset($inline_tabs[$inline_tab_current])
             ) {
-                $inline_tab_current = array_shift(array_keys($inline_tabs));
+                $inline_tab_names = array_keys($inline_tabs);
+                $inline_tab_current = array_shift($inline_tab_names);
             }
         } else {
             $inline_tab_current = null;
@@ -289,7 +301,6 @@ class Sabai_WebResponse extends Sabai_Response
             'TAB_BREADCRUMBS' => $context->getTabInfo(),
             'INLINE_TABS' => $inline_tabs,
             'INLINE_TAB_CURRENT' => $inline_tab_current,
-            'ICON' => $context->getIcon(),
         );
     }
 

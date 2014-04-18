@@ -15,7 +15,9 @@ class Sabai_Addon_Entity_Helper_FieldSchema extends Sabai_Helper
                 $application->LogError($e);
                 continue;
             }
-            $field_schema[$field_config->name] = (array)$field_type->fieldTypeGetSchema($field_config->settings);
+            if (!$_field_schema = $field_type->fieldTypeGetSchema($field_config->settings)) continue;
+            
+            $field_schema[$field_config->name] = (array)$_field_schema;
         }
 
         return $field_schema;

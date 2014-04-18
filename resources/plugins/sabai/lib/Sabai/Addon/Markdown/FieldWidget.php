@@ -23,6 +23,7 @@ class Sabai_Addon_Markdown_FieldWidget implements Sabai_Addon_Field_IWidget
                 'iframe' => false,
                 'iframe_urls' => array('//www.youtube.com/embed/', 'http://www.youtube.com/embed/', 'http://player.vimeo.com/video/', 'http://www.dailymotion.com/embed/video/', 'http://www.screenr.com/embed/'),
             ),
+            'is_fieldset' => true,
         );
         return isset($key) ? @$info[$key] : $info;
     }
@@ -89,10 +90,10 @@ class Sabai_Addon_Markdown_FieldWidget implements Sabai_Addon_Field_IWidget
                 ? array('text' => $value['value'], 'filtered_text' => $value['filtered_value'])
                 : null,
             '#disable_external_links' => isset($settings['embed_external_links_perm'])
-                ? !$this->_addon->getApplication()->getUser()->hasPermission($settings['embed_external_links_perm'])
+                ? !$this->_addon->getApplication()->HasPermission($settings['embed_external_links_perm'])
                 : false,
             '#disable_external_resources' => isset($settings['embed_external_resources_perm'])
-                ? !$this->_addon->getApplication()->getUser()->hasPermission($settings['embed_external_resources_perm'])
+                ? !$this->_addon->getApplication()->HasPermission($settings['embed_external_resources_perm'])
                 : false,
             '#enable_iframe' => !empty($settings['iframe']),
             '#enable_iframe_urls' => !empty($settings['iframe_urls']) ? (array)$settings['iframe_urls'] : null,

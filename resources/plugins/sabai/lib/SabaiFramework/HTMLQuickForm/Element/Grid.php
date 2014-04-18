@@ -93,7 +93,7 @@ class SabaiFramework_HTMLQuickForm_Element_Grid extends HTML_QuickForm_ElementGr
             foreach (array_keys($this->_rows) as $key) {
                 $col = 0;
                 foreach (array_keys($this->_rows[$key]) as $key2) {
-                    $tbody->setCellContents($row, $col, $this->_rows[$key][$key2]->toHTML());
+                    $tbody->setCellContents($row, $col, $this->_rows[$key][$key2] ? $this->_rows[$key][$key2]->toHTML() : '');
                     $attributes = isset($this->_rowAttributes[$key]['@all']) ? $this->_rowAttributes[$key]['@all'] : array();
                     if (isset($this->_rowAttributes[$key][$key2])) $attributes = $this->_rowAttributes[$key][$key2] + $attributes;
                     if (!empty($attributes)) $tbody->setCellAttributes($row, $col, $attributes);

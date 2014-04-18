@@ -7,7 +7,7 @@ class Sabai_Addon_Directory_Controller_ListingReviews extends Sabai_Addon_Direct
     
     protected function _getLinks(Sabai_Context $context, $sort, Sabai_Addon_Entity_Model_Bundle $bundle = null)
     {
-        if (!$this->getUser()->isAnonymous() && !$this->getUser()->hasPermission($context->child_bundle->name . '_add')) {
+        if (!$this->getUser()->isAnonymous() && !$this->HasPermission($context->child_bundle->name . '_add')) {
             return array();
         }
         return array(
@@ -15,7 +15,7 @@ class Sabai_Addon_Directory_Controller_ListingReviews extends Sabai_Addon_Direct
                 __('Write a Review', 'sabai-directory'),
                 $this->Entity_Url($context->entity, '/' . $this->getAddon()->getSlug('reviews') . '/add'),
                 array('icon' => 'pencil'),
-                array('class' => 'sabai-btn sabai-btn-success sabai-btn-small')
+                array('class' => 'sabai-btn sabai-btn-small ' . $this->getAddon()->getConfig('display', 'buttons', 'review'))
             ),
         );
     }

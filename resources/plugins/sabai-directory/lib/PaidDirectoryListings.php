@@ -9,7 +9,7 @@ class Sabai_Addon_PaidDirectoryListings extends Sabai_Addon
                Sabai_Addon_System_IAdminMenus,
                Sabai_Addon_PaidListings_IPlanTypes
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.29', PACKAGE = 'sabai-directory';
     
     /* Start implementation of Sabai_Addon_System_IMainRouter */
     
@@ -47,6 +47,12 @@ class Sabai_Addon_PaidDirectoryListings extends Sabai_Addon
                 'controller_addon' => 'PaidDirectoryListings',
                 'priority' => 6,
                 'type' => Sabai::ROUTE_TAB,
+            ),
+            '/sabai/directory/add' => array(
+                'controller' => 'AddListing',
+                'type' => Sabai::ROUTE_CALLBACK,
+                'controller_addon' => 'PaidDirectoryListings',
+                'priority' => 6,
             ),
         );
         $routes += $this->_getMainRoutes($addon);
@@ -180,14 +186,8 @@ class Sabai_Addon_PaidDirectoryListings extends Sabai_Addon
         switch ($path) {
             case 'payments':
                 $context->addTemplateDir($this->_application->getPlatform()->getAssetsDir('sabai-directory') . '/templates');
-                if ($accessType === Sabai::ROUTE_ACCESS_CONTENT) {
-                    $context->setIcon('money');
-                }
                 return true;
             case 'settings':
-                if ($accessType === Sabai::ROUTE_ACCESS_CONTENT) {
-                    $context->setIcon('cogs');
-                }
                 return true;
         }
     }

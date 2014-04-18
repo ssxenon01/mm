@@ -13,14 +13,19 @@ class Sabai_Addon_PaidDirectoryListings_Controller_AddListing extends Sabai_Addo
     
     protected function _getFormForStepClaim(Sabai_Context $context, array &$formStorage)
     {
+        $listing = $this->Entity_Entity('content', $formStorage['listing_id'], false);
+        $bundle = $this->Entity_Bundle($listing);
+        $route = '/' . $this->getAddon($bundle->addon)->getDirectorySlug() . '/add';
         try {
-            $form = $this->PaidListings_OrderForm($this->Entity_Entity('content', $formStorage['listing_id'], false), 'directory_listing', $context->getRoute(), $this->getAddon()->getConfig('paypal'), __('Claim Listing', 'sabai-directory'));
+            $form = $this->PaidListings_OrderForm($listing, 'directory_listing', $route, $this->getAddon()->getConfig('paypal'), __('Claim Listing', 'sabai-directory'));
         } catch (Sabai_RuntimeException $e) {
             $context->setError($e->getMessage());
             return false;
         }
         $form += parent::_getFormForStepClaim($context, $formStorage);
+        $form['#action'] = $this->Url($route);
         $this->_submitButtons = false;
+        $this->_ajaxSubmit = false;
         
         return $form;
     }
@@ -32,6 +37,7 @@ class Sabai_Addon_PaidDirectoryListings_Controller_AddListing extends Sabai_Addo
             return false; // this should never happen
         }
         $this->_submitButtons = false;
+        $this->_ajaxSubmit = false;
         $entity = $this->Entity_Entity('content', $formStorage['listing_id'], false);
         return $this->PaidListings_ConfirmOrderForm(
             $entity,

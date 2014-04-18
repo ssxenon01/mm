@@ -115,7 +115,7 @@ class Sabai_Addon_Directory_Controller_Dashboard extends Sabai_Addon_Form_Contro
         $links = array();
         $directory_addons = $this->Directory_DirectoryList('addon');
         foreach (array_keys($directory_addons) as $directory_addon) {
-            if ($this->getUser()->hasPermission($this->getAddon($directory_addon)->getListingBundleName() . '_add')) {
+            if ($this->HasPermission($this->getAddon($directory_addon)->getListingBundleName() . '_add')) {
                 $links[] = $this->LinkTo(
                     $this->getAddon($directory_addon)->getDirectoryPageTitle(),
                     $this->Url('/' . $this->getAddon($directory_addon)->getDirectorySlug() . '/add')
@@ -128,11 +128,11 @@ class Sabai_Addon_Directory_Controller_Dashboard extends Sabai_Addon_Form_Contro
                     __('Add Listing', 'sabai-directory'),
                     $this->Url('/' . $this->getAddon('Directory')->getDirectorySlug() . '/add'),
                     array(),
-                    array('class' => 'sabai-btn-success')
+                    array('class' => $this->getAddon()->getConfig('display', 'buttons', 'listing'))
                 ));
             } else {
                 $links[0]->setLabel(__('Add Listing', 'sabai-directory'))
-                    ->setAttribute('class', 'sabai-btn-success');
+                    ->setAttribute('class', $this->getAddon()->getConfig('display', 'buttons', 'listing'));
             }
         }
         

@@ -21,7 +21,7 @@ class Sabai_Addon_Directory_Controller_EditReview extends Sabai_Addon_Content_Co
             ->sortByProperty('post_id', 'ASC')
             ->fetch();
         // Add photo upload field if the user has a valid permission
-        if ($this->getUser()->hasPermission($this->getAddon()->getPhotoBundleName() . '_add')) {
+        if ($this->HasPermission($this->getAddon()->getPhotoBundleName() . '_add')) {
             // Fetch photo file IDs
             $file_ids = array();
             foreach ($this->_currentPhotos as $photo) {
@@ -56,13 +56,6 @@ class Sabai_Addon_Directory_Controller_EditReview extends Sabai_Addon_Content_Co
         if (!$listing = $this->Content_ParentPost($review)) {
             return false;
         }
-        
-        $this->Voting_CastVote(
-            $listing,
-            'rating',
-            $review->getSingleFieldValue('directory_rating'),
-            array('name' => '', 'reference_id' => $review->getId(), 'user_id' => $review->getAuthorId(), 'is_edit' => true)
-        );
         
         // Update photos
         $current_photos = $submitted_photos = array();

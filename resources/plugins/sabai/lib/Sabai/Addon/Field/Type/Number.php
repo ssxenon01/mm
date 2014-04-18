@@ -88,11 +88,12 @@ class Sabai_Addon_Field_Type_Number extends Sabai_Addon_Field_Type_AbstractType
 
     public function fieldTypeOnSave(Sabai_Addon_Field_IField $field, array $values)
     {
+        $settings = $field->getFieldSettings();
         $ret = array();
         foreach ($values as $weight => $value) {
             if (!is_numeric($value)) continue;
 
-            $ret[]['value'] = round($value, 2);
+            $ret[]['value'] = round($value, $settings['decimals']);
         }
 
         return $ret;

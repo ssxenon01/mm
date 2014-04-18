@@ -14,7 +14,7 @@ class Sabai_Addon_Directory_Controller_EditListing extends Sabai_Addon_Content_C
         foreach ($this->_currentPhotos as $photo) {
             $file_ids[] = $photo->file_image[0]['id'];
         }
-        if ($this->getUser()->hasPermission($this->getAddon()->getPhotoBundleName() . '_add')) {
+        if ($this->HasPermission($this->getAddon()->getPhotoBundleName() . '_add')) {
             $photo_config = $this->getAddon()->getConfig('photo');
             if ($photo_config['max_num'] > 0) {
                 $form['photos'] = array(
@@ -121,7 +121,6 @@ class Sabai_Addon_Directory_Controller_EditListing extends Sabai_Addon_Content_C
             $this->getAddon('Content')->updateParentPost($listing, false, true, true);
         }
         
-        $context->setSuccess($this->Entity_Url($listing))
-            ->addFlash(__('The listing has been updated successfully.', 'sabai-directory'));
+        $context->setSuccess($this->Entity_Url($listing));
     }
 }

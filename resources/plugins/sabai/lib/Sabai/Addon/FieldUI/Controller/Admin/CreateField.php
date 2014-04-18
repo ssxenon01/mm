@@ -195,14 +195,21 @@ class Sabai_Addon_FieldUI_Controller_Admin_CreateField extends Sabai_Addon_Form_
         // Add an option to make this field repeatable if the selected widget supports the feature
         if (!$ifieldwidget->fieldWidgetGetInfo('accept_multiple')) {
             if ($ifieldwidget->fieldWidgetGetInfo('repeatable')) {
-                $form['basic']['max_num_items'] = array(
-                    '#type' => 'select',
-                    '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
-                    '#title' => __('Maximum number of values', 'sabai'),
-                    '#description' => __('Maximum number of values users can enter for this field. The "Unlimited" option will display an "Add another item" link so the users can add as many values as they like.', 'sabai'),
-                    '#default_value' => $this->_getMaxNumItemsDefault($ifieldtype, 1),
-                    '#weight' => 60,
-                );
+                if (!$ifieldwidget->fieldWidgetGetInfo('disable_edit_max_num_items')) {
+                    $form['basic']['max_num_items'] = array(
+                        '#type' => 'select',
+                        '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
+                        '#title' => __('Maximum number of values', 'sabai'),
+                        '#description' => __('Maximum number of values users can enter for this field. The "Unlimited" option will display an "Add another item" link so the users can add as many values as they like.', 'sabai'),
+                        '#default_value' => $this->_getMaxNumItemsDefault($ifieldtype, 1),
+                        '#weight' => 60,
+                    );
+                } else {
+                    $form['basic']['max_num_items'] = array(
+                        '#type' => 'hidden',
+                        '#value' => $this->_getMaxNumItemsDefault($ifieldtype, 1),
+                    );
+                }
             } else {
                 $form['basic']['max_num_items'] = array(
                     '#type' => 'hidden',
@@ -210,14 +217,21 @@ class Sabai_Addon_FieldUI_Controller_Admin_CreateField extends Sabai_Addon_Form_
                 );
             }
         } else {
-            $form['basic']['max_num_items'] = array(
-                '#type' => 'select',
-                '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
-                '#title' => __('Maximum number of values', 'sabai'),
-                '#description' => __('Maximum number of values users can enter for this field.', 'sabai'),
-                '#default_value' => $this->_getMaxNumItemsDefault($ifieldtype, 0),
-                '#weight' => 60,
-            );
+            if (!$ifieldwidget->fieldWidgetGetInfo('disable_edit_max_num_items')) {
+                $form['basic']['max_num_items'] = array(
+                    '#type' => 'select',
+                    '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
+                    '#title' => __('Maximum number of values', 'sabai'),
+                    '#description' => __('Maximum number of values users can enter for this field.', 'sabai'),
+                    '#default_value' => $this->_getMaxNumItemsDefault($ifieldtype, 0),
+                    '#weight' => 60,
+                );
+            } else {
+                $form['basic']['max_num_items'] = array(
+                    '#type' => 'hidden',
+                    '#value' => $this->_getMaxNumItemsDefault($ifieldtype, 0),
+                );
+            }
         }
 
         if (!$this->_field) {
@@ -281,6 +295,8 @@ class Sabai_Addon_FieldUI_Controller_Admin_CreateField extends Sabai_Addon_Form_
             '#type' => 'hidden',
             '#value' => $context->getRequest()->asStr('ele_id'),
         );
+
+        $form['#field_type'] = $this->_fieldType;
 
         return $form;
     }

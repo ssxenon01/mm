@@ -32,15 +32,13 @@ class Sabai_Addon_Field_Widget_Checkbox extends Sabai_Addon_Field_Widget_Abstrac
 
     public function fieldWidgetGetForm(Sabai_Addon_Field_IField $field, array $settings, $value = null, array $parents = array())
     {
-        $form = array(
+        return array(
             '#type' => 'checkbox',
             '#on_value' => 1,
             '#off_value' => 0,
             '#on_label' => $settings['checkbox_label'],
             '#default_value' => isset($value) ? $value : !empty($settings['checked']),
         );
-        
-        return $form;
     }
     
     public function fieldWidgetGetPreview(Sabai_Addon_Field_IField $field, array $settings)

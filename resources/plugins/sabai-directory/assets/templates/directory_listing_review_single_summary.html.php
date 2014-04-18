@@ -5,7 +5,7 @@
 <?php   if (!empty($entity->data['directory_listing_photos'])): $photo = $entity->data['directory_listing_photos'][0];?>
             <?php echo $this->File_ThumbnailLink($listing, $photo->file_image[0], array('link_entity' => true));?>
 <?php   else:?>
-            <img src="<?php echo $this->ImageUrl('no_image_small.png');?>" alt="" />
+            <img src="<?php echo $this->NoImageUrl(true);?>" alt="" />
 <?php   endif;?>
             <span><?php echo $this->Entity_Permalink($listing);?></span>
 <?php   if (!empty($listing->voting_rating['']['count'])):?>

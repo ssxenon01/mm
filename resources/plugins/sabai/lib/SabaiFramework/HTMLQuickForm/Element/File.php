@@ -23,6 +23,11 @@ class SabaiFramework_HTMLQuickForm_Element_File extends HTML_QuickForm_file
     public function setMultiple($flag = true)
     {
         $this->_multiple = (bool)$flag;
+        if ($flag) {
+            $this->setAttribute('multiple', 'multiple');
+        } else {
+            $this->removeAttribute('multiple');
+        }
     }
 
     /**

@@ -5,8 +5,8 @@ $content = ob_get_clean();
 ?>
 <script type="text/javascript">
 google.load("maps", "3", {other_params:"sensor=false&libraries=places&language=<?php echo $this->GoogleMaps_Language();?>", callback:function () {
-    $LAB.script("<?php echo $this->JsUrl('directionmap.js', 'sabai-directory');?>")
-        .script("<?php echo $this->JsUrl('autocomplete.js', 'sabai-directory');?>").wait(function(){
+    $LAB.script("<?php echo $this->JsUrl('sabai-googlemaps-directionmap.js', 'sabai-directory');?>")
+        .script("<?php echo $this->JsUrl('sabai-googlemaps-autocomplete.js', 'sabai-directory');?>").wait(function(){
             SABAI.GoogleMaps.directionMap(
                 "#sabai-directory-map",
                 <?php echo ($lat = $entity->getSingleFieldValue('directory_location', 'lat')) ? $lat : 'null';?>,
@@ -18,7 +18,7 @@ google.load("maps", "3", {other_params:"sensor=false&libraries=places&language=<
                 '#sabai-directory-map-direction-panel',
                 <?php echo json_encode($this->Config('Directory', 'map', 'options') + array('icon' => $this->Directory_ListingMapMarkerUrl($entity), 'zoom' => isset($map_settings['listing_default_zoom']) ? intval($map_settings['listing_default_zoom']) : 15, 'styles' => $map_settings['style'] ? $this->GoogleMaps_Style($map_settings['style']) : null));?>
             );
-            SABAI.GoogleMaps.autocomplete(".sabai-directory-direction-location input");
+            SABAI.GoogleMaps.autocomplete(".sabai-directory-direction-location input", {componentRestrictions: {<?php if ($country):?>country: "<?php echo $country;?>"<?php endif;?>}});
         });
 }});
 </script>
@@ -32,7 +32,7 @@ google.load("maps", "3", {other_params:"sensor=false&libraries=places&language=<
             <option value="BICYCLING"><?php echo __('Bicycling', 'sabai-directory');?></option>
         </select>
     </div>
-    <div class="sabai-span3 sabai-directory-search-btn"><button class="sabai-btn sabai-btn-small sabai-btn-primary sabai-directory-search-submit"><?php echo __('Get Directions', 'sabai-directory');?></button></div>
+    <div class="sabai-span3 sabai-directory-search-btn"><button class="sabai-btn sabai-btn-small <?php Sabai::_h($button);?> sabai-directory-search-submit"><?php echo __('Get Directions', 'sabai-directory');?></button></div>
 </div>
 <div id="sabai-directory-map" class="sabai-googlemaps-map" style="height:400px;"></div>
 <div id="sabai-directory-map-direction-panel" style="height:200px; overflow:scroll; display:none;"></div>

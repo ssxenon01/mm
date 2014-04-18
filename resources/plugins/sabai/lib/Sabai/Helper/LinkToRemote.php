@@ -54,13 +54,12 @@ class Sabai_Helper_LinkToRemote extends Sabai_Helper
         }
         if (!empty($options['post']) || self::$_alwaysPost) {
             $ajax_options[] = "type:'post'";
-            $ajax_params = $ajax_url['params'] + array(Sabai_Request::PARAM_AJAX => $update);
             if (empty($options['sendData'])) {
                 // Use http_build_query instead of json_encode so that boolean values are converted to integers
-                $ajax_options[] = sprintf('data:"%s"', strtr(http_build_query($ajax_params), array('%7E' => '~', '+' => '%20')));
+                $ajax_options[] = sprintf('data:"%s"', strtr(http_build_query($ajax_url['params']), array('%7E' => '~', '+' => '%20')));
             } else {
                 // However, we use json_encode since the sendData callback expects the data parameter to be an object instead of a query string
-                $ajax_options[] = sprintf('data:%s', json_encode($ajax_params));
+                $ajax_options[] = sprintf('data:%s', json_encode($ajax_url['params']));
             }
             $ajax_url['params'] = array();
         }

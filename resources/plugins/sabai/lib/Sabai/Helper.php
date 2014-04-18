@@ -1,9 +1,12 @@
 <?php
-class Sabai_Helper
+abstract class Sabai_Helper
 {
-    public function help(Sabai $application)
+    public function __call($name, $arguments)
     {
-        throw new BadMethodCallException(sprintf('%s::%s may not be called directly', __CLASS__, __METHOD__));
+        if ($name === 'help') {
+            throw new BadMethodCallException(sprintf('%s::help(Sabai $application) must be implemented', get_class($this)));
+        }
+        throw new BadMethodCallException(sprintf('Call to undefined method %s::%s()', get_class($this), $name));
     }
     
     public function reset(Sabai $application){}

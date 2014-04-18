@@ -166,7 +166,11 @@ class SabaiFramework_HTMLQuickForm_Renderer_Array extends SabaiFramework_HTMLQui
             ) {
                 $element->removeAttribute('size');
                 if (strpos($element->getAttribute('style'), 'em')) {
-                    $element->setAttribute('style', 'width:98%;');
+                    if ($ret['field_prefix'] || $ret['field_suffix']) {
+                        $element->setAttribute('style', 'width:90%;');
+                    } else {
+                        $element->setAttribute('style', 'width:98%;');
+                    }
                 }
             }
             $ret['html'] = $element->toHtml();

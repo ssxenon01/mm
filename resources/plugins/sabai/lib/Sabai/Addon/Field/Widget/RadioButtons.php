@@ -9,6 +9,7 @@ class Sabai_Addon_Field_Widget_RadioButtons extends Sabai_Addon_Field_Widget_Abs
             'default_settings' => array(
                 'inline' => false,
             ),
+            'is_fieldset' => true,
         );
     }
 
@@ -39,6 +40,7 @@ class Sabai_Addon_Field_Widget_RadioButtons extends Sabai_Addon_Field_Widget_Abs
     
     public function fieldWidgetGetPreview(Sabai_Addon_Field_IField $field, array $settings)
     {
+        $ret = array();
         $field_settings = $field->getFieldSettings();
         foreach ($field_settings['options']['options'] as $value => $label) {
             $ret[] = sprintf('<input type="radio" disabled="disabled"%s />%s', in_array($value, $field_settings['options']['default']) ? ' checked="checked"' : '', Sabai::h($label));
@@ -46,7 +48,7 @@ class Sabai_Addon_Field_Widget_RadioButtons extends Sabai_Addon_Field_Widget_Abs
         if ($settings['inline']) {
             return implode('&nbsp;&nbsp;', $ret);
         }
-        return '<div>' . implode('</div><div>', $ret) . '</div>';
+        return implode('<br />', $ret);
     }
 
     public function fieldWidgetGetEditDefaultValueForm($fieldType, array $fieldSettings, array $settings, array $parents = array())

@@ -2,7 +2,7 @@
 class Sabai_Addon_jQuery extends Sabai_Addon
     implements Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {
@@ -16,7 +16,7 @@ class Sabai_Addon_jQuery extends Sabai_Addon
         $this->_application->jQuery_LoadJson2($response);
         $assets_url = $this->_application->getPlatform()->getAssetsUrl();
         $this->_application->LoadJs($response, $assets_url . '/js/jquery.scrollTo.min.js', 'jquery-scrollto', 'jquery');
-        $this->_application->LoadJs($response, $assets_url . '/js/jquery.sabai.js', 'sabai', 'jquery');
+        $this->_application->LoadJs($response, $assets_url . '/js/sabai.js', 'sabai', 'jquery');
         $this->_application->LoadJs($response, $assets_url . '/js/jquery.autosize.min.js', 'jquery-autosize', 'jquery');
         $this->_application->LoadJs($response, $assets_url . '/js/select2.min.js', 'select2', 'jquery');
         $this->_application->LoadJs($response, $assets_url . '/js/jquery.cookie.js', 'jquery-cookie', 'jquery');

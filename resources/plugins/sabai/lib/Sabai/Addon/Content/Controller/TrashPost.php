@@ -3,7 +3,7 @@ class Sabai_Addon_Content_Controller_TrashPost extends Sabai_Addon_Form_Controll
 {
     protected function _doGetFormSettings(Sabai_Context $context, array &$formStorage)
     {
-        if (!$this->getUser()->hasPermission($context->entity->getBundleName() . '_manage')) {
+        if (!$this->HasPermission($context->entity->getBundleName() . '_manage')) {
             $bundle = $this->Entity_Bundle($context->entity);
             if (!$bundle) {
                 return false;
@@ -44,7 +44,7 @@ class Sabai_Addon_Content_Controller_TrashPost extends Sabai_Addon_Form_Controll
         $this->_cancelUrl = $this->Entity_Url($context->entity);
         $this->_submitButtons['submit'] = array(
             '#value' => sprintf(__('Delete %s', 'sabai'), $this->Entity_BundleLabel($this->Entity_Bundle($context->entity), true)),
-            '#btn_type' => 'primary',
+            '#btn_type' => 'danger',
         );
         $this->_ajaxCancelType = 'none';
         if ($delete_target_id = $context->getRequest()->asStr('delete_target_id')) {

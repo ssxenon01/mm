@@ -8,20 +8,24 @@ class Sabai_Addon_Directory_Controller_Admin_EditListing extends Sabai_Addon_Con
         // Fetch current photos
         $this->_currentPhotos = $this->_getCurrentPhotos($context);
         // Fetch photo file IDs
-        $file_ids = array();
+        $file_ids = $row_attr = array();
         foreach ($this->_currentPhotos as $photo) {
-            $file_ids[] = $photo->file_image[0]['id'];
+            $file_ids[] = $file_id = $photo->file_image[0]['id'];
+            if (!$photo->isPublished()) {
+                $row_attr[$file_id]['@row']['class'] = 'sabai-muted';
+            }
         }
         $form['photos'] = array(
             '#type' => 'file_upload',
-            '#max_file_size' => $this->getAddon()->getConfig('photo', 'max_file_size'),
+            '#max_file_size' => $this->getAddon($context->bundle->addon)->getConfig('photo', 'max_file_size'),
             '#multiple' => true,
             '#allow_only_images' => true,
             '#default_value' => empty($file_ids) ? null : $file_ids,
-            '#max_num_files' => $this->getAddon()->getConfig('photo', 'max_num_owner'),
+            '#max_num_files' => $this->getAddon($context->bundle->addon)->getConfig('photo', 'max_num_owner'),
             '#weight' => 99,
             '#sortable' => true,
             '#title' => __('Photos', 'sabai-directory'),
+            '#row_attributes' => $row_attr,
         );
         
         return $form;
@@ -30,8 +34,8 @@ class Sabai_Addon_Directory_Controller_Admin_EditListing extends Sabai_Addon_Con
     protected function _getCurrentPhotos(Sabai_Context $context)
     {
         return $this->Entity_Query()
-            ->propertyIs('post_entity_bundle_name', $this->getAddon()->getPhotoBundleName())
-            ->propertyIs('post_status', Sabai_Addon_Content::POST_STATUS_PUBLISHED)
+            ->propertyIs('post_entity_bundle_name', $this->getAddon($context->bundle->addon)->getPhotoBundleName())
+            ->propertyIsIn('post_status', array(Sabai_Addon_Content::POST_STATUS_DRAFT, Sabai_Addon_Content::POST_STATUS_PENDING, Sabai_Addon_Content::POST_STATUS_PUBLISHED))
             ->fieldIsNotNull('directory_photo', 'official')
             ->fieldIs('content_parent', $context->entity->getId())
             ->sortByField('directory_photo', 'ASC', 'display_order')
@@ -69,9 +73,9 @@ class Sabai_Addon_Directory_Controller_Admin_EditListing extends Sabai_Addon_Con
             if ($new_photos = array_diff_key($submitted_photos, $current_photos)) {
                 foreach ($new_photos as $new_photo_file_id => $new_photo_title) {
                     $this->_application->getAddon('Entity')->createEntity(
-                        $this->getAddon()->getPhotoBundleName(),
+                        $this->getAddon($context->bundle->addon)->getPhotoBundleName(),
                         array(
-                            'content_post_status' => Sabai_Addon_Content::POST_STATUS_PUBLISHED,
+                            'content_post_status' => $entity->getStatus(),
                             'content_post_title' => $new_photo_title,
                             'file_image' => array('id' => $new_photo_file_id),
                             'content_parent' => $context->entity->getId(),

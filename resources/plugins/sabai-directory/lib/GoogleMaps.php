@@ -4,7 +4,7 @@ class Sabai_Addon_GoogleMaps extends Sabai_Addon
                Sabai_Addon_Field_ITypes,
                Sabai_Addon_Field_IWidgets
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.29', PACKAGE = 'sabai-directory';
     
     /* Start implementation of Sabai_Addon_Form_IFields */
 

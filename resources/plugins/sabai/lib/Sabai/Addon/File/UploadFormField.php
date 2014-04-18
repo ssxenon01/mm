@@ -15,7 +15,7 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
 
         // Add file upload field
         $allowed_extensions = isset($data['#allowed_extensions']) ? $data['#allowed_extensions'] : array('jpeg', 'jpg', 'gif', 'png', 'txt', 'pdf', 'zip');
-        $max_file_size = !empty($data['#max_file_size']) ? $data['#max_file_size'] : 1000;
+        $max_file_size = !empty($data['#max_file_size']) ? $data['#max_file_size'] : 1024;
         $allow_only_images = !empty($data['#allow_only_images']);
 
         $file_settings = $data;
@@ -28,7 +28,7 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             )
         );
         $file_settings['#upload_dir'] = null; // file is uploaded by the storage plugin
-        $file_settings['#max_file_size'] = $max_file_size * 1024;
+        $file_settings['#max_file_size'] = $max_file_size;
         $file_settings['#allowed_extensions'] = $allowed_extensions;
         $file_settings['#allowed_only_images'] = $allow_only_images;
         $file_settings['#collapsible'] = false;
@@ -107,6 +107,7 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             }
         }
 
+        $max_file_size_str = $max_file_size >= 1024 ? round($max_file_size / 1024, 1) . 'MB' : $max_file_size . 'KB';
         $current_file_element = array(
             '#type' => 'grid',
             '#attributes' => array('id' => $file_settings['#attributes']['id'] . '-current'),
@@ -116,6 +117,10 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
                 ? array('thumbnail' => array('style' => 'width:25%;'))
                 : array(),
             '#row_attributes' => $row_attr,
+            '#description' => $data['#max_num_files']
+                ? sprintf(__('Maximum number of files %d, maximum file size %s.', 'sabai'), $data['#max_num_files'], $max_file_size_str)
+                : sprintf(__('Maximum file size %s.', 'sabai'), $max_file_size_str),
+            '#disable_template_override' => true,
         );
         if ($allow_only_images) {
             $current_file_element['#children'][0] = array(
@@ -176,7 +181,7 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             }
             self::$_uploadFields[$file_settings['#attributes']['id']] = array(
                 'name' => $name,
-                'multiple' => $data['#multiple'],
+                'multiple' => $data['#max_num_files'] !== 1,
                 'uploader_settings' => array(
                     'allowed_extensions' => $allowed_extensions,
                     'max_file_size' => $max_file_size * 1024,
@@ -188,6 +193,7 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
                     'max_num_files' => $data['#max_num_files'],
                     'thumbnail' => !isset($file_settings['#thumbnail']) || false !== $file_settings['#thumbnail'],
                     'thumbnail_width' => !empty($file_settings['#thumbnail_width']) ? $file_settings['#thumbnail_width'] : null,
+                    'thumbnail_height' => !empty($file_settings['#thumbnail_height']) ? $file_settings['#thumbnail_height'] : null,
                     'medium_image' => !isset($file_settings['#medium_image']) || false !== $file_settings['#medium_image'],
                     'medium_image_width' => !empty($file_settings['#medium_image_width']) ? $file_settings['#medium_image_width'] : null,
                     'large_image' => !isset($file_settings['#large_image']) || false !== $file_settings['#large_image'],
@@ -217,9 +223,18 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             );
             if ($form->hasError($name . '[upload]')) {
                 foreach ($form->getError($name . '[upload]') as $upload_error) {
-                    $form->setError($upload_error, $name);
+                    $form->setError($upload_error, $name . '[current]');
                 }
                 return;
+            }
+            
+            // Process custom validations if any
+            foreach ($data['#_file_settings']['#element_validate'] as $callback) {
+                try {
+                    $this->_addon->getApplication()->CallUserFuncArray($callback, array($form, &$value['upload'], $data['#_file_settings']));
+                } catch (Sabai_IException $e) {
+                    $form->setError($e->getMessage(), $name . '[current]');
+                }
             }
 
             // Save any newly uploaded file
@@ -287,8 +302,8 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             }
         }
         
-        if (!empty($data['#max_num_files']) && count($value) > $data['#max_num_files']) {
-            $form->setError(sprintf(__('You may not upload more than %d files.', 'sabai'), $data['#max_num_files']), $name);
+        if ($data['#max_num_files'] && count($value) > $data['#max_num_files']) {
+            $form->setError(sprintf(__('You may not upload more than %d files.', 'sabai'), $data['#max_num_files']), $name . '[current]');
         }
     }
 
@@ -359,62 +374,27 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             $token->settings = $upload['uploader_settings'];
             $token->markNew();
             $js[] = sprintf('(function($){
-    SABAI.File.fineUploader({
+    SABAI.File.upload({
         tableSelector: "#%1$s-current",
-        maxNumFiles: %11$d,
         uploaderSelector: "#%1$s-uploader",
-        formSelector: "#%12$s",
-        maxNumFileExceededError: "%13$s",
-        inputType: "%6$s",
+        url: "%2$s",
         inputName: "%3$s",
-        sortable: %14$s,
-        fineUploaderOptions: {
-            request: {
-                endpoint: "%2$s",
-                params: {"sabai_file_form_build_id": "%4$s", "sabai_file_upload_token": "%5$s"}
-            },
-            inputName: "qqfile",
-            validation: {
-                allowedExtensions: %9$s,
-                sizeLimit: %10$d
-            },
-            failedUploadTextDisplay: {
-                mode: "custom",
-                maxChars: 60,
-                responseProperty: "error",
-                enableTooltip: true
-            },
-            text: {
-                uploadButton: "<span class=\"sabai-btn sabai-btn-mini\"><i class=\"sabai-icon-upload-alt\"></i> %8$s</span>",
-                cancelButton: "%15$s",
-                retryButton: "%16$s",
-                failUpload: "%17$s",
-                dragZone: "%18$s",
-                formatProgress: "{percent}% / {total_size}",
-                waitingForResponse: "%19$s"
-            }
-        }
+        formData: {"sabai_file_form_build_id": "%4$s", "sabai_file_upload_token": "%5$s"},
+        maxNumFiles: %6$d,
+        formSelector: "#%7$s",
+        sortable: %8$s,
+        maxNumFileExceededError: "%9$s",
     });
 })(jQuery);',
                 Sabai::h($upload_id),
-                $this->_addon->getApplication()->MainUrl('/sabai/file/upload'),
+                $this->_addon->getApplication()->Url('/sabai/file/upload'),
                 Sabai::h($upload['name']),
                 Sabai::h($form->settings['#build_id']),
                 $token->hash,
-                $upload['multiple'] ? 'checkbox' : 'radio',
-                $upload['multiple'] ? '[current][0][check][]' : '[current][0]',
-                __('Select File', 'sabai'),
-                json_encode($upload['uploader_settings']['image_only'] ? array('png', 'jpg', 'jpeg', 'gif') : $upload['uploader_settings']['allowed_extensions']),
-                $upload['uploader_settings']['max_file_size'],
-                $upload['uploader_settings']['max_num_files'],
+                $upload['uploader_settings']['max_num_files'] > 0 ? $upload['uploader_settings']['max_num_files'] : 0,
                 $form->settings['#id'],
-                sprintf(_n('You may not upload more than %d file.', 'You may not upload more than %d files', $upload['uploader_settings']['max_num_files'], 'sabai'), $upload['uploader_settings']['max_num_files']),
                 $upload['sortable'] ? 'true' : 'false',
-                __('Cancel', 'sabai'),
-                __('Retry', 'sabai'),
-                __('Upload failed', 'sabai'),
-                __('Drop files here to upload', 'sabai'),
-                __('Processing...', 'sabai')                    
+                sprintf(_n('You may not upload more than %d file.', 'You may not upload more than %d files', $upload['uploader_settings']['max_num_files'], 'sabai'), $upload['uploader_settings']['max_num_files'])
             );
         }
 
@@ -428,11 +408,13 @@ class Sabai_Addon_File_UploadFormField implements Sabai_Addon_Form_IField
             return;
         }
 
-        $form->addJs(sprintf('$LAB.script("%s").wait().script("%s").wait(function(){
+        $form->addJs(sprintf('$LAB.script("%s").script("%s").script("%s").wait().script("%s").wait(function(){
   %s
 });',
-            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/jquery.fineuploader-3.0.min.js',
-            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/fineuploader.js',
+            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/jquery.ui.widget.js',
+            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/jquery.iframe-transport.js',
+            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/jquery.fileupload.js',
+            $this->_addon->getApplication()->getPlatform()->getAssetsUrl() . '/js/sabai-file-upload.js',
             implode(PHP_EOL, $js)
         ));
     }

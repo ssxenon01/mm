@@ -45,7 +45,7 @@ class Sabai_Addon_Content_Helper_RenderTitle extends Sabai_Helper
         } else {
             $title = isset($altTitle) ? $altTitle : $entity->getTitle();
             if ($link) {
-                $title = $application->Entity_Permalink($entity, array('title' => $title));
+                $title = $application->Entity_Permalink($entity, array('title' => $title, 'atts' => array('title' => $title)));
             } else {
                 $title = Sabai::h($title);
             }

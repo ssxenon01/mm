@@ -7,7 +7,9 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
     {
         $context->clearTabs();
         $settings = parent::_doGetFormSettings($context, $formStorage);
-        $this->_ajaxSubmit = true;
+        if (!isset($this->_ajaxSubmit)) {
+            $this->_ajaxSubmit = true;
+        }
         $this->_ajaxCancelType = 'none';
         return $settings;
     }
@@ -26,7 +28,7 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
         $options = $this->Directory_DirectoryList();
         
         foreach (array_keys($options) as $directory_listing_bundle) {
-            if (!$this->getUser()->hasPermission($directory_listing_bundle . '_add')) {
+            if (!$this->HasPermission($directory_listing_bundle . '_add')) {
                 unset($options[$directory_listing_bundle]);
             }
         }
@@ -40,6 +42,9 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
         $options = $this->_getSubmittableDiretctories($context);
         if (empty($options)) {
             // The user is not allowed to submit listings to any directory
+            if ($this->getUser()->isAnonymous()) {
+                $context->setUnauthorizedError();
+            }
             return false;
         }
         if (!$context->getRequest()->isPostMethod()) {
@@ -53,6 +58,9 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
                     $addon = $this->getAddon($context->addon);
                     if ($addon instanceof Sabai_Addon_Directory) {
                         $bundle = $addon->getListingBundleName();
+                        if (!isset($options[$bundle])) {
+                            unset($bundle);
+                        }
                     }
                 } catch (Sabai_IException $e) {
                     $this->LogError($e);
@@ -99,7 +107,7 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
         $form = $this->Entity_Form($bundle->name, $values);
         unset($form['directory_claim']);
         // Add photo upload field if the user has a valid permission
-        if ($this->getUser()->hasPermission($this->getAddon($bundle->addon)->getPhotoBundleName() . '_add')) {
+        if ($this->HasPermission($this->getAddon($bundle->addon)->getPhotoBundleName() . '_add')) {
             $photo_config = $this->getAddon($bundle->addon)->getConfig('photo');
             if ($photo_config['max_num'] > 0) {
                 $form['photos'] = array(
@@ -132,7 +140,7 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
     {
         if (empty($form->storage['listing_id'])) {
             $bundle_name = $form->storage['values']['select_directory']['bundle'];
-            $status = $this->getUser()->hasPermission($bundle_name . '_add2') // can post without approval?
+            $status = $this->HasPermission($bundle_name . '_add2') // can post without approval?
                 ? Sabai_Addon_Content::POST_STATUS_PUBLISHED
                 : Sabai_Addon_Content::POST_STATUS_PENDING;
             // Create listing and save entity id into session for later use
@@ -203,7 +211,7 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
                 '#default_value' => $this->getUser()->email,
             ),
             'comment' => array(
-                '#required' => true,
+                '#required' => $this->Entity_Addon($entity)->getConfig('claims', 'no_comment') ? false : true,
                 '#type' => 'markdown_textarea',
                 '#title' => __('Comment', 'sabai-directory'),
                 '#description' => __('Please provide additional information that will allow us to verify your claim.', 'sabai-directory'),
@@ -269,9 +277,9 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
         return $claim->commit();
     }
     
-    protected function _complete(Sabai_Context $context, Sabai_Addon_Form_Form $form)
+    protected function _complete(Sabai_Context $context, array $formStorage)
     {
-        $entity = $this->Entity_Entity('content', $form->storage['listing_id'], false);
+        $entity = $this->Entity_Entity('content', $formStorage['listing_id'], false);
         if (!$entity) {
             return; // this should never happen
         }
@@ -281,8 +289,8 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
         }
         // Display message
         $messages = array();
-        if (@$form->storage['claim_id']) {
-            $claim = $this->getModel('Claim', 'Directory')->fetchById($form->storage['claim_id']);
+        if (@$formStorage['claim_id']) {
+            $claim = $this->getModel('Claim', 'Directory')->fetchById($formStorage['claim_id']);
             if (!$claim) {
                 return; // this should never happen
             }

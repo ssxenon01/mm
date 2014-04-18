@@ -89,14 +89,7 @@ abstract class Sabai_Addon_Form_Controller extends Sabai_Controller
         $form = $this->_doGetFormSettings($context, $formStorage);
 
         // Make sure an array is returned by the _getForm() method if displaying a form
-        if (!is_array($form)) return;
-
-        // Auto define form name if not alreaady set
-        if (!isset($form['#name']) || strlen($form['#name']) === 0) {
-            // Replace the long Sabai_XXX_Controller prefix with XXX,
-            // where XXX stands for the name of current running plugin
-            $form['#name'] = $this->_getFormName(get_class($this));
-        }
+        if (!is_array($form)) return $form;
         
         // Get all inherited class names
         if (!isset($form['#inherits'])) {
@@ -107,6 +100,15 @@ abstract class Sabai_Addon_Form_Controller extends Sabai_Controller
             $form['#inherits'][] = $this->_getFormName($class);
         }
 
+        // Auto define form name if not alreaady set, otherwise add to #inherits
+        if (!isset($form['#name']) || strlen($form['#name']) === 0) {
+            // Replace the long Sabai_XXX_Controller prefix with XXX,
+            // where XXX stands for the name of current running plugin
+            $form['#name'] = $this->_getFormName(get_class($this));
+        } else {
+            $form['#inherits'][] = $this->_getFormName(get_class($this));
+        }
+        
         // Initialize some required form properties
         $form['#build_id'] = $formBuildId;
         $form['#initial_storage'] = $formStorage;
@@ -132,12 +134,9 @@ abstract class Sabai_Addon_Form_Controller extends Sabai_Controller
                 // Create cancel link that will close the form
                 $cancel_link = $this->_getAjaxCancelLink($ajax_param);
             }
-            if ($this->_ajaxSubmit) {
-                // Add ajax target ID as hidden value
-                $form[Sabai_Request::PARAM_AJAX] = array(
-                    '#type' => 'hidden',
-                    '#value' => $ajax_param,
-                );
+            if ($this->_ajaxOnSuccessFlash) {
+                // Do not save flash messages for the next page load
+                $context->setFlashEnabled(false);
             }
         } else {
             if (!isset($this->_ajaxSubmit)) {
@@ -235,12 +234,12 @@ abstract class Sabai_Addon_Form_Controller extends Sabai_Controller
             case 'slide':
                 return sprintf(
                     '<a class="form-cancel-link sabai-form-action" href="%1$s" onclick="jQuery(\'%1$s\').slideUp(\'fast\'); var callback = %3$s; callback.call(this, jQuery(\'%1$s\')); return false">%2$s</a>',
-                    Sabai::h($ajaxParam), __('cancel', 'sabai'), $this->_ajaxOnCancel
+                    Sabai::h($ajaxParam), __('cancel', 'sabai'), str_replace('"', "'", $this->_ajaxOnCancel)
                 );
             case 'fade':
                 return sprintf(
                     '<a class="form-cancel-link sabai-form-action" href="%1$s" onclick="jQuery(\'%1$s\').fadeOut(\'fast\'); var callback = %3$s; callback.call(this, jQuery(\'%1$s\')); return false">%2$s</a>',
-                    Sabai::h($ajaxParam), __('cancel', 'sabai'), $this->_ajaxOnCancel
+                    Sabai::h($ajaxParam), __('cancel', 'sabai'), str_replace('"', "'", $this->_ajaxOnCancel)
                 );
             case 'remote':
                 if (isset($this->_cancelUrl)) {
@@ -255,7 +254,7 @@ abstract class Sabai_Addon_Form_Controller extends Sabai_Controller
             default:
                 return sprintf(
                     '<a class="form-cancel-link sabai-form-action" href="%1$s" onclick="jQuery(\'%1$s\').hide(\'fast\'); var callback = %3$s; callback.call(this, jQuery(\'%1$s\')); return false">%2$s</a>',
-                    Sabai::h($ajaxParam), __('cancel', 'sabai'), $this->_ajaxOnCancel
+                    Sabai::h($ajaxParam), __('cancel', 'sabai'), str_replace('"', "'", $this->_ajaxOnCancel)
                 );
         }
     }
@@ -276,8 +275,8 @@ jQuery(document).ready(function($){
         // Form.serialize() will not include the value of submit button so append the value as a hidden element.
         form.append($this.clone().attr("type", "hidden"));
 
-        SABAI.ajax({trigger: $this, type: form.attr("method"), target: "%1$s", url: "%2$s", onSuccess: %3$s,
-            onSuccessFlash: %6$s, onError: %4$s, onContent: %5$s, data: "__ajax=%1$s&" + form.serialize(), scrollTo: "%1$s"
+        SABAI.ajax({trigger: $this, type: form.attr("method"), target: "%1$s", modalWidth: 0, url: "%2$s", onSuccess: %3$s,
+            onSuccessFlash: %6$s, onError: %4$s, onContent: %5$s, data: form.serialize(), scrollTo: "%1$s"
         });
 
         e.preventDefault();

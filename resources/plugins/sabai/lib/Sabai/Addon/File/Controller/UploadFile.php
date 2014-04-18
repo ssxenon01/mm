@@ -48,18 +48,19 @@ class Sabai_Addon_File_Controller_UploadFile extends Sabai_Controller
             return;
         }
         
-        if (!empty($_FILES['qqfile'])) {
+        if (!empty($_FILES['sabai_file'])) {
             // Upload from IE
-            if (!empty($_FILES['qqfile']['error'])) {
-                $context->error = sprintf(__('Failed uploading file. Error code: %d', 'sabai'), $_FILES['qqfile']['error']);
+            if (!empty($_FILES['sabai_file']['error'])) {
+                $context->error = sprintf(__('Failed uploading file. Error code: %d', 'sabai'), $_FILES['sabai_file']['error']);
                 return;
             }
-            $tmp_name = $tmp_dir . '/' . basename($_FILES['qqfile']['tmp_name']);
-            if (!move_uploaded_file($_FILES['qqfile']['tmp_name'], $tmp_name)) {
+            $tmp_name = $tmp_dir . '/' . basename($_FILES['sabai_file']['tmp_name']);
+            if (!move_uploaded_file($_FILES['sabai_file']['tmp_name'], $tmp_name)) {
                 $context->error = __('Failed creating temporary file', 'sabai');
                 return;
             }
-            $size = $_FILES['qqfile']['size'];
+            $size = $_FILES['sabai_file']['size'];
+            $name = $_FILES['sabai_file']['name'];
         } else {         
             if (!$tmp_name = tempnam($tmp_dir, 'sabai_file_')) {
                 $context->error = __('Failed creating temporary file', 'sabai');
@@ -76,6 +77,7 @@ class Sabai_Addon_File_Controller_UploadFile extends Sabai_Controller
             $size = stream_copy_to_stream($input, $tmp_file);
             fclose($input);
             fclose($tmp_file);
+            $name = $_GET['sabai_file'];
         }
 
         try {
@@ -87,7 +89,7 @@ class Sabai_Addon_File_Controller_UploadFile extends Sabai_Controller
         }
 
         $file = array(
-            'name' => $_GET['qqfile'],
+            'name' => $name,
             'type' => $mime,
             'size' => $size,
             'tmp_name' => $tmp_name

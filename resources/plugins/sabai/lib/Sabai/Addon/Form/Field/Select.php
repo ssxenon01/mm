@@ -75,6 +75,11 @@ class Sabai_Addon_Form_Field_Select extends Sabai_Addon_Form_Field_AbstractField
     
     protected function _getOptions(array $data)
     {
-        return isset($data['#options']) ? array_map(array('Sabai', 'h'), $data['#options']) : array();
+        if (empty($data['#options'])) return array();
+        
+        foreach ($data['#options'] as $k => $v) {
+            $data['#options'][$k] = (string)$v;
+        }
+        return $data['#options'];
     }
 }

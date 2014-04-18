@@ -128,12 +128,12 @@ class Sabai_Addon_Taxonomy_FieldWidget implements Sabai_Addon_Field_IWidget
                     return array(
                         '#type' => 'autocomplete_default',
                         '#default_value' => $this->_getDefaultValue($value),
-                        '#ajax_url' => $this->_addon->getApplication()->MainUrl($bundle->getPath() . '/_autocomplete.json'),
+                        '#ajax_url' => $this->_addon->getApplication()->Url($bundle->getPath() . '/_autocomplete.json'),
                         '#default_items_callback' => array($this, 'getAutocompleteDefaultItems'),
                         '#multiple' => $field->getFieldMaxNumItems() != 1,
                         '#max_selection' => $field->getFieldMaxNumItems(),
                         '#noscript' => array('#type' => 'textfield'),
-                        '#tagging' => $settings['tagging'] && $this->_addon->getApplication()->getUser()->hasPermission($bundle->name . '_add'),
+                        '#tagging' => $settings['tagging'] && $this->_addon->getApplication()->HasPermission($bundle->name . '_add'),
                         '#element_validate' => array(array(array($this, 'validateTerms'), array($bundle, $settings['tagging']))),
                         '#bundle' => $bundle,
                     );
@@ -247,7 +247,7 @@ class Sabai_Addon_Taxonomy_FieldWidget implements Sabai_Addon_Field_IWidget
         if (empty($new_term_names)) return; // no new terms
         
         // Check permission to create new tags
-        if (!$tagging || !$this->_addon->getApplication()->getUser()->hasPermission($bundle->name . '_add')) {
+        if (!$tagging || !$this->_addon->getApplication()->HasPermission($bundle->name . '_add')) {
             $form->setError(sprintf(
                 __('The following %s do not exist: %s', 'sabai'),
                 strtolower($this->_addon->getApplication()->Entity_BundleLabel($bundle, false)),

@@ -10,8 +10,10 @@ abstract class Sabai_Addon_Entity_Controller_ViewEntity extends Sabai_Controller
         $this->Entity_LoadFields($entity);
         // Set context
         $context->clearTabs()
-            ->addTemplate(isset($this->_template) ? $this->_template : $this->Entity_Bundle($entity)->type . '_single_full')
+            ->addTemplate(isset($this->_template) ? $this->_template : $entity->getBundleType() . '_single_full')
             ->setAttributes(array_shift($this->Entity_Render($entity)));
+        // Invoke other add-ons
+        $this->doEvent('EntityViewEntity', array($entity));
     }
     
     /**

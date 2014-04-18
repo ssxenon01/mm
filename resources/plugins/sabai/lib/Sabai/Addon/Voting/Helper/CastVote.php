@@ -32,7 +32,7 @@ class Sabai_Addon_Voting_Helper_CastVote extends Sabai_Helper
             if ($value < 0
                 && $settings['require_vote_permissions']
                 && $settings['require_vote_down_permission']
-                && !$application->getUser()->hasPermission($entity->getBundleName() . '_voting_down_' . $tag)
+                && !$application->HasPermission($entity->getBundleName() . '_voting_down_' . $tag)
             ) {
                 throw new Sabai_RuntimeException(__('You do not have the permission to perform this action.', 'sabai'));
             }  

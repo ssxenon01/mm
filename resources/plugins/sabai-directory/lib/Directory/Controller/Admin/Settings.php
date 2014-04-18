@@ -126,6 +126,7 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 '#title' => __('Listings default view', 'sabai-directory'),
                 '#options' => array(
                     'list' => __('List view', 'sabai-directory'),
+                    'grid' => __('Grid view', 'sabai-directory'),
                     'map' => __('Map view', 'sabai-directory'),
                 ),
                 '#class' => 'sabai-form-inline',
@@ -136,20 +137,32 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                     ), 
                 ),
             ),
-            'f_categories' => array(
-                '#type' => 'checkbox',
-                '#title' => __('Show the "Categories" tab on the front page', 'sabai-directory'),
-                '#default_value' => !empty($config['display']['f_categories']),
+            'grid_columns' => array(
+                '#type' => 'radios',
+                '#class' => 'sabai-form-inline',
+                '#title' => __('Grid view column count', 'sabai-directory'),
+                '#options' => array(2 => 2, 3 => 3, 4 => 4, 6 => 6),
+                '#default_value' => isset($config['display']['grid_columns']) ? $config['display']['grid_columns'] : 4,
             ),
-            'f_reviews' => array(
-                '#type' => 'checkbox',
-                '#title' => __('Show the "Reviews" tab on the front page', 'sabai-directory'),
-                '#default_value' => !empty($config['display']['f_reviews']),
-            ),
-            'f_photos' => array(
-                '#type' => 'checkbox',
-                '#title' => __('Show the "Photos" tab on the front page', 'sabai-directory'),
-                '#default_value' => !empty($config['display']['f_photos']),
+            'f_tabs' => array(
+                '#title' => __('Frontpage Tabs'),
+                '#collapsible' => false,
+                '#class' => 'sabai-form-group',
+                'categories' => array(
+                    '#type' => 'checkbox',
+                    '#title' => __('Show the "Categories" tab on the front page', 'sabai-directory'),
+                    '#default_value' => !empty($config['display']['f_tabs']['categories']),
+                ),
+                'reviews' => array(
+                    '#type' => 'checkbox',
+                    '#title' => __('Show the "Reviews" tab on the front page', 'sabai-directory'),
+                    '#default_value' => !empty($config['display']['f_tabs']['reviews']),
+                ),
+                'photos' => array(
+                    '#type' => 'checkbox',
+                    '#title' => __('Show the "Photos" tab on the front page', 'sabai-directory'),
+                    '#default_value' => !empty($config['display']['f_tabs']['photos']),
+                ),
             ),
             'listing_tabs' => array(
                 '#type' => 'options',
@@ -159,8 +172,8 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 '#options_disabled' => array_keys($this->getAddon()->getListingDefaultTabs()),
                 '#value_title' => __('slug', 'sabai-directory'),
                 '#value_regex' => '/^[a-z0-9][a-z0-9_]*[a-z0-9]$/',
-                '#value_regex_error_message' => __('Tab slugs must consist of lowercase alphanumeric characters and underscores.', 'sabai-directory'),
-                '#description' => sprintf(__('Add, edit, remove, and sort tabs. When you add a custom tab, make sure to create a template file named "directory_listing_tab_[slug].html.php" under %s.', 'sabai-directory'), $this->getPlatform()->getCustomTemplateDir()),
+                '#value_regex_error_message' => __('Slugs must consist of lowercase alphanumeric characters and underscores.', 'sabai-directory'),
+                '#description' => sprintf(__('Add, edit, remove, and sort tabs. When you add a custom tab, make sure to create a template file named "directory_listing_tab_[slug].html.php" under %s.', 'sabai-directory'), $this->getPlatform()->getCustomAssetsDir()),
             ),
             'category_columns' => array(
                 '#type' => 'radios',
@@ -168,6 +181,46 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 '#title' => __('Category list page column count', 'sabai-directory'),
                 '#options' => array(1 => 1, 2 => 2, 3 => 3, 4 => 4),
                 '#default_value' => isset($config['display']['category_columns']) ? $config['display']['category_columns'] : 2,
+            ),
+            'buttons' => array(
+                '#title' => __('Buttons', 'sabai-directory'),
+                '#class' => 'sabai-form-group',
+                '#collapsible' => false,
+                'search' => array(
+                    '#class' => 'sabai-form-inline',
+                    '#type' => 'radios',
+                    '#options' => $this->ButtonOptions('<i class="sabai-icon-search"></i>'),
+                    '#title_no_escape' => true,
+                    '#default_value' => isset($config['display']['buttons']['search']) ? $config['display']['buttons']['search'] : 'sabai-btn-primary',
+                ),
+                'listing' => array(
+                    '#class' => 'sabai-form-inline',
+                    '#type' => 'radios',
+                    '#options' => $this->ButtonOptions(__('Add Listing', 'sabai-directory')),
+                    '#title_no_escape' => true,
+                    '#default_value' => isset($config['display']['buttons']['listing']) ? $config['display']['buttons']['listing'] : 'sabai-btn-success',
+                ),
+                'review' => array(
+                    '#class' => 'sabai-form-inline',
+                    '#type' => 'radios',
+                    '#options' => $this->ButtonOptions('<i class="sabai-icon-edit"></i> ' . __('Write a Review', 'sabai-directory')),
+                    '#title_no_escape' => true,
+                    '#default_value' => isset($config['display']['buttons']['review']) ? $config['display']['buttons']['review'] : 'sabai-btn-success',
+                ),
+                'photos' => array(
+                    '#class' => 'sabai-form-inline',
+                    '#type' => 'radios',
+                    '#options' => $this->ButtonOptions('<i class="sabai-icon-camera"></i> ' . __('Add Photos', 'sabai-directory')),
+                    '#title_no_escape' => true,
+                    '#default_value' => isset($config['display']['buttons']['photos']) ? $config['display']['buttons']['photos'] : 'sabai-btn-success',
+                ),
+                'directions' => array(
+                    '#class' => 'sabai-form-inline',
+                    '#type' => 'radios',
+                    '#options' => $this->ButtonOptions(__('Get Directions', 'sabai-directory')),
+                    '#title_no_escape' => true,
+                    '#default_value' => isset($config['display']['buttons']['directions']) ? $config['display']['buttons']['directions'] : 'sabai-btn-primary',
+                ),
             ),
             'no_photo_comments' => array(
                 '#type' => 'checkbox',
@@ -284,6 +337,19 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                     '#default_value' => !empty($config['map']['options']['marker_clusters']),
                     '#title' => __('Enable marker clusters', 'sabai-directory'),
                 ),
+                'marker_cluster_imgurl' => array(
+                    '#type' => 'textfield',
+                    '#url' => true,
+                    '#default_value' => @$config['map']['options']['marker_cluster_imgurl'],
+                    '#title' => __('Custom marker cluster image directory URL', 'sabai-directory'),
+                    '#description' => sprintf(__('Default: %s'), 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer'),
+                    '#size' => 60,
+                    '#states' => array(
+                        'visible' => array(
+                            'input[name="map[options][marker_clusters][]"]' => array('type' => 'checked', 'value' => true),
+                        ), 
+                    ),
+                ),
                 'scrollwheel' => array(
                     '#type' => 'checkbox',
                     '#default_value' => !empty($config['map']['options']['scrollwheel']),
@@ -296,6 +362,10 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 ),
             ),
         );
+        $radius_options = array(0 => __('None', 'sabai-directory'));
+        foreach (array(2, 5, 10, 20, 50, 100) as $distance) {
+            $radius_options[$distance] = sprintf(__('%d km/mil', 'sabai-directory'), $distance);
+        }
         $form['search'] = array(
             '#title' => __('Search Settings', 'sabai-directory'),
             '#collapsed' => false,
@@ -308,10 +378,31 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 '#required' => true,
                 '#min_value' => 1,
             ),
+            'radius' => array(
+                '#type' => 'radios',
+                '#title' => __('Default search radius', 'sabai-directory'),
+                '#options' => $radius_options,
+                '#default_value' => isset($config['search']['radius']) ? $config['search']['radius'] : 0,
+                '#class' => 'sabai-form-inline',
+            ),
             'no_loc' => array(
                 '#type' => 'checkbox',
                 '#default_value' => !empty($config['search']['no_loc']),
                 '#title' => __('Disable location search', 'sabai-directory'),
+            ),
+            'country' => array(
+                '#title' => __('Country', 'sabai-directory'),
+                '#description' => __('Enter one of the <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">two-letter country codes</a> to restrict location autocomplete suggestions to a specific country.', 'sabai-directory'),
+                '#type' => 'textfield',
+                '#size' => 3,
+                '#default_value' => isset($config['search']['country']) ? $config['search']['country'] : null,
+                '#min_length' => 2,
+                '#max_length' => 2,
+                '#states' => array(
+                    'visible' => array(
+                        'input[name="search[no_loc][]"]' => array('type' => 'checked', 'value' => false),
+                    ), 
+                ),
             ),
         );
         $form['photo'] = array(
@@ -390,17 +481,17 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 '#required' => true,
                 '#size' => 4,
             ),
-            'allow_existing' => array(
-                '#type' => 'checkbox',
-                '#title' => __('Allow users to claim existing listings', 'sabai-directory'),
-                '#default_value' => !empty($config['claims']['allow_existing']),
-            ),
             'claim_form_header' => array(
                 '#type' => 'textarea',
                 '#title' => __('Claim listing form header', 'sabai-directory'),
                 '#default_value' => $claim_form_header,
                 '#rows' => 3,
                 '#tree' => false,
+            ),
+            'no_comment' => array(
+                '#type' => 'checkbox',
+                '#title' => __('Do not require comment', 'sabai-directory'),
+                '#default_value' => !empty($config['claims']['no_comment']),
             ),
             'tac' => array(
                 '#title' => __('Terms and Conditions', 'sabai-directory'),
@@ -521,7 +612,7 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
             'map' => $form->values['map'],
             'photo' => $form->values['photo'],
             'spam' => $form->values['spam'],
-            'claims' => $form->values['claims'],
+            'claims' => array('allow_existing' => $this->getAddon()->getConfig('claims', 'allow_existing')) + $form->values['claims'],
             'pages' => $form->values['pages'],
             'search' => $form->values['search'],
         );

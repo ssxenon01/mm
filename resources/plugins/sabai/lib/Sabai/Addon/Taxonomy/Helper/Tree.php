@@ -1,7 +1,7 @@
 <?php
 class Sabai_Addon_Taxonomy_Helper_Tree extends Sabai_Helper
 {
-    public function help(Sabai $application, $bundleName, $prefix = '--', array $tree = array(), $maxDepth = 0)
+    public function help(Sabai $application, $bundleName, $prefix = '--', array $tree = array(), $maxDepth = 0, $initialDepth = 1)
     {
         $terms = array();
         if (is_object($bundleName)) {
@@ -10,12 +10,12 @@ class Sabai_Addon_Taxonomy_Helper_Tree extends Sabai_Helper
         foreach ($application->getAddon('Taxonomy')->getModel('Term')->entityBundleName_is($bundleName)->fetch(0, 0, 'title', 'ASC') as $term) {
             $terms[$term->parent][] = $term;
         }
-        $this->_makeTermTree($terms, $tree, $prefix, $maxDepth);
+        $this->_makeTermTree($terms, $tree, $prefix, $maxDepth, $initialDepth);
         
         return $tree; 
     }
     
-    private function _makeTermTree($terms, &$tree, $prefix, $maxDepth, $depth = 1, $parentId = 0)
+    private function _makeTermTree($terms, &$tree, $prefix, $maxDepth, $depth, $parentId = 0)
     {
         if (!isset($terms[$parentId])) return;
 

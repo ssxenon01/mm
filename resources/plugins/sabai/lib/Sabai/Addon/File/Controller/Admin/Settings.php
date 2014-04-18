@@ -17,7 +17,7 @@ class Sabai_Addon_File_Controller_Admin_Settings extends Sabai_Addon_Form_Contro
                 '#element_validate' => array(array(array($this, 'validateDir'), array('upload_dir'))),
                 '#description' => sprintf(
                     __('Enter the path to a directory where uploaded files are stored. Leave blank to use the system default (%s). This directory must be writeable by the server.', 'sabai'),
-                    $this->getAddon()->getVarDir('upload')
+                    $this->getAddon()->getVarDir('files')
                 ),
             ),
             'tmp_dir' => array(

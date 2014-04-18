@@ -26,9 +26,10 @@ jQuery(document).ready(function($) {
         <?php echo json_encode($markers);?>,
         function (center, bounds, zoom) {
             SABAI.ajax({
-                type: "get",
+                type: <?php if (defined('SABAI_FIX_URI_TOO_LONG') && SABAI_FIX_URI_TOO_LONG):?>"post"<?php else:?>"get"<?php endif;?>,
                 target: "#sabai-directory-listings",
-                url: "<?php echo $this->Url($CURRENT_ROUTE, $url_params, '', '&');?>&is_drag=1&center=" + center.lat() + "," + center.lng() + "&sw=" + bounds.getSouthWest().lat() + "," + bounds.getSouthWest().lng() + "&ne=" + bounds.getNorthEast().lat() + "," + bounds.getNorthEast().lng() + "&zoom=" + zoom,
+                url: "<?php echo $this->Url($CURRENT_ROUTE);?>",
+                data: "<?php echo http_build_query($url_params);?>&is_drag=1&center=" + center.lat() + "," + center.lng() + "&sw=" + bounds.getSouthWest().lat() + "," + bounds.getSouthWest().lng() + "&ne=" + bounds.getNorthEast().lat() + "," + bounds.getNorthEast().lng() + "&zoom=" + zoom,
                 onError: function(error) {SABAI.flash(error.message, "error");}
             });
         },
@@ -44,7 +45,7 @@ jQuery(document).ready(function($) {
 <div class="sabai-directory-nav sabai-clearfix">
     <div class="sabai-pull-left"><?php echo $this->DropdownButtonLinks($sorts, 'small', __('Sort by: <b>%s</b>', 'sabai-directory'));?><?php if (!empty($distances)):?><?php echo $this->DropdownButtonLinks($distances, 'small', __('Radius: <b>%s</b>', 'sabai-directory'));?><?php endif;?></div>
 <?php   if (empty($settings['hide_nav_views'])):?>
-    <div class="sabai-btn-group sabai-pull-right"><?php echo $this->ButtonLinks($views, 'small', true, true);?></div>
+    <div class="sabai-btn-group sabai-pull-right"><?php echo $this->ButtonLinks($views, 'small', true, !$IS_MOBILE);?></div>
 <?php   endif;?>
 </div>
 <?php endif;?>

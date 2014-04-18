@@ -14,12 +14,7 @@ class Sabai_Addon_GoogleMaps_Helper_Geocode extends Sabai_Helper
         $model = $application->getModel('Geocode', 'GoogleMaps');
         if (!$geocode = $model->hash_is($hash)->fetchOne()) {
             // No cache, so query Google geocoding service
-            try {
-                $result = $application->GoogleMaps_GoogleGeocode($query, $latlng);
-            } catch (Sabai_RuntimeException $e) {
-                $application->LogError($e);
-                return false;
-            }
+            $result = $application->GoogleMaps_GoogleGeocode($query, $latlng);
             // Create new geocode cache entry
             $geocode = $model->create('Geocode')
                 ->markNew()

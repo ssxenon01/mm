@@ -1,41 +1,29 @@
 <?php
 class Sabai_Addon_Directory_Helper_ListingsQuery extends Sabai_Helper
 {
-    public function help(Sabai $application, Sabai_Addon_Entity_Query $query, $address, array $keywords, $category, $sort, $distance = 0, $isMile = false, $featuredOnly = false)
+    public function help(Sabai $application, Sabai_Addon_Entity_Query $query, array $latlng, array $keywords, $category, $sort, $distance = 0, $isMile = false, $featuredOnly = false)
     {
-        if ($address) {
-            if (!is_array($address)) {
-                if ($geocode = $application->GoogleMaps_Geocode($address)) {
-                    $lat = $geocode->lat;
-                    $lng = $geocode->lng;
-                    if (empty($distance) && $geocode->viewport && ($viewport = explode(',', $geocode->viewport))) {
-                        $distance = array(array($viewport[0], $viewport[1]), array($viewport[2], $viewport[3]));
-                    }
+        if (!empty($latlng)) {
+            $lat = $latlng[0];
+            $lng = $latlng[1];
+            if (!is_array($distance)) {
+                if ($isMile) {
+                    $distance = $distance * 1.609344;
                 }
+                $lat1 = round($lat - ($distance / 69), 6);
+                $lat2 = round($lat + ($distance / 69), 6);
+                $lng1 = round($lng - $distance / abs(cos(deg2rad($lat)) * 69), 6);
+                $lng2 = round($lng + $distance / abs(cos(deg2rad($lat)) * 69), 6);
             } else {
-                $lat = $address[0];
-                $lng = $address[1];
+                $lat1 = $distance[0][0];
+                $lat2 = $distance[1][0];
+                $lng1 = $distance[0][1];
+                $lng2 = $distance[1][1];
             }
-            if (isset($lat) && isset($lng)) {
-                if (!is_array($distance)) {
-                    if ($isMile) {
-                        $distance = $distance * 1.609344;
-                    }
-                    $lat1 = round($lat - ($distance / 69), 6);
-                    $lat2 = round($lat + ($distance / 69), 6);
-                    $lng1 = round($lng - $distance / abs(cos(deg2rad($lat)) * 69), 6);
-                    $lng2 = round($lng + $distance / abs(cos(deg2rad($lat)) * 69), 6);
-                } else {
-                    $lat1 = $distance[0][0];
-                    $lat2 = $distance[1][0];
-                    $lng1 = $distance[0][1];
-                    $lng2 = $distance[1][1];
-                }
-                $query->fieldIsOrGreaterThan('directory_location', $lat1, 'lat')
-                    ->fieldIsOrSmallerThan('directory_location', $lat2, 'lat')
-                    ->fieldIsOrGreaterThan('directory_location', $lng1, 'lng')
-                    ->fieldIsOrSmallerThan('directory_location', $lng2, 'lng');
-            }
+            $query->fieldIsOrGreaterThan('directory_location', $lat1, 'lat')
+                ->fieldIsOrSmallerThan('directory_location', $lat2, 'lat')
+                ->fieldIsOrGreaterThan('directory_location', $lng1, 'lng')
+                ->fieldIsOrSmallerThan('directory_location', $lng2, 'lng');
         }
         if (!empty($keywords[0])) {
             foreach ($keywords[0] as $keyword) {
@@ -63,7 +51,7 @@ class Sabai_Addon_Directory_Helper_ListingsQuery extends Sabai_Helper
                 return $query->fieldIs('content_children_count', 'directory_listing_review', 'child_bundle_name')
                     ->sortByField('content_children_count', 'DESC', 'value');
             case 'distance':
-                if ($address) {
+                if (!empty($latlng)) {
                     return $query->sortByExtraField('distance', 'ASC')->addExtraField(
                         'distance',
                         sprintf(

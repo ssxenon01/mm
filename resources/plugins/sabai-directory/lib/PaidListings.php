@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/PaidListings/IFeatures.php';
 
 class Sabai_Addon_PaidListings extends Sabai_Addon
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.29', PACKAGE = 'sabai-directory';
     const ORDER_STATUS_PENDING = 1, ORDER_STATUS_PROCESSING = 2, ORDER_STATUS_AWAITING_FULLFILLMENT = 3, ORDER_STATUS_COMPLETE = 4,
         ORDER_STATUS_REFUNDED = 5, ORDER_STATUS_EXPIRED = 6, ORDER_STATUS_FAILED = 7,
         ORDER_ITEM_STATUS_PENDING = 1, ORDER_ITEM_STATUS_DELIVERED = 2, ORDER_ITEM_STATUS_CANCELLED = 3;
@@ -113,7 +113,7 @@ class Sabai_Addon_PaidListings extends Sabai_Addon
                     $order_item_data = $order_item->OrderItemMetas->getArray('value', 'key');
                     if ($ifeature->paidListingsFeatureIsAppliable($order->Entity, $order_item_data, $order->User, $isManual)) {
                         // Create log
-                        $order_log = $order->createOrderLog()->markNew();
+                        $order_log = $order->createOrderLog('')->markNew();
                         $order_log->OrderItem = $order_item;
                         if ($ifeature->paidListingsFeatureApply($order->Entity, $order_item_data, $order->User)) {
                             $order_item->status = self::ORDER_ITEM_STATUS_DELIVERED;
@@ -143,11 +143,12 @@ class Sabai_Addon_PaidListings extends Sabai_Addon
                         continue;
                     }
                     // Create log
-                    $order_log = $order->createOrderLog()->markNew();
+                    $order_log = $order->createOrderLog('')->markNew();
                     $order_log->OrderItem = $order_item;
                     if ($order_item->isDelivered()) {
                         $ifeature = $this->_application->PaidListings_FeatureImpl($order_item->Feature->name);
-                        if ($ifeature->paidListingsFeatureUnapply($order->Entity, $order_item->data, $order->User)) {
+                        $order_item_data = $order_item->OrderItemMetas->getArray('value', 'key');
+                        if ($ifeature->paidListingsFeatureUnapply($order->Entity, $order_item_data, $order->User)) {
                             $order_item->status = self::ORDER_ITEM_STATUS_CANCELLED;
                             $order_log->message = __('Item delivery cancelled.', 'sabai-directory');
                         } else {
@@ -190,7 +191,7 @@ class Sabai_Addon_PaidListings extends Sabai_Addon
             }
             $order->status = self::ORDER_STATUS_COMPLETE;
             // Create log
-            $order_log = $order->createOrderLog()->markNew();
+            $order_log = $order->createOrderLog('')->markNew();
             $order_log->message = __('Order complete.', 'sabai-directory');
             $order_log->status = $order->status;
                 
@@ -244,7 +245,7 @@ class Sabai_Addon_PaidListings extends Sabai_Addon
         }
 
         // Create log
-        $order_log = $order->createOrderLog()->markNew();
+        $order_log = $order->createOrderLog('')->markNew();
         $order_log->message = sprintf(__('PayPal IPN received (Status: %s).', 'sabai-directory'), $ipn['payment_status']);
         $order_log->status = $order->status;
         
@@ -256,7 +257,7 @@ class Sabai_Addon_PaidListings extends Sabai_Addon
         
         if ($previous_status !== $order->status) {
             $order->reload();
-            $this->doEvent('PaidListingsOrderStatusChange', array($order));
+            $this->_application->doEvent('PaidListingsOrderStatusChange', array($order));
         }
     }
     

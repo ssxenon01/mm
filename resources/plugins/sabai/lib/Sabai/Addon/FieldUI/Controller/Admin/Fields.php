@@ -25,15 +25,27 @@ class Sabai_Addon_FieldUI_Controller_Admin_Fields extends Sabai_Controller
             $field_types[$field_type_name] = $field_type;
         }
 
-        $fields = $bundle->Fields->with('FieldConfig')->getArray();
+        $fields = array();
+        foreach ($bundle->Fields->with('FieldConfig') as $field) {
+            if (isset($fields[$field->getFieldName()])) {
+                $field->markRemoved();
+                $commit = true;
+            } else {
+                $fields[$field->getFieldName()] = $field;
+            }
+        }
+        if (!empty($commit)) {
+            // Remove duplicated fields
+            $this->getModel(null, 'Entity')->commit();
+        }
         usort($fields, array(__CLASS__, '_sortByWeight'));
         
         $existing_fields = array();
         foreach ($this->getModel('FieldConfig', 'Entity')->name_startsWith('field_')->fetch()->with('Fields') as $existing_field_config) {
             foreach ($existing_field_config->Fields as $existing_field) {
-                if (isset($existing_fields[$existing_field_config->name])) continue;
+                if (isset($existing_fields[$existing_field_config->type][$existing_field_config->name])) continue;
                 
-                $existing_fields[$existing_field_config->name] = $existing_field;
+                $existing_fields[$existing_field_config->type][$existing_field_config->name] = $existing_field;
             }
         }
         
@@ -45,6 +57,7 @@ class Sabai_Addon_FieldUI_Controller_Admin_Fields extends Sabai_Controller
                 'form_edit_field_url' => $this->Url($admin_fields_path . '/edit'),
                 'form_create_field_url' => $this->Url($admin_fields_path . '/create'),
                 'existing_fields' => $existing_fields,
+                'hidden_existing_fields' => array(),
             ));
     }
 

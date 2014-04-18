@@ -4,7 +4,7 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
     public function formFieldGetFormElement($name, array &$data, Sabai_Addon_Form_Form $form)
     {
         if (!isset($data['#template'])) {
-        // Modify template slightly so that the field decription is displayed at the top of the table.
+            // Modify template slightly so that the field decription is displayed at the top of the table.
             $data['#template'] = '<div<!-- BEGIN id --> id="{id}"<!-- END id --> class="{class_prefix}form-field<!-- BEGIN class --> {class}<!-- END class -->">
   <!-- BEGIN label --><div class="{class_prefix}form-field-label"><span>{label}</span><!-- BEGIN required --><span class="{class_prefix}form-field-required">*</span><!-- END required --></div><!-- END label -->
   <!-- BEGIN label_2 --><div class="{class_prefix}form-field-description {class_prefix}form-field-description-top">{label_2}</div><!-- END label_2 -->
@@ -25,7 +25,7 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
         <input type="text" name="%1$s[options][%2$d][label]" value="%3$s" size="15" placeholder="%7$s" />
         <input type="text" name="%1$s[options][%2$d][value]" value="%4$s" size="15" placeholder="%8$s" />
         <a href="#" class="sabai-btn sabai-btn-mini sabai-btn-success" onclick="SABAI.addOption(\'#%6$s\', \'%1$s\', this, %11$s); return false;"><i class="sabai-icon-plus"></i></a>
-        <a href="#" class="sabai-btn sabai-btn-mini sabai-btn-danger" onclick="SABAI.removeOption(\'#%6$s\', this); return false;"><i class="sabai-icon-minus"></i></a>
+        <a href="#" class="sabai-btn sabai-btn-mini sabai-btn-danger" onclick="SABAI.removeOption(\'#%6$s\', this, \'%12$s\'); return false;"><i class="sabai-icon-minus"></i></a>
         <span class="sabai-btn sabai-btn-mini sabai-btn-inverse"><i class="sabai-icon-resize-vertical"></i></span>
     </li>';
     
@@ -62,7 +62,8 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
                     Sabai::h($value_title),
                     $type,
                     $default_name,
-                    $type === 'checkbox' ? 'true' : 'false'
+                    $type === 'checkbox' ? 'true' : 'false',
+                    __('Are you sure?', 'sabai')
                 );
                 ++$key;
             }
@@ -72,13 +73,14 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
                 $key,
                 '',
                 '',
-                '',
+                $type === 'checkbox' ? ' checked="checked"' : '',
                 $ele_id,
-                Sabai::h($label_title),
+                Sabai::h((string)$label_title),
                 Sabai::h($value_title),
                 $type,
                 $default_name,
-                $type === 'checkbox' ? 'true' : 'false'
+                $type === 'checkbox' ? 'true' : 'false',
+                __('Are you sure?', 'sabai')
             );
             $data['#options'] = array_keys($data['#default_value']);
         } else {
@@ -95,7 +97,8 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
                     Sabai::h($value_title),
                     $type,
                     $default_name,
-                    $type === 'checkbox' ? 'true' : 'false'
+                    $type === 'checkbox' ? 'true' : 'false',
+                    __('Are you sure?', 'sabai')
                 );
             }
             $data['#options'] = array();
@@ -103,25 +106,16 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
         $data['#markup'] = '<ul id="' . $ele_id .'">' . implode(PHP_EOL, $inputs) . '</ul>';
         $data['#default_value'] = $data['#value'] = null;
         
-        $form->addJs('jQuery(document).ready(function(){jQuery("#'. $ele_id .'").sortable({handle:".sabai-btn-inverse", containment:"parent", axis:"y"});});');
+        $form->addJs('jQuery(document).ready(function(){jQuery("#'. $ele_id .'").sortable({handle:".sabai-btn-inverse", containment:"parent", axis:"y", cancel:".sabai-disabled"});});');
         
         return $form->createHTMLQuickformElement('static', $name, $data['#label'], $data['#markup']);
     }
 
     public function formFieldOnSubmitForm($name, &$value, array &$data, Sabai_Addon_Form_Form $form)
     {        
-        if (empty($value['options'])) {
-            if ($form->isFieldRequired($data)) {
-                $form->setError(isset($data['#required_error_message']) ? $data['#required_error_message'] : __('Please fill out this field.', 'sabai'), $name);
-            }
-            $value = array('options' => array(), 'default' => array());
-
-            return;
-        }
-        
         $options = array();
         $default_value = array();
-        foreach ($value['options'] as $key => $option) {
+        foreach ((array)@$value['options'] as $key => $option) {
             $option['value'] = trim($option['value']);
             if (!strlen($option['value'])) {
                 continue;
@@ -136,16 +130,22 @@ class Sabai_Addon_Form_Field_Options extends Sabai_Addon_Form_Field_AbstractFiel
             }
             $options[$option['value']] = $option['label'];
             if (isset($value['default'])) {
-                if (in_array($key, (array)$value['default'])) {
+                if (in_array($key, (array)$value['default']) && !in_array($option['value'], $default_value)) {
                     $default_value[] = $option['value'];
                 }
             }
         }
         
-        if (empty($options)
-            && $form->isFieldRequired($data)
-        ) {
-            $form->setError(isset($data['#required_error_message']) ? $data['#required_error_message'] : __('Please fill out this field.', 'sabai'), $name);
+        if (empty($options)) {
+            if ($form->isFieldRequired($data)) {
+                $form->setError(isset($data['#required_error_message']) ? $data['#required_error_message'] : __('Please fill out this field.', 'sabai'), $name);
+            }
+        } else {
+            if (empty($default_value)
+                && $data['#require_default']
+            ) {
+                $form->setError(isset($data['#default_required_error_message']) ? $data['#default_required_error_message'] : __('Please select at least one option.', 'sabai'), $name);
+            }
         }
         
         $value = array('options' => $options, 'default' => $default_value);

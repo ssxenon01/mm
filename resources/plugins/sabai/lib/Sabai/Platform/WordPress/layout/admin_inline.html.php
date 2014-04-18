@@ -1,4 +1,4 @@
-<h2><?php if (isset($ICON)):?><i id="sabai-wordpress-icon" class="sabai-icon-<?php echo $ICON;?> sabai-icon-large"></i>&nbsp;<?php endif;?><?php Sabai::_h($PAGE_TITLE);?> 
+<h2><?php Sabai::_h($PAGE_TITLE);?> 
 <?php if ($PAGE_MENU):?>
 <?php   foreach ($PAGE_MENU as $_PAGE_MENU): $attr = empty($_PAGE_MENU['class']) ? array('class' => 'add-new-h2') : array('class' => 'add-new-h2 ' . $_PAGE_MENU['class']);?>
 <?php     if (!empty($_PAGE_MENU['ajax'])):?>

@@ -99,6 +99,7 @@ class Sabai_Addon_PaidListings_Helper_OrderForm extends Sabai_Helper
             'CANCELURL' => (string)$application->Url($currentRoute),
             'NOSHIPPING' => 1,
             'ALLOWNOTE' => 0,
+            'SOLUTIONTYPE' => 'Sole',
             'LOCALECODE' => $application->getPlatform()->getLocale(),
             'EMAIL' => $application->getUser()->email,
             'BRANDNAME' => $application->getPlatform()->getSiteName(),

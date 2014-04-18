@@ -90,7 +90,7 @@ class Sabai_Addon_Taxonomy_EntityType implements Sabai_Addon_Entity_IType
         if (!empty($bundle->info['taxonomy_hierarchical'])) {
             $term->parent = (int)@$properties['taxonomy_term_parent'];
         }
-        $term->name = $this->_getUniqueSlug($bundle, $this->_addon->getApplication()->Slugify($properties['taxonomy_term_title']));
+        $term->name = $this->_getUniqueSlug($bundle, $this->_addon->getApplication()->Slugify(isset($properties['taxonomy_term_name']) ? $properties['taxonomy_term_name'] : $properties['taxonomy_term_title']));
         $this->_addon->getModel()->commit();
         return $term->toEntity();
     }

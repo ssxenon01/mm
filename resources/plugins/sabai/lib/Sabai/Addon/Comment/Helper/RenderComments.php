@@ -9,7 +9,7 @@ class Sabai_Addon_Comment_Helper_RenderComments extends Sabai_Helper
                 . PHP_EOL . $this->_getCommentsActionLinks($application, $entity, 0, $containerId, false);
         }
 
-        if ($application->getUser()->hasPermission($entity->getBundleName() . '_comment_vote')) {
+        if ($application->HasPermission($entity->getBundleName() . '_comment_vote')) {
             $vote_token = $application->Token('comment_vote_comment', 1800, true);
         } else {
             $vote_token = null;
@@ -27,7 +27,7 @@ class Sabai_Addon_Comment_Helper_RenderComments extends Sabai_Helper
                 } else {
                     $_vote_token = $vote_token;
                 }           
-                $li[] = $application->Comment_Render($comments[$key], $entity, $application->getUser(), $parent_entity, $_vote_token);
+                $li[] = $application->Comment_Render($comments[$key], $entity, $parent_entity, $_vote_token);
             }
         }
         $ret = array();
@@ -56,7 +56,7 @@ class Sabai_Addon_Comment_Helper_RenderComments extends Sabai_Helper
             );
         }
         if (!$application->getUser()->isAnonymous()) {
-            if ($application->getUser()->hasPermission($entity->getBundleName() . '_comment_add')
+            if ($application->HasPermission($entity->getBundleName() . '_comment_add')
                 || $entity->getAuthorId() === $application->getUser()->id // Owner of entity can always add comment
             ) {
                 $links[] = $application->LinkToRemote(

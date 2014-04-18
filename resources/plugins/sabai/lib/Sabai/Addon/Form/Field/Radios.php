@@ -33,7 +33,7 @@ class Sabai_Addon_Form_Field_Radios extends Sabai_Addon_Form_Field_AbstractField
             unset($data['#field_prefix']);
         }
         foreach ($options as $option_value => $option_label) {
-            $data['#children'][][0] = $this->_createRadioButton($data, $option_value, $option_label)
+            $data['#children'][][0] = $this->_createRadioButton($data, $option_value, (string)$option_label)
                 + $form->defaultElementSettings();
         }
         if (isset($data['#field_suffix'])) {

@@ -11,7 +11,7 @@ abstract class Sabai_Addon_System_Controller_Admin_EmailSettings extends Sabai_A
             '#tree' => true,
             'emails' => array(),
         );
-        foreach ($this->Filter('SystemEmailSettings', $this->_getEmailSettings($context), array($this->getAddon()->getType())) as $name => $email_settings) {
+        foreach ($this->Filter('SystemEmailSettings', $this->_getEmailSettings($context), array($this->getAddon()->getName())) as $name => $email_settings) {
             if (!isset($email_settings['type'])) continue;
             
             $settings = isset($current_settings[$name]) ? $current_settings[$name] + $email_settings : $email_settings;
@@ -46,7 +46,7 @@ abstract class Sabai_Addon_System_Controller_Admin_EmailSettings extends Sabai_A
                             'input[name="'. 'emails' .'['. $name . '][enable][]"]' => array('type' => 'checked', 'value' => true),
                         ),
                     ),
-                    '#weight' => 5,
+                    '#weight' => 10,
                 ),
                 // Save type which is useful for later use, when sending notifications
                 'type' => array(
@@ -66,7 +66,7 @@ abstract class Sabai_Addon_System_Controller_Admin_EmailSettings extends Sabai_A
                         ),
                     ),
                     '#default_value' => isset($settings['roles']) ? $settings['roles'] : null,
-                    '#weight' => 2,
+                    '#weight' => 5,
                 );
             } elseif ($settings['type'] === 'user') {
                 if (!empty($settings['has_guest_author'])) {
@@ -74,14 +74,14 @@ abstract class Sabai_Addon_System_Controller_Admin_EmailSettings extends Sabai_A
                         '#type' => 'checkbox',
                         '#title' => __('Send this notification to guest authors', 'sabai'),
                         '#default_value' => !empty($settings['send_to_guest']),
-                        '#weight' => 2,
+                        '#weight' => 5,
                     );
                 }
                 $form['emails'][$name]['cc_roles'] = array(
                     '#type' => 'checkbox',
                     '#title' => __('Send a copy to users of selected roles', 'sabai'),
                     '#default_value' => !empty($settings['cc_roles']),
-                    '#weight' => 2,
+                    '#weight' => 6,
                 );
                 $form['emails'][$name]['roles'] = array(
                     '#type' => 'checkboxes',
@@ -94,7 +94,7 @@ abstract class Sabai_Addon_System_Controller_Admin_EmailSettings extends Sabai_A
                         ),
                     ),
                     '#default_value' => isset($settings['roles']) ? $settings['roles'] : null,
-                    '#weight' => 3,
+                    '#weight' => 7,
                 );
             }
         }

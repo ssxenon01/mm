@@ -17,7 +17,6 @@ class Sabai_Addon_GoogleMaps_MarkerFormField implements Sabai_Addon_Form_IField
         $ele_map_id = $form->getFieldId($name);
         $data = array(
             '#tree' => true,
-            '#class' => 'sabai-form-group',
             '#children' => array(
                 0 => array(
                     'address' => array(
@@ -32,7 +31,7 @@ class Sabai_Addon_GoogleMaps_MarkerFormField implements Sabai_Addon_Form_IField
                         '#markup' => sprintf(
                             '<div id="%1$s" style="height:%2$dpx;" class="sabai-googlemaps-map"></div>',
                             $ele_map_id,
-                            isset($data['#map_height']) ? Sabai::h($data['#map_height']) : 400
+                            isset($data['#map_height']) ? Sabai::h($data['#map_height']) : 300
                         ),
                     ) + $form->defaultElementSettings(),
                     'zoom' => array(
@@ -53,6 +52,7 @@ class Sabai_Addon_GoogleMaps_MarkerFormField implements Sabai_Addon_Form_IField
                 )
             ),
         ) + $data + $form->defaultElementSettings();
+        $data['#class'] .= ' sabai-form-group';
 
         $map = array();
 
@@ -143,9 +143,9 @@ class Sabai_Addon_GoogleMaps_MarkerFormField implements Sabai_Addon_Form_IField
             %s
 })}});',
             $this->_addon->getApplication()->GoogleMaps_Language(),
-            $public_url . '/js/markermap.js',
+            $public_url . '/js/sabai-googlemaps-markermap.js',
             $public_url . '/js/jquery.fitmaps.js',
-            $public_url . '/js/autocomplete.js',
+            $public_url . '/js/sabai-googlemaps-autocomplete.js',
             implode(PHP_EOL, $js)
         ));
     }

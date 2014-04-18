@@ -14,11 +14,11 @@ class Sabai_Addon_Voting_Helper_RenderUpdown extends Sabai_Helper
                 }
             }
             if ($entity->getAuthorId() === $application->getUser()->id) {
-                $can_upvote = $application->getUser()->hasPermission($entity->getBundleName() . '_voting_own_updown');
+                $can_upvote = $application->HasPermission($entity->getBundleName() . '_voting_own_updown');
             } else {
-                $can_upvote = $application->getUser()->hasPermission($entity->getBundleName() . '_voting_updown');
+                $can_upvote = $application->HasPermission($entity->getBundleName() . '_voting_updown');
             }
-            $can_downvote = $application->getUser()->hasPermission($entity->getBundleName() . '_voting_down_updown');
+            $can_downvote = $application->HasPermission($entity->getBundleName() . '_voting_down_updown');
             if ($can_upvote || $can_downvote) {
                 $vote_token = $application->Token('voting_vote_entity', 1800, true);
                 $on_success = 'target.find("> span").text(parseInt(result.sum, 10)); target.toggleClass("sabai-voting-updown-up", result.value == 1); target.toggleClass("sabai-voting-updown-down", result.value == -1); return false;';     

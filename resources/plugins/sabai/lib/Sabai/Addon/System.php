@@ -4,8 +4,7 @@ class Sabai_Addon_System extends Sabai_Addon
                Sabai_Addon_System_IAdminRouter,
                Sabai_Addon_System_IAdminMenus
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
-    private static $_disablePermissionsInSession = false; 
+    const VERSION = '1.2.29', PACKAGE = 'sabai'; 
                 
     public function isUninstallable($currentVersion)
     {
@@ -118,6 +117,10 @@ class Sabai_Addon_System extends Sabai_Addon
                 'controller' => 'Info',
                 'title_callback' => true,
             ),
+            '/sabai/user/_autocomplete' => array(
+                'controller' => 'UserAutocomplete',
+                'type' => Sabai::ROUTE_CALLBACK,
+            ),
         );
     }
 
@@ -127,7 +130,6 @@ class Sabai_Addon_System extends Sabai_Addon
             case '/addons':
                 return true; // for backward compat with 1.0.x
             case '/settings':
-                $context->setIcon('cogs');
                 return true;
             case '/addons/addon/:addon_name':
                 return ($addon_name = $context->getRequest()->asStr('addon_name'))
@@ -163,11 +165,6 @@ class Sabai_Addon_System extends Sabai_Addon
     }
 
     /* End implementation of Sabai_Addon_System_IAdminRouter */
-  
-    public function hasSettingsPage($currentVersion)
-    {
-        return array('url' => '/settings/system', 'modal' => true, 'modal_width' => 600);
-    }
 
     public function onSystemIMainRouterInstalled(Sabai_Addon $addon, ArrayObject $log)
     {
@@ -285,18 +282,14 @@ class Sabai_Addon_System extends Sabai_Addon
         ) {
             $this->_application->setModRewriteFormat($this->_config['site']['mod_rewrite']['format'], 'main');
         }
-        // Check if permissions is sessions is diabled
-        if (!empty($this->_config['no_perms_in_session']) || (defined('SABAI_SYSTEM_DISABLE_PERMISSIONS_IN_SESSIONS') && SABAI_SYSTEM_DISABLE_PERMISSIONS_IN_SESSIONS)) {
-            self::$_disablePermissionsInSession = true;
-        }
     }
 
     public function onSabaiWebResponseSend(Sabai_Context $context, Sabai_WebResponse $response)
     {
         // Add messages saved during the previous request to the response content as flash messages
-        if ($flash = $this->_application->getPlatform()->getSessionVar('system_flash')) {
+        if ($flash = $this->_application->getPlatform()->getSessionVar('system_flash', $this->_application->getUser()->id)) {
             $response->setFlash($flash);
-            $this->_application->getPlatform()->deleteSessionVar('system_flash');
+            $this->_application->getPlatform()->deleteSessionVar('system_flash', $this->_application->getUser()->id);
         }
     }
     
@@ -305,11 +298,18 @@ class Sabai_Addon_System extends Sabai_Addon
         if ($context->isAdmin()) return;
         
         // Check if the current theme has a custom template directory Sabai applications 
-        $custom_template_dir = $this->_application->getPlatform()->getCustomTemplateDir();
-        if (is_dir($custom_template_dir)) {
-            $template->addDir($custom_template_dir);
-            if (file_exists($custom_template_dir . '/style.css')) {
-                $response->addCssFile($this->_application->getPlatform()->getCustomTemplateDirUrl() . '/style.css', 'sabai-system-custom', 'screen', 99);
+        $custom_assets_dir = $this->_application->getPlatform()->getCustomAssetsDir();
+        if (is_dir($custom_assets_dir)) {
+            $template->addDir($custom_assets_dir);
+            if (file_exists($custom_assets_dir . '/style.css')) {
+                $response->addCssFile($this->_application->getPlatform()->getCustomAssetsDirUrl() . '/style.css', 'sabai-system-custom', 'screen', 99);
+            }
+        }
+        // Add more directories if this is a cloned add-on
+        if (isset($context->bundle) && $this->_application->getAddon($context->bundle->addon)->hasParent()) {
+            $custom_assets_dir = $custom_assets_dir . '/' . $context->bundle->addon;
+            if (is_dir($custom_assets_dir)) {
+                $template->addDir($custom_assets_dir);
             }
         }
     }
@@ -339,7 +339,7 @@ class Sabai_Addon_System extends Sabai_Addon
     {
         // Save response messages to session if flashing is enabled
         if ($context->isFlashEnabled() && ($flash = $context->getFlash())) {
-            $this->_application->getPlatform()->setSessionVar('system_flash', $flash);
+            $this->_application->getPlatform()->setSessionVar('system_flash', $flash, $this->_application->getUser()->id);
         }
     }
 
@@ -486,7 +486,6 @@ class Sabai_Addon_System extends Sabai_Addon
                     'format' => rtrim($this->_application->getScriptUrl('main'), '/') . '%1$s%3$s'
                 ),
             ),
-            'no_perms_in_session' => false,
         );
     }
     
@@ -669,45 +668,7 @@ class Sabai_Addon_System extends Sabai_Addon
         $role->title = $this->_application->_t(_n_noop('Guest', 'Guest', 'sabai'));
         // Commit
         $this->getModel()->commit();
-    }
-
-    public function onSabaiUserInitialized(SabaiFramework_User $user, $userChanged)
-    {
-        if ($user->isAdministrator()) return;
-        
-        if ($userChanged
-            || self::$_disablePermissionsInSession
-            || null === ($permissions = $this->_application->getPlatform()->getSessionVar('system_permissions'))
-        ) { 
-            $permissions = array();
-        
-            if (!$user->isAnonymous()) {
-                // Fetch permissions by roles the user belongs to
-                $roles = $this->_application->getPlatform()->getUserRolesByUser($user->getIdentity());
-                if (!empty($roles)) {
-                    foreach ($this->getModel('Role')->name_in($roles)->fetch() as $role) {
-                        if (!$role->permissions) continue;
-                
-                        $permissions += $role->permissions;
-                    }
-                }
-            } else {
-                // Fetch permission of guest roles
-                if (($guest_role = $this->getModel('Role')->name_is('_guest_')->fetchOne())
-                    && $guest_role->permissions
-                ) {                
-                    $permissions += $guest_role->permissions;
-                }
-            }
-            // Allow addons to set permissions
-            $this->_application->doEvent('SystemLoadPermissions', array($user->getIdentity(), &$permissions));
-            // Save loaded permissions in session if not disabled
-            if (!self::$_disablePermissionsInSession) {
-                $this->_application->getPlatform()->setSessionVar('system_permissions', $permissions);
-            }
-        }
-        $user->setPermissions($permissions);
-    }    
+    } 
         
     public function getUserMenus()
     {

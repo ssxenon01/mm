@@ -71,7 +71,7 @@ class Sabai_Addon_Comment_Controller_FlagComment extends Sabai_Addon_Form_Contro
         $context->setSuccess($this->Entity_Url($context->entity))
             ->setSuccessAttributes(array(
                 'flag' => $results,
-                'hide' => $context->comment->isHidden() && $this->getUser()->hasPermission($context->entity->getBundleName() . '_manage')
+                'hide' => $context->comment->isHidden() && $this->HasPermission($context->entity->getBundleName() . '_manage')
             ))
             ->clearFlash();
         

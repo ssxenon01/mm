@@ -57,7 +57,7 @@ class Sabai_Addon_Comment_Controller_Admin_ListComments extends Sabai_Addon_Form
             $comment_path = $context->getRoute() . $comment->id;
             $links = array(
                 $this->LinkTo(__('Edit', 'sabai'), $this->Url($comment_path . '/edit')),
-                $this->LinkTo(sprintf(__('View %s', 'sabai'), $this->Translate($this->Entity_Bundle($context->entity)->label_singular)), $this->Entity_Url($context->entity)),
+                $this->LinkTo(sprintf(__('View %s', 'sabai'), $this->Entity_BundleLabel($context->entity)), $this->Entity_Url($context->entity)),
             );
             $form['comments']['#options'][$comment->id] = array(
                 'comment' => Sabai::h(mb_strimwidth(strip_tags(strtr($comment->body_html, array("\r" => '', "\n" => ' '))), 0, 200, '...')),

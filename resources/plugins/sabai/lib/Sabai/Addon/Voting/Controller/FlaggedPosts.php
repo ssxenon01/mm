@@ -6,7 +6,7 @@ abstract class Sabai_Addon_Voting_Controller_FlaggedPosts extends Sabai_Addon_Co
     protected function _doExecute(Sabai_Context $context)
     {
         foreach ($this->_getBundleNames($context) as $bundle_name) {
-            if ($this->getUser()->hasPermission($bundle_name . '_manage')) {
+            if ($this->HasPermission($bundle_name . '_manage')) {
                 $this->_bundleNames[] = $bundle_name;
             }
         }

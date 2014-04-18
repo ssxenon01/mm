@@ -38,13 +38,20 @@ class Sabai_Addon_Content_Controller_AddChildPost extends Sabai_Addon_Form_Contr
         $values['content_post_status'] = $this->_getContentPostStatus($context);
         $entity = $this->getAddon('Entity')->createEntity($context->child_bundle, $values + $form->values);
         if ($entity->isPublished()) {
-            $url = $this->Entity_Url($entity);
+            if (!isset($context->child_bundle->info['viewable']) || false !== $context->child_bundle->info['viewable']) {            
+                $context->setSuccess($this->Entity_Url($entity));
+            } else {
+                $context->addTemplate('form_results')->setAttributes(array(
+                    'success' => __('Your post has been submitted successfully.', 'sabai'),
+                    'info' => sprintf(__('Back to %s', 'sabai'), $this->Entity_Link($context->entity)),
+                ));
+            }
         } else {
-            // redirect to the parent entity page.
-            $url = $this->Entity_Url($context->entity);
-            $context->addFlash(__('Thanks for your submission, we will review it and get back with you.', 'sabai'));
-        }
-        $context->setSuccess($url);        
+            $context->addTemplate('form_results')->setAttributes(array(
+                'success' => __('Thanks for your submission, we will review it and get back with you.', 'sabai'),
+                'info' => sprintf(__('Back to %s', 'sabai'), $this->Entity_Link($context->entity)),
+            ));
+        }      
         $this->doEvent('ContentChildEntityCreated', array($entity, $context->entity));
 
         // Set cookie to track guest user
@@ -57,7 +64,7 @@ class Sabai_Addon_Content_Controller_AddChildPost extends Sabai_Addon_Form_Contr
     
     protected function _getContentPostStatus(Sabai_Context $context)
     {
-        return $this->getUser()->hasPermission($context->child_bundle->name . '_add2')
+        return $this->HasPermission($context->child_bundle->name . '_add2')
             ? Sabai_Addon_Content::POST_STATUS_PUBLISHED
             : Sabai_Addon_Content::POST_STATUS_PENDING;
     }

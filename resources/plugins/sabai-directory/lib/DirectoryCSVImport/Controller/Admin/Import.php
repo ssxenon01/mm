@@ -43,16 +43,24 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
                 '#title' => __('Convert encoding of CSV file data to UTF-8', 'sabai-directory'),
                 '#default_value' => false,
             ),
+            'convert_crlf' => array(
+                '#type' => 'checkbox',
+                '#title' => __('Convert line endings of CSV file to CR/LF', 'sabai-directory'),
+                '#default_value' => false,
+            ),
         );
     }
     
     protected function _getFormForStepSettings(Sabai_Context $context, array &$formStorage)
     {
+        @setlocale(LC_ALL, $this->getPlatform()->getLocale());
+        
         $csv_file = $formStorage['values']['upload']['file']['saved_file_path'];
         $csv_delimiter = $formStorage['values']['upload']['delimiter'];
         $csv_enclosure = $formStorage['values']['upload']['enclosure'];
         $csv_convert_encoding = !empty($formStorage['values']['upload']['convert_encoding']);
-        if (false === $csv_columns = $this->_getCsvFileHeaders($context, $csv_file, $csv_delimiter, $csv_enclosure, $csv_convert_encoding)) {
+        $csv_convert_crlf = !empty($formStorage['values']['upload']['convert_crlf']);
+        if (false === $csv_columns = $this->_getCsvFileHeaders($context, $csv_file, $csv_delimiter, $csv_enclosure, $csv_convert_encoding, $csv_convert_crlf)) {
             @unlink($csv_file);
             return false;
         }
@@ -354,18 +362,19 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
     protected function _submitFormForStepDefaultSettings(Sabai_Context $context, Sabai_Addon_Form_Form $form)
     {
         @set_time_limit(0);
+        @setlocale(LC_ALL, $this->getPlatform()->getLocale());
         
         $csv_file = $form->storage['values']['upload']['file']['saved_file_path'];
         $csv_delimiter = $form->storage['values']['upload']['delimiter'];
         $csv_enclosure = $form->storage['values']['upload']['enclosure'];
         if (!$fp = $this->_getCsvFile($context, $csv_file, false)) {
             @unlink($csv_file);
-            return false;
+            throw new Sabai_RuntimeException('Failed loading CSV file from ' . $csv_file);
         }
         
-        if (false === $csv_columns = $this->_getCsvFileHeaders($context, $fp, $csv_delimiter, $csv_enclosure, false)) {
+        if (false === $csv_columns = $this->_getCsvFileHeaders($context, $fp, $csv_delimiter, $csv_enclosure)) {
             @unlink($csv_file);
-            return false;
+            throw new Sabai_RuntimeException('Failed reading headers from CSV file ' . $csv_file);
         }
         
         $settings = $form->storage['values']['settings']['fields'];
@@ -407,7 +416,7 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
             $row = array('category' => array());
             // Load row data from CSV
             foreach ($csv_columns as $csv_row_key => $csv_column_name) {
-                if (isset($settings[$csv_row_key])) {
+                if (isset($settings[$csv_row_key]) && strlen($settings[$csv_row_key])) {
                     if ($settings[$csv_row_key] === 'category') {
                         if (!empty($form->values['category_separator'])) {
                             foreach (explode($form->values['category_separator'], $csv_row[$csv_row_key]) as $_category) {
@@ -473,9 +482,9 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
             // Init directory listing values
             $values = array(
                 'content_post_title' => $row['title'],
-                'content_body' => isset($row['description']) ? array('text' => $row['description'], 'filtered_text' => $row['description']) : null,
+                'content_body' => isset($row['description']) && strlen($row['description']) ? array('text' => $row['description'], 'filtered_text' => $row['description']) : null,
                 'directory_location' => array(
-                    'address' => $row['address'],
+                    'address' => isset($row['address']) && strlen($row['address']) ? $row['address'] : null,
                 ),
                 'content_post_published' => !empty($row['date']) && is_numeric($row['date']) ? (int)$row['date'] : strtotime($row['date']),
                 'content_post_user_id' => !empty($row['author_id']) ? $row['author_id'] : $defaults['author_id'],
@@ -485,17 +494,18 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
                 ),
                 'directory_category' => !empty($row['category']) ? array_values($row['category']) : $defaults['category'],
                 'directory_contact' => array(
-                    'phone' => isset($row['phone']) ? $row['phone'] : null,
-                    'mobile' => isset($row['mobile']) ? $row['mobile'] : null,
-                    'fax' => isset($row['fax']) ? $row['fax'] : null,
-                    'email' => isset($row['email']) ? $row['email'] : null,
-                    'website' => isset($row['website'])
-                        ? strpos($row['website'], 'http') === 0 ? $row['website'] : 'http://' . $row['website'] : null,
+                    'phone' => isset($row['phone']) && strlen($row['phone']) ? $row['phone'] : null,
+                    'mobile' => isset($row['mobile']) && strlen($row['mobile']) ? $row['mobile'] : null,
+                    'fax' => isset($row['fax']) && strlen($row['fax']) ? $row['fax'] : null,
+                    'email' => isset($row['email']) && strlen($row['email']) ? $row['email'] : null,
+                    'website' => isset($row['website']) && strlen($row['website'])
+                        ? (strpos($row['website'], 'http') === 0 ? $row['website'] : 'http://' . $row['website'])
+                        : null,
                 ),
                 'directory_social' => array(
-                    'twitter' => isset($row['twitter']) ? str_replace('http://twitter.com/', '', $row['twitter']) : null,
-                    'facebook' => isset($row['facebook']) ? $row['facebook'] : null,
-                    'googleplus' => isset($row['googleplus']) ? $row['googleplus'] : null,
+                    'twitter' => isset($row['twitter']) && strlen($row['twitter']) ? str_replace('http://twitter.com/', '', $row['twitter']) : null,
+                    'facebook' => isset($row['facebook']) && strlen($row['facebook']) ? $row['facebook'] : null,
+                    'googleplus' => isset($row['googleplus']) && strlen($row['googleplus']) ? $row['googleplus'] : null,
                 ),
             );
             
@@ -543,49 +553,58 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
         $form->storage['rows_failed'] = $rows_failed;
     }
 
-    protected function _complete(Sabai_Context $context, Sabai_Addon_Form_Form $form)
+    protected function _complete(Sabai_Context $context, array $formStorage)
     {
         $context->addTemplate('form_results');
-        $success_count = $form->storage['rows_imported'];
+        $success_count = $formStorage['rows_imported'];
         $context->success = sprintf(_n('%d row imported successfullly.', '%d rows imported successfullly.', $success_count, 'sabai-directory'), $success_count);
-        $failed_count = count($form->storage['rows_failed']);
+        $failed_count = count($formStorage['rows_failed']);
         if ($failed_count) {
             $error = array();
-            foreach ($form->storage['rows_failed'] as $row_num => $error_message) {
+            foreach ($formStorage['rows_failed'] as $row_num => $error_message) {
                 $error[] = sprintf(__('CSV data on row number %d could not be imported: %s', 'sabai-directory'), $row_num, $error_message);
             }
             $context->error = $error;
         }
-        @unlink($form->storage['values']['upload']['file']['saved_file_path']);
+        @unlink($formStorage['values']['upload']['file']['saved_file_path']);
     }
     
-    protected function _getCsvFile(Sabai_Context $context, $csvFilePath, $toUtf8 = false)
+    protected function _getCsvFile(Sabai_Context $context, $csvFilePath, $toUtf8 = false, $toCRLF = false)
     {
         if (false === $fp = fopen($csvFilePath, 'r')) {
-            $context->setError(sprintf(__('An error occurred while opening the CSV file: %s', 'sabai-directory'), $csvFilePath));
+            $context->setError(sprintf('An error occurred while opening the CSV file: %s', $csvFilePath));
             return false;
         }
-        if ($toUtf8) {
+        if ($toUtf8 || $toCRLF) {
             $contents = fread($fp, filesize($csvFilePath));
             fclose($fp);
             if ($contents === false) {
-                $context->setError(sprintf(__('An error occurred while reading the CSV file: %s', 'sabai-directory'), $csvFilePath));
+                $context->setError(sprintf('An error occurred while reading the CSV file: %s', $csvFilePath));
                 return false;
             }
             if (false === $fp = fopen($csvFilePath, 'w+')) {
-                $context->setError(__('An error occurred while converting the encoding of CSV file to UTF-8.', 'sabai-directory'));
+                $context->setError(sprintf('An error occurred while opening CSV file %s with write permission.', $csvFilePath));
                 return false;
             }
-            fwrite($fp, mb_convert_encoding($contents, 'UTF-8', mb_detect_encoding($contents)));
+            if ($toCRLF) {
+                $contents = strtr($contents, array("\r" => "\r\n", "\n" => "\r\n"));
+            }
+            if ($toUtf8) {
+                $contents = mb_convert_encoding($contents, 'UTF-8', mb_detect_encoding($contents));
+            }
+            if (false === fwrite($fp, $contents)) {
+                $context->setError(sprintf('An error occurred while writing CSV file %s.', $csvFilePath));
+                return false;
+            }
             rewind($fp);
         }
         return $fp;
     }
     
-    protected function _getCsvFileHeaders(Sabai_Context $context, $csvFile, $delimiter, $enclosure, $toUtf8 = false)
+    protected function _getCsvFileHeaders(Sabai_Context $context, $csvFile, $delimiter, $enclosure, $toUtf8 = false, $toCRLF = false)
     {
         if (!is_resource($csvFile)
-            && (false === $csvFile = $this->_getCsvFile($context, $csvFile, $toUtf8))
+            && (false === $csvFile = $this->_getCsvFile($context, $csvFile, $toUtf8, $toCRLF))
         ) {
             return false;
         } 

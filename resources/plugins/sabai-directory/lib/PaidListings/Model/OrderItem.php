@@ -25,7 +25,7 @@ class Sabai_Addon_PaidListings_Model_OrderItem extends Sabai_Addon_PaidListings_
     {
         $order_log = parent::createOrderLog()->markNew();
         $order_log->order_id = $this->order_id;
-        $order_log->message = $message;
+        $order_log->message = strlen($message) ? mb_strcut(strtr($message, array("\r" => '', "\n" => ' ')), 0, 255) : $message;
         $order_log->is_error = $isError;
         return $order_log;
     }

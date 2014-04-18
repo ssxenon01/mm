@@ -69,8 +69,18 @@ class Sabai_Platform_WordPress_UserIdentityFetcher extends SabaiFramework_User_I
 
     public function _doSearch($term, $limit, $offset, $sort, $order)
     {
+        return $this->_search('user_login', $term, $limit, $offset, $sort, $order);
+    }
+    
+    public function _doSearchByName($term, $limit, $offset, $sort, $order)
+    {
+        return $this->_search('display_name', $term, $limit, $offset, $sort, $order);
+    }
+    
+    protected function _search($field, $term, $limit, $offset, $sort, $order)
+    {
         $ret = array();
-        $sql = $GLOBALS['wpdb']->prepare('SELECT * FROM ' . $GLOBALS['wpdb']->users . ' WHERE user_login LIKE %s ORDER BY %s %s LIMIT %d, %d', $term. '%', $sort, $order, $offset, $limit);
+        $sql = $GLOBALS['wpdb']->prepare('SELECT * FROM ' . $GLOBALS['wpdb']->users . ' WHERE ' . $field . ' LIKE %s ORDER BY %s %s LIMIT %d, %d', $term. '%', $sort, $order, $offset, $limit);
         foreach ($GLOBALS['wpdb']->get_results($sql) as $result) {
             $ret[$result->ID] = $this->_buildIdentity($result);
         }

@@ -1,36 +1,36 @@
 <?php
 class Sabai_Addon_Comment_Helper_Render extends Sabai_Helper
 {
-    public function help(Sabai $application, $comment, Sabai_Addon_Entity_IEntity $entity, SabaiFramework_User $user, Sabai_Addon_Entity_IEntity $parentEntity = null, $voteToken = null, $tag = 'li')
+    public function help(Sabai $application, $comment, Sabai_Addon_Entity_IEntity $entity, Sabai_Addon_Entity_IEntity $parentEntity = null, $voteToken = null, $tag = 'li')
     {
         if (!is_array($comment)) {
             $comment = $comment->toArray();
         }
         $meta = $actions = $classes = array();
         $comment_user_id = $comment['author']->id;
-        if (!$user->isAnonymous()) {
-            $is_own_comment = $comment_user_id === $user->id;
+        if (!$application->getUser()->isAnonymous()) {
+            $is_own_comment = $comment_user_id === $application->getUser()->id;
             // Add edit link?
-            if ($user->hasPermission($entity->getBundleName() . '_comment_edit_any')
-                || ($is_own_comment && $user->hasPermission($entity->getBundleName() . '_comment_edit_own'))
+            if ($application->HasPermission($entity->getBundleName() . '_comment_edit_any')
+                || ($is_own_comment && $application->HasPermission($entity->getBundleName() . '_comment_edit_own'))
             ) {
                 $actions[] = $application->LinkToRemote(__('Edit', 'sabai'), '#sabai-comment-' . $comment['id'] . ' .sabai-comment-form', $application->Entity_Url($entity, '/comments/' . $comment['id'] . '/edit'), array('content' => 'jQuery("#sabai-comment-' . $comment['id'] . ' .sabai-comment-main").hide(); target.focusFirstInput();', 'icon' => 'edit'), array('title' => __('Edit this Comment', 'sabai')));
             }
             // Add delete link?
-            if ($user->isAdministrator()
-                || ($is_own_comment && $user->hasPermission($entity->getBundleName() . '_comment_delete_own'))
+            if ($application->getUser()->isAdministrator()
+                || ($is_own_comment && $application->HasPermission($entity->getBundleName() . '_comment_delete_own'))
             ) {
                 $actions[] = $application->LinkToModal(__('Delete', 'sabai'), $application->Entity_Url($entity, '/comments/' . $comment['id'] . '/delete'), array('width' => 470, 'icon' => 'trash'), array('title' => __('Delete this Comment', 'sabai')));
             }
             // Add unhide link?
-            if ($user->hasPermission($entity->getBundleName() . '_manage')) {
+            if ($application->HasPermission($entity->getBundleName() . '_manage')) {
                 if ($comment['is_hidden']) {
                     $actions[] = $application->LinkToModal(__('Unhide', 'sabai'), $application->Entity_Url($entity, '/comments/' . $comment['id'] . '/hide'), array('width' => 470, 'icon' => 'eye-open'), array('title' => __('Unhide this Comment', 'sabai')));
                 }
             }
             if ($comment['flag_count']) {
                 // Show flag score as well if the user has the xxx_manage permission, otherwise show only the flag count 
-                if ($user->hasPermission($entity->getBundleName() . '_manage')) {
+                if ($application->HasPermission($entity->getBundleName() . '_manage')) {
                     $meta[] = '<li class="sabai-comment-flags"><span><i class="sabai-icon-flag"></i> ' . $comment['flag_count'] . ' (' . $comment['flag_sum'] . ')</span></li>';
                 } else { 
                     $meta[] = '<li class="sabai-comment-flags"><span><i class="sabai-icon-flag"></i> ' . $comment['flag_count'] . '</span></li>';
@@ -46,12 +46,12 @@ class Sabai_Addon_Comment_Helper_Render extends Sabai_Helper
             }
             // Add flag/vote links?
             if ($voteToken !== false) {
-                if (!$comment['flag_disabled'] && $user->hasPermission($entity->getBundleName() . '_comment_flag')) {
+                if (!$comment['flag_disabled'] && $application->HasPermission($entity->getBundleName() . '_comment_flag')) {
                     $meta[] = '<li class="sabai-comment-flag">' . $application->LinkToModal(__('flag', 'sabai'), $application->Entity_Url($entity, '/comments/' . $comment['id'] . '/flag'), array('width' => 470, 'error' => 'trigger.closest("li").remove();', 'icon' => 'flag'), array('title' => __('Flag this comment', 'sabai'))) . '</li>';
                 }
                 if (!$comment['vote_disabled']
-                    &&$user->hasPermission($entity->getBundleName() . '_comment_vote')
-                    && (!$is_own_comment || $user->hasPermission($entity->getBundleName() . '_comment_vote_own'))
+                    && $application->HasPermission($entity->getBundleName() . '_comment_vote')
+                    && (!$is_own_comment || $application->HasPermission($entity->getBundleName() . '_comment_vote_own'))
                 ) {
                     if (!isset($voteToken)) {
                         $voteToken = $application->Token('comment_vote_comment', 1800, true);

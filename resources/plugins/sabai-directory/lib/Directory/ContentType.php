@@ -16,7 +16,6 @@ class Sabai_Addon_Directory_ContentType implements Sabai_Addon_Content_IContentT
             return array(
                 'type' => 'directory_listing',
                 'path' => '/' . $this->_addon->getDirectorySlug(),
-                'icon' => 'edit',
                 'label' => $this->_addon->getApplication()->_t(_n_noop('Listings', 'Listings', 'sabai-directory'), 'sabai-directory'),
                 'label_singular' => $this->_addon->getApplication()->_t(_n_noop('Listing', 'Listing', 'sabai-directory'), 'sabai-directory'),
                 'permalink_path' => '/' . $this->_addon->getDirectorySlug() . '/' . ($listing_slug ? $listing_slug : 'listing'),
@@ -117,10 +116,11 @@ class Sabai_Addon_Directory_ContentType implements Sabai_Addon_Content_IContentT
                     'title' => '',
                 ),
                 'content_permissions' => array(
-                    'edit_own' => array('label' => __('Edit own unclaimed %2$s', 'sabai-directory'), 'default' => true),
+                    'edit_own' => array('label' => __('Edit own unclaimed %1$s', 'sabai-directory'), 'default' => true),
                     'edit_any' => array('label' => __('Edit any unclaimed %2$s', 'sabai-directory')),
-                    'trash_own' => array('label' => __('Delete own unclaimed %2$s', 'sabai-directory')),
+                    'trash_own' => array('label' => __('Delete own unclaimed %1$s', 'sabai-directory')),
                     'manage' => array('label' => __('Delete any unclaimed %2$s', 'sabai-directory')),
+                    'claim' => array('label' => __('Claim existing %1$s', 'sabai-directory'), 'default' => true),
                     'voting_rating' => false,
                     'voting_own_rating' => false,
                 ),
@@ -131,7 +131,6 @@ class Sabai_Addon_Directory_ContentType implements Sabai_Addon_Content_IContentT
                 'type' => 'directory_listing_review',
                 'path' => '/' . $this->_addon->getDirectorySlug() . '/' . $this->_addon->getSlug('reviews'),
                 'parent' => $this->_addon->getListingBundleName(),
-                'icon' => 'comments',
                 'label' => $this->_addon->getApplication()->_t(_n_noop('Reviews', 'Reviews', 'sabai-directory'), 'sabai-directory'),
                 'label_singular' => $this->_addon->getApplication()->_t(_n_noop('Review', 'Review', 'sabai-directory'), 'sabai-directory'),
                 'properties' => array(
@@ -172,6 +171,7 @@ class Sabai_Addon_Directory_ContentType implements Sabai_Addon_Content_IContentT
                     'weight' => 1,
                     'title' => '',
                 ),
+                'content_activity' => array('directory_rating'),
                 'file_content_icons' => false,
                 'content_permissions' => array(
                     'manage' => array('label' => __('Delete any %2$s', 'sabai-directory')),
@@ -238,7 +238,6 @@ class Sabai_Addon_Directory_ContentType implements Sabai_Addon_Content_IContentT
                 'type' => 'directory_listing_lead',
                 'path' => '/' . $this->_addon->getDirectorySlug() . '/' . $this->_addon->getSlug('leads'),
                 'parent' => $this->_addon->getListingBundleName(),
-                'icon' => 'picture',
                 'label' => $this->_addon->getApplication()->_t(_n_noop('Leads', 'Leads', 'sabai-directory'), 'sabai-directory'),
                 'label_singular' => $this->_addon->getApplication()->_t(_n_noop('Lead', 'Lead', 'sabai-directory'), 'sabai-directory'),
                 'viewable' => false,

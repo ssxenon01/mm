@@ -13,7 +13,7 @@ require_once 'SabaiFramework/Application.php';
  */
 abstract class SabaiFramework_Application_Http extends SabaiFramework_Application
 {
-    protected $_scriptUrls = array(), $_currentScriptName = 'main';
+    protected $_scriptUrls = array(), $_currentScriptName = 'main', $_modRewriteFormat;
 
     /**
      * Constructor
@@ -23,7 +23,7 @@ abstract class SabaiFramework_Application_Http extends SabaiFramework_Applicatio
         parent::__construct($id, $routeParam);
     }
 
-    public function run(SabaiFramework_Application_Controller $controller, SabaiFramework_Application_HttpContext $context, $route = null)
+    public function run(SabaiFramework_Application_Controller $controller, SabaiFramework_Application_Context $context, $route = null)
     {
         return parent::run($controller, $context, $route);
     }
@@ -61,6 +61,13 @@ abstract class SabaiFramework_Application_Http extends SabaiFramework_Applicatio
 
         return $this;
     }
+    
+    public function setModRewriteFormat($modRewriteFormat, $script)
+    {
+        $this->_modRewriteFormat[$script] = $modRewriteFormat;
+
+        return $this;
+    }
 
     /**
      * Creates an application URL from an array of options.
@@ -77,18 +84,24 @@ abstract class SabaiFramework_Application_Http extends SabaiFramework_Applicatio
             'fragment' => '',
             'script' => null,
             'separator' => '&amp;',
+            'secure' => false,
+            'mod_rewrite' => true,
         );
         if (!isset($options['script_url'])) {
-            $route = '/' . trim($options['route'], '/');
-            if (isset($options['script']) && isset($this->_scriptUrls[$options['script']])) {
-                $options['script_url'] = $this->_scriptUrls[$options['script']];
+            $route = rtrim($options['route'], '/');
+            $script_name = isset($options['script']) && isset($this->_scriptUrls[$options['script']]) ? $options['script'] : $this->_currentScriptName;
+            if (!isset($this->_modRewriteFormat[$script_name]) || !$options['mod_rewrite']) {
+                $options['script_url'] = $this->getScriptUrl($script_name);
+                // Append route data to request parameters if not the root route
+                if ($route) $options['params'][$this->getRouteParam()] = $route;
             } else {
-                $options['script_url'] = $this->_scriptUrls[$this->_currentScriptName];
-            }            
-            // Append route data to request parameters if not the root route
-            if ($route !== '/') $options['params'][$this->getRouteParam()] = $route;
+                $options['script_url'] = sprintf($this->_modRewriteFormat[$script_name], $route);
+            }
+            if ($options['secure']) {
+                $options['script_url'] = str_replace('http://', 'https://', $options['script_url']);
+            }
         }
-
+        
         return new SabaiFramework_Application_Url($options['script_url'], $options['params'], $options['fragment'], $options['separator']);
     }
 }

@@ -19,10 +19,12 @@
             <td><?php echo $this->Content_RenderBody($entity);?></td>
         </tr>
 <?php foreach ($this->Entity_CustomFields($entity) as $field):?>
+<?php   if ($field_output = $this->Entity_RenderField($entity, $field['type'], $field['settings'], $field['values'])):?>
         <tr>
             <td><strong><?php Sabai::_h($field['title']);?></strong></td>
-            <td><?php echo $this->Entity_RenderField($entity, $field['type'], $field['settings'], $field['values']);?></td>
+            <td><?php echo $field_output;?></td>
         </tr>
+<?php   endif;?>
 <?php endforeach;?>
     </tbody>
 </table>

@@ -48,7 +48,20 @@ class Sabai_Platform_WordPress_Shortcode
                 self::$_content[$placeholder] = $content;
                 return $placeholder;
             } elseif ($context->isError()) {
-                throw new Exception($context->getErrorMessage());
+                $ret = array();
+                $error = $response->getError($context);
+                foreach ($error['messages'] as $message) {
+                    $ret[] = '<div class="sabai-error">' . $message . '</div>';
+                }
+                return implode(PHP_EOL, $ret);
+            } elseif ($context->isRedirect()) {
+                return sprintf(
+                    '<script type="text/javascript">jQuery(document).ready(function(){window.location.replace("%s");});</script><p>%s</p><p>%s</p><div><a class="sabai-btn">%s</a></div>',
+                    $context->getRedirectUrl(),
+                    ($message = $context->getRedirectMessage()) ? $message : __('Redirecting...', 'sabai'),
+                    __('If you are not redirected automatically, please click the button below:'),
+                    __('Continue')
+                );
             } else {
                 return '';
             }

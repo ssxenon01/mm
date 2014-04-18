@@ -11,6 +11,7 @@ class Sabai_Addon_File_Helper_ThumbnailLink extends Sabai_Helper
             'link_image_size' => null,
             'link_entity' => false,
             'title' => null,
+            'image_size' => null,
         );
         return sprintf(
             '<a href="%s" title="%s" class="sabai-file sabai-file-image sabai-file-type-%s %s" rel="%s"><img src="%s" alt="" /></a>',
@@ -19,7 +20,7 @@ class Sabai_Addon_File_Helper_ThumbnailLink extends Sabai_Helper
             Sabai::h($file['extension']),
             $options['class'] ? Sabai::h($options['class']) : '',
             Sabai::h($options['rel']),
-            $application->File_ThumbnailUrl($file['name'])
+            $options['image_size'] ? $application->File_Url($entity, $file, $options['image_size']) : $application->File_ThumbnailUrl($file['name'])
         );
     }
 }

@@ -11,7 +11,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
                Sabai_Addon_Widgets_IWidgets,
                Sabai_Addon_System_IMainMenus
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.29', PACKAGE = 'sabai-directory';
     
     private static $_gmapLoaded = false;    
     protected $_path, $_listingBundleName, $_reviewBundleName, $_leadBundleName, $_photoBundleName, $_categoryBundleName;
@@ -275,7 +275,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 'weight' => 15,
                 'ajax' => false,
             ),
-            '/' . $this->getDirectorySlug() . '/' . $this->getSlug('categories') . '/:term_name/' . $this->getDirectorySlug() => array(
+            '/' . $this->getDirectorySlug() . '/' . $this->getSlug('categories') . '/:slug/' . $this->getDirectorySlug() => array(
                 'controller' => 'TermListings',
                 'title_callback' => true,
                 'type' => Sabai::ROUTE_INLINE_TAB,
@@ -430,7 +430,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 if ($accessType === Sabai::ROUTE_ACCESS_LINK) {
                     return true;
                 }
-                if (!$this->_application->getUser()->hasPermission($context->child_bundle->name . '_add')) {
+                if (!$this->_application->HasPermission($context->child_bundle->name . '_add')) {
                     if ($this->_application->getUser()->isAnonymous()) {
                         $context->setUnauthorizedError($this->_application->Entity_Url($context->entity, '/reviews/add'));
                     }
@@ -448,12 +448,12 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 if ($accessType === Sabai::ROUTE_ACCESS_LINK) {
                     return true;
                 }            
-                return $this->_application->getUser()->hasPermission($context->child_bundle->name . '_add');
+                return $this->_application->HasPermission($context->child_bundle->name . '_add');
             case 'categories':
-                if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return !empty($this->_config['display']['f_categories']);
+                if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return !empty($this->_config['display']['f_tabs']['categories']);
                 return ($context->taxonomy_bundle = $this->_application->Entity_Bundle($this->_categoryBundleName)) ? true : false;
             case 'reviews':
-                if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return !empty($this->_config['display']['f_reviews']);
+                if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return !empty($this->_config['display']['f_tabs']['reviews']);
                 return ($context->child_bundle = $this->_application->Entity_Bundle($this->_reviewBundleName)) ? true : false;
             case 'listing_reviews':
                 if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return true;
@@ -471,7 +471,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 $lat = $context->entity->getSingleFieldValue('directory_location', 'lat');
                 return !empty($lat);
             case 'photos':
-                if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return !empty($this->_config['display']['f_photos']);
+                if ($accessType !== Sabai::ROUTE_ACCESS_CONTENT) return !empty($this->_config['display']['f_tabs']['photos']);
                 return ($context->child_bundle = $this->_application->Entity_Bundle($this->_photoBundleName)) ? true : false;
             case 'listing_photos':
             case 'user_photos':
@@ -487,11 +487,12 @@ class Sabai_Addon_Directory extends Sabai_Addon
             case 'my_listing':
                 if ((!$id = $context->getRequest()->asInt('listing_id'))
                     || (!$entity = $this->_application->Entity_TypeImpl('content')->entityTypeGetEntityById($id))
+                    || !$this->_application->Directory_IsListingOwner($entity, false)
                 ) {
                     return false;
                 }
                 $context->entity = $entity;
-                return $this->_application->Directory_IsListingOwner($context->entity, false);
+                return true;
             case 'edit_my_listing':
             case 'upload_my_listing_photos':
                 return $this->_application->Directory_IsListingOwner($context->entity, true);
@@ -506,32 +507,33 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 $context->entity = $entity;
                 return true;
             case 'claim':
-                if (empty($this->_config['claims']['allow_existing']) // allowed to claim existing listings?
+                if ((isset($this->_config['claims']['allow_existing']) && !$this->_config['claims']['allow_existing'])
                     || !empty($context->entity->directory_claim)
                 ) {
                     return false;
                 }
-                if ($this->_application->getUser()->isAnonymous()) {
-                    $context->setUnauthorizedError($this->_application->Entity_Url($context->entity, '/claim'));
-                    return false;
+                if ($this->_application->HasPermission($context->bundle->name . '_claim')) {
+                    return true;
                 }
-                return true;
+                if ($this->_application->getUser()->isAnonymous()) {
+                    $context->setUnauthorizedError($this->_application->Entity_Url($context->entity, '/' . $this->getSlug('claim')));
+                }
+                return false; 
             case 'add_listing':
-                if ($this->_application->getUser()->isAnonymous()) {
-                    if ($this->_application->getUser()->hasPermission($context->bundle->name . '_add')) {
-                        return true;
-                    }
-                    $context->setUnauthorizedError($route['path']);
-                    return false;
+                if ($this->_application->HasPermission($context->bundle->name . '_add')) {
+                    return true;
                 }
-                return $this->_application->getUser()->hasPermission($context->bundle->name . '_add'); 
+                if ($this->_application->getUser()->isAnonymous()) {
+                    $context->setUnauthorizedError($route['path']);
+                }
+                return false; 
             case 'edit_listing':
                 // If the listing is already claimed, do not allow anyone to edit it via this route
                 if (!empty($context->entity->directory_claim)) {
                     return false;
                 }
-                return $this->_application->getUser()->hasPermission($this->_listingBundleName . '_edit_any')
-                    || ($this->_application->getUser()->hasPermission($this->_listingBundleName . '_edit_own') && $this->_application->Content_IsAuthor($context->entity));
+                return $this->_application->HasPermission($this->_listingBundleName . '_edit_any')
+                    || ($this->_application->HasPermission($this->_listingBundleName . '_edit_own') && $this->_application->Content_IsAuthor($context->entity));
             case 'directory':
                 $context->addTemplateDir($this->_application->getPlatform()->getAssetsDir('sabai-directory') . '/templates');
                 return true;
@@ -540,7 +542,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 return true;
             case 'listing_contact':
                 return !empty($context->entity->directory_claim)
-                    && $this->_application->getUser()->hasPermission($this->_leadBundleName . '_add')
+                    && $this->_application->HasPermission($this->_leadBundleName . '_add')
                     && ($context->child_bundle = $this->_application->Entity_Bundle($this->_leadBundleName));
         }
     }
@@ -689,9 +691,6 @@ class Sabai_Addon_Directory extends Sabai_Addon
     {
         switch ($path) {
             case 'settings':
-                if ($accessType === Sabai::ROUTE_ACCESS_CONTENT) {
-                    $context->setIcon('cogs');
-                }
                 return true;
             case 'claim':
                 return (($id = $context->getRequest()->asInt('claim_id'))
@@ -744,14 +743,24 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 'photo_sort' => 'votes',
                 'bookmark_sort' => 'added',
                 'view' => 'list',
-                'f_categories' => true,
-                'f_reviews' => true,
-                'f_photos' => true,
+                'f_tabs' => array(
+                    'categories' => true,
+                    'reviews' => true,
+                    'photos' => true,
+                ),
+                'grid_columns' => 4,
                 'listing_default_tab' => 'reviews',
                 'listing_tabs' => null,
                 'category_columns' => 2,
                 'no_photo_comments' => false,
                 'stick_featured' => true,
+                'buttons' => array(
+                    'search' => 'sabai-btn-primary',
+                    'listing' => 'sabai-btn-success',
+                    'review' => 'sabai-btn-success',
+                    'photos' => 'sabai-btn-success',
+                    'directions' => 'sabai-btn-primary',
+                ),
             ),
             'map' => array(
                 'disable' => false,
@@ -767,6 +776,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
             'search' => array(
                 'min_keyword_len' => 3,
                 'no_loc' => false,
+                'country' => null,
             ),
             'photo' => array(
                 'max_file_size' => 1024,
@@ -778,8 +788,9 @@ class Sabai_Addon_Directory extends Sabai_Addon
             'claims' => array(
                 'duration' => 365,
                 'grace_period' => 7,
-                'allow_existing' => true,
+                'no_comment' => false,
                 'tac' => array('type' => 'none', 'required' => true),
+                'allow_existing' => true,
             ),
             'spam' => array(
                 'threshold' => array('listing' => 30, 'review' => 15, 'photo' => 15),
@@ -1072,16 +1083,18 @@ class Sabai_Addon_Directory extends Sabai_Addon
         }
         
         if ($displayMode === 'full') {
-            if (!empty($this->_config['claims']['allow_existing'])) {
-                $links['claim'] = $this->_application->LinkTo(__('Claim', 'sabai-directory'), $this->_application->Entity_Url($entity, '/' . $this->getSlug('claim')), array('icon' => 'check'), array('title' => sprintf(__('Claim this %s', 'sabai-directory'), $this->_application->Entity_BundleLabel($bundle, true))));
+            if (!isset($this->_config['claims']['allow_existing']) || $this->_config['claims']['allow_existing']) {
+                if ($user->isAnonymous() || $this->_application->HasPermission($this->_listingBundleName . '_claim')) {
+                    $links['claim'] = $this->_application->LinkTo(__('Claim', 'sabai-directory'), $this->_application->Entity_Url($entity, '/' . $this->getSlug('claim')), array('icon' => 'check'), array('title' => sprintf(__('Claim this %s', 'sabai-directory'), $this->_application->Entity_BundleLabel($bundle, true))));
+                }
             }
-            if ($user->hasPermission($this->_listingBundleName . '_edit_any')
-                || ($user->hasPermission($this->_listingBundleName . '_edit_own') && $this->_application->Content_IsAuthor($entity, $user))
+            if ($this->_application->HasPermission($this->_listingBundleName . '_edit_any')
+                || ($this->_application->HasPermission($this->_listingBundleName . '_edit_own') && $this->_application->Content_IsAuthor($entity, $user))
             ) {
                 $links['edit'] = $this->_application->LinkTo(__('Edit', 'sabai-directory'), $this->_application->Entity_Url($entity, '/edit'), array('icon' => 'edit'), array('title' => sprintf(__('Edit this %s', 'sabai-directory'), $this->_application->Entity_BundleLabel($bundle, true))));
             }
-            if ($user->hasPermission($this->_listingBundleName . '_manage')
-                || ($user->hasPermission($this->_listingBundleName . '_trash_own') && $this->_application->Content_IsAuthor($entity, $user))
+            if ($this->_application->HasPermission($this->_listingBundleName . '_manage')
+                || ($this->_application->HasPermission($this->_listingBundleName . '_trash_own') && $this->_application->Content_IsAuthor($entity, $user))
             ) {
                 $links['delete'] = $this->_application->LinkToModal(__('Delete', 'sabai-directory'), $this->_application->Entity_Url($entity, '/delete'), array('icon' => 'trash', 'width' => 470), array('title' => sprintf(__('Delete this %s', 'sabai-directory'), $this->_application->Entity_BundleLabel($bundle, true))));
             }
@@ -1099,14 +1112,14 @@ class Sabai_Addon_Directory extends Sabai_Addon
         if ($displayMode === 'full') {
             $user = $this->_application->getUser();
             $bundle_label_singular = $this->_application->Entity_BundleLabel($bundle, true);
-            $can_manage = $user->hasPermission($this->_reviewBundleName . '_manage');
+            $can_manage = $this->_application->HasPermission($this->_reviewBundleName . '_manage');
             if ($can_manage) {
                 $links['edit'] = $this->_application->LinkTo(__('Edit', 'sabai-directory'), $this->_application->Entity_Url($entity, '/edit'), array('icon' => 'edit'), array('title' => sprintf(__('Edit this %s', 'sabai-directory'), $bundle_label_singular)));
                 $links['delete'] = $this->_application->LinkToModal(__('Delete', 'sabai-directory'), $this->_application->Entity_Url($entity, '/delete', array('delete_target_id' => $id)), array('width' => 470, 'icon' => 'trash'), array('title' => sprintf(__('Delete this %s', 'sabai-directory'), $bundle_label_singular)));
             } else { 
                 $is_author = $this->_application->Content_IsAuthor($entity, $user);
-                if ($user->hasPermission($this->_reviewBundleName . '_edit_any')
-                    || ($is_author && $user->hasPermission($this->_reviewBundleName . '_edit_own'))
+                if ($this->_application->HasPermission($this->_reviewBundleName . '_edit_any')
+                    || ($is_author && $this->_application->HasPermission($this->_reviewBundleName . '_edit_own'))
                 ) {
                     $links['edit'] = $this->_application->LinkTo(__('Edit', 'sabai-directory'), $this->_application->Entity_Url($entity, '/edit'), array('icon' => 'edit'), array('title' => sprintf(__('Edit this %s', 'sabai-directory'), $bundle_label_singular)));
                 }
@@ -1136,7 +1149,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
             );
             $classes[] = 'sabai-directory-photo-official';
         } else {
-            if ($this->_application->getUser()->hasPermission($this->_photoBundleName . '_manage')) {
+            if ($this->_application->HasPermission($this->_photoBundleName . '_manage')) {
                 $links['delete'] = $this->_application->LinkToModal(__('Delete', 'sabai-directory'), $this->_application->Entity_Url($entity, '/delete'), array('width' => 470, 'icon' => 'trash'), array('title' => sprintf(__('Delete this %s', 'sabai-directory'), $this->_application->Entity_BundleLabel($bundle, true))));
             }
         }
@@ -1171,8 +1184,17 @@ class Sabai_Addon_Directory extends Sabai_Addon
             'order' => 2,
             'label' => __('Owner', 'sabai-directory'),
         );
-            
+    
         if (!empty($form['entities']['#options'])) {
+            $pending_counts = array();
+            foreach (array($this->_reviewBundleName, $this->_photoBundleName, $this->_leadBundleName) as $bundle_name) {
+                $pending_counts[$bundle_name] = $this->_application->Entity_Query('content')
+                    ->propertyIs('post_entity_bundle_name', $bundle_name)
+                    ->propertyIsIn('post_status', array(Sabai_Addon_Content::POST_STATUS_DRAFT, Sabai_Addon_Content::POST_STATUS_PENDING))
+                    ->fieldIsIn('content_parent', array_keys($form['entities']['#options']))
+                    ->groupByField('content_parent')
+                    ->count();
+            }
             $form['entities']['#header']['author']['order'] = 3;
             foreach ($form['entities']['#options'] as $entity_id => $data) {
                 $entity = $data['#entity'];
@@ -1186,17 +1208,20 @@ class Sabai_Addon_Directory extends Sabai_Addon
                     $icons[] = '<i class="sabai-content-icon sabai-content-featured sabai-icon-certificate"></i>';
                 }
                 $form['entities']['#options'][$entity_id]['title'] = '<span class="sabai-directory-icons">' . implode(PHP_EOL, $icons) . '</span> ' . $form['entities']['#options'][$entity_id]['title'];
+                $review_count = (int)$entity->getSingleFieldValue('content_children_count', 'directory_listing_review');
+                $photo_count = (int)$entity->getSingleFieldValue('content_children_count', 'directory_listing_photo');
+                $lead_count = (int)$entity->getSingleFieldValue('content_children_count', 'directory_listing_lead');
                 $form['entities']['#options'][$entity_id] += array(
                     'reviews' => $this->_application->LinkTo(
-                        (int)$entity->getSingleFieldValue('content_children_count', 'directory_listing_review'),
+                        empty($pending_counts[$this->_reviewBundleName][$entity_id]) ? $review_count : sprintf('%d (%d)', $review_count, $pending_counts[$this->_reviewBundleName][$entity_id]),
                         $this->_application->Url('/' . $this->getDirectorySlug() . '/' . $this->getSlug('reviews'), array('content_parent' => $entity_id))
                     ),
                     'photos' => $this->_application->LinkTo(
-                        (int)$entity->getSingleFieldValue('content_children_count', 'directory_listing_photo'),
+                        empty($pending_counts[$this->_photoBundleName][$entity_id]) ? $photo_count : sprintf('%d (%d)', $photo_count, $pending_counts[$this->_photoBundleName][$entity_id]),
                         $this->_application->Url('/' . $this->getDirectorySlug() . '/' . $this->getSlug('photos'), array('content_parent' => $entity_id))
                     ),
                     'leads' => $this->_application->LinkTo(
-                        (int)$entity->getSingleFieldValue('content_children_count', 'directory_listing_lead'),
+                        empty($pending_counts[$this->_leadBundleName][$entity_id]) ? $lead_count : sprintf('%d (%d)', $lead_count, $pending_counts[$this->_leadBundleName][$entity_id]),
                         $this->_application->Url('/' . $this->getDirectorySlug() . '/' . $this->getSlug('leads'), array('content_parent' => $entity_id))
                     ),
                 );
@@ -1324,11 +1349,33 @@ class Sabai_Addon_Directory extends Sabai_Addon
     public function onFormBuildContentAdminListchildposts(&$form, &$storage)
     {
         if ($form['#bundle']->name === $this->_reviewBundleName) {
-            foreach ($form['entities']['#options'] as $entity_id => $data) {
-                $entity = $data['#entity'];
-                $icons = array();
-                $icons[] = '<span class="sabai-rating sabai-rating-' . $entity->directory_rating[0] * 10 . '"></span>';
-                $form['entities']['#options'][$entity_id]['title'] = '<span class="sabai-directory-icons">' . implode(PHP_EOL, $icons) . '</span> ' . $form['entities']['#options'][$entity_id]['title'];
+            $form['entities']['#header']['photos'] = array(
+                'order' => 14,
+                'label' => '<i class="sabai-icon sabai-icon-camera" title="'. __('Photos', 'sabai-directory') .'">',
+            );
+            if (!empty($form['entities']['#options'])) {
+                foreach (array(Sabai_Addon_Content::POST_STATUS_DRAFT, Sabai_Addon_Content::POST_STATUS_PENDING, Sabai_Addon_Content::POST_STATUS_PUBLISHED) as $status) {
+                    $photo_counts[$status] = $this->_application->Entity_Query('content')
+                        ->propertyIs('post_entity_bundle_name', $this->_photoBundleName)
+                        ->propertyIs('post_status', $status)
+                        ->fieldIsIn('content_reference', array_keys($form['entities']['#options']))
+                        ->groupByField('content_reference')
+                        ->count();
+                }
+                foreach ($form['entities']['#options'] as $entity_id => $data) {
+                    $entity = $data['#entity'];
+                    $icons = array();
+                    $icons[] = '<span class="sabai-rating sabai-rating-' . $entity->directory_rating[0] * 10 . '"></span>';
+                    $form['entities']['#options'][$entity_id]['title'] = '<span class="sabai-directory-icons">' . implode(PHP_EOL, $icons) . '</span> ' . $form['entities']['#options'][$entity_id]['title'];
+                    $photo_count = (int)@$photo_counts[Sabai_Addon_Content::POST_STATUS_PUBLISHED][$entity_id];
+                    $pending_photo_count = (int)@$photo_counts[Sabai_Addon_Content::POST_STATUS_PENDING][$entity_id] + (int)@$photo_counts[Sabai_Addon_Content::POST_STATUS_DRAFT][$entity_id];
+                    $form['entities']['#options'][$entity_id] += array(
+                        'photos' => $this->_application->LinkTo(
+                            empty($pending_photo_count) ? $photo_count : sprintf('%d (%d)', $photo_count, $pending_photo_count),
+                            $this->_application->Url('/' . $this->getDirectorySlug() . '/' . $this->getSlug('photos'), array('content_reference' => $entity_id))
+                        ),
+                    );
+                }
             }
             $this->_addAdminListPostsFormHeader($form);
         } elseif ($form['#bundle']->name === $this->_photoBundleName) {
@@ -1532,13 +1579,13 @@ class Sabai_Addon_Directory extends Sabai_Addon
     public function isListingTrashable($review, $user)
     {
         return $this->_application->Content_IsAuthor($review, $user)
-            && $user->hasPermission($this->_listingBundleName . '_trash_own');
+            && $this->_application->HasPermission($this->_listingBundleName . '_trash_own');
     }
 
     public function isReviewTrashable($review, $user)
     {
         return $this->_application->Content_IsAuthor($review, $user)
-            && $user->hasPermission($this->_reviewBundleName . '_trash_own');
+            && $this->_application->HasPermission($this->_reviewBundleName . '_trash_own');
     }
     
     public function onContentDirectoryListingReviewPostsTrashed($bundleName, $entities)
@@ -1592,15 +1639,15 @@ class Sabai_Addon_Directory extends Sabai_Addon
         ) {
             $this->_loadGoogleMaps($response);
             $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/jquery.jsticky.js', 'jquery-jsticky', 'jquery');
-            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/googlemap.js', 'sabai-directory-googlemap', 'sabai');
+            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/sabai-directory-googlemap.js', 'sabai-directory-googlemap', 'sabai');
             $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/markerclusterer_packed.js', 'sabai-directory-markerclusterer', 'sabai');
-            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/autocomplete.js', 'sabai-googlemaps-autocomplete', 'sabai');
+            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/sabai-googlemaps-autocomplete.js', 'sabai-googlemaps-autocomplete', 'sabai');
         } elseif (in_array('directory_searchform', $templates)) {
             $this->_loadGoogleMaps($response);
-            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/autocomplete.js', 'sabai-googlemaps-autocomplete', 'sabai');
+            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/sabai-googlemaps-autocomplete.js', 'sabai-googlemaps-autocomplete', 'sabai');
         } elseif (in_array('directory_map', $templates)) {
             $this->_loadGoogleMaps($response);
-            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/googlemap.js', 'sabai-directory-googlemap', 'sabai');
+            $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/sabai-directory-googlemap.js', 'sabai-directory-googlemap', 'sabai');
             $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/markerclusterer_packed.js', 'sabai-directory-markerclusterer', 'sabai');
         } elseif (in_array('directory_listings_slider', $templates)) {
             $this->_application->LoadJs($response, $this->_application->getPlatform()->getAssetsUrl('sabai-directory') . '/js/jquery.bxslider.min.js', 'jquery-bxslider', 'jquery');
@@ -1629,11 +1676,14 @@ class Sabai_Addon_Directory extends Sabai_Addon
         if (!defined('SABAI_DIRECTORY_NO_GOOGLE_MAPS_API') || !SABAI_DIRECTORY_NO_GOOGLE_MAPS_API) {
             $js[] = 'google.load("maps", "3", {other_params:"sensor=false&libraries=places&language=' . $this->_application->GoogleMaps_Language(). '"});';
         }
-        $js[] = 'google.setOnLoadCallback(function(){
+        $js[] = sprintf(
+            'google.setOnLoadCallback(function(){
     if (typeof SABAI.GoogleMaps != "undefined" && typeof SABAI.GoogleMaps.autocomplete != "undefined") {
-        SABAI.GoogleMaps.autocomplete(".sabai-directory-search-location input");
+        SABAI.GoogleMaps.autocomplete(".sabai-directory-search-location input", {%s});
     }
-});';
+});',
+            strlen(@$this->_config['search']['country']) ? 'componentRestrictions: {country: "' . strtolower($this->_config['search']['country']) . '"}' : ''
+        );
         $response->addJs(implode(PHP_EOL, $js), false);
         self::$_gmapLoaded = true;
     }
@@ -1659,6 +1709,13 @@ class Sabai_Addon_Directory extends Sabai_Addon
         if ($bundle->name !== $this->_reviewBundleName) return;
         
         if ($entity->isPublished()) {
+            // Cast vote for the parent listing
+            $this->_application->Voting_CastVote(
+                $this->_application->Content_ParentPost($entity, false),
+                'rating',
+                $entity->getSingleFieldValue('directory_rating'),
+                array('name' => '', 'reference_id' => $entity->getId(), 'user_id' => $entity->getAuthorId())
+            );
             $this->_application->Directory_SendReviewNotification('published', $entity);
             $this->_notifyListingOwners($entity);
         } else {
@@ -1668,6 +1725,25 @@ class Sabai_Addon_Directory extends Sabai_Addon
                 null,
                 array('{review_url}' => $this->_application->AdminUrl('/' . $this->getDirectorySlug() . '/' . $this->getSlug('reviews') . '/' . $entity->getId()))
             );
+        }
+    }
+    
+    public function onEntityUpdateContentDirectoryListingReviewEntitySuccess($bundle, $entity, $oldEntity, $values)
+    {
+        if ($bundle->name !== $this->_reviewBundleName) return;
+
+        if ($entity->isPublished()) {
+            if (isset($values['directory_rating']) // rating changed
+                || isset($values['content_post_status']) // review was just published
+            ) {
+                // Cast vote for the parent listing
+                $this->_application->Voting_CastVote(
+                    $this->_application->Content_ParentPost($entity, false),
+                    'rating',
+                    $entity->getSingleFieldValue('directory_rating'),
+                    array('name' => '', 'reference_id' => $entity->getId(), 'user_id' => $entity->getAuthorId(), 'is_edit' => true)
+                );
+            }
         }
     }
 
@@ -1864,9 +1940,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
     
     public function onDirectoryListingClaimStatusChange($claim)
     {
-        if ($claim->entity_bundle_name !== $this->_listingBundleName
-            || !in_array($claim->status, array('pending', 'approved', 'rejected'))
-        ) {
+        if ($claim->entity_bundle_name !== $this->_listingBundleName) {
             return;
         }
         $this->_application->Directory_SendClaimNotification($claim->status, $claim);

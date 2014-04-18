@@ -14,7 +14,6 @@ class Sabai_Helper_ImportRemote extends Sabai_Helper
     {
         $url = $application->Url($url); // convert to SabaiFramework_Application_Url
         $url['separator'] = '&';
-        $url['params'] += array(Sabai_Request::PARAM_AJAX => $id);
         $func = $return ? 'sprintf' : 'printf';
         return $func('<script type="text/javascript">
 jQuery(document).ready(function() {

@@ -13,6 +13,7 @@ class Sabai_Addon_Field_Widget_User extends Sabai_Addon_Field_Widget_AbstractWid
                         'enhanced_ui' => true,
                         'current_user_selected' => false,
                     ),
+                    'is_fieldset' => true,
                 );
         }
     }

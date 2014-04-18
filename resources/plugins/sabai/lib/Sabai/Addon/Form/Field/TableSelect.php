@@ -180,7 +180,7 @@ class Sabai_Addon_Form_Field_TableSelect extends Sabai_Addon_Form_Field_Abstract
         containment: "parent",
         axis: "y",
         update: function (event, ui) {}
-    }).disableSelection();
+    });
 });',
                 $data['#id']
             ));

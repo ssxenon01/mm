@@ -48,9 +48,23 @@ class Sabai_Addon_Directory_Controller_Map extends Sabai_Controller
             'featured_only' => false,
             'scrollwheel' => false,
             'marker_clusters' => true,
+            'geocode_error' => null,
+            'marker_cluster_imgurl' => null,
         );
         $attr = array_intersect_key($context->getAttributes(), $defaults) + $defaults;
-        $entities = $this->Directory_ListingsQuery($query, $attr['address'], array(), $category_id, $attr['sort'], $attr['distance'], $attr['is_mile'], $attr['featured_only'])
+        $latlng = array();
+        if (strlen($attr['address'])) {
+            try {
+                $geocode = $this->GoogleMaps_Geocode($attr['address']);
+                $latlng = array($geocode->lat, $geocode->lng);
+                if (empty($attr['distance']) && $geocode->viewport && ($viewport = explode(',', $geocode->viewport))) {
+                    $attr['distance'] = array(array($viewport[0], $viewport[1]), array($viewport[2], $viewport[3]));
+                }
+            } catch (Sabai_Addon_Google_GeocodeException $e) {
+                $attr['geocode_error'] = $e->getMessage();
+            }
+        }
+        $entities = $this->Directory_ListingsQuery($query, $latlng, array(), $category_id, $attr['sort'], $attr['distance'], $attr['is_mile'], $attr['featured_only'])
             ->fetch($attr['num'], 0);
         $attr['entities'] = $this->Entity_Render('content', $entities, null, 'summary');
         $context->addTemplate('directory_map')->setAttributes($attr);

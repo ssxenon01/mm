@@ -158,14 +158,19 @@ abstract class Sabai_Addon_PaidListings_Controller_ViewOrders extends Sabai_Addo
                     }
                     $this->getModel(null, 'PaidListings')->commit();
                     break;
-                case 'mark_paid':
+                case 'update_status':
+                    if (empty($form->values['new_status'])) break;
+                    $orders_updated = array();
                     foreach ($form->values['orders'] as $order_id) {
+                        if (!isset($context->orders[$order_id])) continue;
                         $order = $context->orders[$order_id];
-                        $order->status = Sabai_Addon_PaidListings::ORDER_STATUS_AWAITING_FULLFILLMENT;
+                        if ($order->status == $form->values['new_status']) continue;
+
+                        $order->status = $form->values['new_status'];
+                        $orders_updated[] = $order;
                     }
                     $this->getModel(null, 'PaidListings')->commit();
-                    foreach ($form->values['orders'] as $order_id) {
-                        $order = $context->orders[$order_id];
+                    foreach ($orders_updated as $order) {
                         $order->reload();
                         $this->doEvent('PaidListingsOrderStatusChange', array($order));
                     }
@@ -233,8 +238,9 @@ abstract class Sabai_Addon_PaidListings_Controller_ViewOrders extends Sabai_Addo
         }
         // Init status filters and current filter
         $filters = array(0 => $this->LinkToRemote(__('All', 'sabai-directory'), $context->getContainer(), $this->Url($context->getRoute(), $url_params), array(), array('class' => 'sabai-btn sabai-btn-mini')));
-        foreach ($this->PaidListings_OrderStatusLabels() as $status => $status_label) {
-            $filters[$status] = $this->LinkToRemote($status_label, $context->getContainer(), $this->Url($context->getRoute(), array('status' => $status) + $url_params), array(), array('class' => 'sabai-btn sabai-btn-mini'));
+        $status_labels = $this->PaidListings_OrderStatusLabels();
+        foreach ($status_labels as $status => $status_label) {
+            $filters[$status] = $this->LinkToRemote($status_label, $context->getContainer(), $this->Url($context->getRoute(), array('status' => $status) + $url_params), array(), array('class' => 'sabai-btn sabai-btn-mini'));            
         }
         $current_status = $context->getRequest()->asInt('status', 0, array_keys($filters));
         $filters[$current_status]->setAttribute('class', $filters[$current_status]->getAttribute('class') . ' sabai-active');
@@ -326,7 +332,9 @@ abstract class Sabai_Addon_PaidListings_Controller_ViewOrders extends Sabai_Addo
                 'content' => $listing_link,
             );
             // Update order status to completed if no pending order items. This could happen, for example status could not be updated because of database error.
-            if (empty($order_item_count[Sabai_Addon_PaidListings::ORDER_ITEM_STATUS_PENDING]) && !$order->isComplete()) {
+            if (empty($order_item_count[Sabai_Addon_PaidListings::ORDER_ITEM_STATUS_PENDING])
+                && !in_array($order->status, array(Sabai_Addon_PaidListings::ORDER_STATUS_COMPLETE, Sabai_Addon_PaidListings::ORDER_STATUS_EXPIRED, Sabai_Addon_PaidListings::ORDER_STATUS_FAILED, Sabai_Addon_PaidListings::ORDER_STATUS_REFUNDED))
+            ) {
                 $order->status = Sabai_Addon_PaidListings::ORDER_STATUS_COMPLETE;
                 $commit = true;
             }
@@ -357,14 +365,27 @@ abstract class Sabai_Addon_PaidListings_Controller_ViewOrders extends Sabai_Addo
             ));
         
         if ($this->_submitable = $this->getUser()->isAdministrator()) {
+            // Do not allow manually changing the status to Complete
+            unset($status_labels[Sabai_Addon_PaidListings::ORDER_STATUS_COMPLETE]);
             $this->_submitButtons = array(
                 'action' => array(
                     '#type' => 'select',
                     '#options' => array(
                         '' => __('Bulk Actions', 'sabai-directory'),
                         'delete' => __('Delete', 'sabai-directory'),
+                        'update_status' => __('Update Status', 'sabai-directory'),
                     ),
                     '#weight' => 1,
+                ),
+                'new_status' => array(
+                    '#type' => 'select',
+                    '#default_value' => null,
+                    '#multiple' => false,
+                    '#options' => $status_labels,
+                    '#weight' => 2,
+                    '#states' => array(
+                        'visible' => array('select[name="action"]' => array('type' => 'value', 'value' => 'update_status')),
+                    ),
                 ),
                 'apply' => array(
                     '#value' => __('Apply', 'sabai-directory'),
@@ -373,15 +394,6 @@ abstract class Sabai_Addon_PaidListings_Controller_ViewOrders extends Sabai_Addo
                     '#weight' => 10,
                 ),
             );
-            switch ($current_status) {
-                case Sabai_Addon_PaidListings::ORDER_STATUS_PENDING:
-                    $this->_submitButtons['action']['#options'] += array(
-                        'mark_paid' => __('Mark Paid', 'sabai-directory'),
-                    );
-                    break;
-                default:
-                    
-            }
             $form['orders']['#disabled'] = false;
         }
         

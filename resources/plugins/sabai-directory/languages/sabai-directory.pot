@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the sabai package.
 msgid ""
 msgstr ""
-"Project-Id-Version: sabai-directory 1.2.18\n"
+"Project-Id-Version: sabai-directory 1.2.25\n"
 "Report-Msgid-Bugs-To: http://sabaiapps.com/\n"
 "POT-Creation-Date: 2013-01-10 18:51+0900\n"
-"PO-Revision-Date: 2013-09-13 10:51+0900\n"
+"PO-Revision-Date: 2013-10-18 10:51+0900\n"
 "Last-Translator: onokazu <onokazu@gmail.com>\n"
 "Language-Team: LANGUAGE <onokazu@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -77,6 +77,10 @@ msgstr ""
 
 #, php-format
 msgid "<span>Was this review helpful to you?</span> %s %s"
+msgstr ""
+
+#, php-format
+msgid "(%d)"
 msgstr ""
 
 #, php-format
@@ -197,7 +201,7 @@ msgid "Listing Description"
 msgstr ""
 
 #, php-format
-msgid "Edit own unclaimed %2$s"
+msgid "Edit own unclaimed %1$s"
 msgstr ""
 
 #, php-format
@@ -205,11 +209,15 @@ msgid "Edit any unclaimed %2$s"
 msgstr ""
 
 #, php-format
-msgid "Delete own unclaimed %2$s"
+msgid "Delete own unclaimed %1$s"
 msgstr ""
 
 #, php-format
 msgid "Delete any unclaimed %2$s"
+msgstr ""
+
+#, php-format
+msgid "Claim existing %1$s"
 msgstr ""
 
 msgid "Reviews"
@@ -326,11 +334,20 @@ msgstr ""
 msgid "Claim Date"
 msgstr ""
 
+msgid "Claim Type"
+msgstr ""
+
 msgid "Delete"
 msgstr ""
 
 #, php-format
 msgid "Claim %s"
+msgstr ""
+
+msgid "New listing"
+msgstr ""
+
+msgid "Existing listing"
 msgstr ""
 
 msgid "Display Settings"
@@ -400,7 +417,16 @@ msgstr ""
 msgid "List view"
 msgstr ""
 
+msgid "Grid view"
+msgstr ""
+
 msgid "Map view"
+msgstr ""
+
+msgid "Grid view column count"
+msgstr ""
+
+msgid "Frontpage Tabs"
 msgstr ""
 
 msgid "Show the \"Categories\" tab on the front page"
@@ -430,6 +456,15 @@ msgid ""
 msgstr ""
 
 msgid "Category list page column count"
+msgstr ""
+
+msgid "Buttons"
+msgstr ""
+
+msgid "Write a Review"
+msgstr ""
+
+msgid "Add Photos"
 msgstr ""
 
 msgid "Disable photo comments"
@@ -550,7 +585,8 @@ msgstr ""
 msgid "Allow users to claim existing listings"
 msgstr ""
 
-msgid "Claim listing form header"
+
+msgid "Do not require comment"
 msgstr ""
 
 msgid "No terms and conditions"
@@ -667,9 +703,6 @@ msgstr ""
 msgid "Edit listing"
 msgstr ""
 
-msgid "Add Photos"
-msgstr ""
-
 msgid "Add official photos"
 msgstr ""
 
@@ -712,12 +745,6 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-msgid "Your message has been submitted successfully."
-msgstr ""
-
-msgid "Write a Review"
-msgstr ""
-
 msgid "None"
 msgstr ""
 
@@ -737,6 +764,12 @@ msgid "List"
 msgstr ""
 
 msgid "Switch to list view"
+msgstr ""
+
+msgid "Grid"
+msgstr ""
+
+msgid "Switch to grid view"
 msgstr ""
 
 msgid "Map"

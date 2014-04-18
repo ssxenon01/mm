@@ -19,8 +19,10 @@ class Sabai_Addon_Content_Helper_DeletePosts extends Sabai_Helper
                     $entities[$entity->getId()] = $entity;
                 }
             }
-        } else {
-            throw new Sabai_LogicException('Invalid argument supplied for Content_DeletePosts helper');
+        }
+        
+        if (empty($entities)) {
+            return;
         }
         
         // Fetch child entities
@@ -29,8 +31,6 @@ class Sabai_Addon_Content_Helper_DeletePosts extends Sabai_Helper
         }
         
         // Delete all
-        if (!empty($entities)) {
-            $application->getAddon('Entity')->deleteEntities('content', $entities);
-        }
+        $application->getAddon('Entity')->deleteEntities('content', $entities);
     }
 }

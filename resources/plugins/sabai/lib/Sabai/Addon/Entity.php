@@ -4,7 +4,7 @@ class Sabai_Addon_Entity extends Sabai_Addon
                Sabai_Addon_Entity_IFieldCache,
                Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.18', PACKAGE = 'sabai';
+    const VERSION = '1.2.29', PACKAGE = 'sabai';
     const FIELD_REALM_ALL = 0, FIELD_REALM_ENTITY_TYPE_DEFAULT = 1, FIELD_REALM_BUNDLE_DEFAULT = 2;
 
     private static $_reservedBundleNames = array('users', 'my', 'flagged', 'add', 'comments', 'vote');
@@ -505,29 +505,32 @@ class Sabai_Addon_Entity extends Sabai_Addon
                     ->markNew()
                     ->set('name', $fieldName)
                     ->set('system', $realm)
-                    ->set('storage', isset($fieldInfo['storage']) ? $fieldInfo['storage'] : 'sql');
+                    ->set('storage', isset($fieldInfo['storage']) ? $fieldInfo['storage'] : 'sql')
+                    ->set('settings', $field_settings);
                 if ($realm !== self::FIELD_REALM_ALL) {
                     $field_config->set('Bundle', $bundle)->set('EntityType', $bundle->EntityType);
                 }
             } else {
-                if ($field_config->schema !== $field_schema) {
-                    // Notify that field schema has changed
-                    $updatedFields[$field_config->storage]['old'][$field_config->name] = $field_config->schema;
-                    $updatedFields[$field_config->storage]['new'][$field_config->name] = $field_schema;
-                }
+                $is_update = true;
             }
         } else {
+            $is_update = true;
             $field_config = $fieldName;
+        }
+        if (!empty($is_update)) {
+            if ($overwrite) {
+                $field_config->settings = $field_settings;
+            } else {
+                $field_config->settings += $field_settings;
+            }
             if ($field_config->schema !== $field_schema) {
                 // Notify that field schema has changed
                 $updatedFields[$field_config->storage]['old'][$field_config->name] = $field_config->schema;
                 $updatedFields[$field_config->storage]['new'][$field_config->name] = $field_schema;
             }
         }
-        // Update field config
-        $field_config->type = $fieldInfo['type'];
-        $field_config->settings = $field_settings;
         $field_config->schema = $field_schema;
+        $field_config->type = $fieldInfo['type'];
         
         $widget = isset($fieldInfo['widget']) ? (string)$fieldInfo['widget'] : $field_types[$fieldInfo['type']]['default_widget'];
         if ($widget
@@ -707,7 +710,7 @@ class Sabai_Addon_Entity extends Sabai_Addon
         // Notify that an entity has been created
         $this->_invokeEntityEvents($bundle->entitytype_name, $bundle->type, array($bundle, $entity, $values, &$extraEventArgs), 'AfterCreate');
         // Load entity fields
-        $this->_application->Entity_LoadFields($entity);
+        $this->_application->Entity_LoadFields($entity, null, null, true);
         // Notify that an entity has been saved
         $this->_invokeEntityEvents($bundle->entitytype_name, $bundle->type, array($bundle, $entity, $values, $extraEventArgs), 'Create', 'Success');
 
@@ -740,7 +743,7 @@ class Sabai_Addon_Entity extends Sabai_Addon
         // Clear cached entity fields
         $this->_application->Entity_FieldCacheImpl()->entityFieldCacheRemove($updated_entity->getType(), array($updated_entity->getId()));
         // Field values may have changed, so reload entity
-        $this->_application->Entity_LoadFields($updated_entity);
+        $this->_application->Entity_LoadFields($updated_entity, null, null, true);
         // Notify that an entity has been saved
         $this->_invokeEntityEvents($bundle->entitytype_name, $bundle->type, array($bundle, $updated_entity, $entity, $values, $extraEventArgs), 'Update', 'Success');
         
@@ -831,21 +834,18 @@ class Sabai_Addon_Entity extends Sabai_Addon
             if (!isset($identity)) {
                 $identity = $this->_application->getUser()->getIdentity();
             }
-            $entity = $entity_type_impl->entityTypeCreateEntity($bundle, $properties, $identity);
+            $ret = $entity_type_impl->entityTypeCreateEntity($bundle, $properties, $identity);
         } else {
-            $entity = $entity_type_impl->entityTypeUpdateEntity($entity, $bundle, $properties);
+            $ret = $entity_type_impl->entityTypeUpdateEntity($entity, $bundle, $properties);
         }
 
         // Save fields
         foreach (array_keys($field_values_by_storage) as $field_storage) {
             $this->_application->Entity_FieldStorageImpl($field_storage)
-                ->entityFieldStorageSaveValues(
-                    $entity,
-                    $field_values_by_storage[$field_storage]
-                );
+                ->entityFieldStorageSaveValues($ret, $field_values_by_storage[$field_storage]);
         }
         
-        return $entity;
+        return $ret;
     }
 
     /**

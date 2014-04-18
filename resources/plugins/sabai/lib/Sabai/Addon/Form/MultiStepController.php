@@ -1,7 +1,6 @@
 <?php
 abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Controller
 {
-    protected $_nextBtnLabel, $_backBtnLabel;
     private $_currentStep, $_steps;
 
     protected function _doGetFormSettings(Sabai_Context $context, array &$formStorage)
@@ -30,34 +29,35 @@ abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Con
             $this->_currentStep = $formStorage['step'];
             // Get form for the current step
             if (!$form = $this->_getForm($this->_currentStep, $context, $formStorage)) {
-                return false;
+                if ($form === false) {
+                    return false;
+                }
+                $this->_complete($context, $formStorage);
+                return;
             }
         } else {
             $this->_currentStep = $this->_getFirstStep();
             // Get form for the current step
             if (!$form = $this->_getForm($this->_currentStep, $context, $formStorage)) {
-                return false;
+                if ($form === false) {
+                    return false;
+                }
+                $this->_complete($context, $formStorage);
+                return;
             }
             $form['#disable_back_btn'] = true;            
         }
         if (false !== $this->_submitButtons) { // false means to never add submit buttons
             if (empty($this->_submitButtons)) {
-                if (false !== $this->_getNextStep()) {
-                    $this->_submitButtons[] = array(
-                        '#value' => isset($this->_nextBtnLabel) ? $this->_nextBtnLabel : __('Next', 'sabai'),
-                        '#btn_type' => 'primary',
-                        '#weight' => 10,
-                    );
-                } else {
-                    $this->_submitButtons[] = array(
-                        '#btn_type' => 'primary',
-                        '#value' => __('Save', 'sabai'),
-                    );
-                }
+                $this->_submitButtons[] = array(
+                    '#value' => isset($form['#next_btn_label']) ? $form['#next_btn_label'] : (false !== $this->_getNextStep() ? __('Next', 'sabai') : __('Save', 'sabai')),
+                    '#btn_type' => 'primary',
+                    '#weight' => 10,
+                );
             }
             if (empty($form['#disable_back_btn'])) {
                 $this->_submitButtons['back'] = array(
-                    '#value' => isset($this->_backBtnLabel) ? $this->_backBtnLabel : __('Back', 'sabai'),
+                    '#value' => isset($form['#back_btn_label']) ? $form['#back_btn_label'] : __('Back', 'sabai'),
                     '#weight' => -10,
                     '#submit' => array(array(array($this, 'previousForm'), array($context))),
                     '#force_submit' => true, // skip validating the currently displayed form
@@ -89,13 +89,7 @@ abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Con
         $form->storage['values'][$this->_currentStep] = $form->values;
 
         // Call submit callback if any exists
-        if (false === $this->_submitForm($this->_currentStep, $context, $form)) {
-            if (!$form->hasError()) {
-                $form->setError(__('An error occurred while submitting the form.', 'sabai'));
-            }
-
-            return; // Display the same form again
-        }
+        $this->_submitForm($this->_currentStep, $context, $form);
         
         // Return if error or redirect
         if ($context->isError()
@@ -105,27 +99,37 @@ abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Con
         }
 
         // One or more steps may have been skipped, so make sure there are more steps afterwards.
-        if (false === $this->_getNextStep()) {
-            $this->_complete($context, $form);
+        if (false === $next_step = $this->_getNextStep()) {
+            $this->_complete($context, $form->storage);
             return;
         }
 
         // Advance to the next step
-        $form->storage['step'] = $this->_getNextStep();
+        $form->storage['step'] = $next_step;
         if (!$form->redirect) {
             $form->rebuild = true;
             $form->settings = $this->_getFormSettings($context, $form->settings['#build_id'], $form->storage);
         }
     }
 
-    final protected function _skipStep(&$formStorage)
+    final protected function _skipStep(array &$formStorage, $skipTo = null)
     {
-        $this->_currentStep = $formStorage['step'] = $this->_getNextStep();
+        if (!isset($skipTo)) {
+            $skipTo = $this->_getNextStep();
+        }
+        $this->_currentStep = $formStorage['step'] = $skipTo;
         return $this->_currentStep;
+    }
+    
+    protected function _skipStepAndGetForm(Sabai_Context $context, array &$formStorage, $skipTo = null)
+    {
+        return ($step = $this->_skipStep($formStorage, $skipTo)) ? $this->_getForm($step, $context, $formStorage) : array();
     }
     
     protected function _getNextStep()
     {
+        if ($this->_currentStep === false) return false;
+        
         $next_step_key_index = array_search($this->_currentStep, $this->_steps) + 1;
         
         return isset($this->_steps[$next_step_key_index]) ? $this->_steps[$next_step_key_index] : false;
@@ -133,6 +137,8 @@ abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Con
     
     protected function _getPreviousStep()
     {
+        if ($this->_currentStep === false) end(array_values($this->_steps));
+        
         $previous_step_key_index = array_search($this->_currentStep, $this->_steps) - 1;
         
         return isset($this->_steps[$previous_step_key_index]) ? $this->_steps[$previous_step_key_index] : false;
@@ -140,12 +146,19 @@ abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Con
     
     protected function _getFirstStep()
     {
-        return array_shift(array_values($this->_steps));
+        return current(array_values($this->_steps));
     }
     
     protected function _getForm($step, Sabai_Context $context, array &$formStorage)
     {
-        return call_user_func_array(array($this, '_getFormForStep' . $this->Camelize($step)), array($context, &$formStorage));
+        while ((!$form = call_user_func_array(array($this, '_getFormForStep' . $this->Camelize($step)), array($context, &$formStorage)))
+            && false !== $form
+            && ($step = $this->_getNextStep())
+        ) {
+            $this->_skipStep($formStorage, $step);
+        }
+        
+        return $form;
     }
     
     protected function _submitForm($step, Sabai_Context $context, Sabai_Addon_Form_Form $form)
@@ -161,5 +174,5 @@ abstract class Sabai_Addon_Form_MultiStepController extends Sabai_Addon_Form_Con
      */
     abstract protected function _getSteps(Sabai_Context $context);
 
-    abstract protected function _complete(Sabai_Context $context, Sabai_Addon_Form_Form $form);
+    abstract protected function _complete(Sabai_Context $context, array $formStorage);
 }

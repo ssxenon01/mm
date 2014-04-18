@@ -14,13 +14,13 @@ class Sabai_Addon_Voting_FieldType implements Sabai_Addon_Field_IType
         switch ($this->_name) {
             case 'voting_default':
                 $info = array(
-                    'label' => __('Votes', 'sabai'),
+                    'label' => __('Vote', 'sabai'),
                     'default_settings' => array(),
                 );
                 break;
             case 'voting_updown':
                 $info = array(
-                    'label' => __('Votes', 'sabai'),
+                    'label' => __('Vote', 'sabai'),
                     'default_settings' => array(),
                 );
                 break;
@@ -32,19 +32,20 @@ class Sabai_Addon_Voting_FieldType implements Sabai_Addon_Field_IType
                 break;
             case 'voting_rating':
                 $info = array(
-                    'label' => __('Ratings', 'sabai'),
+                    'label' => __('Rating', 'sabai'),
                     'default_settings' => array(),
+                    'max_num_items' => 0,
                 );
                 break;
             case 'voting_favorite':
                 $info = array(
-                    'label' => __('Favorites', 'sabai'),
+                    'label' => __('Favorite', 'sabai'),
                     'default_settings' => array(),
                 );
                 break;
             case 'voting_flag':
                 $info = array(
-                    'label' => __('Flags', 'sabai'),
+                    'label' => __('Flag', 'sabai'),
                     'default_settings' => array(),
                 );
                 break;

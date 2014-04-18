@@ -125,9 +125,7 @@ abstract class SabaiFramework_Model_EntityCollection implements Iterator, Counta
     public function getFirst()
     {
         $this->rewind();
-        if (!$this->valid()) return false;
-
-        return $this->current();
+        return $this->valid() ? $this->current() : false;
     }
 
     public function rewind()

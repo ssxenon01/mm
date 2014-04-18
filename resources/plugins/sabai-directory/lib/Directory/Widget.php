@@ -362,7 +362,7 @@ class Sabai_Addon_Directory_Widget implements Sabai_Addon_Widgets_IWidget
                     '<i class="sabai-icon-time"></i> ' . $application->DateDiff($listing->getTimestamp())
                 ),
                 'image' => !isset($photos[$listing->getId()])
-                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->ImageUrl('no_image_small.png') . '" alt="" />'))
+                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->NoImageUrl(true) . '" alt="" />'))
                     : $application->File_ThumbnailLink($listing, $photos[$listing->getId()][0]->file_image[0], array('link_entity' => true)),
             );
         }
@@ -409,7 +409,7 @@ class Sabai_Addon_Directory_Widget implements Sabai_Addon_Widgets_IWidget
                 'url' => $application->Entity_Url($listing),
                 'title' => $listing->getTitle(),
                 'image' => !isset($photos[$listing->getId()])
-                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->ImageUrl('no_image_small.png') . '" alt="" />'))
+                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->NoImageUrl(true) . '" alt="" />'))
                     : $application->File_ThumbnailLink($listing, $photos[$listing->getId()][0]->file_image[0], array('link_entity' => true, 'title' => $listing->getTitle())),
                 'meta' => $meta,
             );
@@ -479,7 +479,7 @@ class Sabai_Addon_Directory_Widget implements Sabai_Addon_Widgets_IWidget
                     ? array('<i class="sabai-icon-time"></i> ' . $application->DateDiff($listing->getTimestamp()))
                     : array(sprintf('%s<span class="sabai-directory-rating-average">%s</span><span class="sabai-directory-rating-count">(%d)</span>', $application->Voting_RenderRating($listing), number_format($listing->voting_rating['']['average'], 2), $listing->voting_rating['']['count'])),
                 'image' => !isset($photos[$listing->getId()])
-                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->ImageUrl('no_image_small.png') . '" alt="" />'))
+                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->NoImageUrl(true) . '" alt="" />'))
                     : $application->File_ThumbnailLink($listing, $photos[$listing->getId()][0]->file_image[0], array('link_entity' => true)),
             );
         }
@@ -548,7 +548,7 @@ class Sabai_Addon_Directory_Widget implements Sabai_Addon_Widgets_IWidget
                     '<i class="sabai-icon-user"></i> ' . Sabai::h($application->Content_Author($review)->name)
                 ),
                 'image' => !isset($photos[$listing->getId()])
-                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->ImageUrl('no_image_small.png') . '" alt="" />'))
+                    ? $application->Entity_Permalink($listing, array('no_escape' => true, 'title' => '<img src="' . $application->NoImageUrl(true) . '" alt="" />'))
                     : $application->File_ThumbnailLink($listing, $photos[$listing->getId()][0]->file_image[0], array('link_entity' => true, 'title' => $listing->getTitle())),
             );
         }

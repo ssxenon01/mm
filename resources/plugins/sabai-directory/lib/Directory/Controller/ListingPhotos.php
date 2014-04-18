@@ -23,7 +23,7 @@ class Sabai_Addon_Directory_Controller_ListingPhotos extends Sabai_Addon_Directo
     protected function _getLinks(Sabai_Context $context, $sort, Sabai_Addon_Entity_Model_Bundle $bundle = null)
     {
         if ($this->getUser()->isAnonymous()
-            || !$this->getUser()->hasPermission($context->child_bundle->name . '_add')
+            || !$this->HasPermission($context->child_bundle->name . '_add')
             || !$this->getAddon()->getConfig('photo', 'max_num_photos')
         ) {
             return array();
@@ -33,7 +33,7 @@ class Sabai_Addon_Directory_Controller_ListingPhotos extends Sabai_Addon_Directo
                 __('Add Photos', 'sabai-directory'),
                 $this->Entity_Url($context->entity, '/' . $this->getAddon()->getSlug('photos') . '/add'),
                 array('icon' => 'camera'),
-                array('class' => 'sabai-btn sabai-btn-success sabai-btn-small')
+                array('class' => 'sabai-btn sabai-btn-small ' . $this->getAddon()->getConfig('display', 'buttons', 'photos'))
             ),
         );
     }

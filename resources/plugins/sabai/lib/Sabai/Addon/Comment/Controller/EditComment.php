@@ -51,7 +51,7 @@ class Sabai_Addon_Comment_Controller_EditComment extends Sabai_Addon_Form_Contro
         $voted = $this->getModel('Vote')->postId_is($context->comment->id)->userId_is($this->getUser()->id)->count();
         $context->setSuccess($this->Entity_Url($context->entity, '', array(), 'sabai-comment-' . $context->comment->id))
             ->setSuccessAttributes(array(
-                'comment_html' => $this->Comment_Render($context->comment->toArray(), $context->entity, $this->getUser(), null, $voted ? false : null, null),
+                'comment_html' => $this->Comment_Render($context->comment->toArray(), $context->entity, null, $voted ? false : null, null),
             ));
     }
 }

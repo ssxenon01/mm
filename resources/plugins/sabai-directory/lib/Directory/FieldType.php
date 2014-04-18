@@ -299,6 +299,13 @@ class Sabai_Addon_Directory_FieldType implements Sabai_Addon_Field_IType
                 }
                 $values = $new_values;
                 break;
+            case 'directory_contact':
+                foreach ($values as $key => $value) {
+                    if (strlen($values[$key]['phone']) || strlen($values[$key]['mobile']) || strlen($values[$key]['fax'])) {
+                        $values[$key]['has_phone'] = true;
+                    }
+                }
+                break;
         }
     }
     
@@ -312,6 +319,11 @@ class Sabai_Addon_Directory_FieldType implements Sabai_Addon_Field_IType
                     $current[] = $value;
                 }
                 return $current !== $valueToSave;
+            case 'directory_contact':
+                foreach (array_keys($currentLoadedValue) as $key) {
+                    unset($currentLoadedValue[$key]['has_phone']);
+                }
+                return $valueToSave !== $currentLoadedValue;
             default:
                 return $valueToSave !== $currentLoadedValue;
         }

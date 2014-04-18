@@ -22,6 +22,7 @@ class Sabai_Addon_PaidListings_Helper_Currencies extends Sabai_Helper
         'SEK' => '&#107;&#114;',
         'CHF' => '&#67;&#72;&#70;',
         'THB' => '&#3647;', 
+        'ZAR' => '&#82;',
     );
     
     /**
@@ -30,7 +31,7 @@ class Sabai_Addon_PaidListings_Helper_Currencies extends Sabai_Helper
     public function help(Sabai $application, $currency, $labels = false)
     {
         if (!$labels) {
-            return isset($currency) ? self::$_currencies[$currency] : self::$_currencies; 
+            return isset($currency) ? @self::$_currencies[$currency] : self::$_currencies; 
         }
         if (!isset($this->_labels)) {
             $this->_labels = array(
@@ -53,6 +54,7 @@ class Sabai_Addon_PaidListings_Helper_Currencies extends Sabai_Helper
                 'SEK' => __('Swedish Krona', 'sabai-directory'),
                 'CHF' => __('Swiss Franc', 'sabai-directory'),
                 'THB' => __('Thailand Baht', 'sabai-directory'),
+                'ZAR' => __('South African Rand', 'sabai-directory'),
             );
             $format = __('%s (%s)', 'sabai-directory');
             foreach ($this->_labels as $code => $label) {

@@ -37,7 +37,7 @@ abstract class Sabai_Addon_Entity_ParentEntityFieldWidget implements Sabai_Addon
         return array(
             '#type' => 'autocomplete_default',
             '#default_value' => $this->_getDefaultValue($value),
-            '#ajax_url' => $this->_addon->getApplication()->MainUrl($bundle->getPath() . '/_autocomplete.json'),
+            '#ajax_url' => $this->_addon->getApplication()->Url($bundle->getPath() . '/_autocomplete.json'),
             '#default_items_callback' => array($this, 'getAutocompleteDefaultItems'),
             '#multiple' => $field->getFieldMaxNumItems() != 1,
             '#max_selection' => $field->getFieldMaxNumItems(),

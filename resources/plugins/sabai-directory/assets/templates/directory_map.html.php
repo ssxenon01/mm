@@ -26,8 +26,11 @@ jQuery(document).ready(function($) {
         null,
         <?php echo intval($zoom);?>,
         <?php if ($style):?><?php echo json_encode($this->GoogleMaps_Style($style));?><?php else:?>null<?php endif;?>,
-        <?php echo json_encode(array('scrollwheel' => (bool)$scrollwheel, 'marker_clusters' => (bool)$marker_clusters));?>
+        <?php echo json_encode(array('scrollwheel' => (bool)$scrollwheel, 'marker_clusters' => (bool)$marker_clusters, 'marker_cluster_imgurl' => $marker_cluster_imgurl));?>
     );
 });
 </script>
+<?php if ($geocode_error):?>
+<div class="sabai-error" style="margin-bottom:15px;"><?php Sabai::_h($geocode_error);?></div>
+<?php endif;?>
 <div id="<?php echo substr($CURRENT_CONTAINER, 1);?>-map" class="sabai-googlemaps-map" style="height:<?php echo intval($height);?>px;<?php if (!empty($width)):?> width:<?php echo intval($width);?>px;<?php endif;?>"></div>

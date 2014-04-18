@@ -12,13 +12,8 @@ class Sabai_Context extends SabaiFramework_Application_HttpContext
         $_info = array(), $_title, $_htmlHeadTitle, $_menus = array(), $_inlineTabs = array(),
         $_tabs = array(), $_tabInfo = array(), $_tabMenus = array(),
         $_currentTabSet = 0, $_currentTab = array(), $_templates = array(), $_templateDirs = array(),
-        $_icon, $_url, $_summary;
+        $_url, $_summary;
     private static $_isAdmin = false;
-
-    public function setRequest(Sabai_Request $request)
-    {
-        return parent::setRequest($request);
-    }
 
     public function setIsAdmin($flag = true)
     {
@@ -67,17 +62,6 @@ class Sabai_Context extends SabaiFramework_Application_HttpContext
     public function getSummary()
     {
         return $this->_summary;
-    }
-    
-    public function setIcon($icon)
-    {
-        $this->_icon = $icon;
-        return $this;
-    }
-    
-    public function getIcon()
-    {
-        return $this->_icon;
     }
 
     public function getTemplates()

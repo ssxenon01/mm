@@ -97,6 +97,8 @@ class Sabai_Addon_Directory_Controller_AllListings extends Sabai_Addon_Directory
             'featured_only' => $context->getRequest()->asBool('featured_only', !empty($context->featured_only)),
             'feature' => $context->getRequest()->asBool('feature', !isset($context->feature) || !empty($context->feature)), // make featured listings sticky?
             'search' => array('no_loc' => isset($context->search_location) && empty($context->search_location)),
+            'buttons' => array('search' => 'sabai-btn-primary'),
+            'grid_columns' => $context->getRequest()->asInt('grid_columns', isset($context->grid_columns) ? (int)$context->grid_columns : 4, array(2, 3, 4, 6)),
         );
         if ($sorts = $context->getRequest()->asStr('sorts', isset($context->sorts) ? $context->sorts : null)) {
             $settings['sorts'] = explode(',', $sorts);
@@ -138,6 +140,7 @@ class Sabai_Addon_Directory_Controller_AllListings extends Sabai_Addon_Directory
             'template' => $this->_isCustomTemplate ? $this->_template : '',
             'addons' => $this->_allAddons ? '' : implode(',', $this->_addons),
             'sorts' => !empty($this->_settings['sorts']) ? implode(',', $this->_settings['sorts']) : null,
+            'grid_columns' => $this->_settings['grid_columns'],
         );
     }
 }

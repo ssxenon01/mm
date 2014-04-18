@@ -32,7 +32,7 @@ class Sabai_Platform_WordPress_Widget extends WP_Widget
         }
 
         if ($content = $widget->widgetsWidgetGetContent($instance)) {
-            if (!file_exists($tpl = get_stylesheet_directory() . '/sabai/wordpress_widget.html.php')) {
+            if (!@file_exists($tpl = Sabai_Platform_WordPress::getInstance($this->_wpPluginName)->getCustomAssetsDir() . '/templates/wordpress_widget.html.php')) {
                 $tpl = Sabai_Platform_WordPress::getInstance($this->_wpPluginName)->getAssetsDir() . '/templates/wordpress_widget.html.php';
             }
             $tpl_vars = array(

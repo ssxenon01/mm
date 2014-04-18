@@ -41,7 +41,7 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
             alert(error.message);
         }';
         $this->_ajaxOnCancel = 'function(target) {
-            jQuery(SABAI).trigger(\'sabai.fieldui.field.cancelled\', {trigger: jQuery(this), target: target});
+            jQuery(SABAI).trigger("sabai.fieldui.field.cancelled", {trigger: jQuery(this), target: target});
         }';
 
         $ifieldtype = $this->Field_TypeImpl($this->_field->getFieldType());
@@ -51,6 +51,7 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
             $default_widget = $field_types[$this->_field->getFieldType()]['default_widget'];
             if ($default_widget == $this->_field->getFieldWidget()) {
                 // the default widget is the one that does not exist
+                $this->_field->setFieldWidget(null)->setFieldWidgetSettings(array())->commit();
                 throw $e;
             }
             // Change widget to the default widget
@@ -85,17 +86,18 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
             '#type' => 'fieldset',
             '#title' => __('Advanced Settings', 'sabai'),
             '#tree' => false,
-            '#weight' => 30,
+            '#weight' => 40,
             '#collapsed' => true,
         );
         
         // Display field type and link to switch to another widget
-        $edit_widget_url = $this->Url($this->_bundle->getPath() . '/fields/edit_widget');
-        $edit_widget_url['params'] = array('field_id' => $this->_field->id, 'ele_id' => $context->getRequest()->asStr('ele_id')) + $edit_widget_url['params'];
+        $edit_widget_url = $this->Url($this->_bundle->getPath() . '/fields/edit_widget', array('field_id' => $this->_field->id, 'ele_id' => $context->getRequest()->asStr('ele_id')));
         $form['field'] = array(
             '#type' => 'item',
             '#field_prefix' => __('Form element type:', 'sabai'),
-            '#value' => $this->LinkToRemote($ifieldwidget->fieldWidgetGetInfo('label'), $context->getContainer(), $edit_widget_url, array('scroll' => true)),
+            '#value' => count($field_types[$this->_field->getFieldType()]['widgets']) > 1
+                ? $this->LinkToRemote($ifieldwidget->fieldWidgetGetInfo('label'), $context->getContainer(), $edit_widget_url, array('scroll' => true))
+                : $ifieldwidget->fieldWidgetGetInfo('label'),
             '#weight' => 1,
         );
 
@@ -121,6 +123,7 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
             '#max_length' => 255,
             '#default_value' => $this->_field->getFieldAdminTitle(),
             '#weight' => 1,
+            '#required' => true,
         );
         
         if (!$ifieldwidget->fieldWidgetGetInfo('disable_edit_description')) {
@@ -171,14 +174,21 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
         // Add an option to make this field repeatable if the selected widget supports the feature
         if (!$ifieldwidget->fieldWidgetGetInfo('accept_multiple')) {
             if ($ifieldwidget->fieldWidgetGetInfo('repeatable')) {
-                $form['basic']['max_num_items'] = array(
-                    '#type' => 'select',
-                    '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
-                    '#title' => __('Maximum number of values', 'sabai'),
-                    '#description' => __('Maximum number of values users can enter for this field. The "Unlimited" option will display an "Add another item" link so the users can add as many values as they like.', 'sabai'),
-                    '#default_value' => $this->_field->id ? $this->_field->getFieldMaxNumItems() : $this->_getMaxNumItemsDefault($ifieldtype, 1),
-                    '#weight' => 60,
-                );
+                if (!$ifieldwidget->fieldWidgetGetInfo('disable_edit_max_num_items')) {
+                    $form['basic']['max_num_items'] = array(
+                        '#type' => 'select',
+                        '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
+                        '#title' => __('Maximum number of values', 'sabai'),
+                        '#description' => __('Maximum number of values users can enter for this field. The "Unlimited" option will display an "Add another item" link so the users can add as many values as they like.', 'sabai'),
+                        '#default_value' => $this->_field->id ? $this->_field->getFieldMaxNumItems() : $this->_getMaxNumItemsDefault($ifieldtype, 1),
+                        '#weight' => 60,
+                    );
+                } else {
+                    $form['basic']['max_num_items'] = array(
+                        '#type' => 'hidden',
+                        '#value' => $this->_getMaxNumItemsDefault($ifieldtype, 1),
+                    );
+                }
             } else {
                 $form['basic']['max_num_items'] = array(
                     '#type' => 'hidden',
@@ -186,14 +196,21 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
                 );
             }
         } else {
-            $form['basic']['max_num_items'] = array(
-                '#type' => 'select',
-                '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
-                '#title' => __('Maximum number of values', 'sabai'),
-                '#description' => __('Maximum number of values users can enter for this field.', 'sabai'),
-                '#default_value' => $this->_field->id ? $this->_field->getFieldMaxNumItems() : $this->_getMaxNumItemsDefault($ifieldtype, 0),
-                '#weight' => 60,
-            );
+            if (!$ifieldwidget->fieldWidgetGetInfo('disable_edit_max_num_items')) {
+                $form['basic']['max_num_items'] = array(
+                    '#type' => 'select',
+                    '#options' => $this->_getMaxNumItemsOptions($ifieldtype),
+                    '#title' => __('Maximum number of values', 'sabai'),
+                    '#description' => __('Maximum number of values users can enter for this field.', 'sabai'),
+                    '#default_value' => $this->_field->id ? $this->_field->getFieldMaxNumItems() : $this->_getMaxNumItemsDefault($ifieldtype, 0),
+                    '#weight' => 60,
+                );
+            } else {
+                $form['basic']['max_num_items'] = array(
+                    '#type' => 'hidden',
+                    '#value' => $this->_getMaxNumItemsDefault($ifieldtype, 0),
+                );
+            }
         }
 
         if ($settings_form = (array)@$ifieldtype->fieldTypeGetSettingsForm($settings, array('settings'))) {
@@ -224,7 +241,6 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
         }
 
         // Add a field for setting the default value if the widget supports default values
-        $this->_field->setFieldSettings($settings)->setFieldWidgetSettings($widget_settings); // make sure all settings are available
         if ($default_value_form = $ifieldwidget->fieldWidgetGetEditDefaultValueForm($this->_field->getFieldType(), $settings, $widget_settings, array('default_value'))) {
             $form['advanced']['default_value'] = array(
                 '#title' => __('Default value', 'sabai'),
@@ -260,6 +276,9 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
                 '#weight' => 1,
             );
         }
+        
+        $form['#field_name'] = $this->_field->getFieldName();
+        $form['#field_type'] = $this->_field->getFieldType();
         
         return $form;
     }
@@ -367,17 +386,5 @@ class Sabai_Addon_FieldUI_Controller_Admin_EditField extends Sabai_Addon_Form_Co
             ));
         
         $this->doEvent('FieldUISubmitFieldSuccess', array($field, /*$isEdit*/ !$field_is_new));
-    }
-
-    public function validateName(Sabai_Addon_Form_Form $form, $value, $element)
-    {
-        // Make sure the field name is unique
-        $field_name = 'field_' . $value;
-        $repository = $this->getModel('FieldConfig', 'Entity')->name_is($field_name);
-        // Skip counting self
-        if ($this->_field->fieldconfig_id) $repository->id_isNot($this->_field->fieldconfig_id);
-        if ($repository->count() > 0) {
-            $form->setError(__('The field name is already in use by another field.', 'sabai'), $element);
-        }
     }
 }

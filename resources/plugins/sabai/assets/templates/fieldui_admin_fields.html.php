@@ -6,18 +6,18 @@
     <div id="sabai-fieldui-active-wrap">
         <div id="sabai-fieldui-active">
             <div class="sabai-fieldui-fields">
-<?php foreach ($fields as $field): unset($existing_fields[$field->getFieldName()]);?>
+<?php foreach ($fields as $field):?>
 <?php   if ((!$field_type = @$field_types[$field->getFieldType()]) || !$field->getFieldWidget()) continue;?>
+<?php   if (isset($existing_fields[$field->getFieldType()][$field->getFieldName()])): $hidden_existing_fields[$field->getFieldType()][$field->getFieldName()] = $existing_fields[$field->getFieldType()][$field->getFieldName()]; unset($existing_fields[$field->getFieldType()][$field->getFieldName()]); endif;?>
 <?php   if (false === $field_preview = $this->FieldUI_PreviewWidget($field)) continue;?>
-                <div id="sabai-fieldui-field<?php echo $field->getFieldId();?>" class="sabai-fieldui-field sabai-fieldui-field-type-<?php echo str_replace('_', '-', $field->getFieldType());?>">
+                <div id="sabai-fieldui-field<?php echo $field->getFieldId();?>" class="sabai-fieldui-field sabai-fieldui-field-type-<?php echo str_replace('_', '-', $field->getFieldType());?>" data-field-type="<?php echo $field->getFieldType();?>" data-field-type-normalized="<?php echo str_replace('_', '-', $field->getFieldType());?>" data-field-name="<?php echo $field->getFieldName();?>">
                     <div class="sabai-fieldui-field-info">
-						<div class="sabai-fieldui-field-control">
-                            <a href="<?php echo $form_edit_field_url;?>" class="sabai-fieldui-field-edit" data-modal-title="<?php echo Sabai::h(strlen($field->getFieldAdminTitle()) ? $field->getFieldAdminTitle() : $field_type['label']) . ' - ' . $field->getFieldName();?>" title="<?php echo __('Edit field', 'sabai');?>"><i class="sabai-icon-cog"></i>Edit</a><?php if ($field->isCustomField()):?> &middot; <a href="#" class="sabai-fieldui-field-delete" title="<?php echo __('Delete field', 'sabai');?>"><i class="sabai-icon-trash"></i>Delete</a><?php endif;?>
+                        <div class="sabai-fieldui-field-control">
+                            <a href="<?php echo $form_edit_field_url;?>" class="sabai-fieldui-field-edit" data-modal-title="<?php echo Sabai::h(strlen($field->getFieldAdminTitle()) ? $field->getFieldAdminTitle() : $field_type['label']) . ' - ' . $field->getFieldName();?>" title="<?php echo __('Edit field', 'sabai');?>"><i class="sabai-icon-large sabai-icon-cog"></i></a><?php if ($field->isCustomField()):?>&nbsp;<a href="#" class="sabai-fieldui-field-delete" title="<?php echo __('Delete field', 'sabai');?>"><i class="sabai-icon-large sabai-icon-trash"></i></a><?php endif;?>
                         </div>
                         <div class="sabai-fieldui-field-title"><?php echo Sabai::h(strlen($field->getFieldAdminTitle()) ? $field->getFieldAdminTitle() : $field_type['label']) . ' - ' . $field->getFieldName();?></div>
                     </div>                  
                     <div class="sabai-fieldui-field-preview"><?php echo $field_preview;?></div>
-                    <div id="sabai-fieldui-field-form<?php echo $field->getFieldId();?>" class="sabai-fieldui-field-form"></div>
                     <input class="sabai-fieldui-field-id" type="hidden" name="fields[]" value="<?php echo $field->getFieldId();?>" />
                 </div>
 <?php endforeach;?>
@@ -41,31 +41,38 @@
             </div>
         </div>
 <?php if (!empty($existing_fields)):?>
-        <div class="sabai-fieldui-available" id="sabai-fieldui-existing-fields">
+<?php   foreach ($existing_fields as $existing_field_type => $_existing_fields):?>
+<?php     if ((!$field_type = @$field_types[$existing_field_type])) continue;?>
+        <div class="sabai-fieldui-available" id="sabai-fieldui-existing-fields-<?php echo str_replace('_', '-', $existing_field_type);?>"<?php if (empty($_existing_fields)):?> style="display:none;"<?php endif;?>>
             <div class="sabai-fieldui-title">
                 <div class="sabai-fieldui-control">
-                    <a href="#" class="sabai-fieldui-toggle"><i class="sabai-icon-caret-up"></i></a>
+                    <a href="#" class="sabai-fieldui-toggle"><i class="sabai-icon-caret-down"></i></a>
                 </div>
-                <div class="sabai-fieldui-label"><?php echo __('Existing Fields', 'sabai');?></div>
+                <div class="sabai-fieldui-label"><?php printf(__('Existing Fields (%s)', 'sabai'), Sabai::h($field_type['label']));?></div>
             </div>    
-            <div class="sabai-fieldui-fields sabai-clearfix">
-<?php foreach ($existing_fields as $existing_field_name => $existing_field):?>
-                <a href="<?php echo $form_create_field_url;?>" data-field-type="<?php echo $existing_field->getFieldType();?>" data-field-name="<?php echo $existing_field_name;?>" class="sabai-btn"><?php Sabai::_h($existing_field->getFieldAdminTitle());?></a>
+            <div class="sabai-fieldui-fields sabai-clearfix" style="display:none;">
+<?php foreach ($_existing_fields as $existing_field_name => $existing_field):?>
+                <a href="<?php echo $form_create_field_url;?>" data-field-type="<?php echo $existing_field->getFieldType();?>" data-field-name="<?php echo $existing_field_name;?>" class="sabai-btn sabai-btn-default"><?php Sabai::_h($existing_field->getFieldAdminTitle());?></a>
 <?php endforeach;?>
+<?php if (!empty($hidden_existing_fields[$existing_field_type])):?>
+<?php   foreach ($hidden_existing_fields[$existing_field_type] as $existing_field_name => $existing_field):?>
+                <a href="<?php echo $form_create_field_url;?>" data-field-type="<?php echo $existing_field->getFieldType();?>" data-field-name="<?php echo $existing_field_name;?>" class="sabai-btn sabai-btn-default" style="display:none !important;"><?php Sabai::_h($existing_field->getFieldAdminTitle());?></a>
+<?php   endforeach;?>
+<?php endif;?>
             </div>
         </div>
+<?php   endforeach;?>
 <?php endif;?>
     </div>
 </div>
 </form>
 <div class="sabai-fieldui-field" id="sabai-fieldui-field" style="display:none;">
-	<div class="sabai-fieldui-field-info">
-		<div class="sabai-fieldui-field-control">
-			<a href="<?php echo $form_edit_field_url;?>" class="sabai-fieldui-field-edit" data-modal-title="" title="<?php echo __('Edit field', 'sabai');?>"><i class="sabai-icon-cog"></i>Edit</a> &middot; <a href="#" class="sabai-fieldui-field-delete" title="<?php echo __('Delete field', 'sabai');?>"><i class="sabai-icon-trash"></i>Delete</a>
-		</div>
-		<div class="sabai-fieldui-field-title"></div>
-	</div>
+    <div class="sabai-fieldui-field-info">
+        <div class="sabai-fieldui-field-control">
+            <a href="<?php echo $form_edit_field_url;?>" class="sabai-fieldui-field-edit" data-modal-title="" title="<?php echo __('Edit field', 'sabai');?>"><i class="sabai-icon-large sabai-icon-cog"></i></a>&nbsp;<a href="#" class="sabai-fieldui-field-delete" title="<?php echo __('Delete field', 'sabai');?>"><i class="sabai-icon-large sabai-icon-trash"></i></a>
+        </div>
+        <div class="sabai-fieldui-field-title"></div>
+    </div>
     <div class="sabai-fieldui-field-preview"></div>
-    <div class="sabai-fieldui-field-form"></div>
     <input class="sabai-fieldui-field-id" type="hidden" name="fields[]" value="" />
 </div>

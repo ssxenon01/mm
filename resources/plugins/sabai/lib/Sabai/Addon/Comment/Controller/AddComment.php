@@ -53,7 +53,7 @@ class Sabai_Addon_Comment_Controller_AddComment extends Sabai_Addon_Form_Control
         $this->doEvent('CommentSubmitCommentSuccess', array($comment, /*$isEdit*/ false, $context->entity));
         $context->setSuccess($this->Entity_Url($context->entity, '', array(), 'sabai-comment-' . $comment->id))
             ->setSuccessAttributes(array(
-                'comment_html' => $this->Comment_Render($comment->toArray(), $context->entity, $this->getUser()),
+                'comment_html' => $this->Comment_Render($comment->toArray(), $context->entity),
             ));
     }
 }
