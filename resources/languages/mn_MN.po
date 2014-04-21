@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-17 21:49+0800\n"
-"Last-Translator: Gundsambuu <ssxenon01@gmail.com>\n"
+"PO-Revision-Date: 2014-04-21 14:23+0800\n"
+"Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
 "MIME-Version: 1.0\n"
@@ -171,14 +171,14 @@ msgstr ""
 
 #: wp-admin/import/dotclear.php:572 wp-admin/import/textpattern.php:584
 msgid "<a href=\"http://wordpress.org/\">The official WordPress site</a>"
-msgstr "<a href=\"http://wordpress.org/\">Албан ёсны WordPress сайт</a>"
+msgstr "<a href=\"http://wordpress.org/\">Албан ёсны menu.mn сайт</a>"
 
 #: wp-admin/import/dotclear.php:574 wp-admin/import/textpattern.php:586
 msgid ""
 "<a href=\"http://codex.wordpress.org/\">The Codex (In other words, the "
 "WordPress Bible)</a>"
 msgstr ""
-"<a href=\"http://codex.wordpress.org/\">Codex (Нэг үгээр WordPress библь)</a>"
+"<a href=\"http://codex.wordpress.org/\">Codex (Нэг үгээр menu.mn библь)</a>"
 
 #: wp-activate.php:68
 #, qt-format
@@ -1287,7 +1287,7 @@ msgid ""
 "wordpress.org/Giving_WordPress_Its_Own_Directory\">to be different from the "
 "directory</a> you installed WordPress."
 msgstr ""
-"Хэрвээ та өөрийн нүүр хуудсыг WordPress суулгасан <a href=\"http://codex."
+"Хэрвээ та өөрийн нүүр хуудсыг menu.mn суулгасан <a href=\"http://codex."
 "wordpress.org/Giving_WordPress_Its_Own_Directory\">өөр хавтас болгохыг "
 "хүсвэл</a> хаягаа энд оруулна уу."
 
@@ -1862,7 +1862,7 @@ msgid ""
 "\">WordPress %1$s</a> automatically or download the package and install it "
 "manually:"
 msgstr ""
-"<a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> "
+"<a href=\"http://codex.wordpress.org/Version_%1$s\">menu.mn %1$s</a> "
 "боломжтой байна! Сайтын админд мэдэгдэнэ үү."
 
 #: wp-admin/update-core.php:41
@@ -2468,7 +2468,7 @@ msgid ""
 "<a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> is "
 "available! Please notify the site administrator."
 msgstr ""
-"<a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> "
+"<a href=\"http://codex.wordpress.org/Version_%1$s\">menu.mn %1$s</a> "
 "боломжтой байна! Сайтын админд мэдэгдэнэ үү."
 
 #: wp-admin/includes/update.php:133
@@ -2477,7 +2477,7 @@ msgid ""
 "<a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> is "
 "available! <a href=\"%2$s\">Please update now</a>."
 msgstr ""
-"<a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> бэлэн "
+"<a href=\"http://codex.wordpress.org/Version_%1$s\">menu.mn %1$s</a> бэлэн "
 "боллоо! <a href=\"%2$s\">Одоо шинэчлэнэ үү</a>."
 
 #: wp-admin/install.php:151
@@ -5552,7 +5552,7 @@ msgid ""
 "<h1>Already Installed</h1><p>You appear to have already installed WordPress. "
 "To reinstall please clear your old database tables first.</p>"
 msgstr ""
-"Та аль хэдийн WordPress-г суулгасан харагдаж байна. Дахин суулгахын тулд "
+"Та аль хэдийн menu.mn-г суулгасан харагдаж байна. Дахин суулгахын тулд "
 "эхлээд хуучин өгөгдлийн баазын хүснэгтээ цэвэрлэнэ үү."
 
 #: wp-includes/ms-functions.php:1009
@@ -6273,7 +6273,7 @@ msgstr ""
 #, qt-format
 msgid "<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher"
 msgstr ""
-"<strong>АЛДАА</strong>: WordPress %1$s нь MySQL %2$s эсвэл түүнээс дээш "
+"<strong>АЛДАА</strong>: menu.mn %1$s нь MySQL %2$s эсвэл түүнээс дээш "
 "хувилбарыг шаардаж байна."
 
 # Powered by WordPress
@@ -6866,7 +6866,7 @@ msgid ""
 "<strong>Warning:</strong> This theme has <strong>not been tested</strong> "
 "with your current version of WordPress."
 msgstr ""
-"<strong>Анхааруулга:</strong> Энэ загварыг таны одоогийн WordPress хувилбар "
+"<strong>Анхааруулга:</strong> Энэ загварыг таны одоогийн menu.mn хувилбар "
 "дээр <strong>шалгаагүй</strong>."
 
 #: wp-admin/includes/theme-install.php:475
@@ -6874,7 +6874,7 @@ msgid ""
 "<strong>Warning:</strong> This theme has not been marked as "
 "<strong>compatible</strong> with your version of WordPress."
 msgstr ""
-"<strong>Анхааруулга:</strong> Энэ загварыг таны WordPress хувилбартай "
+"<strong>Анхааруулга:</strong> Энэ загварыг таны menu.mn хувилбартай "
 "<strong>нийцтэй</strong> гэж тэмдэглээгүй байна."
 
 #: wp-admin/includes/theme-install.php:508
@@ -6908,7 +6908,7 @@ msgid ""
 "%2$s or higher and MySQL version %3$s or higher. You are running PHP version "
 "%4$s and MySQL version %5$s."
 msgstr ""
-"Шинэчлэлийг суулгаж чадахгүй. WordPress %1$s нь PHP %2$s эсвэл түүнээс дээш  "
+"Шинэчлэлийг суулгаж чадахгүй. menu.mn %1$s нь PHP %2$s эсвэл түүнээс дээш  "
 "болон MySQL %3$s эсвэл түүнээс дээш хувилбарыг шаардаж байна. Та PHP %4$s "
 "болон MySQL %5$s-г ажиллуулж байна."
 
@@ -6918,7 +6918,7 @@ msgid ""
 "The update cannot be installed because WordPress %1$s requires PHP version "
 "%2$s or higher. You are running version %3$s."
 msgstr ""
-"Шинэчлэлийг суулгаж чадахгүй. WordPress %1$s нь PHP %2$s эсвэл түүнээс дээш "
+"Шинэчлэлийг суулгаж чадахгүй. menu.mn %1$s нь PHP %2$s эсвэл түүнээс дээш "
 "хувилбарыг шаардаж байна. Та хувилбар %3$s-г ажиллуулж байна."
 
 #: wp-admin/includes/update-core.php:238
@@ -6927,8 +6927,8 @@ msgid ""
 "The update cannot be installed because WordPress %1$s requires MySQL version "
 "%2$s or higher. You are running version %3$s."
 msgstr ""
-"Шинэчлэлийг суулгаж чадахгүй. WordPress %1$s нь MySQL %2$s эсвэл түүнээс "
-"дээш хувилбарыг шаардаж байна. Та хувилбар %3$s-г ажиллуулж байна."
+"Шинэчлэлийг суулгаж чадахгүй. menu.mn %1$s нь MySQL %2$s эсвэл түүнээс дээш "
+"хувилбарыг шаардаж байна. Та хувилбар %3$s-г ажиллуулж байна."
 
 #: wp-admin/includes/update-core.php:241
 msgid "Verifying the unpacked files&#8230;"
@@ -7009,7 +7009,7 @@ msgid ""
 "An automated WordPress update has failed to complete - <a href=\"%s\">please "
 "attempt the update again now</a>."
 msgstr ""
-"Автомат WordPress шинэчлэлт амжилтгүй дууслаа - <a href=\"%s\">шинэчлэлийг "
+"Автомат menu.mn шинэчлэлт амжилтгүй дууслаа - <a href=\"%s\">шинэчлэлийг "
 "дахин оролдоно уу</a>."
 
 #: wp-admin/includes/update.php:261
@@ -7041,8 +7041,8 @@ msgid ""
 "Welcome to WordPress. This is your first post. Edit or delete it, then start "
 "blogging!"
 msgstr ""
-"WordPress-д тавтай морил. Энэ бол таны анхны нийтлэл. Засварлах эсвэл "
-"устгаад блогоо эхэлнэ үү!"
+"menu.mn-д тавтай морил. Энэ бол таны анхны нийтлэл. Засварлах эсвэл устгаад "
+"блогоо эхэлнэ үү!"
 
 #: wp-admin/includes/upgrade.php:213
 msgid "Hello world!"
@@ -7253,7 +7253,7 @@ msgid ""
 "You appear to have already installed WordPress. To reinstall please clear "
 "your old database tables first."
 msgstr ""
-"Та аль хэдийн WordPress-г суулгасан харагдаж байна. Дахин суулгахын тулд "
+"Та аль хэдийн menu.mn-г суулгасан харагдаж байна. Дахин суулгахын тулд "
 "эхлээд хуучин өгөгдлийн баазын хүснэгтээ цэвэрлэнэ үү."
 
 #: wp-admin/install.php:159
@@ -8897,8 +8897,8 @@ msgid ""
 "Plugins extend and expand the functionality of WordPress. Once a plugin is "
 "installed, you may activate it or deactivate it here."
 msgstr ""
-"Нэмэлт нь WordPress-н функцыг нэмэгдүүлдэг. Нэмэлтийг суулгасны дараагаар, "
-"та энд нэмэлтийг идэвхжүүлэх болон идэвхгүй болгож болно."
+"Нэмэлт нь menu.mn-н функцыг нэмэгдүүлдэг. Нэмэлтийг суулгасны дараагаар, та "
+"энд нэмэлтийг идэвхжүүлэх болон идэвхгүй болгож болно."
 
 #: wp-admin/plugins.php:307
 msgid ""
@@ -8906,7 +8906,7 @@ msgid ""
 "delete or rename that file in the <code>%s</code> directory and it will be "
 "automatically deactivated."
 msgstr ""
-"Хэрвээ алдаа гаран та WordPress-г ашиглаж чадахгүй байвал, <code>%s</code> "
+"Хэрвээ алдаа гаран та menu.mn-г ашиглаж чадахгүй байвал, <code>%s</code> "
 "хавтас доторх тэрхүү файлыг устгах эсвэл сольж нэрлэснээр түүнийг автоматаар "
 "идэвхгүй болгоно."
 
@@ -9294,7 +9294,7 @@ msgid ""
 "Themes give your WordPress style. Once a theme is installed, you may preview "
 "it, activate it or deactivate it here."
 msgstr ""
-"Загвар нь WordPress-н дизайн юм. Загварыг суулгасны дараагаар, та энд тэдний "
+"Загвар нь menu.mn-н дизайн юм. Загварыг суулгасны дараагаар, та энд тэдний "
 "нягтлан харах, идэвхжүүлэх болон идэвхгүй болгож болно."
 
 #: wp-admin/themes.php:36
@@ -11992,7 +11992,7 @@ msgid ""
 "When you click the button below WordPress will create an XML file for you to "
 "save to your computer."
 msgstr ""
-"Таныг доорх товчлуурыг дарахад таны компьютерт хадгалах XML файлыг WordPress "
+"Таныг доорх товчлуурыг дарахад таны компьютерт хадгалах XML файлыг menu.mn "
 "үүсгэнэ."
 
 #: wp-admin/export.php:61
@@ -12000,16 +12000,16 @@ msgid ""
 "This format, which we call WordPress eXtended RSS or WXR, will contain your "
 "posts, pages, comments, custom fields, categories, and tags."
 msgstr ""
-"WordPress экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom "
-"field, ангилал болон тэмлдэглэгээ</strong> импортлох."
+"menu.mn экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom field, "
+"ангилал болон тэмлдэглэгээ</strong> импортлох."
 
 #: wp-admin/export.php:62
 msgid ""
 "Once you&#8217;ve saved the download file, you can use the Import function "
 "on another WordPress blog to import this blog."
 msgstr ""
-"Та татах файлыг хадгалсны дараагаар, импорт функцыг ашиглан өөр WordPress "
-"блог руу энэ блогоо импортолж болно."
+"Та татах файлыг хадгалсны дараагаар, импорт функцыг ашиглан өөр menu.mn блог "
+"руу энэ блогоо импортолж болно."
 
 #: wp-admin/export.php:64 wp-admin/menu.php:36
 msgid "Options"
@@ -12036,7 +12036,7 @@ msgid ""
 "If you have posts or comments in another system, WordPress can import those "
 "into this blog. To get started, choose a system to import from below:"
 msgstr ""
-"Хэрвээ танд өөр систем дээр нийтлэл эсвэл сэтгэгдэл байгаа бол, WordPress "
+"Хэрвээ танд өөр систем дээр нийтлэл эсвэл сэтгэгдэл байгаа бол, menu.mn "
 "тэднийг энэ блог руу импортолж болно. Эхлэхийн тулд импортлох системийг "
 "доороос сонгоно уу:"
 
@@ -12206,7 +12206,7 @@ msgid ""
 "Now that you have imported your Blogger blog into WordPress, what are you "
 "going to do? Here are some suggestions:"
 msgstr ""
-"Та Blogger-н блогийг WordPress рүү импорт хийлээ, одоо юу хийх гэж байна? "
+"Та Blogger-н блогийг menu.mn рүү импорт хийлээ, одоо юу хийх гэж байна? "
 "Зарим санал болголтууд:"
 
 #: wp-admin/import/blogger.php:803
@@ -12242,7 +12242,7 @@ msgid ""
 "will not affect any posts you have already imported. If you attempt to re-"
 "import a blog, duplicate posts and comments will be skipped."
 msgstr ""
-"Таны WordPress өгөгдлийн баазад таны Blogger-н талаарх зарим мэдээлэл байна. "
+"Таны menu.mn өгөгдлийн баазад таны Blogger-н талаарх зарим мэдээлэл байна. "
 "Энэ мэдээллийг цэвэрлэснээр та дахин эхэлж болно. Дахин эхлэх нь таны аль "
 "хэдийн импортлосон нийтлэл нөлөөлөхгүй. Хэрвээ та блогийг дахин импортлохыг "
 "оролдвол, адилхан нийтлэлийг алгасана."
@@ -12482,15 +12482,14 @@ msgid ""
 "Finally, there are numerous WordPress resources around the internet.  Some "
 "of them are:"
 msgstr ""
-"Эцэст нь, интернетэд маш олон тооны WordPress мэдээлэл байгаа.  Тэдний зарим "
+"Эцэст нь, интернетэд маш олон тооны menu.mn мэдээлэл байгаа.  Тэдний зарим "
 "нь:"
 
 #: wp-admin/import/dotclear.php:573 wp-admin/import/textpattern.php:585
 msgid ""
 "<a href=\"http://wordpress.org/support/\">The WordPress support forums</a>"
 msgstr ""
-"<a href=\"http://wordpress.org/support/\">WordPress дэмжлэгийн хэлэлцүүлэг</"
-"a>"
+"<a href=\"http://wordpress.org/support/\">menu.mn дэмжлэгийн хэлэлцүүлэг</a>"
 
 #: wp-admin/import/dotclear.php:576 wp-admin/import/textpattern.php:588
 #, qt-format
@@ -12744,7 +12743,7 @@ msgid ""
 "If you don&#8217;t enter a password, ALL ENTRIES from your LiveJournal will "
 "be imported as public posts in WordPress."
 msgstr ""
-"Хэрвээ та нууц үг оруулаагүй бол, БҮХ НИЙТЛЭЛИЙГ WordPress-н олон нийтийн "
+"Хэрвээ та нууц үг оруулаагүй бол, БҮХ НИЙТЛЭЛИЙГ menu.mn-н олон нийтийн "
 "нийтлэл рүү импортлоно."
 
 #: wp-admin/import/livejournal.php:213
@@ -13171,7 +13170,7 @@ msgstr "Simple Tagging-г импортлох"
 
 #: wp-admin/import/stp.php:30
 msgid "Howdy! This imports tags from Simple Tagging 1.6.2 into WordPress tags."
-msgstr "Энэ нь Simple Tagging 1.6.2-с WordPress рүү тэмдэглээг импортлоно."
+msgstr "Энэ нь Simple Tagging 1.6.2-с menu.mn рүү тэмдэглээг импортлоно."
 
 #: wp-admin/import/stp.php:31
 msgid ""
@@ -13241,7 +13240,7 @@ msgstr "Амархан биш байсан гэж үү?"
 
 #: wp-admin/import/stp.php:169
 msgid "Import Simple Tagging tags into WordPress tags."
-msgstr "Simple Tagging-н тэмдэглээг WordPress-н тэмдэглээ рүү импортлох."
+msgstr "Simple Tagging-н тэмдэглээг menu.mn-н тэмдэглээ рүү импортлох."
 
 #: wp-admin/import/textpattern.php:56
 msgid "Import Textpattern"
@@ -13340,7 +13339,7 @@ msgstr "Ultimate Tag Warrior-с импортлох"
 #: wp-admin/import/utw.php:31
 msgid ""
 "Howdy! This imports tags from Ultimate Tag Warrior 3 into WordPress tags."
-msgstr "Энэ нь Ultimate Tag Warrior-с WordPress рүү тэмдэглээг импортлоно."
+msgstr "Энэ нь Ultimate Tag Warrior-с menu.mn рүү тэмдэглээг импортлоно."
 
 #: wp-admin/import/utw.php:32
 msgid ""
@@ -13400,11 +13399,11 @@ msgstr ""
 
 #: wp-admin/import/utw.php:288
 msgid "Import Ultimate Tag Warrior tags into WordPress tags."
-msgstr "Ultimate Tag Warrior-н тэмдэглээг WordPress-н тэмдэглээ рүү импортлох."
+msgstr "Ultimate Tag Warrior-н тэмдэглээг menu.mn-н тэмдэглээ рүү импортлох."
 
 #: wp-admin/import/wordpress.php:39
 msgid "Import WordPress"
-msgstr "WordPress-г импортлох"
+msgstr "menu.mn-г импортлох"
 
 #: wp-admin/import/wordpress.php:48
 msgid ""
@@ -13412,8 +13411,8 @@ msgid ""
 "the posts, pages, comments, custom fields, categories, and tags into this "
 "blog."
 msgstr ""
-"WordPress экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom "
-"field, ангилал болон тэмдэглээ</strong> импортлох."
+"menu.mn экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom field, "
+"ангилал болон тэмдэглээ</strong> импортлох."
 
 #: wp-admin/import/wordpress.php:49
 msgid ""
@@ -13505,8 +13504,8 @@ msgid ""
 "Import <strong>posts, pages, comments, custom fields, categories, and tags</"
 "strong> from a WordPress export file."
 msgstr ""
-"WordPress экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom "
-"field, ангилал болон тэмдэглээ</strong> импортлох."
+"menu.mn экспортын файлаас <strong>нийтлэл, хуудас, сэтгэгдэл, custom field, "
+"ангилал болон тэмдэглээ</strong> импортлох."
 
 #: wp-admin/import/wp-cat2tag.php:31
 msgid "Categories to Tags"
@@ -13763,19 +13762,19 @@ msgstr "Файл системийн алдаа"
 
 #: wp-admin/includes/class-wp-upgrader.php:47
 msgid "Unable to locate WordPress Root directory."
-msgstr "WordPress Root хавтасны тодорхойлох боломжгүй."
+msgstr "menu.mn Root хавтасны тодорхойлох боломжгүй."
 
 #: wp-admin/includes/class-wp-upgrader.php:48
 msgid "Unable to locate WordPress Content directory (wp-content)."
-msgstr "WordPress агуулгын санг (wp-content) тодорхойлох боломжгүй."
+msgstr "menu.mn агуулгын санг (wp-content) тодорхойлох боломжгүй."
 
 #: wp-admin/includes/class-wp-upgrader.php:49 wp-admin/includes/plugin.php:640
 msgid "Unable to locate WordPress Plugin directory."
-msgstr "WordPress нэмэлтийн хавтасны байрлуулах боломжгүй."
+msgstr "menu.mn нэмэлтийн хавтасны байрлуулах боломжгүй."
 
 #: wp-admin/includes/class-wp-upgrader.php:50
 msgid "Unable to locate WordPress Theme directory."
-msgstr "WordPress загварын хавтасыг тодорхойлох боломжгүй."
+msgstr "menu.mn загварын хавтасыг тодорхойлох боломжгүй."
 
 #: wp-admin/includes/class-wp-upgrader.php:52
 msgid "Unable to locate needed folder (%s)."
@@ -13915,7 +13914,7 @@ msgstr "Загварыг амжилттай суулгалаа."
 
 #: wp-admin/includes/class-wp-upgrader.php:840
 msgid "WordPress is at the latest version."
-msgstr "WordPress хамгийн сүүлийн хувилбар дээрээ байна."
+msgstr "menu.mn хамгийн сүүлийн хувилбар дээрээ байна."
 
 #: wp-admin/includes/class-wp-upgrader.php:844
 msgid "Could not copy files."
@@ -14061,7 +14060,7 @@ msgstr "http://wordpress.org/development/feed/"
 
 #: wp-admin/includes/dashboard.php:72
 msgid "WordPress Development Blog"
-msgstr "WordPress нэвтрэлт"
+msgstr "menu.mn нэвтрэлт"
 
 #: wp-admin/includes/dashboard.php:85
 msgid "http://planet.wordpress.org/"
@@ -14073,7 +14072,7 @@ msgstr "http://planet.wordpress.org/feed/"
 
 #: wp-admin/includes/dashboard.php:87
 msgid "Other WordPress News"
-msgstr "Бусад WordPress мэдээ"
+msgstr "Бусад menu.mn мэдээ"
 
 #: wp-admin/includes/dashboard.php:103 wp-admin/includes/dashboard.php:485
 #: wp-admin/includes/dashboard.php:540
@@ -14921,7 +14920,7 @@ msgstr "Нэмсэн"
 
 #: wp-admin/includes/media.php:304 wp-admin/includes/template.php:3468
 msgid "WordPress"
-msgstr "WordPress"
+msgstr "menu.mn"
 
 #: wp-admin/includes/media.php:375
 msgid "Upload/Insert %s"
@@ -15822,7 +15821,7 @@ msgid ""
 "plugins/\">WordPress Plugin Directory</a> or upload a plugin in .zip format "
 "via this page."
 msgstr ""
-"Нэмэлт нь WordPress-н функцыг нэмэгдүүлдэг. Та автоматаар нэмэлтийг <a href="
+"Нэмэлт нь menu.mn-н функцыг нэмэгдүүлдэг. Та автоматаар нэмэлтийг <a href="
 "\"http://wordpress.org/extend/plugins/\">WordPress нэмэлтийн хавтасаас</a> "
 "суулгаж болно эсвэл .zip өргөтгөлтэй файлыг энэ хуудсанд нэмэснээр суулгаж "
 "болно. "
@@ -15992,7 +15991,7 @@ msgstr "Сүүлд шинэчэлсэн:"
 #: wp-admin/includes/plugin-install.php:556
 #: wp-admin/includes/theme-install.php:327
 msgid "Requires WordPress Version:"
-msgstr "WordPress хувилбар шаардлагатай:"
+msgstr "menu.mn хувилбар шаардлагатай:"
 
 #: wp-admin/includes/plugin-install.php:556
 #: wp-admin/includes/theme-install.php:327
@@ -16018,7 +16017,7 @@ msgstr[1] "%s удаа"
 
 #: wp-admin/includes/plugin-install.php:562
 msgid "WordPress.org Plugin Page &#187;"
-msgstr "WordPress.org нэмэлтийн хуудас &#187;"
+msgstr "menu.mn нэмэлтийн хуудас &#187;"
 
 #: wp-admin/includes/plugin-install.php:564
 msgid "Plugin Homepage  &#187;"
@@ -16033,7 +16032,7 @@ msgid ""
 "<strong>Warning:</strong> This plugin has <strong>not been tested</strong> "
 "with your current version of WordPress."
 msgstr ""
-"<strong>Анхааруулга:</strong> Энэ нэмэлтийг таны одоогийн WordPress хувилбар "
+"<strong>Анхааруулга:</strong> Энэ нэмэлтийг таны одоогийн menu.mn хувилбар "
 "дээр <strong>шалгаагүй</strong>."
 
 #: wp-admin/includes/plugin-install.php:586
@@ -16041,7 +16040,7 @@ msgid ""
 "<strong>Warning:</strong> This plugin has <strong>not been marked as "
 "compatible</strong> with your version of WordPress."
 msgstr ""
-"<strong>Анхааруулга:</strong> Энэ нэмэлтийг таны одоогийн WordPress "
+"<strong>Анхааруулга:</strong> Энэ нэмэлтийг таны одоогийн menu.mn "
 "хувилбартай <strong>нийцтэй гэж тэмдэглээгүй байна</strong>."
 
 #: wp-admin/includes/plugin.php:92
@@ -16212,7 +16211,7 @@ msgstr "Миний блог"
 
 #: wp-admin/includes/schema.php:202
 msgid "Just another WordPress site"
-msgstr "Өөр нэг WordPress сайт"
+msgstr "Өөр нэг menu.mn сайт"
 
 #: wp-admin/includes/schema.php:223 wp-admin/options-general.php:244
 msgid "F j, Y"
