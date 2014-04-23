@@ -1,5 +1,6 @@
 .htaccess
 resources/uploads/
+resources/sabai/
 .idea/
 resources/blogs.dir/
 resources/upgrade/
