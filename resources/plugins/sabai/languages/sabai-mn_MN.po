@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Sabai\n"
 "Report-Msgid-Bugs-To: http://sabaiapps.com/\n"
 "POT-Creation-Date: 2013-01-10 18:51+0900\n"
-"PO-Revision-Date: 2014-04-17 18:00+0800\n"
+"PO-Revision-Date: 2014-04-21 14:39+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: xenon <ssxenon01@gmail.com>\n"
 "Language: mn\n"
@@ -1669,13 +1669,13 @@ msgid "FW: %s"
 msgstr ""
 
 msgid "General"
-msgstr ""
+msgstr "Ерөнхий"
 
 msgid "Sabai Settings"
-msgstr ""
+msgstr "Лавлах тохиргоо"
 
 msgid "System Settings"
-msgstr ""
+msgstr "Системийн тохиргоо"
 
 msgid "Failed fetching plugin data from the database."
 msgstr ""
@@ -1920,7 +1920,7 @@ msgid "Helpful"
 msgstr ""
 
 msgid "Ratings"
-msgstr ""
+msgstr "Үнэлгээ"
 
 msgid "Favorites"
 msgstr ""
@@ -2378,20 +2378,22 @@ msgid "Your request may not be processed."
 msgstr ""
 
 msgid "The requested page was not found."
-msgstr ""
+msgstr "Таны хайсан хуудас олдсонгүй."
 
 msgid "The requested method is not allowed."
-msgstr ""
+msgstr "Таны илгээсэн хүсэлтийг зөвшөөрөөгүй."
 
 msgid "The requested page is not acceptable by the browser."
-msgstr ""
+msgstr "Таны хайсан хуудсыг таны веб хөтөч дэмжихгүй байна."
 
 msgid "The requested method is not implemented."
-msgstr ""
+msgstr "Таны илгээсэн хүсэлтийг боловсруулах үйлдэл байхгүй байна."
 
 msgid ""
 "The server is currently unable to handle the request. Please try again later."
 msgstr ""
+"Сервер одоогоор дараах хүсэлтийг боловсруулах боломжгүй байна. Дараа дахин "
+"илгээнэ үү."
 
 msgid "The server encountered an error processing your request."
-msgstr ""
+msgstr "Таны хүсэлтийг боловсруулахад алдаа гарлаа."

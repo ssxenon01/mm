@@ -141,7 +141,7 @@
 }
 .sabai-directory-search input,
 .sabai-directory-search select,
-.sabai-directory-search-btn button {height:100% !important; margin:0 !important;}
+.sabai-directory-search-btn button {height:100% !important; margin:0 !important; padding: 0;}
 .sabai-directory-search-btn .sabai-directory-search-submit {width:100%;}
 
 .sabai-widget-directory-submitbtn {text-align:center;}
