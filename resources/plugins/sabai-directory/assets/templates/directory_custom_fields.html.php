@@ -1,6 +1,6 @@
 <?php foreach ($this->Entity_CustomFields($entity) as $field):?>
     <?php $fieldName =  str_replace('_', '-', $field['name']);
-    if($fieldName == 'field-with-whom' || $fieldName == 'field-what'){
+    if($fieldName == 'field-with-whom' || $fieldName == 'field-what' || $fieldName == 'field-location'){
         return '';
     }
     ?>
