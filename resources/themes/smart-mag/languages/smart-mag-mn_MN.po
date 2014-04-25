@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-04-15 18:33+0800\n"
+"PO-Revision-Date: 2014-04-25 10:07+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: Poedit 1.6.4\n"
@@ -1837,7 +1837,7 @@ msgstr ""
 
 #: header.php:69
 msgid "Search..."
-msgstr ""
+msgstr "Хайх..."
 
 #: header.php:112
 msgid "Navigate"
@@ -1845,11 +1845,11 @@ msgstr ""
 
 #: lib/admin/option-renderer.php:160
 msgid "Yes"
-msgstr ""
+msgstr "Тийм"
 
 #: lib/admin/option-renderer.php:160
 msgid "No"
-msgstr ""
+msgstr "Үгүй"
 
 #: lib/admin/option-renderer.php:278
 msgid "Repeat Horizontal and Vertical - Pattern"
@@ -1873,7 +1873,7 @@ msgstr ""
 
 #: lib/admin/option-renderer.php:287
 msgid "Remove"
-msgstr ""
+msgstr "Устгах"
 
 #: lib/admin/option-renderer.php:342
 msgid "Suggested Fonts"
@@ -1885,11 +1885,11 @@ msgstr ""
 
 #: lib/admin/option-renderer.php:346
 msgid "System Fonts"
-msgstr ""
+msgstr "Системийн фонт"
 
 #: lib/admin/options.php:25
 msgid "Theme Settings"
-msgstr ""
+msgstr "Загварын тохиргоо"
 
 #: lib/admin/options.php:300
 msgid ""
@@ -1900,11 +1900,11 @@ msgstr ""
 #: lib/core.php:316
 msgctxt "breadcrumbs"
 msgid "Home"
-msgstr ""
+msgstr "Нүүр хуудас"
 
 #: lib/core.php:317
 msgid "Category: \"%s\""
-msgstr ""
+msgstr "Ангилал: \"%s\""
 
 #: lib/core.php:318
 msgid "Archive for \"%s\""
@@ -1912,7 +1912,7 @@ msgstr ""
 
 #: lib/core.php:319
 msgid "Search Results for \"%s\" Query"
-msgstr ""
+msgstr "\"%s\" ын хайлтын илэрц"
 
 #: lib/core.php:320
 msgid "Posts Tagged \"%s\""
@@ -1924,7 +1924,7 @@ msgstr ""
 
 #: lib/core.php:322
 msgid "Error 404"
-msgstr ""
+msgstr "Алдаа 404"
 
 #: lib/core.php:331
 msgid "You are at:"
@@ -1932,21 +1932,21 @@ msgstr ""
 
 #: lib/core.php:543
 msgid "Page"
-msgstr ""
+msgstr "Хуудас"
 
 #: lib/posts.php:33 lib/posts.php:324
 msgid "Read More"
-msgstr ""
+msgstr "Дэлгэрэнгүй"
 
 #: lib/posts.php:295
 msgctxt "pagination"
 msgid "Next"
-msgstr ""
+msgstr "Дараах"
 
 #: lib/posts.php:296
 msgctxt "pagination"
 msgid "Previous"
-msgstr ""
+msgstr "Өмнөх"
 
 #: lib/vendor/tgm-activation.php:164
 msgid "Install Required Plugins"
