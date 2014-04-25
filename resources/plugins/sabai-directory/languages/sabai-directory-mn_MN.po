@@ -2125,7 +2125,7 @@ msgid "Emails"
 msgstr "И-Мэйл"
 
 msgid "Directory Dashboard"
-msgstr "Лавлаын самбар"
+msgstr "Лавлахын самбар"
 
 msgid "Custom Tab Sample"
 msgstr ""
