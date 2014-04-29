@@ -103,23 +103,23 @@ add_action( 'in_admin_header', 'wp_admin_bar_render', 0 );
  * @param WP_Admin_Bar $wp_admin_bar
  */
 function wp_admin_bar_wp_menu( $wp_admin_bar ) {
-	/*$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( array(
 		'id'    => 'wp-logo',
 		'title' => '<span class="ab-icon"></span>',
 		'href'  => self_admin_url( 'about.php' ),
 		'meta'  => array(
 			'title' => __('About WordPress'),
 		),
-	) );*/
+	) );
 
 	if ( is_user_logged_in() ) {
 		// Add "About WordPress" link
-		/*$wp_admin_bar->add_menu( array(
+		$wp_admin_bar->add_menu( array(
 			'parent' => 'wp-logo',
 			'id'     => 'about',
 			'title'  => __('About WordPress'),
 			'href'  => self_admin_url( 'about.php' ),
-		) );*/
+		) );
 	}
 
 	// Add WordPress.org link
@@ -127,7 +127,7 @@ function wp_admin_bar_wp_menu( $wp_admin_bar ) {
 		'parent'    => 'wp-logo-external',
 		'id'        => 'wporg',
 		'title'     => __('WordPress.org'),
-		'href'      => __('http://wordpress.org/'),
+		'href'      => __('https://wordpress.org/'),
 	) );
 
 	// Add codex link
@@ -143,7 +143,7 @@ function wp_admin_bar_wp_menu( $wp_admin_bar ) {
 		'parent'    => 'wp-logo-external',
 		'id'        => 'support-forums',
 		'title'     => __('Support Forums'),
-		'href'      => __('http://wordpress.org/support/'),
+		'href'      => __('https://wordpress.org/support/'),
 	) );
 
 	// Add feedback link
@@ -151,7 +151,7 @@ function wp_admin_bar_wp_menu( $wp_admin_bar ) {
 		'parent'    => 'wp-logo-external',
 		'id'        => 'feedback',
 		'title'     => __('Feedback'),
-		'href'      => __('http://wordpress.org/support/forum/requests-and-feedback'),
+		'href'      => __('https://wordpress.org/support/forum/requests-and-feedback'),
 	) );
 }
 
@@ -188,7 +188,7 @@ function wp_admin_bar_my_account_item( $wp_admin_bar ) {
 		return;
 
 	$avatar = get_avatar( $user_id, 26 );
-	$howdy  = sprintf( __('%1$s'), $current_user->display_name );
+	$howdy  = sprintf( __('Howdy, %1$s'), $current_user->display_name );
 	$class  = empty( $avatar ) ? '' : 'with-avatar';
 
 	$wp_admin_bar->add_menu( array(

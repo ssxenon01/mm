@@ -8,7 +8,7 @@ class Sabai_Addon_Content extends Sabai_Addon
                Sabai_Addon_System_IPermissionCategories,
                Sabai_Addon_System_IPermissions
 {
-    const VERSION = '1.2.29', PACKAGE = 'sabai';
+    const VERSION = '1.2.30', PACKAGE = 'sabai';
     const POST_STATUS_PUBLISHED = 'published', POST_STATUS_DRAFT = 'draft', POST_STATUS_PENDING = 'pending', POST_STATUS_TRASHED = 'trashed',
         TRASH_TYPE_SPAM = 1, TRASH_TYPE_OFFTOPIC = 2, TRASH_TYPE_OTHER = 3;
                 

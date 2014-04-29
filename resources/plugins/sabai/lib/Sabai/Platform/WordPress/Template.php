@@ -114,7 +114,7 @@ class Sabai_Platform_WordPress_Template
     {
         $links = array($links[0]);
         foreach ($this->_pageBreadcrumbs as $breadcrumb) {
-            $links[] = array('url' => $breadcrumb['url'], 'text' => $breadcrumb['title']);
+            $links[] = array('url' => (string)$breadcrumb['url'], 'text' => $breadcrumb['title']);
         }
         return $links;
     }

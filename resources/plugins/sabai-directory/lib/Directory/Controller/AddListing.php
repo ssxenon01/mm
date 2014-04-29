@@ -50,7 +50,7 @@ class Sabai_Addon_Directory_Controller_AddListing extends Sabai_Addon_Form_Multi
         if (!$context->getRequest()->isPostMethod()) {
             // Skip selection step if only 1 directory to which the user can submit listings
             if (count($options) === 1) {
-                $bundle = array_shift(array_keys($options));
+                $bundle = current(array_keys($options));
             } elseif (isset($context->bundle)) {
                 $bundle = $context->bundle->name;
             } elseif (isset($context->addon)) {

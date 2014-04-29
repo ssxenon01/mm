@@ -4248,3 +4248,5 @@ div.rateit div.rateit-reset:hover
 .sabai-file-file.sabai-file-type-mpeg {background-image:url('../images/icons/mpg.png');}
 .sabai-file-file.sabai-file-type-xml {background-image:url('../images/icons/xml.png');}
 .sabai-file-file.sabai-file-type-swf {background-image:url('../images/icons/swf.png');}
+
+.mobile .sabai-row-action {visibility:visible;}

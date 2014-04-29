@@ -16,8 +16,8 @@ class Sabai_Addon_Directory_Taxonomy implements Sabai_Addon_Taxonomy_ITaxonomy
                 return array(
                     'type' => 'directory_category',
                     'path' => '/' . $this->_addon->getDirectorySlug() . '/' . $this->_addon->getSlug('categories'),
-                    'label' => $this->_addon->getApplication()->_t(_n_noop('Categories', 'Categories', 'sabai-directory')),
-                    'label_singular' => $this->_addon->getApplication()->_t(_n_noop('Category', 'Category', 'sabai-directory')),
+                    'label' => $this->_addon->getApplication()->_t(_n_noop('Categories', 'Categories', 'sabai-directory'), 'sabai-directory'),
+                    'label_singular' => $this->_addon->getApplication()->_t(_n_noop('Category', 'Category', 'sabai-directory'), 'sabai-directory'),
                     'taxonomy_hierarchical' => true,
                     'taxonomy_body' => array(
                         'required' => false,

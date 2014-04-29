@@ -10,7 +10,7 @@
 
 ;(function($) {
 
-  $.fn.sticky = function(options) {
+  $.fn.stickyScroll = function(options) {
 
     var defaults = {
         topSpacing: 0, // No spacing by default
@@ -68,10 +68,9 @@
 
         if (pushPoint < windowTop) {
           // Create a placeholder for sticky element to occupy vertical real estate
-          $this.after(placeholder).css({
+          $this.append(placeholder).css({
             position: 'fixed',
-            top: topSpacing,
-            width: $this.css('width')
+            top: topSpacing
           });
           
           if (hasIndex) {
@@ -95,7 +94,7 @@
         }
       };
 
-      $window.bind("scroll.stickyScroll resize.stickyScroll", stickyScroll);
+      $window.unbind('.stickyScroll').bind('scroll.stickyScroll resize.stickyScroll', stickyScroll);
     });
   };
 })(jQuery);

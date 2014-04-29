@@ -336,6 +336,12 @@ msgstr ""
 msgid "Thanks for your submission, we will review it and get back with you."
 msgstr ""
 
+msgid "Your post has been submitted successfully."
+msgstr ""
+
+msgid "Back to %s"
+msgstr ""
+
 #, php-format
 msgid "Add %s"
 msgstr ""
@@ -2334,4 +2340,10 @@ msgid ""
 msgstr ""
 
 msgid "The server encountered an error processing your request."
+msgstr ""
+
+msgid "Maximum number of files %d, maximum file size %s."
+msgstr ""
+
+msgid "Maximum file size %s."
 msgstr ""

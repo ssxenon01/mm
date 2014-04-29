@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
         <?php if ($settings['map']['style']):?><?php echo json_encode($this->GoogleMaps_Style($settings['map']['style']));?><?php else:?>null<?php endif;?>,
         <?php echo json_encode($settings['map']['options']);?>
     );
-    <?php if (empty($settings['scroll_list'])):?>jQuery("<?php echo $CURRENT_CONTAINER;?>-directory-map-container").sticky({topSpacing: 40, stopper: ".sabai-directory-pagination"});<?php endif;?>
+    <?php if (empty($settings['scroll_list'])):?>jQuery("<?php echo $CURRENT_CONTAINER;?>-directory-map-container").stickyScroll({topSpacing: 40, stopper: ".sabai-directory-pagination"});<?php endif;?>
 });
 </script>
 <?php if (empty($settings['hide_nav'])):?>

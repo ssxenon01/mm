@@ -4,7 +4,7 @@ class Sabai_Addon_Entity extends Sabai_Addon
                Sabai_Addon_Entity_IFieldCache,
                Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.29', PACKAGE = 'sabai';
+    const VERSION = '1.2.30', PACKAGE = 'sabai';
     const FIELD_REALM_ALL = 0, FIELD_REALM_ENTITY_TYPE_DEFAULT = 1, FIELD_REALM_BUNDLE_DEFAULT = 2;
 
     private static $_reservedBundleNames = array('users', 'my', 'flagged', 'add', 'comments', 'vote');
@@ -612,6 +612,13 @@ class Sabai_Addon_Entity extends Sabai_Addon
 
     private function _updateEntityBundle(Sabai_Addon_Entity_Model_Bundle $bundle, array $info, array &$newFields, array &$removedFields, array &$updatedFields)
     {
+        if (!isset($info['label_menu'])) {
+            $info['label_menu'] = $info['label'];
+        }
+        $_info = array_diff_key($info, array_flip(array('label', 'label_singular', 'system', 'fields', 'properties', 'path', 'type')));
+        $bundle->set('label', $info['label'])
+            ->set('label_singular', isset($info['label_singular']) ? $info['label_singular'] : $info['label'])
+            ->set('info', $_info);
         // Update info
         $_info = array_diff_key($info, array_flip(array('label', 'label_singular', 'system', 'fields', 'properties', 'path', 'type')));
         $bundle->set('info', $_info);

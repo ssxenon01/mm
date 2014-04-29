@@ -3,7 +3,7 @@ require_once 'Sabai/Platform.php';
 
 class Sabai_Platform_WordPress extends Sabai_Platform
 {
-    const VERSION = '1.2.29';
+    const VERSION = '1.2.30';
     private $_mainContent, $_mainRoute, $_template, $_userToBeDeleted, $_sessionTransient = true, $_sessionTransientLifetime = 1800;
     private static $_instances = array();
 

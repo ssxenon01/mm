@@ -4,7 +4,7 @@ class Sabai_Addon_HTML extends Sabai_Addon
                Sabai_Addon_Field_ITypes,
                Sabai_Addon_Field_IWidgets
 {
-    const VERSION = '1.2.29', PACKAGE = 'sabai';
+    const VERSION = '1.2.30', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {

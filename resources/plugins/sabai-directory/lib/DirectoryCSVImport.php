@@ -2,7 +2,7 @@
 class Sabai_Addon_DirectoryCSVImport extends Sabai_Addon
     implements Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.29', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.30', PACKAGE = 'sabai-directory';
     
     /* Start implementation of Sabai_Addon_System_IAdminRouter */
 

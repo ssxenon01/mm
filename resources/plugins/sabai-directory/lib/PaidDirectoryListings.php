@@ -9,7 +9,7 @@ class Sabai_Addon_PaidDirectoryListings extends Sabai_Addon
                Sabai_Addon_System_IAdminMenus,
                Sabai_Addon_PaidListings_IPlanTypes
 {
-    const VERSION = '1.2.29', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.30', PACKAGE = 'sabai-directory';
     
     /* Start implementation of Sabai_Addon_System_IMainRouter */
     

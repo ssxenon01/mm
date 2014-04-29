@@ -13,7 +13,7 @@ class SabaiFramework_DB_MySQLi extends SabaiFramework_DB_MySQL
 {
     protected function _doQuery($query)
     {
-        if (!$rs = mysqli_query($query, $this->_connection->connect())) {
+        if (!$rs = mysqli_query($this->_connection->connect(), $query)) {
             return false;
         }
 
@@ -24,7 +24,7 @@ class SabaiFramework_DB_MySQLi extends SabaiFramework_DB_MySQL
 
     protected function _doExec($sql)
     {
-        return mysqli_query($sql, $this->_connection->connect());
+        return mysqli_query($this->_connection->connect(), $sql);
     }
 
     public function affectedRows()

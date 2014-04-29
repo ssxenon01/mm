@@ -3,10 +3,10 @@
 Plugin Name: Sabai
 Description: Sabai is a web application framework for WordPress.
 Author: onokazu
-Author URI: http://codecanyon.net/user/onokazu/portfolio
+Author URI: http://codecanyon.net/user/onokazu/portfolio?ref=onokazu
 Text Domain: sabai
 Domain Path: /languages
-Version: 1.2.29
+Version: 1.2.30
 */
 
 function sabai_wordpress_run()

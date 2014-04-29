@@ -7,7 +7,7 @@ class Sabai_Addon_File extends Sabai_Addon
                Sabai_Addon_Field_IWidgets,
                Sabai_Addon_File_IStorage
 {
-    const VERSION = '1.2.29', PACKAGE = 'sabai';
+    const VERSION = '1.2.30', PACKAGE = 'sabai';
     
     protected $_path;
         
