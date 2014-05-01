@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Sabai\n"
 "Report-Msgid-Bugs-To: http://sabaiapps.com/\n"
 "POT-Creation-Date: 2013-01-10 18:51+0900\n"
-"PO-Revision-Date: 2014-04-29 13:25+0800\n"
+"PO-Revision-Date: 2014-05-01 21:56+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: xenon <ssxenon01@gmail.com>\n"
 "Language: mn\n"
@@ -1914,7 +1914,7 @@ msgid "Are you sure you want to ignore all the flags submitted?"
 msgstr "Бүх тэмдэглэгээг үл тоох уу?"
 
 msgid "Ignore Flags"
-msgstr ""
+msgstr "Мэдэгдлийг үл тоо"
 
 msgid "Redo Submit"
 msgstr ""
@@ -1955,20 +1955,20 @@ msgid "This post is useful (click again to undo)"
 msgstr ""
 
 msgid "Mark this post as useful"
-msgstr ""
+msgstr "Энэ нийтлэл тус болсон"
 
 msgid "This post is not useful (click again to undo)"
-msgstr ""
+msgstr "Энэ нийтлэл хэрэг болсонгүй"
 
 msgid "Unmark this post as useful"
 msgstr ""
 
 msgid "Vote"
-msgstr ""
+msgstr "Дэмжих"
 
 #, php-format
 msgid "Vote for \"%s\""
-msgstr ""
+msgstr "\"%s\" г дэмжих"
 
 #, php-format
 msgid "Vote up %s"
@@ -2019,22 +2019,22 @@ msgid "Flag"
 msgstr ""
 
 #, php-format
-msgid "Flag this %s"
+msgid "%s-г мэдэгдэх"
 msgstr ""
 
-msgid "Flagged"
-msgstr ""
-
-#, php-format
-msgid "This post has %d flags"
+msgid "Мэдэгдэл илгээлээ"
 msgstr ""
 
 #, php-format
-msgid "Vote for this %s"
+msgid "Энэ нийтлэл %d мэдэгдэл авсан"
 msgstr ""
 
 #, php-format
-msgid "Unvote for this %s"
+msgid "%s г дэмжих"
+msgstr ""
+
+#, php-format
+msgid "%s г дэмжихээ болих"
 msgstr ""
 
 #, php-format
@@ -2053,22 +2053,22 @@ msgid "Clear %s"
 msgstr ""
 
 msgid "Flagged / Unflagged"
-msgstr ""
+msgstr "Мэдэгдсэн / Мэдэгдээгүй"
 
 msgid "Unflagged"
-msgstr ""
+msgstr "Мэдэгдсэн"
 
 #, php-format
 msgid "%d vote (score: %d)"
 msgid_plural "%d votes (score: %d)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d санал (оноо: %d)"
+msgstr[1] "%d санал (оноо: %d)"
 
 #, php-format
 msgid "%d favorite"
 msgid_plural "%d favorites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d таалагдсан"
+msgstr[1] "%d таалагдсан"
 
 #, php-format
 msgid ""
@@ -2140,11 +2140,11 @@ msgstr "Эцэг %s:"
 
 #, php-format
 msgid "Update %s"
-msgstr ""
+msgstr "%s г шинэчлэх"
 
 #, php-format
 msgid "Popular %s"
-msgstr ""
+msgstr "Алдартай %s"
 
 #, php-format
 msgid "Separate %s with commas"
@@ -2152,7 +2152,7 @@ msgstr ""
 
 #, php-format
 msgid "Add or remove %s"
-msgstr ""
+msgstr "%s устгах / нэмэх"
 
 #, php-format
 msgid "Choose from the most used %s"

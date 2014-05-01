@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: sabai-directory 1.2.18\n"
 "Report-Msgid-Bugs-To: http://sabaiapps.com/\n"
 "POT-Creation-Date: 2013-01-10 18:51+0900\n"
-"PO-Revision-Date: 2014-04-29 13:22+0800\n"
+"PO-Revision-Date: 2014-05-01 21:57+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: LANGUAGE <onokazu@gmail.com>\n"
 "Language: mn\n"
@@ -1612,17 +1612,17 @@ msgstr ""
 "{site_url}"
 
 msgid "Listing Flagged Notification Email"
-msgstr "Байгууллага тэмдэглэгдэхэд ирэх имэйл мэдэгдэл"
+msgstr "Байгууллага мэдэгдэхэд ирэх имэйл мэдэгдэл"
 
 msgid ""
 "If enabled, a notification email is sent to users of selected roles whenever "
 "a listing is flagged."
 msgstr ""
-"Хэрэв идэвхжүүлбэл, Байгууллага тэмдэглэгдэхэд сонгогдсон эрхт хэрэглэгч рүү "
+"Хэрэв идэвхжүүлбэл, Байгууллагыг мэдэгдэхэд сонгогдсон эрхт хэрэглэгч рүү "
 "мэдэгдэх имэйл илгээнэ."
 
 msgid "[{site_name}] Listing (ID: {listing_id}) has been flagged"
-msgstr "[{site_name}] Байгууллага (ID: {listing_id}) тэмдэглэгдлээ"
+msgstr "[{site_name}] Байгууллага (ID: {listing_id}) мэдэгдлээ"
 
 msgid ""
 "Hi {recipient_name},\n"
@@ -1718,7 +1718,7 @@ msgid ""
 "If enabled, a notification email is sent to users of selected roles whenever "
 "a photo is flagged."
 msgstr ""
-"Хэрэв идэвхжүүлбэл, Зураг тэмдэглэгдэхэд сонгогдсон эрхт хэрэглэгчдэд имэйл "
+"Хэрэв идэвхжүүлбэл, Зураг мэдэгдэхэд сонгогдсон эрхт хэрэглэгчдэд имэйл "
 "мэдэгдэл илгээнэ."
 
 msgid ""
@@ -2099,7 +2099,7 @@ msgstr "Зургууд"
 
 #, php-format
 msgid "Photos (%d)"
-msgstr "Photos (%d)"
+msgstr "Зураг (%d)"
 
 #, php-format
 msgid "Add Photos - %s"
