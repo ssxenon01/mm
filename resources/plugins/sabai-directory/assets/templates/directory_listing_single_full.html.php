@@ -1,3 +1,4 @@
+sadasd
 <div id="<?php echo $id;?>" class="<?php echo $class;?> sabai-clearfix" itemscope itemtype="http://schema.org/LocalBusiness">
     <meta itemprop="name" content="<?php Sabai::_h($entity->getTitle());?>" />
     <meta itemprop="url" content="<?php echo $this->Entity_PermalinkUrl($entity);?>" />
