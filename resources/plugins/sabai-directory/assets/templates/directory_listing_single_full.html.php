@@ -1,4 +1,4 @@
-sadasd
+
 <div id="<?php echo $id;?>" class="<?php echo $class;?> sabai-clearfix" itemscope itemtype="http://schema.org/LocalBusiness">
     <meta itemprop="name" content="<?php Sabai::_h($entity->getTitle());?>" />
     <meta itemprop="url" content="<?php echo $this->Entity_PermalinkUrl($entity);?>" />
@@ -6,23 +6,26 @@ sadasd
     <div class="sabai-directory-labels"><?php echo $labels;?></div>
 <?php endif;?>
     <div class="sabai-row-fluid">
-        <div class="sabai-span4 sabai-directory-images">
-<?php if (!empty($entity->data['directory_photos'])): $photo = $entity->data['directory_photos'][0];?>
-            <a href="<?php echo $this->Entity_Url($entity, '/photos', array('photo_id' => $photo->getId()));?>" title="<?php Sabai::_h($photo->getTitle());?>"><img src="<?php echo $this->Directory_PhotoUrl($photo, 'medium');?>" alt="" itemprop="image" /></a>
-<?php   $i = 0; while ($photos = array_slice($entity->data['directory_photos'], $i * 4 + 1, 4)):?>
-            <div class="sabai-directory-thumbnails sabai-row-fluid">
-<?php     foreach ($photos as $photo):?>
-                <div class="sabai-span3">
-                    <a href="<?php echo $this->Entity_Url($entity, '/photos', array('photo_id' => $photo->getId()));?>" title="<?php Sabai::_h($photo->getTitle());?>"><img src="<?php echo $this->Directory_PhotoUrl($photo, 'thumbnail');?>" alt="" /></a>
-                </div>
-<?php     endforeach;?>
-            </div>
-<?php   ++$i; endwhile;?>
-<?php else:?>
-            <img src="<?php echo $this->NoImageUrl();?>" alt="" />
-<?php endif;?>
+        <div class="sabai-span12 sabai-directory-images">
+            <?php if (!empty($entity->data['directory_photos'])): $photo = $entity->data['directory_photos'][0]; ?>
+                <a href="<?php echo $this->Entity_Url($entity, '/photos', array('photo_id' => $photo->getId())); ?>" title="<?php Sabai::_h($photo->getTitle()); ?>"><img
+                        src="<?php echo $this->Directory_PhotoUrl($photo, 'medium'); ?>" alt="" itemprop="image"/></a>
+                <?php $i = 0;
+                while ($photos = array_slice($entity->data['directory_photos'], $i * 4 + 1, 4)): ?>
+                    <div class="sabai-directory-thumbnails sabai-row-fluid">
+                        <?php foreach ($photos as $photo): ?>
+                            <div class="sabai-span3">
+                                <a href="<?php echo $this->Entity_Url($entity, '/photos', array('photo_id' => $photo->getId())); ?>"
+                                   title="<?php Sabai::_h($photo->getTitle()); ?>"><img src="<?php echo $this->Directory_PhotoUrl($photo, 'thumbnail'); ?>" alt=""/></a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php ++$i; endwhile; ?>
+            <?php else: ?>
+                <img src="<?php echo $this->NoImageUrl(); ?>" alt=""/>
+            <?php endif; ?>
         </div>
-        <div class="sabai-span8 sabai-directory-main">
+        <div class="sabai-span12 sabai-directory-main">
 <?php if (!empty($entity->voting_rating['']['count'])):?>
             <div class="sabai-directory-rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <?php echo $this->Voting_RenderRating($entity);?>
