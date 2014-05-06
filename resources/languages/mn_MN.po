@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-21 14:23+0800\n"
+"PO-Revision-Date: 2014-05-06 16:25+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -300,6 +300,8 @@ msgid ""
 "Use <code>get_trackback_url()</code> instead if you do not want the value "
 "echoed."
 msgstr ""
+"Хэрэв та утгыг гаргахыг хүсэхгүй бол <code>get_trackback_url()</code> ыг "
+"ашиглана уу."
 
 #: wp-admin/update-core.php:178
 msgid ""
@@ -325,6 +327,8 @@ msgid ""
 "site to your account</strong>. There is no limit to the number of sites you "
 "can have, so create to your heart&#8217;s content, but write responsibly!"
 msgstr ""
+"Тавтай морил, %s. Дараах формыг бөглөснөө,<strong>өөрийн нэр дээр ахин сайт "
+"үүсгэх</strong> боломжтой."
 
 #: wp-admin/update-core.php:134
 msgid ""
@@ -411,6 +415,9 @@ msgid ""
 "to <code>BASE</code> when it should be like <code>/</code> or <code>/blogs/</"
 "code>."
 msgstr ""
+"code>wp-config.php</code> ын тохиргоон дээр алдаа гарлаа. <code>$base</code> "
+"is set to <code>BASE</code> when it should be like <code>/</code> or <code>/"
+"blogs/</code>."
 
 #: wp-includes/author-template.php:55
 msgid ""
@@ -444,6 +451,9 @@ msgid ""
 "registrations. To change or disable registration go to your <a href=\"wp-"
 "admin/ms-options.php\">Options page</a>."
 msgstr ""
+"Сайн байну уу! Та &#8220;%s&#8221; ын бүртгэлийг зөвшөөрсөн байна. Үүнийг <a "
+"href=\"wp-admin/ms-options.php\">тохиргооны хуудас</a> хэсэгээс өөрчлөх "
+"боломжтой."
 
 #: wp-signup.php:371
 msgid ""
@@ -5777,7 +5787,30 @@ msgstr "Нүүр хуудас"
 #: wp-includes/post-template.php:1009
 msgid ""
 "This post is password protected. To view it please enter your password below:"
+msgstr "Энэ нийтлэлийг хамгаалагдсан байна. Үзэхийн тулд нууц үгээ оруулна уу"
+
+#: wp-login.php:519
+msgid ""
+"Please enter your username or email address. You will receive a link to "
+"create a new password via email."
 msgstr ""
+"Хэрэглэгчийн нэр эсвэл нууц үгээ оруулна уу. Танд имэйл ээр баталгаажуулах "
+"холбоосыг илгээх болно. Хэрэв баталгаажуулах имэйл ирээгүй бол спамаа шалгаж "
+"үзнэ үү"
+
+#: wp-login.php:519
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+"Хэрэв та нууц үг солих хүсэлт илгээгээгүй бол энэ мэйлийг тоохгүй орхиж "
+"болно."
+
+#: wp-login.php:519
+msgid "Someone requested that the password be reset for the following account:"
+msgstr "Хэн нэгэн дараах хэрэглэгчийн нууц үгийг солих хүсэлт илгээлээ:"
+
+#: wp-login.php:519
+msgid "To reset your password, visit the following address:"
+msgstr "Нууц үгээ солихын тулд дараах холбоос дээр дарна уу:"
 
 #: wp-includes/post-template.php:1073
 msgctxt "revision date format"
@@ -6005,7 +6038,7 @@ msgstr ""
 
 #: wp-includes/script-loader.php:173
 msgid "Next &gt;"
-msgstr ""
+msgstr "Дараах &gt;"
 
 #: wp-includes/script-loader.php:174
 msgid "&lt; Prev"
@@ -6310,6 +6343,8 @@ msgid ""
 "To reset your password visit the following address, otherwise just ignore "
 "this email and nothing will happen."
 msgstr ""
+"Нууц үгээ шинэчлэхийг хүсвэл дараах холбоос дээр дарна уу. Үгүй бол зүгээр "
+"орхиж болно."
 
 #: wp-login.php:199
 msgid "[%s] Password Reset"
@@ -6546,7 +6581,7 @@ msgstr ""
 
 #: wp-signup.php:326
 msgid "Signup"
-msgstr ""
+msgstr "Бүргүүлэх"
 
 #: wp-signup.php:363
 msgid ""
@@ -6557,13 +6592,15 @@ msgstr ""
 
 #: wp-signup.php:365
 msgid "Still waiting for your email?"
-msgstr ""
+msgstr "Имэйл ирэхгүй л байна уу?"
 
 #: wp-signup.php:369
 msgid ""
 "Wait a little longer.  Sometimes delivery of email can be delayed by "
 "processes outside of our control."
 msgstr ""
+"Жаахан хүлээнэ үү. Заримдаа имэйл нь 1 цаг хүртэлх хугацаагаар хоцрох "
+"тохиолдол бии."
 
 #: wp-signup.php:392
 msgid "Registration has been disabled."
@@ -9717,15 +9754,15 @@ msgstr "Сайтыг нэмсэн."
 
 #: wp-admin/user-edit.php:29
 msgid "Edit User"
-msgstr ""
+msgstr "Хэрэглэгчийг засварлах"
 
 #: wp-admin/user-edit.php:22 wp-admin/user-edit.php:24
 msgid "Invalid user ID."
-msgstr ""
+msgstr "Буруу хэрэглэгчийн ID"
 
 #: wp-admin/user-edit.php:53
 msgid "Use https"
-msgstr ""
+msgstr "https ашиглана уу"
 
 #: wp-admin/user-edit.php:54
 msgid "Always use https when visiting the admin"
@@ -9734,7 +9771,7 @@ msgstr ""
 #: wp-admin/user-edit.php:62 wp-admin/user-edit.php:93
 #: wp-admin/user-edit.php:139
 msgid "You do not have permission to edit this user."
-msgstr ""
+msgstr "Танд энэ хэрэглэгчийг засварлах эрх байхгүй байна."
 
 #: wp-admin/user-edit.php:149
 msgid "User updated."
@@ -9793,7 +9830,7 @@ msgstr "(шаардлагатай)"
 
 #: wp-admin/user-edit.php:260
 msgid "Display name publicly as"
-msgstr ""
+msgstr "Нэрийг нийтэд харуулахдаа"
 
 #: wp-admin/user-edit.php:290
 msgid "Contact Info"
@@ -9802,7 +9839,7 @@ msgstr "харилцах хаяг"
 #: wp-admin/user-edit.php:299 wp-admin/user-new.php:213
 #: wp-includes/comment-template.php:1501
 msgid "Website"
-msgstr ""
+msgstr "Вебсайт"
 
 #: wp-admin/user-edit.php:315
 msgid "About Yourself"
@@ -9831,6 +9868,8 @@ msgid ""
 "If you would like to change the password type a new one. Otherwise leave "
 "this blank."
 msgstr ""
+"Хэрэв та нууц үгээ солихыг хүсвэл шинээр оруулнуу. Үгүй бол хоосон орхиж "
+"болно."
 
 #: wp-admin/user-edit.php:331
 msgid "Type your new password again."
@@ -9880,7 +9919,7 @@ msgstr ""
 
 #: wp-admin/menu.php:189 wp-admin/user-new.php:108 wp-admin/user-new.php:142
 msgid "Add New User"
-msgstr ""
+msgstr "Шинэ хэрэглэгч нэмэх"
 
 #: wp-admin/user-new.php:122
 msgid ""
@@ -10116,19 +10155,19 @@ msgstr "Сонголтууд"
 
 #: wp-admin/widgets.php:309
 msgid "Save Widget"
-msgstr ""
+msgstr "Виджетыг хадгалах"
 
 #: wp-admin/widgets.php:325
 msgid "Changes saved."
-msgstr ""
+msgstr "Өөрчлөлт хадгалагдсан."
 
 #: wp-admin/widgets.php:329
 msgid "Error while saving."
-msgstr ""
+msgstr "Хадгалах явцад алдаа гарлаа."
 
 #: wp-admin/widgets.php:330
 msgid "Error in displaying the widget settings form."
-msgstr ""
+msgstr "Виджетийг дүрслэхэд алдаа гарлаа."
 
 #: wp-admin/widgets.php:353
 msgid "Available Widgets"
@@ -10162,7 +10201,7 @@ msgstr "Уучлаарай. Танд ээ хуудасыг устгах эрх �
 #: wp-app.php:445 wp-app.php:640 wp-app.php:826 xmlrpc.php:1865
 #: xmlrpc.php:2179
 msgid "Sorry, your entry could not be posted. Something wrong happened."
-msgstr ""
+msgstr "Уучлаарай, Таны бичвэрийг нийтэлж чадсангүй."
 
 #: wp-app.php:472
 msgid "Sorry, you do not have the right to access this post."
@@ -10170,7 +10209,7 @@ msgstr "Уучлаарай. Танд ээ хуудасыг устгах эрх �
 
 #: wp-app.php:506 wp-app.php:672 wp-app.php:745 wp-app.php:795 xmlrpc.php:1905
 msgid "Sorry, you do not have the right to edit this post."
-msgstr ""
+msgstr "Уучлаарай, Танд энэ нийтлэлийг засварлах эрх байхгүй байна."
 
 #: wp-app.php:529 wp-app.php:688 xmlrpc.php:1921
 msgid ""
@@ -10179,7 +10218,7 @@ msgstr ""
 
 #: wp-app.php:551 wp-app.php:709 xmlrpc.php:1955
 msgid "Sorry, you do not have the right to delete this post."
-msgstr ""
+msgstr "Уучлаарай, Танд энэ нийтлэлийг устгах эрх байхгүй байна."
 
 #: wp-app.php:559 wp-app.php:724 xmlrpc.php:1960
 msgid ""
@@ -10196,11 +10235,11 @@ msgstr ""
 
 #: wp-comments-post.php:36
 msgid "Sorry, comments are closed for this item."
-msgstr ""
+msgstr "Уучлаарай, Энэ хэсгийн сэтгэгдлийг хаасан байна."
 
 #: wp-comments-post.php:71
 msgid "Sorry, you must be logged in to post a comment."
-msgstr ""
+msgstr "Уучлаарай, Та сэтгэгдэл бичихийн тулд нэвтэрсэн байх шаардлагатай."
 
 #: wp-comments-post.php:78
 msgid "Error: please fill the required fields (name, email)."
@@ -10368,7 +10407,7 @@ msgstr "Сүлжээний тохиргоо"
 
 #: wp-content/plugins/akismet/akismet.php:201
 msgid "No problems"
-msgstr ""
+msgstr "Асуудал байхгүй байна"
 
 #: wp-content/plugins/akismet/akismet.php:201
 msgid "Obstructed"
@@ -10578,7 +10617,7 @@ msgstr ""
 
 #: wp-includes/feed-atom-comments.php:19
 msgid "Comments on %s"
-msgstr ""
+msgstr "Бичсэн %s"
 
 #: wp-includes/default-widgets.php:300
 msgid ""
@@ -10587,11 +10626,11 @@ msgstr "wor"
 
 #: wp-includes/comment-template.php:962
 msgid "Enter your password to view comments."
-msgstr ""
+msgstr "Нууц үгээ оруулан сэтгэгдлийг харна уу"
 
 #: wp-includes/comment-template.php:586 wp-includes/comment-template.php:949
 msgid "No Comments"
-msgstr ""
+msgstr "Сэтгэгдэл байхгүй байна"
 
 #: wp-includes/comment-template.php:588 wp-includes/comment-template.php:950
 msgid "1 Comment"
@@ -10609,6 +10648,7 @@ msgstr "Энийг засварлах"
 #: wp-includes/comment-template.php:1508
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
+"Сэтгэгдэл бичихийн тулд <a href=\"%s\">нэвтэрч</a> орсон байх шаардлагатай."
 
 #: wp-includes/category-template.php:849
 msgid "Tags: "
@@ -10676,7 +10716,7 @@ msgstr ""
 
 #: wp-includes/bookmark-template.php:82
 msgid "Last updated: %s"
-msgstr ""
+msgstr "Шинэчлэсэн: %s"
 
 #: wp-includes/bookmark-template.php:206
 msgid "Bookmarks"
@@ -10690,7 +10730,7 @@ msgstr ""
 
 #: wp-includes/category-template.php:451
 msgid "No categories"
-msgstr ""
+msgstr "Ангилал байхгүй байна."
 
 #: wp-includes/category-template.php:599
 msgid "%s topic"
@@ -10700,7 +10740,7 @@ msgstr[1] "%s сэдэв"
 
 #: wp-includes/class-pop3.php:83
 msgid "No server specified"
-msgstr ""
+msgstr "Сервер тодорхойлоогүй байна."
 
 #: wp-includes/class-pop3.php:91 wp-includes/class-pop3.php:103
 #: wp-includes/class-pop3.php:124 wp-includes/class-pop3.php:247
