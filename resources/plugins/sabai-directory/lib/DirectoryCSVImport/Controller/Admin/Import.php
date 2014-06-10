@@ -407,13 +407,13 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
         $rows_imported = 0;
         $row_number = 1;
         $rows_geocoded = 0;
-        $rows_failed = array();
+        $rows_failed = $rows_geocoding_failed = array();
         while (false !== $csv_row = fgetcsv($fp, 0, $form->storage['values']['upload']['delimiter'], $form->storage['values']['upload']['enclosure'])) {
             ++$row_number;
             if (empty($csv_row) || !is_array($csv_row)) {
                 continue;
             }
-            $row = array('category' => array());
+            $row = array('category' => array(), 'address' => null);
             // Load row data from CSV
             foreach ($csv_columns as $csv_row_key => $csv_column_name) {
                 if (isset($settings[$csv_row_key]) && strlen($settings[$csv_row_key])) {
@@ -528,9 +528,10 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
                 }
             }
             
+  
             try {
                 if (empty($row['lat']) || empty($row['lng'])) {
-                    if ($geocode) {
+                    if ($row['address'] && $geocode) {
                         $geocode_result = $this->GoogleMaps_GoogleGeocode($row['address']);
                         $values['directory_location']['lat'] = $geocode_result['lat'];
                         $values['directory_location']['lng'] = $geocode_result['lng'];
@@ -543,14 +544,23 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
                     $values['directory_location']['lat'] = $row['lat'];
                     $values['directory_location']['lng'] = $row['lng'];
                 }
-                $this->getAddon('Entity')->createEntity($context->bundle, $values);
-                ++$rows_imported;
+            } catch (Sabai_Addon_Google_GeocodeException $e) {
+                $rows_geocoding_failed[$row_number] = array($row['address'], $e->getMessage());
             } catch (Exception $e) {
                 $rows_failed[$row_number] = $e->getMessage();
+                continue;
             }
+            try {
+                $listing = $this->getAddon('Entity')->createEntity($context->bundle, $values);
+            } catch (Exception $e) {
+                $rows_failed[$row_number] = $e->getMessage();
+                continue;
+            }    
+            ++$rows_imported;
         }
         $form->storage['rows_imported'] = $rows_imported;
         $form->storage['rows_failed'] = $rows_failed;
+        $form->storage['rows_geocoding_failed'] = $rows_geocoding_failed;
     }
 
     protected function _complete(Sabai_Context $context, array $formStorage)
@@ -558,14 +568,18 @@ class Sabai_Addon_DirectoryCSVImport_Controller_Admin_Import extends Sabai_Addon
         $context->addTemplate('form_results');
         $success_count = $formStorage['rows_imported'];
         $context->success = sprintf(_n('%d row imported successfullly.', '%d rows imported successfullly.', $success_count, 'sabai-directory'), $success_count);
-        $failed_count = count($formStorage['rows_failed']);
-        if ($failed_count) {
-            $error = array();
+        $error = array();
+        if (!empty($formStorage['rows_failed'])) {
             foreach ($formStorage['rows_failed'] as $row_num => $error_message) {
                 $error[] = sprintf(__('CSV data on row number %d could not be imported: %s', 'sabai-directory'), $row_num, $error_message);
             }
-            $context->error = $error;
         }
+        if (!empty($formStorage['rows_geocoding_failed'])) {
+            foreach ($formStorage['rows_geocoding_failed'] as $row_num => $error_data) {
+                $error[] = sprintf(__('Address (%s) for CSV data on row number %d could not be geocoded: %s', 'sabai-directory'), isset($error_data[0]) ? $error_data[0] : 'N/A', $row_num, $error_data[1]);
+            }
+        }
+        $context->error = $error;
         @unlink($formStorage['values']['upload']['file']['saved_file_path']);
     }
     

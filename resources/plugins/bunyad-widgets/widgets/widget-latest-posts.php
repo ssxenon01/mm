@@ -62,42 +62,28 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
 		elseif ($r->have_posts()):
 ?>
 
-			<?php echo $before_widget; ?>
-			
-			<?php if ($title): ?>
-				<?php echo $before_title . $title . $after_title; ?>
-			<?php endif;?>
-			
-			<ul class="posts-list">
-			
-			<?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
-				<li>
-				
-					<a href="<?php the_permalink() ?>"><?php the_post_thumbnail('post-thumbnail', array('title' => strip_tags(get_the_title()))); ?>
-					
-					<?php if (class_exists('Bunyad') && Bunyad::options()->review_show_widgets): ?>
-						<?php echo apply_filters('bunyad_review_main_snippet', ''); ?>
-					<?php endif; ?>
-					
-					</a>
-					
-					<div class="content">
-					
-						<time datetime="<?php echo get_the_date('Y-m-d\TH:i:sP'); ?>"><?php echo get_the_date(); ?> </time>
-					
-						<span class="comments"><a href="<?php echo esc_attr(get_comments_link()); ?>"><i class="fa fa-comments-o"></i>
-							<?php echo get_comments_number(); ?></a></span>
-					
-						<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>">
-							<?php if (get_the_title()) the_title(); else the_ID(); ?></a>
-																	
-					</div>
-				
-				</li>
-			<?php endwhile; ?>
-			</ul>
-			
-			<?php echo $after_widget; ?>
+
+
+            <div class="top-news">
+                <div class="feature-title">
+                    <div class="inner">
+                        <h3 class="title"><?php echo $title;?></h3>
+                        <div class="leaf_line"></div>
+                    </div>
+                </div>
+                <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
+                    <div class="news-list clearfix">
+                        <div class="img-container">
+                            <?php the_post_thumbnail('medium', array('title' => strip_tags(get_the_title()))); ?>
+                        </div>
+                        <div class="news-body">
+                            <h4><?php if (get_the_title()) the_title(); else the_ID(); ?></h4>
+                            <div class="body-text"> <?php the_content( ); ?> </div>
+                            <a class="more" href="<?php the_permalink() ?>">Дэлгэрэнгүй <span></span></a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
 <?php
 		endif;
 		
@@ -108,6 +94,99 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
 		
 		set_transient('bunyad_widget_latest_posts', $cache);
 	}
+
+    public function old_widget($args, $instance)
+    {
+        $cache = get_transient('bunyad_widget_latest_posts');
+
+        if (!is_array($cache)) {
+            $cache = array();
+        }
+
+        if (!isset($args['widget_id'])) {
+            $args['widget_id'] = $this->id;
+        }
+
+        // cache available
+        if (isset($cache[ $args['widget_id'] ])) {
+            echo $cache[ $args['widget_id'] ];
+            return;
+        }
+
+        ob_start();
+        extract($args);
+
+        $title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts', 'bunyad-widgets') : $instance['title'], $instance, $this->id_base);
+        if (empty($instance['number']) || !$number = absint($instance['number'])) {
+            $number = 5;
+        }
+
+        // start of args
+        $query_args = array(
+            'posts_per_page' => $number, 'post_status' => 'publish', 'ignore_sticky_posts' => 1
+        );
+
+        // limit by category
+        if (!empty($instance['category'])) {
+            $query_args['cat'] = $instance['category'];
+        }
+
+        $r = new WP_Query($query_args);
+
+        // do custom loop if available
+        if (has_action('bunyad_widget_latest_posts_loop')):
+
+            do_action('bunyad_widget_latest_posts_loop', $args, $r);
+
+        elseif ($r->have_posts()):
+            ?>
+
+            <?php echo $before_widget; ?>
+
+            <?php if ($title): ?>
+            <?php echo $before_title . $title . $after_title; ?>
+        <?php endif;?>
+
+            <ul class="posts-list">
+
+                <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
+                    <li>
+
+                        <a href="<?php the_permalink() ?>"><?php the_post_thumbnail('post-thumbnail', array('title' => strip_tags(get_the_title()))); ?>
+
+                            <?php if (class_exists('Bunyad') && Bunyad::options()->review_show_widgets): ?>
+                                <?php echo apply_filters('bunyad_review_main_snippet', ''); ?>
+                            <?php endif; ?>
+
+                        </a>
+
+                        <div class="content">
+
+                            <time datetime="<?php echo get_the_date('Y-m-d\TH:i:sP'); ?>"><?php echo get_the_date(); ?> </time>
+
+						<span class="comments"><a href="<?php echo esc_attr(get_comments_link()); ?>"><i class="fa fa-comments-o"></i>
+                                <?php echo get_comments_number(); ?></a></span>
+
+                            <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>">
+                                <?php if (get_the_title()) the_title(); else the_ID(); ?></a>
+
+                        </div>
+
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+
+            <?php echo $after_widget; ?>
+        <?php
+        endif;
+
+        // reset the global $the_post as this query will have stomped on it
+        wp_reset_postdata();
+
+        $cache[$args['widget_id']] = ob_get_flush();
+
+        set_transient('bunyad_widget_latest_posts', $cache);
+    }
 
 	public function update($new, $old) 
 	{

@@ -6,16 +6,34 @@ class ITSEC_File_Change_Admin {
 		$settings,
 		$core,
 		$module,
-		$module_path,
-		$module_path_relative;
+		$module_path;
 
 	function run( $core, $module ) {
 
-		if ( is_admin() ) {
+		$this->core                 = $core;
+		$this->module               = $module;
+		$this->settings             = get_site_option( 'itsec_file_change' );
+		$this->module_path          = ITSEC_Lib::get_module_path( __FILE__ );
 
-			$this->initialize( $core, $module );
+		add_action( 'itsec_add_admin_meta_boxes', array(
+			$this, 'add_admin_meta_boxes'
+		) ); //add meta boxes to admin page
+		add_action( 'itsec_admin_init', array( $this, 'initialize_admin' ) ); //initialize admin area
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) ); //enqueue scripts for admin page
+		add_filter( 'itsec_add_dashboard_status', array(
+			$this, 'dashboard_status'
+		) ); //add information for plugin status
+		add_filter( 'itsec_logger_displays', array( $this, 'register_logger_displays' ) ); //adds logs metaboxes
+		add_filter( 'itsec_tracking_vars', array( $this, 'tracking_vars' ) );
 
+		//manually save options on multisite
+		if ( is_multisite() ) {
+			add_action( 'itsec_admin_init', array( $this, 'save_network_options' ) ); //save multisite options
 		}
+
+		add_action( 'wp_ajax_itsec_file_change_ajax', array( $this, 'one_time_file_check_ajax' ) );
+		add_action( 'wp_ajax_itsec_file_change_warning_ajax', array( $this, 'file_change_warning_ajax' ) );
+		add_action( 'wp_ajax_itsec_jquery_filetree_ajax', array( $this, 'jquery_filetree_ajax' ) );
 
 	}
 
@@ -64,7 +82,7 @@ class ITSEC_File_Change_Admin {
 			'itsec_file_change_warning',
 			array(
 				'nonce' => wp_create_nonce( 'itsec_file_change_warning' ),
-				'url'   => admin_url() . 'admin.php?page=toplevel_page_itsec_logs',
+				'url'   => admin_url() . 'admin.php?page=toplevel_page_itsec_logs&itsec_log_filter=file_change',
 			)
 		);
 
@@ -119,12 +137,18 @@ class ITSEC_File_Change_Admin {
 		if ( $this->settings['enabled'] === true ) {
 
 			$status_array = 'safe-medium';
-			$status       = array( 'text' => __( 'Your site will detect changes to your files.', 'it-l10n-better-wp-security' ), 'link' => '#itsec_file_change_enabled', );
+			$status       = array(
+				'text' => __( 'Your site will detect changes to your files.', 'it-l10n-better-wp-security' ),
+				'link' => '#itsec_file_change_enabled',
+			);
 
 		} else {
 
 			$status_array = 'medium';
-			$status       = array( 'text' => __( 'Your website is not looking for changed files. Consider turning on file change detections.', 'it-l10n-better-wp-security' ), 'link' => '#itsec_file_change_enabled', );
+			$status       = array(
+				'text' => __( 'Your website is not looking for changed files. Consider turning on file change detections.', 'it-l10n-better-wp-security' ),
+				'link' => '#itsec_file_change_enabled',
+			);
 
 		}
 
@@ -213,12 +237,6 @@ class ITSEC_File_Change_Admin {
 
 		}
 
-	}
-
-	/**
-	 * Empty callback function
-	 */
-	public function empty_callback_function() {
 	}
 
 	/**
@@ -357,9 +375,11 @@ class ITSEC_File_Change_Admin {
 	/**
 	 * Render the file change log metabox
 	 *
+	 * @since 4.0
+	 *
 	 * @return void
 	 */
-	public function logs_metabox() {
+	public function logs_metabox_content() {
 
 		global $itsec_globals;
 
@@ -368,8 +388,6 @@ class ITSEC_File_Change_Admin {
 		if ( ! class_exists( 'ITSEC_File_Change_Log' ) ) {
 			require( dirname( __FILE__ ) . '/class-itsec-file-change-log.php' );
 		}
-
-		echo __( 'Below is a summary log of all the file changes recorded for your WordPress site. To get details on a particular item click the title. To adjust logging options visit the global settings page.', 'it-l10n-better-wp-security' );
 
 		if ( isset( $this->settings['enabled'] ) && $this->settings['enabled'] === true ) {
 
@@ -390,7 +408,7 @@ class ITSEC_File_Change_Admin {
 
 			$next_run = $next_run_day . ' at ' . date( 'g:i a', $next_run_raw );
 
-			echo '<p>' . __( 'Next automatic scan at: ', 'ithemes_security' ) . '<strong>' . $next_run . '*</strong></p>';
+			echo '<p>' . __( 'Next automatic scan at: ', 'it-l10n-better-wp-security' ) . '<strong>' . $next_run . '*</strong></p>';
 			echo '<p><em>*' . __( 'Automatic file change scanning is triggered by a user visiting your page and may not happen exactly at the time listed.', 'it-l10n-better-wp-security' ) . '</em>';
 
 		}
@@ -473,41 +491,6 @@ class ITSEC_File_Change_Admin {
 	}
 
 	/**
-	 * Initializes all admin functionality.
-	 *
-	 * @since 4.0
-	 *
-	 * @param ITSEC_Core $core The $itsec_core instance
-	 *
-	 * @return void
-	 */
-	private function initialize( $core, $module ) {
-
-		$this->core                 = $core;
-		$this->module               = $module;
-		$this->settings             = get_site_option( 'itsec_file_change' );
-		$this->module_path          = ITSEC_Lib::get_module_path( __FILE__ );
-		$this->module_path_relative = ITSEC_Lib::get_module_path( __FILE__, true );
-
-		add_action( 'itsec_add_admin_meta_boxes', array( $this, 'add_admin_meta_boxes' ) ); //add meta boxes to admin page
-		add_action( 'itsec_admin_init', array( $this, 'initialize_admin' ) ); //initialize admin area
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) ); //enqueue scripts for admin page
-		add_filter( 'itsec_add_dashboard_status', array( $this, 'dashboard_status' ) ); //add information for plugin status
-		add_filter( 'itsec_metaboxes', array( $this, 'register_logger_metaboxes' ) ); //adds logs metaboxes
-		add_filter( 'itsec_tracking_vars', array( $this, 'tracking_vars' ) );
-
-		//manually save options on multisite
-		if ( is_multisite() ) {
-			add_action( 'itsec_admin_init', array( $this, 'save_network_options' ) ); //save multisite options
-		}
-
-		add_action( 'wp_ajax_itsec_file_change_ajax', array( $this, 'one_time_file_check_ajax' ) );
-		add_action( 'wp_ajax_itsec_file_change_warning_ajax', array( $this, 'file_change_warning_ajax' ) );
-		add_action( 'wp_ajax_itsec_jquery_filetree_ajax', array( $this, 'jquery_filetree_ajax' ) );
-
-	}
-
-	/**
 	 * Execute admin initializations
 	 *
 	 * @return void
@@ -520,14 +503,14 @@ class ITSEC_File_Change_Admin {
 		add_settings_section(
 			'file_change-enabled',
 			__( 'File Change Detection', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
 		add_settings_section(
 			'file_change-settings',
 			__( 'File Change Detection Settings', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
@@ -640,8 +623,6 @@ class ITSEC_File_Change_Admin {
 
 		$directory = urldecode( $directory );
 
-		$path = $this->module_path_relative;
-
 		if ( file_exists( $directory ) ) {
 
 			$files = scandir( $directory );
@@ -656,7 +637,7 @@ class ITSEC_File_Change_Admin {
 				foreach ( $files as $file ) {
 
 					if ( file_exists( $directory . $file ) && $file != '.' && $file != '..' && is_dir( $directory . $file ) ) {
-						echo '<li class="directory collapsed"><a href="#" rel="' . htmlentities( $directory . $file ) . '/">' . htmlentities( $file ) . '<div class="itsec_treeselect_control"><img src="' . $path . 'images/redminus.png" style="vertical-align: -3px;" title="Add to exclusions..." class="itsec_filetree_exclude"></div></a></li>';
+						echo '<li class="directory collapsed"><a href="#" rel="' . htmlentities( $directory . $file ) . '/">' . htmlentities( $file ) . '<div class="itsec_treeselect_control"><img src="' . plugins_url( 'images/redminus.png', __FILE__ ) . '" style="vertical-align: -3px;" title="Add to exclusions..." class="itsec_filetree_exclude"></div></a></li>';
 					}
 
 				}
@@ -667,7 +648,7 @@ class ITSEC_File_Change_Admin {
 					if ( file_exists( $directory . $file ) && $file != '.' && $file != '..' && ! is_dir( $directory . $file ) ) {
 
 						$ext = preg_replace( '/^.*\./', '', $file );
-						echo '<li class="file ext_' . $ext . '"><a href="#" rel="' . htmlentities( $directory . $file ) . '">' . htmlentities( $file ) . '<div class="itsec_treeselect_control"><img src="' . $path . 'images/redminus.png" style="vertical-align: -3px;" title="Add to exclusions..." class="itsec_filetree_exclude"></div></a></li>';
+						echo '<li class="file ext_' . $ext . '"><a href="#" rel="' . htmlentities( $directory . $file ) . '">' . htmlentities( $file ) . '<div class="itsec_treeselect_control"><img src="' . plugins_url( 'images/redminus.png', __FILE__ ) . '" style="vertical-align: -3px;" title="Add to exclusions..." class="itsec_filetree_exclude"></div></a></li>';
 
 					}
 
@@ -701,23 +682,27 @@ class ITSEC_File_Change_Admin {
 	}
 
 	/**
-	 * Array of metaboxes for the logs screen
+	 * Array of displays for the logs screen
 	 *
 	 * @since 4.0
 	 *
-	 * @param array $metaboxes metabox array
+	 * @param array $displays metabox array
 	 *
 	 * @return array metabox array
 	 */
-	public function register_logger_metaboxes( $metaboxes ) {
+	public function register_logger_displays( $displays ) {
 
-		$metaboxes[] = array(
-			'module'   => 'file_change',
-			'title'    => __( 'File Change History', 'it-l10n-better-wp-security' ),
-			'callback' => array( $this, 'logs_metabox' )
-		);
+		if ( isset( $this->settings['enabled'] ) && $this->settings['enabled'] === true ) {
 
-		return $metaboxes;
+			$displays[] = array(
+				'module'   => 'file_change',
+				'title'    => __( 'File Change History', 'it-l10n-better-wp-security' ),
+				'callback' => array( $this, 'logs_metabox_content' )
+			);
+
+		}
+
+		return $displays;
 
 	}
 

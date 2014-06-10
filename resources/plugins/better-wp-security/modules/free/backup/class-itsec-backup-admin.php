@@ -10,10 +10,29 @@ class ITSEC_Backup_Admin {
 
 	function run( $core, $module ) {
 
-		if ( is_admin() ) {
+		$this->core        = $core;
+		$this->module      = $module;
+		$this->settings    = get_site_option( 'itsec_backup' );
+		$this->module_path = ITSEC_Lib::get_module_path( __FILE__ );
 
-			$this->initialize( $core, $module );
+		add_filter( 'itsec_tooltip_modules', array( $this, 'register_tooltip' ) ); //register tooltip action
+		add_action( 'itsec_add_admin_meta_boxes', array(
+			$this, 'add_admin_meta_boxes'
+		) ); //add meta boxes to admin page
+		add_action( 'itsec_admin_init', array( $this, 'initialize_admin' ) ); //initialize admin area
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) ); //enqueue scripts for admin page
+		add_filter( 'itsec_add_dashboard_status', array(
+			$this, 'dashboard_status'
+		) ); //add information for plugin status
+		add_filter( 'itsec_tracking_vars', array( $this, 'tracking_vars' ) );
 
+		if ( isset( $_POST['itsec_backup'] ) && $_POST['itsec_backup'] == 'one_time_backup' ) {
+			add_action( 'itsec_admin_init', array( $this, 'one_time_backup' ) );
+		}
+
+		//manually save options on multisite
+		if ( is_multisite() ) {
+			add_action( 'itsec_admin_init', array( $this, 'save_network_options' ) ); //save multisite options
 		}
 
 	}
@@ -27,7 +46,7 @@ class ITSEC_Backup_Admin {
 	 */
 	public function add_admin_meta_boxes() {
 
-		if ( ! class_exists( 'backupbuddy_api0' ) ) {
+		if ( ! class_exists( 'backupbuddy_api' ) ) {
 
 			add_meta_box(
 				'backup_description',
@@ -59,7 +78,7 @@ class ITSEC_Backup_Admin {
 				'core'
 			);
 
-			if ( ! class_exists( 'backupbuddy_api0' ) ) {
+			if ( ! class_exists( 'backupbuddy_api' ) ) {
 				add_meta_box(
 					'backupbuddy_info',
 					__( 'Take the Next Steps in Security with BackupBuddy', 'it-l10n-better-wp-security' ),
@@ -118,7 +137,9 @@ class ITSEC_Backup_Admin {
 			wp_register_style( 'itsec_backup_styles', $this->module_path . 'css/admin-backup.css' ); //add multi-select css
 			wp_enqueue_style( 'itsec_backup_styles' );
 
-			wp_localize_script( 'itsec_backup_js', 'exclude_text', array( 'available' => __( 'Tables for Backup', 'it-l10n-better-wp-security' ), 'excluded' => __( 'Excluded Tables', 'it-l10n-better-wp-security' ) ) );
+			wp_localize_script( 'itsec_backup_js', 'exclude_text', array(
+				'available' => __( 'Tables for Backup', 'it-l10n-better-wp-security' ), 'excluded' => __( 'Excluded Tables', 'it-l10n-better-wp-security' )
+			) );
 
 		}
 
@@ -160,35 +181,81 @@ class ITSEC_Backup_Admin {
 	 */
 	public function dashboard_status( $statuses ) {
 
-		if ( class_exists( 'backupbuddy_api0' ) && sizeof( backupbuddy_api0::getSchedules() ) >= 1 ) {
+		if ( class_exists( 'backupbuddy_api' ) && sizeof( backupbuddy_api::getSchedules() ) >= 1 ) {
+
+			if ( $this->settings['enabled'] === true ) { //disable our backups if we have to
+
+				$this->settings['enabled'] = false;
+				update_site_option( 'itsec_backup', $this->settings );
+
+			}
 
 			$status_array = 'safe-medium';
-			$status       = array( 'text' => __( 'Your site is performing scheduled database and file backups.', 'it-l10n-better-wp-security' ), 'link' => '?page=pb_backupbuddy_scheduling', );
+			$status       = array(
+				'text' => __( 'Your site is performing scheduled database and file backups.', 'it-l10n-better-wp-security' ),
+				'link' => '?page=pb_backupbuddy_scheduling',
+			);
 
-		} elseif ( class_exists( 'backupbuddy_api0' ) ) {
+		} elseif ( class_exists( 'backupbuddy_api' ) ) {
+
+			if ( $this->settings['enabled'] === true ) { //disable our backups if we have to
+
+				$this->settings['enabled'] = false;
+				update_site_option( 'itsec_backup', $this->settings );
+
+			}
 
 			$status_array = 'medium';
-			$status       = array( 'text' => __( 'BackupBuddy is installed but backups do not appear to have been scheduled. Please schedule backups.', 'it-l10n-better-wp-security' ), 'link' => '?page=pb_backupbuddy_scheduling', );
+			$status       = array(
+				'text' => __( 'BackupBuddy is installed but backups do not appear to have been scheduled. Please schedule backups.', 'it-l10n-better-wp-security' ),
+				'link' => '?page=pb_backupbuddy_scheduling',
+			);
 
 		} elseif ( $this->has_backup() === true && $this->scheduled_backup() === true ) {
 
+			if ( $this->settings['enabled'] === true ) { //disable our backups if we have to
+
+				$this->settings['enabled'] = false;
+				update_site_option( 'itsec_backup', $this->settings );
+
+			}
+
 			$status_array = 'safe-medium';
-			$status       = array( 'text' => __( 'You are using a 3rd party backup solution.', 'it-l10n-better-wp-security' ), 'link' => $this->external_backup_link(), );
+			$status       = array(
+				'text' => __( 'You are using a 3rd party backup solution.', 'it-l10n-better-wp-security' ),
+				'link' => $this->external_backup_link(),
+			);
 
 		} elseif ( $this->has_backup() === true ) {
 
+			if ( $this->settings['enabled'] === true ) { //disable our backups if we have to
+
+				$this->settings['enabled'] = false;
+				update_site_option( 'itsec_backup', $this->settings );
+
+			}
+
 			$status_array = 'medium';
-			$status       = array( 'text' => __( 'It looks like you have a 3rd-party backup solution in place but are not using it. Please turn on scheduled backups.', 'it-l10n-better-wp-security' ), 'link' => $this->external_backup_link(), );
+			$status       = array(
+				'text' => __( 'It looks like you have a 3rd-party backup solution in place but are not using it. Please turn on scheduled backups.', 'it-l10n-better-wp-security' ),
+				'link' => $this->external_backup_link(),
+			);
 
 		} elseif ( $this->settings['enabled'] === true ) {
 
 			$status_array = 'medium';
-			$status       = array( 'text' => __( 'Your site is performing scheduled database backups but is not backing up files. Consider purchasing or scheduling BackupBuddy to protect your investment.', 'it-l10n-better-wp-security' ), 'link' => 'http://ithemes.com/better-backups', );
+			$status       = array(
+				'text' => __( 'Your site is performing scheduled database backups but is not backing up files. Consider purchasing or scheduling BackupBuddy to protect your investment.', 'it-l10n-better-wp-security' ),
+				'link' => 'http://ithemes.com/better-backups',
+			);
 
 		} else {
 
 			$status_array = 'high';
-			$status       = array( 'text' => __( 'Your site is not performing any scheduled database backups.', 'it-l10n-better-wp-security' ), 'link' => '#itsec_backup_enabled', );
+			$status       = array(
+				'text' => __( 'Your site is not performing any scheduled database backups.', 'it-l10n-better-wp-security' ),
+				'link' => '#itsec_backup_enabled',
+			);
 
 		}
 
@@ -196,12 +263,6 @@ class ITSEC_Backup_Admin {
 
 		return $statuses;
 
-	}
-
-	/**
-	 * Empty callback function
-	 */
-	public function empty_callback_function() {
 	}
 
 	/**
@@ -296,9 +357,9 @@ class ITSEC_Backup_Admin {
 
 	public function scheduled_backup() {
 
-		$has_backup = false;
+		$sceduled_backup = false;
 
-		return apply_filters( 'itsec_scheduled_external_backup', $has_backup );
+		return apply_filters( 'itsec_scheduled_external_backup', $sceduled_backup );
 
 	}
 
@@ -307,40 +368,6 @@ class ITSEC_Backup_Admin {
 		$backup_link = '#itsec_backup_enabled';
 
 		return apply_filters( 'itsec_external_backup_link', $backup_link );
-
-	}
-
-	/**
-	 * Initializes all admin functionality.
-	 *
-	 * @since 4.0
-	 *
-	 * @param ITSEC_Core $core The $itsec_core instance
-	 *
-	 * @return void
-	 */
-	private function initialize( $core, $module ) {
-
-		$this->core        = $core;
-		$this->module      = $module;
-		$this->settings    = get_site_option( 'itsec_backup' );
-		$this->module_path = ITSEC_Lib::get_module_path( __FILE__ );
-
-		add_filter( 'itsec_tooltip_modules', array( $this, 'register_tooltip' ) ); //register tooltip action
-		add_action( 'itsec_add_admin_meta_boxes', array( $this, 'add_admin_meta_boxes' ) ); //add meta boxes to admin page
-		add_action( 'itsec_admin_init', array( $this, 'initialize_admin' ) ); //initialize admin area
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) ); //enqueue scripts for admin page
-		add_filter( 'itsec_add_dashboard_status', array( $this, 'dashboard_status' ) ); //add information for plugin status
-		add_filter( 'itsec_tracking_vars', array( $this, 'tracking_vars' ) );
-
-		if ( isset( $_POST['itsec_backup'] ) && $_POST['itsec_backup'] == 'one_time_backup' ) {
-			add_action( 'itsec_admin_init', array( $this, 'one_time_backup' ) );
-		}
-
-		//manually save options on multisite
-		if ( is_multisite() ) {
-			add_action( 'itsec_admin_init', array( $this, 'save_network_options' ) ); //save multisite options
-		}
 
 	}
 
@@ -355,21 +382,21 @@ class ITSEC_Backup_Admin {
 		add_settings_section(
 			'backup-settings-2',
 			__( 'Configure Database Backups', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
 		add_settings_section(
 			'backup-enabled',
 			__( 'Enable Database Backups', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
 		add_settings_section(
 			'backup-settings',
 			__( 'Backup Schedule Settings', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
@@ -529,7 +556,7 @@ class ITSEC_Backup_Admin {
 		$content .= wp_nonce_field( 'itsec_do_backup', 'wp_nonce' );
 		$content .= '<input type="hidden" name="itsec_backup" value="one_time_backup" />';
 		$content .= '<p>' . __( 'Press the button below to create a backup of your WordPress database. If you have "Send Backups By Email" selected in automated backups you will receive an email containing the backup file.', 'it-l10n-better-wp-security' ) . '</p>';
-		$content .= '<p class="submit"><input type="submit" class="button-primary" value="' . __( 'Create Database Backup', 'ithemes_security' ) . '" /></p>';
+		$content .= '<p class="submit"><input type="submit" class="button-primary" value="' . __( 'Create Database Backup', 'it-l10n-better-wp-security' ) . '" /></p>';
 		$content .= '<p><a href="?page=toplevel_page_itsec_settings#itsec_backup_all_sites">' . __( 'Adjust Backup Settings', 'it-l10n-better-wp-security' ) . '</a>';
 		$content .= '</form>';
 

@@ -20,19 +20,33 @@ class Sabai_Platform_WordPress_Template
         add_filter('the_title', array($this, 'onTheTitleFilter'), 99, 2);
         add_action('wp_head', array($this, 'onWpHeadAction'), 99);
         add_filter('page_link', array($this, 'onPageLinkFilter'), 99, 3);  
-        add_filter('the_permalink', array($this, 'onThePermaLinkFilter'), 99, 3);        
-        add_filter('wpseo_title', array($this, 'onWpSeoTitleFilter'), 99);
-        add_filter('wpseo_metadesc', array($this, 'onWpSeoMetaDescFilter'), 99);
-        add_filter('wpseo_breadcrumb_links', array($this, 'onWpSeoBreadcrumbLinksFilter'), 99, 1);
-        add_filter('wpseo_canonical', array($this, 'onCanonicalFilter'), 99);
-        add_filter('aioseop_title_page', array($this, 'onAioSeoPTitlePageFilter'), 99);
-        add_filter('aioseop_description', array($this, 'onAioSeoPDescFilter'), 99);
-        add_filter('aioseop_canonical_url', array($this, 'onCanonicalFilter'), 99);
+        add_filter('the_permalink', array($this, 'onThePermaLinkFilter'), 99, 3);   
+        $replace_canonical = true;
+        if (defined('WPSEO_VERSION')) { 
+            add_filter('wpseo_title', array($this, 'onWpSeoTitleFilter'), 99);
+            add_filter('wpseo_metadesc', array($this, 'onWpSeoMetaDescFilter'), 99);
+            add_filter('wpseo_breadcrumb_links', array($this, 'onWpSeoBreadcrumbLinksFilter'), 99, 1);
+            add_filter('wpseo_canonical', array($this, 'onCanonicalFilter'), 99);
+        }
+        if (defined('AIOSEOP_VERSION')) {
+            add_filter('aioseop_title_page', array($this, 'onAioSeoPTitlePageFilter'), 99);
+            add_filter('aioseop_description', array($this, 'onAioSeoPDescFilter'), 99);
+            add_filter('aioseop_canonical_url', array($this, 'onCanonicalFilter'), 99);
+        }
+        if ($replace_canonical) {
+            remove_action('wp_head', 'rel_canonical');
+            add_action('wp_head', array($this, 'onWpHeadActionCanonical'), 99);
+        }
     }
-
+ 
     public function onWpHeadAction()
     {
         echo implode(PHP_EOL, array($this->_css, $this->_js, $this->_htmlHead));
+    }
+
+    public function onWpHeadActionCanonical()
+    {
+        echo '<link rel="canonical" href="' . (string)$this->_pageUrl . '" />';
     }
 
     public function onWpTitleFilter($title, $sep, $seplocation)
@@ -97,16 +111,17 @@ class Sabai_Platform_WordPress_Template
         }
         return true;
     }
-        
+
     public function onWpSeoTitleFilter($title)
     {
-        if (!isset($this->_htmlHeadTitle) || false === $this->_htmlHeadTitle) {
-            return $title;
-        }
+        if (!isset($this->_htmlHeadTitle) || false === $this->_htmlHeadTitle) return $title;
+        
+        $options = get_option('wpseo_titles');
+        if (!isset($options['title-page']) || !strlen($options['title-page'])) return $this->_htmlHeadTitle;
+        
         global $wp_query;
         $page = $wp_query->get_queried_object();
         $page->post_title = $this->_htmlHeadTitle;
-        $options = get_option('wpseo_titles');
         return wpseo_replace_vars($options['title-page'], $page);
     }
     

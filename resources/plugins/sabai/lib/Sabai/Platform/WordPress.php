@@ -3,7 +3,7 @@ require_once 'Sabai/Platform.php';
 
 class Sabai_Platform_WordPress extends Sabai_Platform
 {
-    const VERSION = '1.2.30';
+    const VERSION = '1.2.31';
     private $_mainContent, $_mainRoute, $_template, $_userToBeDeleted, $_sessionTransient = true, $_sessionTransientLifetime = 1800;
     private static $_instances = array();
 
@@ -73,7 +73,11 @@ class Sabai_Platform_WordPress extends Sabai_Platform
     
     public function isAdministrator(Sabai_UserIdentity $identity)
     {
-        return is_super_admin($identity->id) || user_can($identity->id, 'manage_sabai_content') || user_can($identity->id, 'manage_sabai');
+        $id = $identity->id;
+        return is_super_admin($id)
+            || (is_multisite() && user_can($id, 'activate_plugins'))
+            || user_can($id, 'manage_sabai_content')
+            || user_can($id, 'manage_sabai');
     }
 
     public function isSuperUserRole($roleName)
@@ -684,11 +688,11 @@ class Sabai_Platform_WordPress extends Sabai_Platform
     public function onAdminMenuAction()
     {
         // Allow super users and users with the manage_sabai capability to access sabai settings page
-        add_options_page('Sabai', 'Sabai', current_user_can('install_plugins') ? 'install_plugins' : 'manage_sabai', 'sabai/settings', array($this, 'runAdmin'));
+        add_options_page('Sabai', 'Sabai', current_user_can('activate_plugins') ? 'activate_plugins' : 'manage_sabai', 'sabai/settings', array($this, 'runAdmin'));
         
         // Allow super users and users with the manage_sabai_content capability to access sabai content administration pages
-        if (current_user_can('install_plugins')) {
-            $capability = 'install_plugins';
+        if (current_user_can('activate_plugins')) {
+            $capability = 'activate_plugins';
         } elseif (current_user_can('manage_sabai_content')) {
             $capability = 'manage_sabai_content';
         } else {
@@ -919,8 +923,6 @@ class Sabai_Platform_WordPress extends Sabai_Platform
         add_action('deleted_user', array($this, 'onDeletedUserAction'));
         // Disable WP comments
         add_filter('comments_template', array($this, 'onCommentsTemplateFilter'));
-        // Add Sabai sitemap index to WP SEO sitemap index 
-        add_filter('wpseo_sitemap_index', array($this, 'onWpSeoSitemapIndexFilter'));
         
         add_shortcode('sabai', array($this, 'onSabaiShortcode'));
 

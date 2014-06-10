@@ -7,7 +7,7 @@ Author: onokazu
 Author URI: http://codecanyon.net/user/onokazu/portfolio?ref=onokazu
 Text Domain: sabai-directory
 Domain Path: /languages
-Version: 1.2.30
+Version: 1.2.31
 */
 if (is_admin()) {
     include_once dirname(__FILE__) . '/include/activate.php';

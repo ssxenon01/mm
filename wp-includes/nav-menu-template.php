@@ -46,7 +46,7 @@ class Walker_Nav_Menu extends Walker {
 	 */
 	function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$indent = str_repeat("\t", $depth);
-		$output .= "\n$indent<ul class=\"sub-menu\">\n";
+		$output .= "\n$indent<ul class=\"dropdown-menu\">\n";
 	}
 
 	/**
@@ -146,7 +146,10 @@ class Walker_Nav_Menu extends Walker {
 		foreach ( $atts as $attr => $value ) {
 			if ( ! empty( $value ) ) {
 				$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-				$attributes .= ' ' . $attr . '="' . $value . '"';
+                if($attr === 'href' && $value =='#')
+                    $attributes .= ' ' . $attr . '="' . $value . '" data-toggle="dropdown"';
+                else
+				    $attributes .= ' ' . $attr . '="' . $value . '"';
 			}
 		}
 
@@ -342,7 +345,7 @@ function wp_nav_menu( $args = array() ) {
 	if ( $menu_items_with_children ) {
 		foreach ( $sorted_menu_items as &$menu_item ) {
 			if ( isset( $menu_items_with_children[ $menu_item->ID ] ) )
-				$menu_item->classes[] = 'menu-item-has-children';
+				$menu_item->classes[] = 'dropdown';
 		}
 	}
 

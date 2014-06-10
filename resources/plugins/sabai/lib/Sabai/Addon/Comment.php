@@ -5,7 +5,7 @@ class Sabai_Addon_Comment extends Sabai_Addon
                Sabai_Addon_Field_ITypes,
                Sabai_Addon_Content_IPermissions
 {
-    const VERSION = '1.2.30', PACKAGE = 'sabai';
+    const VERSION = '1.2.31', PACKAGE = 'sabai';
     const POST_STATUS_PUBLISHED = 0, POST_STATUS_HIDDEN = 1, POST_STATUS_FEATURED = 2;
     const VOTE_FLAG_VALUE_SPAM = 5, VOTE_FLAG_VALUE_OFFENSIVE = 6, VOTE_FLAG_VALUE_OFFTOPIC = 2, VOTE_FLAG_VALUE_OTHER = 0;
                 

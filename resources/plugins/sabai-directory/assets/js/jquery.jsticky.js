@@ -49,7 +49,7 @@
           topSpacing     = settings.topSpacing,
           zIndex         = settings.zIndex,
           pushPoint      = $this.offset().top - topSpacing, // Point at which the sticky element starts pushing
-          placeholder    = $('<div></div>').width(thisWidth).height(thisHeight).addClass('sticky-placeholder'), // Cache a clone sticky element
+          placeholder    = $('<div></div>').width(thisWidth).addClass('sticky-placeholder'), // Cache a clone sticky element
           stopper        = settings.stopper,
           $window        = $(window);
 

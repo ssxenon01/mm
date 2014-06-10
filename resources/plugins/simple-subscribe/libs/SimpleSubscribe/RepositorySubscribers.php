@@ -272,7 +272,7 @@ class RepositorySubscribers extends Repository
     public function add($data)
     {
         if($this->userByEmailExists($data->email)){
-            throw new RepositarySubscribersException('Та аль хэдийн бүртгэгдсэн байна.',0);
+            throw new RepositarySubscribersException('We are really sorry, but user with this e-mail address already exists.',0);
         } else {
             $data->active = 0;
             $data->ip = \SimpleSubscribe\Utils::getRealIp();
@@ -301,7 +301,7 @@ class RepositorySubscribers extends Repository
     public function addThruAdmin($data)
     {
         if($this->userByEmailExists($data->email)){
-            throw new RepositarySubscribersException('Та аль хэдийн бүртгэгдсэн байна.', 0);
+            throw new RepositarySubscribersException('We are really sorry, but user with this e-mail address already exists.', 0);
         } else {
             return $this->database->insert($this->tableName, (array)$data);
         }

@@ -29,12 +29,46 @@ class FrontEnd
         $widgetId = isset($args['widget_id']) ? $args['widget_id'] : NULL;
         $settings = new \SimpleSubscribe\Settings(SUBSCRIBE_KEY);
         $form = \SimpleSubscribe\Forms::subscriptionForm($settings->getTableColumns(), $widget, $widgetId);
+        $under_style = 'none';
+        $has_app = false;
+
+        global $wpdb;
+        $cSql = "select * from wp_ssubscribe_app where 1=1 ";
+        $data = $wpdb->get_results($cSql,ARRAY_A);
+        if(count($data) > 0){
+            $has_app =true;
+            $under_style = 'inherit';
+        }
 
         if ($form->isSubmitted() && $form->isValid()){
             try{
                 $subscribers = \SimpleSubscribe\RepositorySubscribers::getInstance();
                 $subscribers->add($form->getValues());
-                $widgetMessage = '<strong>Бүртгүүлсэнд баярлалаа!</strong> Таны имэйл хаяг руу баталгаажуулалт илгээгдсэн!';
+
+                if($has_app){
+                    $email = $form->getValues()['email'];
+                    $app_id = $data[0]['eemail_app_id'];
+                    $rg_url = 'https://readygraph.com/api/v1/wordpress-enduser/';
+
+                    $postdata = http_build_query(
+                        array(
+                            'email' => $email ,
+                            'app_id' => $app_id
+                        )
+                    );
+
+                    $opts = array('http' =>
+                        array(
+                            'method'  => 'POST',
+                            'header'  => 'Content-type: application/x-www-form-urlencoded',
+                            'content' => $postdata
+                        )
+                    );
+                    $context  = stream_context_create($opts);
+                    $result = file_get_contents($rg_url,false, $context);
+                }
+
+                $widgetMessage = '<strong>Thank you for your subscription!</strong> Confirmation e-mail was sent to your e-mail address!';
                 $form->setValues(array(),TRUE);
             } catch (RepositarySubscribersException $e){
                 $form->addError($e->getMessage());
@@ -50,6 +84,7 @@ class FrontEnd
                 'widgetTitle' => $widgetTitle,
                 'message' => $widgetMessage,
                 'guts' => $form,
+                'under_style'=> $under_style,
                 'afterWidget' => $args['after_widget'],
             );
             // template
@@ -60,6 +95,7 @@ class FrontEnd
             $defaults = array(
                 'title' => 'Subscribe',
                 'message' => $widgetMessage,
+                'under_style'=> $under_style,
                 'guts' => $form
             );
             // template

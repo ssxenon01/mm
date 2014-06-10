@@ -10,12 +10,8 @@
 .widgetGuts dl,
 .widgetGuts dd,
 .widgetGuts dt { margin: 0; }
-.widgetGuts dt:first-child{
-    display:block;
-}
-
 .widgetGuts dd,
-.widgetGuts dt { margin-bottom: 15px;display: inline-block; }
+.widgetGuts dt { margin-bottom: 15px; }
 .widgetGuts .success,
 .widgetGuts .error
 {
@@ -30,24 +26,6 @@
 	color: #ffce00;
 	line-height: 1.3em;
 	list-style: none;
-}
-.widgetGuts input
-{
-    background: #1f2c38;
-    color: #c5c7cb;
-    border: 0;
-    font-size: inherit;
-    padding: 7px 14px;
-    outline: 0;
-}
-.widgetGuts input.button
-{
-    background: #2a3c4c;
-    padding: 4px 8px;
-    font-weight: 600;
-    color: #c5c7cb;
-    border: 0;
-    font-size: inherit;
 }
 .widgetGuts .success li,
 .widgetGuts .error li { padding-left: 0; margin-left: 0; }

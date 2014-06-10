@@ -9,8 +9,18 @@ class Sabai_Addon_GoogleMaps_Helper_GoogleGeocode extends Sabai_Helper
      */
     public function help(Sabai $application, $query, $isLatLng = false)
     {
+        $protocol = 'http';
         $_query = $isLatLng ? 'latlng=' . urlencode($query) : 'address=' . urlencode($query);
-        $ch = curl_init('http://maps.googleapis.com/maps/api/geocode/json?' . $_query . '&sensor=false&language=' . $application->GoogleMaps_Language());
+        if (defined('SABAI_GOOGLEMAPS_GEOCODING_APIKEY')) {
+            $_query .= '&key=' . urlencode(SABAI_GOOGLEMAPS_GEOCODING_APIKEY);
+            $protocol = 'https';
+        }
+        $ch = curl_init(sprintf(
+            '%s://maps.googleapis.com/maps/api/geocode/json?%s&sensor=false&language=%s',
+            $protocol,
+            $_query,
+            $application->GoogleMaps_Language()
+        ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec($ch);
         $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
