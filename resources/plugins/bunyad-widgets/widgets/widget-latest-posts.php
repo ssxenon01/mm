@@ -74,11 +74,11 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
                 <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
                     <div class="news-list clearfix">
                         <div class="img-container">
-                            <?php the_post_thumbnail('medium', array('title' => strip_tags(get_the_title()))); ?>
+                            <?php the_post_thumbnail('recent-posts', array('title' => strip_tags(get_the_title()))); ?>
                         </div>
                         <div class="news-body">
-                            <h4><?php if (get_the_title()) the_title(); else the_ID(); ?></h4>
-                            <div class="body-text"> <?php the_content( ); ?> </div>
+                            <a href="<?php the_permalink() ?>"><h4><?php if (get_the_title()) the_title(); else the_ID(); ?></h4></a>
+                            <div class="body-text"> <?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?> </div>
                             <a class="more" href="<?php the_permalink() ?>">Дэлгэрэнгүй <span></span></a>
                         </div>
                     </div>

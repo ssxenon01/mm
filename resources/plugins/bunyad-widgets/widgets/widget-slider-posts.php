@@ -81,7 +81,7 @@ class Bunyad_SliderPosts_Widget extends WP_Widget
 
                                     <div class="swiper-slide">
                                         <div class="type"><?php the_category(); ?></div>
-                                        <?php the_post_thumbnail(array(360,200,true), array('title' => strip_tags(get_the_title()))); ?>
+                                        <?php the_post_thumbnail('slider-small', array('title' => strip_tags(get_the_title()))); ?>
                                         <a href="<?php the_permalink(); ?>"><div class="title"><?php if (get_the_title()) the_title(); else the_ID(); ?> <span class="published"><?php echo get_the_date('Y-m-d\TH:i:sP'); ?></span></div></a>
                                     </div>
 

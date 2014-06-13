@@ -14,7 +14,7 @@ require_once get_template_directory() . '/lib/bunyad.php';
 $bunyad = Bunyad::core()->init(array(
 
 	'theme_name' => 'mymenu',
-	'meta_prefix' => '_mymenu',
+	'meta_prefix' => '_bunyad',
 
 	// widgets enabled
 	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr', 'ads', 'latest-reviews', 'bbp-login','city-pulse','footer','slider-posts','player-posts'),
@@ -94,15 +94,15 @@ class Bunyad_Theme_SmartMag
 		/*
 		 * Featured images settings
 		 */
-		set_post_thumbnail_size(110, 96, true); // 17:15, also used in 85x75 and more similar aspect ratios
+		set_post_thumbnail_size(86, 86, true); // 17:15, also used in 85x75 and more similar aspect ratios
 
 		// 1280x612 images for no cropping of featured and slider image
 		add_image_size('main-full', 1078, 516, true); // main post image in full width
-		add_image_size('main-slider', 702, 336, true);
+		add_image_size('main-slider', 750, 393, true);
 		
-		add_image_size('main-block', 351, 185, true); // also usable at 326x160
-		add_image_size('slider-small', 168, 137, true); // small thumb for slider
-		add_image_size('gallery-block', 214, 140, true); // small thumb for slider
+		add_image_size('slider-small', 360, 200, true); // small thumb for slider
+		add_image_size('recent-posts', 300, 200, true); // small thumb for slider
+		add_image_size('gallery-block', 230, 360, true); // small thumb for slider
 
 		// i18n
 		load_theme_textdomain('bunyad', get_template_directory() . '/languages');
@@ -132,7 +132,7 @@ class Bunyad_Theme_SmartMag
 		global $content_width;
 		
 		if (!isset($content_width)) {
-			$content_width = 702;
+			$content_width = 750;
 		}
 		
 		/*

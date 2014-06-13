@@ -53,7 +53,7 @@ endif;
 			<?php endif; ?>
 		
 			<div class="post-content">			
-				
+
 				<?php Bunyad::posts()->the_content(); ?>
 				
 			</div>
@@ -63,7 +63,7 @@ endif;
 		</div>
 		
 		<?php Bunyad::core()->theme_sidebar(); ?>
-		
+
 	</div> <!-- .row -->
 </div> <!-- .main -->
 

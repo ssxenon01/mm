@@ -82,7 +82,7 @@ class Bunyad_CityPulse_Widget extends WP_Widget
 
                                     <?php
                                     if(has_post_thumbnail($post->ID))
-                                        echo get_the_post_thumbnail($post->ID,array(230,360,true));
+                                        echo get_the_post_thumbnail($post->ID,'gallery-block');
                                     ?>
                                     <a href="<?php the_permalink(); ?>"><div class="title"><?php echo $post->post_title; ?></div></a>
                                 </div>

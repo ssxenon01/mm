@@ -79,9 +79,9 @@ class Bunyad_PlayerPosts_Widget extends WP_Widget
                                 <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
 
                                     <div class="swiper-slide">
-                                        <div class="play-icon"></div>
-                                        <?php the_post_thumbnail(array(360,200,true), array('title' => strip_tags(get_the_title()))); ?>
-                                        <div class="title"><?php if (get_the_title()) the_title(); else the_ID(); ?> <span class="published"><?php echo get_the_date('Y-m-d\TH:i:sP'); ?></span></div>
+                                        <a href="<?php echo get_permalink();?>"><div class="play-icon"></div></a>
+                                        <?php the_post_thumbnail('slider-small', array('title' => strip_tags(get_the_title()))); ?>
+                                        <a href="<?php echo get_permalink();?>"><div class="title"><?php if (get_the_title()) the_title(); else the_ID(); ?> <span class="published"><?php echo get_the_date('Y-m-d\TH:i:sP'); ?></span></div></a>
                                     </div>
 
                                 <?php endwhile; ?>

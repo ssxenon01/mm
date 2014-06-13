@@ -17,7 +17,7 @@
 	if ($bunyad_loop->have_posts()):
 	
 	?>
-		
+	asdas
 	<div class="posts-list listing-alt">
 	
 		<?php while ($bunyad_loop->have_posts()): $bunyad_loop->the_post(); ?>
