@@ -38,9 +38,6 @@ if (empty($bunyad_loop_template) && Bunyad::options()->archive_loop_template == 
 
                 ?>
 
-                <?php if (have_posts()): the_post(); endif; // load the page ?>
-
-
                 <div class="top-news">
                     <div class="feature-title">
                         <div class="inner">

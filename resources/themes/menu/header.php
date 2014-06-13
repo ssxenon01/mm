@@ -53,13 +53,13 @@
                     <div class="pull-left">
                         <ul class="topmenu">
                             <li>
-                                <a href="/contact">Холбоо барих</a>
+                                <a href="contact">Холбоо барих</a>
                             </li>
                             <li>
-                                <a href="/about">Бидний тухай</a>
+                                <a href="about">Бидний тухай</a>
                             </li>
                             <li>
-                                <a href="/collaborate">Хамтран ажиллах</a>
+                                <a href="collaborate">Хамтран ажиллах</a>
                             </li>
                         </ul>
                     </div>
