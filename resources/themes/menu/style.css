@@ -335,7 +335,9 @@ a:hover {
     height: 18px;
     margin-top: 4px;
 }
-
+strong{
+    font-weight: bold;
+}
 /* Main Wrapper */
 /* line 59, ../sass/style.scss */
 .pr0 {
