@@ -1,85 +1,62 @@
-<?php 
+<?php
 
 /**
  * Alternate "loop" to display posts in blog style.
  */
 
+global $bunyad_loop;
+
+if (!is_object($bunyad_loop)) {
+    $bunyad_loop = $wp_query;
+}
+
+if ($bunyad_loop->have_posts()):
+
 ?>
 
-	<?php
-	
-	global $bunyad_loop;
-	
-	if (!is_object($bunyad_loop)) {
-		$bunyad_loop = $wp_query;
-	}
-	
-	if ($bunyad_loop->have_posts()):
-	
-	?>
-	asdas
-	<div class="posts-list listing-alt">
-	
-		<?php while ($bunyad_loop->have_posts()): $bunyad_loop->the_post(); ?>
-		
-			<article <?php post_class(); ?> itemscope itemtype="http://schema.org/Article">
+<div class="city-pulse" >
+    <div class="row">
+        <?php get_template_part('city-pulse-sliders');?>
+        <div class="clearfix"></div>
+        <div id="city-pulse">
+            <?php while ($bunyad_loop->have_posts()): $bunyad_loop->the_post(); ?>
+                <article <?php post_class(); ?> itemscope itemtype="http://schema.org/Article">
+                    <div class="col-md-6 pulse-box">
+                        <a href="<?php the_permalink() ?>" itemprop="url">
+                            <div>
+                                <div class="thumbnail-image">
+                                    <?php the_post_thumbnail('slider-small', array('title' => strip_tags(get_the_title()),'class'=>'photo', 'itemprop' => 'image')); ?>
+                                    <div class="photo-icon"></div>
+                                    <div class="datebg"></div>
+                                    <div class="published">
+                                        <div class="text"><?php echo get_the_date('M'); ?></div>
+                                        <div class="count"><?php echo get_the_date('d'); ?></div>
+                                    </div>
+                                </div>
+                                <div class="pbox-body">
+                                    <div class="box-title clearfix">
+                                       <h3 itemprop="name"><?php the_title();?> </h3> <span class="photo-count">(<?php
+                                            $attachments = get_children( array( 'post_parent' => $post->ID ) );
+                                            echo(count($attachments)) + 1;
+                                            ?> photos)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
 
-			<?php
-				// object has category taxonomy? i.e., is it a post?
-				if (in_array('category', get_object_taxonomies(get_post_type()))):
-				
-					// display category label when not in a category archive
-					$category = current(get_the_category());
-			?>		
-				<span class="cat-title cat-<?php echo $category->cat_ID; ?>"><a href="<?php echo esc_url(get_category_link($category)); 
-					?>"><?php echo esc_html($category->name); ?></a></span>
-					
-			<?php endif; ?>
-			
-				<a href="<?php the_permalink() ?>" itemprop="url"><?php the_post_thumbnail('main-block', array('title' => strip_tags(get_the_title()), 'itemprop' => 'image')); ?>
-				
-				<?php echo apply_filters('bunyad_review_main_snippet', ''); ?>
-				
-				</a>
-				
-				<div class="content">
-				
-					<time datetime="<?php echo get_the_date('Y-m-d\TH:i:sP'); ?>" itemprop="datePublished"><?php echo get_the_date(); ?> </time>
-				
-					<span class="comments"><a href="<?php echo esc_attr(get_comments_link()); ?>"><i class="fa fa-comments-o"></i>
-						<?php echo get_comments_number(); ?></a></span>
-				
-					<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>" itemprop="name url">
-						<?php if (get_the_title()) the_title(); else the_ID(); ?></a>
-					
-					<div class="excerpt"><?php echo Bunyad::posts()->excerpt(null, 20, array('force_more' => true)); ?></div>
-					
-				</div>
-				
-			
-			
-			</article>
-		
-		<?php endwhile; ?>
-				
-	</div>
+                </article>
+            <?php endwhile; ?>
+        </div>
+    </div>
+</div>
+<?php else: ?>
 
-	<?php if (!Bunyad::options()->blog_no_pagination): // pagination can be disabled ?>
-	
-	<div class="main-pagination">
-		<?php echo Bunyad::posts()->paginate(array(), $bunyad_loop); ?>
-	</div>
-	
-	<?php endif; ?>
-		
+    <article id="post-0" class="page no-results not-found">
+        <div class="post-content">
+            <h1><?php _e( 'Nothing Found!', 'bunyad' ); ?></h1>
+            <p><?php _e('Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'bunyad'); ?></p>
+        </div><!-- .entry-content -->
+    </article><!-- #post-0 -->
 
-	<?php else: ?>
-
-		<article id="post-0" class="page no-results not-found">
-			<div class="post-content">
-				<h1><?php _e( 'Nothing Found!', 'bunyad' ); ?></h1>
-				<p><?php _e('Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'bunyad'); ?></p>
-			</div><!-- .entry-content -->
-		</article><!-- #post-0 -->
-	
-	<?php endif; ?>
+<?php endif; ?>
