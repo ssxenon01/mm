@@ -37,50 +37,58 @@ class EM_Widget extends WP_Widget {
     	$instance = array_merge($this->defaults, $instance);
     	$instance = $this->fix_scope($instance); // depcreciate	
 
-    	echo $args['before_widget'];
-    	if( !empty($instance['title']) ){
-		    echo $args['before_title'];
-		    echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);
-		    echo $args['after_title'];
-    	}
-    	
-		$instance['owner'] = false;
-		//orderby fix for previous versions with old orderby values
-		if( !array_key_exists($instance['orderby'], $this->em_orderby_options) ){
-			//replace old values
-			$old_vals = array(
-				'name' => 'event_name',
-				'end_date' => 'event_end_date',
-				'start_date' => 'event_start_date',
-				'end_time' => 'event_end_time',
-				'start_time' => 'event_start_time'
-			);
-			foreach($old_vals as $old_val => $new_val){
-				$instance['orderby'] = str_replace($old_val, $new_val, $instance['orderby']);
-			}
-		}
-		
-		$events = EM_Events::get(apply_filters('em_widget_events_get_args',$instance));
-		echo "<ul>";
-		$li_wrap = !preg_match('/^<li>/i', trim($instance['format']));
-		if ( count($events) > 0 ){
-			foreach($events as $event){				
-				if( $li_wrap ){
-					echo '<li>'. $event->output($instance['format']) .'</li>';
-				}else{
-					echo $event->output($instance['format']);
-				}
-			}
-		}else{
-			echo '<li>'.$instance['no_events_text'].'</li>';
-		}
-		if ( !empty($instance['all_events']) ){
-			$events_link = (!empty($instance['all_events_text'])) ? em_get_link($instance['all_events_text']) : em_get_link(__('all events','dbem'));
-			echo '<li class="all-events-link">'.$events_link.'</li>';
-		}
-		echo "</ul>";
-		
-	    echo $args['after_widget'];
+        $instance['owner'] = false;
+        //orderby fix for previous versions with old orderby values
+        if( !array_key_exists($instance['orderby'], $this->em_orderby_options) ){
+            //replace old values
+            $old_vals = array(
+                'name' => 'event_name',
+                'end_date' => 'event_end_date',
+                'start_date' => 'event_start_date',
+                'end_time' => 'event_end_time',
+                'start_time' => 'event_start_time'
+            );
+            foreach($old_vals as $old_val => $new_val){
+                $instance['orderby'] = str_replace($old_val, $new_val, $instance['orderby']);
+            }
+        }
+
+        $events = EM_Events::get(apply_filters('em_widget_events_get_args',$instance));
+        ?>
+
+        <div class="event-list">
+            <div class="event-title">
+                <?php echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);?>
+            </div>
+            <div class="eventlist">
+
+                <?php foreach($events as $event): ?>
+
+                    <div class="event">
+                        <div class="img-over">
+                            <a href="<?php echo get_permalink($event->ID);?>">
+                                <?php echo get_the_post_thumbnail($event->ID,'thumbnail', array('title' => strip_tags(get_the_title()), 'itemprop' => 'image' , 'class' => 'media-object')); ?>
+                                <div class="datebg"></div>
+                                <div class="event-date">
+                                    <div class="text">MAR</div>
+                                    <div class="count">22</div>
+                                </div>
+                                <div class="line"></div>
+                            </a>
+                        </div>
+                        <div class="text-intro">
+                            <h3 class="event-t"><?php echo get_the_title($event->ID)?></h3>
+                            <h4><span class="glyphicon glyphicon-map-marker"></span> VLVT Night Club</h4>
+                            <div class="date"> <span class="glyphicon glyphicon-time"></span>  <?php echo $event?>17:00pm</div>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+
+            </div>
+        </div>
+
+        <?php
     }
 
     /** @see WP_Widget::update */
