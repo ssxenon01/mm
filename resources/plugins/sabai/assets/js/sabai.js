@@ -1,4 +1,3 @@
-var SABAI = SABAI || {};
 
 (function($) {
     SABAI.console = window.console || {'log': function (msg) {
