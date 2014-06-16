@@ -731,6 +731,7 @@ jQuery(function($) {
         $('.carousel-linked-nav li:eq(' + idx + ')').addClass('active');
 
     });
+    $('ul.nav li.dropdown').hover(function() { $(this).find('.dropdown-menu').stop(true, true).show(); $(this).addClass('open'); }, function() { $(this).find('.dropdown-menu').stop(true, true).hide(); $(this).removeClass('open'); });
 
 });
 
