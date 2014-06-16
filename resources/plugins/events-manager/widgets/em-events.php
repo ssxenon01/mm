@@ -61,33 +61,28 @@ class EM_Widget extends WP_Widget {
                 <?php echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);?>
             </div>
             <div class="eventlist">
-
                 <?php foreach($events as $event): ?>
-
                     <div class="event">
                         <div class="img-over">
                             <a href="<?php echo get_permalink($event->ID);?>">
                                 <?php echo get_the_post_thumbnail($event->ID,'thumbnail', array('title' => strip_tags(get_the_title()), 'itemprop' => 'image' , 'class' => 'media-object')); ?>
                                 <div class="datebg"></div>
                                 <div class="event-date">
-                                    <div class="text">MAR</div>
-                                    <div class="count">22</div>
+                                    <div class="text"><?php echo mysql2date( 'M', $event->start );?></div>
+                                    <div class="count"><?php echo mysql2date( 'd', $event->start );?></div>
                                 </div>
                                 <div class="line"></div>
                             </a>
                         </div>
                         <div class="text-intro">
                             <h3 class="event-t"><?php echo get_the_title($event->ID)?></h3>
-                            <h4><span class="glyphicon glyphicon-map-marker"></span> VLVT Night Club</h4>
-                            <div class="date"> <span class="glyphicon glyphicon-time"></span>  <?php echo $event?>17:00pm</div>
+                            <h4><span class="glyphicon glyphicon-map-marker"></span> <?php echo get_the_title($event->get_location())?></h4>
+                            <div class="date"> <span class="glyphicon glyphicon-time"></span>  <?php ?><?php echo mysql2date( 'H:i', $event->event_start_time );?></div>
                         </div>
                     </div>
-
                 <?php endforeach; ?>
-
             </div>
         </div>
-
         <?php
     }
 
