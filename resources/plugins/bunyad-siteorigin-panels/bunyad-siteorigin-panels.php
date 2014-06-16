@@ -633,8 +633,8 @@ function siteorigin_panels_render( $post_id = false, $enqueue_css = true ) {
 			// 1/x widths?
 			if (round($one_weight, 0) === $one_weight) {
 				
-				$weight_class = ($one_weight == 2 ? 'half' : 'one-' . $one_weight);
-				$weight_class = str_replace(array(3, 4, 5), array('third', 'fourth', 'fifth'), $weight_class);
+				$weight_class = ($one_weight == 2 ? 'col-md-6' : 'col-md-12');
+				$weight_class = str_replace(array(3, 4, 5), array('col-md-4', 'col-md-3', 'fifth'), $weight_class);
 
 				$cell_classes[] = $weight_class;
 			}

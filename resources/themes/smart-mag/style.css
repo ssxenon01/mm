@@ -2580,51 +2580,66 @@ h3.gallery-title {
 
 /* comment nav */
 .comment-nav {
-	overflow: hidden;
-	font-size: 13px;
-	margin: -14px 0 28px 75px; /* 42-14=28px for top */
+    overflow: hidden;
+    font-size: 13px;
+    margin: -14px 0 28px 75px; /* 42-14=28px for top */
 }
 
-	.comment-nav .nav-previous { float: left; }
-	.comment-nav .nav-next { float: right; }
-	.comment-nav a { color: #606569; }
+.comment-nav .nav-previous {
+    float: left;
+}
+
+.comment-nav .nav-next {
+    float: right;
+}
+
+.comment-nav a {
+    color: #606569;
+}
 
 /* comment form */
 .comment .comment-respond {
-	margin-left: 75px;
-	margin-top: -1px; 
+    margin-left: 75px;
+    margin-top: -1px;
 }
 
-.comment-respond form { margin-top: 42px; }
+.comment-respond form {
+    margin-top: 42px;
+}
 
-	.comment-respond .section-head { display: block; }
+.comment-respond .section-head {
+    display: block;
+}
 
-	.comment-respond p { 
-		margin-bottom: 28px;
-		font-size: 13px;
-	}
-	
-	.comment-respond small {
-		float: right;
-		margin-top: -55px;
-		font-size: 12px;
-		font-family: "Open Sans", Arial, sans-serif;
-		margin-right: 12px;
-	}
-	
-	.comment-respond small a { color: #a6a6a6; }
+.comment-respond p {
+    margin-bottom: 28px;
+    font-size: 13px;
+}
 
-	
-	.comment-respond .form-submit { overflow: hidden; }
-	
-	#comment-submit, .submit-button { 
-		float: right;
-		background: #19232d;
-		text-transform: uppercase;
-		font-size: 14px;
-		color: #fff;
-		padding: 7px 21px;		
-	}
+.comment-respond small {
+    float: right;
+    margin-top: -55px;
+    font-size: 12px;
+    font-family: "Open Sans", Arial, sans-serif;
+    margin-right: 12px;
+}
+
+.comment-respond small a {
+    color: #a6a6a6;
+}
+
+.comment-respond .form-submit {
+    overflow: hidden;
+}
+
+#comment-submit, .submit-button {
+    float: right;
+    background: #19232d;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #fff;
+    padding: 7px 21px;
+}
 	
 /**
  * 4.3. =Single & Other Pages
@@ -2647,7 +2662,7 @@ h3.gallery-title {
 
 .page-content .main-heading { font-weight: 600; }
 
-.page .page-content > div:last-child, .page .page-content > section:last-child { 
+.page .page-content > div:last-child, .page .page-content > section:last-child {
 	margin-bottom: 0;
 } 
 

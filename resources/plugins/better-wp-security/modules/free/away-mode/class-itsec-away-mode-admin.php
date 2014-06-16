@@ -5,16 +5,31 @@ class ITSEC_Away_Mode_Admin {
 	private
 		$settings,
 		$core,
-		$module,
 		$away_file,
 		$module_path;
 
-	function run( $core, $module ) {
+	function run( $core ) {
 
-		if ( is_admin() ) {
+		global $itsec_globals;
 
-			$this->initialize( $core, $module );
+		$this->core        = $core;
+		$this->settings    = get_site_option( 'itsec_away_mode' );
+		$this->away_file   = $itsec_globals['ithemes_dir'] . '/itsec_away.confg'; //override file
+		$this->module_path = ITSEC_Lib::get_module_path( __FILE__ );
 
+		add_action( 'itsec_add_admin_meta_boxes', array(
+			$this, 'add_admin_meta_boxes'
+		) ); //add meta boxes to admin page
+		add_action( 'itsec_admin_init', array( $this, 'initialize_admin' ) ); //initialize admin area
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) ); //enqueue scripts for admin page
+		add_filter( 'itsec_add_dashboard_status', array(
+			$this, 'dashboard_status'
+		) ); //add information for plugin status
+		add_filter( 'itsec_tracking_vars', array( $this, 'tracking_vars' ) );
+
+		//manually save options on multisite
+		if ( is_multisite() ) {
+			add_action( 'itsec_admin_init', array( $this, 'save_network_options' ) ); //save multisite options
 		}
 
 	}
@@ -268,56 +283,24 @@ class ITSEC_Away_Mode_Admin {
 		if ( $this->settings['enabled'] === true ) {
 
 			$status_array = 'safe-medium';
-			$status       = array( 'text' => __( 'Away Mode is enabled and your WordPress Dashboard is not available when you will not be needing it.', 'it-l10n-better-wp-security' ), 'link' => '#itsec_away_mode_enabled', );
+			$status       = array(
+				'text' => __( 'Away Mode is enabled and your WordPress Dashboard is not available when you will not be needing it.', 'it-l10n-better-wp-security' ),
+				'link' => '#itsec_away_mode_enabled',
+			);
 
 		} else {
 
 			$status_array = 'medium';
-			$status       = array( 'text' => __( 'Your WordPress Dashboard is available 24/7. Do you really update 24 hours a day? Consider using Away Mode.', 'it-l10n-better-wp-security' ), 'link' => '#itsec_away_mode_enabled', );
+			$status       = array(
+				'text' => __( 'Your WordPress Dashboard is available 24/7. Do you really update 24 hours a day? Consider using Away Mode.', 'it-l10n-better-wp-security' ),
+				'link' => '#itsec_away_mode_enabled',
+			);
 
 		}
 
 		array_push( $statuses[$status_array], $status );
 
 		return $statuses;
-
-	}
-
-	/**
-	 * Empty callback function
-	 */
-	public function empty_callback_function() {
-	}
-
-	/**
-	 * Initializes all admin functionality.
-	 *
-	 * @since 4.0
-	 *
-	 * @param ITSEC_Core $core The $itsec_core instance
-	 *
-	 * @return void
-	 */
-	private function initialize( $core, $module ) {
-
-		global $itsec_globals;
-
-		$this->core        = $core;
-		$this->module      = $module;
-		$this->settings    = get_site_option( 'itsec_away_mode' );
-		$this->away_file   = $itsec_globals['ithemes_dir'] . '/itsec_away.confg'; //override file
-		$this->module_path = ITSEC_Lib::get_module_path( __FILE__ );
-
-		add_action( 'itsec_add_admin_meta_boxes', array( $this, 'add_admin_meta_boxes' ) ); //add meta boxes to admin page
-		add_action( 'itsec_admin_init', array( $this, 'initialize_admin' ) ); //initialize admin area
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) ); //enqueue scripts for admin page
-		add_filter( 'itsec_add_dashboard_status', array( $this, 'dashboard_status' ) ); //add information for plugin status
-		add_filter( 'itsec_tracking_vars', array( $this, 'tracking_vars' ) );
-
-		//manually save options on multisite
-		if ( is_multisite() ) {
-			add_action( 'itsec_admin_init', array( $this, 'save_network_options' ) ); //save multisite options
-		}
 
 	}
 
@@ -332,14 +315,14 @@ class ITSEC_Away_Mode_Admin {
 		add_settings_section(
 			'away_mode-enabled',
 			__( 'Away Mode', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
 		add_settings_section(
 			'away_mode-settings',
 			__( 'Away Mode', 'it-l10n-better-wp-security' ),
-			array( $this, 'empty_callback_function' ),
+			'__return_empty_string',
 			'security_page_toplevel_page_itsec_settings'
 		);
 
@@ -471,9 +454,13 @@ class ITSEC_Away_Mode_Admin {
 		$input['enabled'] = ( isset( $input['enabled'] ) && intval( $input['enabled'] == 1 ) ? true : false );
 		$input['type']    = ( isset( $input['type'] ) && intval( $input['type'] == 1 ) ? 1 : 2 );
 
-		if ( ! isset( $input['away_start'] ) ) {
+		if ( ! isset( $input['away_start'] ) && ! isset( $input['start'] ) ) {
 
 			$input['start'] = $this->settings['start'];
+
+		} elseif ( ! isset( $input['away_start'] ) && isset( $input['start'] ) ) {
+
+			$input['start'] = intval( $input['start'] );
 
 		} else {
 
@@ -482,9 +469,13 @@ class ITSEC_Away_Mode_Admin {
 
 		}
 
-		if ( ! isset( $input['away_end'] ) ) {
+		if ( ! isset( $input['away_end'] ) && ! isset( $input['end'] ) ) {
 
 			$input['end'] = $this->settings['end'];
+
+		} elseif ( ! isset( $input['away_end'] ) && isset( $input['end'] ) ) {
+
+			$input['end'] = intval( $input['end'] );
 
 		} else {
 
@@ -493,7 +484,15 @@ class ITSEC_Away_Mode_Admin {
 
 		}
 
-		if ( $input['enabled'] === true && $this->module->check_away( true, $input ) === true ) {
+		if ( $input['enabled'] === true && $input['start'] === 1 && $input['end'] === 1 ) {
+			$input['enabled'] = false;
+		}
+
+		if ( ! class_exists( 'ITSEC_Away_Mode' ) ) {
+			require( dirname( __FILE__ ) . '/class-itsec-away-mode.php' );
+		}
+
+		if ( $input['enabled'] === true && ITSEC_Away_Mode::check_away( $input ) === true ) {
 
 			$input['enabled'] = false; //disable away mode
 

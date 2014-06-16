@@ -8,7 +8,7 @@
  */
 class SabaiFramework
 {
-    const VERSION = '1.2.30';
+    const VERSION = '1.2.31';
     private static $_started = false;
 
     /**

@@ -21,8 +21,10 @@ class ITSEC_Hide_Backend {
 			add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 
 			add_filter( 'body_class', array( $this, 'remove_admin_bar' ) );
+			add_filter( 'loginout', array( $this, 'filter_loginout' ) );
 			add_filter( 'wp_redirect', array( $this, 'filter_login_url' ), 10, 2 );
 			add_filter( 'site_url', array( $this, 'filter_login_url' ), 10, 2 );
+			add_filter( 'retrieve_password_message', array( $this, 'retrieve_password_message' ) );
 
 			remove_action( 'template_redirect', 'wp_redirect_admin_locations', 1000 );
 
@@ -66,18 +68,23 @@ class ITSEC_Hide_Backend {
 				(
 					get_site_option( 'users_can_register' ) == false &&
 					(
-						isset( $_SERVER['REQUEST_URI'] ) && $_SERVER['REQUEST_URI'] == ITSEC_Lib::get_home_root() . 'wp-register.php' ||
-						isset( $_SERVER['REQUEST_URI'] ) && $_SERVER['REQUEST_URI'] == ITSEC_Lib::get_home_root() . 'wp-signup.php'
+						isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], 'wp-register.php' ) ||
+						isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], 'wp-signup.php' )
 					)
 				) ||
 				(
-					isset( $_SERVER['REQUEST_URI'] ) && $_SERVER['REQUEST_URI'] == ITSEC_Lib::get_home_root() . 'wp-login.php' && is_user_logged_in() !== true
+					isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], 'wp-login.php' ) && is_user_logged_in() !== true
 				) ||
 				( is_admin() && is_user_logged_in() !== true ) ||
 				(
 					$this->settings['register'] != 'wp-register.php' &&
 					strpos( $_SERVER['REQUEST_URI'], 'wp-register.php' ) !== false ||
-					strpos( $_SERVER['REQUEST_URI'], 'wp-signup.php' ) !== false
+					strpos( $_SERVER['REQUEST_URI'], 'wp-signup.php' ) !== false ||
+					(
+						isset( $_REQUEST['redirect_to'] ) &&
+						strpos( $_REQUEST['redirect_to'], 'wp-admin/customize.php' ) !== false
+
+					)
 				)
 			) &&
 			strpos( $_SERVER['REQUEST_URI'], 'admin-ajax.php' ) === false
@@ -101,10 +108,11 @@ class ITSEC_Hide_Backend {
 
 		}
 
-		$url_info   = parse_url( $_SERVER['REQUEST_URI'] );
-		$login_path = site_url( $this->settings['slug'], 'relative' );
+		$url_info                  = parse_url( $_SERVER['REQUEST_URI'] );
+		$login_path                = site_url( $this->settings['slug'], 'relative' );
+		$login_path_trailing_slash = site_url( $this->settings['slug'] . '/', 'relative' );
 
-		if ( $url_info['path'] === $login_path ) {
+		if ( $url_info['path'] === $login_path || $url_info['path'] === $login_path_trailing_slash ) {
 
 			if ( ! is_user_logged_in() ) {
 				//Add the login form
@@ -177,8 +185,7 @@ class ITSEC_Hide_Backend {
 	 *
 	 * @return void
 	 */
-	public
-	function execute_hide_backend_login() {
+	public function execute_hide_backend_login() {
 
 		if ( strpos( $_SERVER['REQUEST_URI'], 'wp-login.php' ) ) { //are we on the login page
 
@@ -193,16 +200,33 @@ class ITSEC_Hide_Backend {
 	}
 
 	/**
-	 * Filters redirects for currect login URL
+	 * Filters redirects for correct login URL
+	 *
+	 * @since 4.0
 	 *
 	 * @param  string $url URL redirecting to
 	 *
 	 * @return string       Correct redirect URL
 	 */
-	public
-	function filter_login_url( $url ) {
+	public function filter_login_url( $url ) {
 
 		return str_replace( 'wp-login.php', $this->settings['slug'], $url );
+
+
+	}
+
+	/**
+	 * Filter meta link
+	 *
+	 * @since 4.2
+	 *
+	 * @param string $link the link
+	 *
+	 * @return string the link
+	 */
+	public function filter_loginout( $link ) {
+
+		return str_replace( 'wp-login.php', $this->settings['slug'], $link );
 
 	}
 
@@ -213,8 +237,7 @@ class ITSEC_Hide_Backend {
 	 *
 	 * @return void
 	 */
-	public
-	function plugins_loaded() {
+	public function plugins_loaded() {
 
 		if ( is_user_logged_in() && isset( $_GET['action'] ) && sanitize_text_field( $_GET['action'] ) == 'logout' ) {
 
@@ -236,7 +259,7 @@ class ITSEC_Hide_Backend {
 	 *
 	 * @return array          body tag classes
 	 */
-	function remove_admin_bar( $classes ) {
+	public function remove_admin_bar( $classes ) {
 
 		if ( is_admin() && is_user_logged_in() !== true ) {
 
@@ -254,6 +277,14 @@ class ITSEC_Hide_Backend {
 
 	}
 
+	public function retrieve_password_message( $message ) {
+
+		return str_replace( 'wp-login.php', $this->settings['slug'], $message );
+
+		return $message;
+
+	}
+
 	/**
 	 * Sets 404 error at later time.
 	 *
@@ -261,8 +292,7 @@ class ITSEC_Hide_Backend {
 	 *
 	 * @return void
 	 */
-	public
-	function set_404() {
+	public function set_404() {
 
 		ITSEC_Lib::set_404();
 

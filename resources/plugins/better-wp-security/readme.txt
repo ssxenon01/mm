@@ -4,8 +4,8 @@ Contributors: ithemes, ChrisWiegman, mattdanner, chrisjean
 Donate link: http://ithemes.com
 Tags: security, secure, multi-site, network, mu, login, lockdown, htaccess, hack, header, cleanup, ban, restrict, access, protect, protection, disable, images, image, hotlink, admin, username, database, prefix, wp-content, rename, directory, directories, secure, SSL, iThemes, BackupBuddy, Exchange, iThemes Exchange
 Requires at least: 3.8
-Tested up to: 3.9
-Stable tag: 4.1.5
+Tested up to: 3.9.1
+Stable tag: 4.2.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,18 @@ iThemes has been building and supporting WordPress tools since 2008. With our fu
 = Get Support and Pro Features =
 
 Get added peace of mind with professional support from our expert team and pro features to take your site's security to the next level with <a href="http://ithemes.com/security">iThemes Security Pro</a>.
+
+Pro Features:
+
+* User action logging - track when user's edit content, login or logout
+* 2-factor authentication - Use Google Authenticator or Authy to send a custom code to your phone when you log in
+* Import/export settings - saves time setting up multiple WordPress sites
+* GeoIP banning - coming soon
+* Malware scanning - coming soon
+
+= iThemes Sync Integration =
+
+Manage more than one site? Manage away mode, release lockouts and make sure your WordPress site is up to date with <a href="http://ithemes.com/sync/">iThemes Sync</a>.
 
 = Obscure =
 
@@ -80,6 +92,18 @@ For complete site backups and the ability to restore or move WordPress easily, c
 * Makes it easier for users not accustomed to WordPress to remember login and admin URLs by customizing default admin URLs
 * Detects hidden 404 errors on your site that can affect your SEO such as bad links and missing images
 * Removes the existing jQuery version used and replaces it with a safe version (the version that comes default with WordPress).
+
+= Tutorials =
+
+Learn how to use iThemes Security with our series of <a href="http://ithemes.com/tutorial/category/ithemes-security/">in-depth tutorial videos</a> taught by lead developer Chris Wiegman:
+
+* <a href="http://ithemes.com/tutorials/getting-started-ithemes-security-part-1/">Getting Started</a>
+* <a href="http://ithemes.com/tutorials/getting-started-ithemes-security-part-2-global-settings/">Global Settings</a>
+* <a href="http://ithemes.com/tutorials/getting-started-ithemes-security-part-3-404-detection/">404 Detection</a>
+* <a href="http://ithemes.com/tutorials/getting-started-ithemes-security-part-4-away-mode/">Away Mode</a>
+* <a href="http://ithemes.com/tutorials/getting-started-ithemes-security-part-5-banned-users/">Banned Users</a>
+* <a href="http://ithemes.com/tutorials/getting-started-ithemes-security-part-6-brute-force-protection/">Brute Force Protection</a>
+* Many more to come!
 
 = Compatibility =
 
@@ -160,6 +184,80 @@ Free support may be available with the help of the community in the <a href="htt
 5. Easy-to-navigate Security dashboard
 
 == Changelog ==
+
+= 4.2.13 =
+* Fixed error for missing function in hide backend
+
+= 4.2.12 =
+* Fixed an error that could cause a 404 on the admin with hide-backend enabled.
+
+= 4.2.11 =
+* Fixed error on line 55 of class-itsec-four-oh-four.php that could occur under certain circumstances
+
+= 4.2.10 =
+* Don't filter hide backend hash until after schema redirect
+* don't send file change email on first scan
+* Fixed verbage when changing login URL
+* Modified ban users rewrites for apache. Should work with proxy and if setenvif isn't enabled.
+* Fixed get_module_path to prevent 404 errors on plugin assets
+* Fixed misplaced parenthesis forcing computer to always display it isn't whitelisted
+* Updated readme.txt
+
+= 4.2.8 =
+* Added call to settings import/export module (pro)
+* Added button to restore default log location
+* Don't automatically load front-end classes in dashboard pages
+* Avoid errors on save if htaccess is completely empty
+* Only register activation/deactivation/install hooks in admin
+* Make sure temporary white-list is always available
+* Improved check for white-listed IP during lockout
+* Added ability to use constant to override server detection
+* Don't remove extra line spaces in .htaccess
+* Minor reformating and typo fixes
+* Make sure front-end classes are available only when needed
+* Fixed default types in file change settings
+* Added file type exclusion to 404 settings
+* Allow for Jetpack SSO to function with suspicious queries turned on
+* Use WordPress' PclZip for backup zip
+
+= 4.2.6 =
+* Make sure backup disables itself when other backup solutions are present
+* Fix tweet link
+* Minor fixes and cleanup
+* Added call to two-factor module
+
+= 4.2.4 =
+* Consolidate white lists into one option
+* Fix IP mask calculations
+* Fix NGINX IP range blocking
+* Update modules to use new logging
+* Minor refactoring
+* Add metabox for iThemes Sync
+* Update jQuery version in tweaks
+* Shortened file change array names to save space
+* Fixed links in lockout emails
+* Fixed IP mask calculations
+* Add call to pro user-logging module
+* Add ability to temporarily whitelist an IP address
+
+= 4.2.2 =
+* Don't allow empty file types in file change exclusions
+* Add Sync integration for Away Mode
+* Minor typo and other fixes
+* Better cache clearing and formatting updates
+* Make sure rewrite rules are updated on this update
+* Remove extra (settings) items from admin bar menu (leave logs and important information)
+* Add WP_CONTENT_DIR to system information on dashboard
+* Move support nag to free version only and make sure it properly redirects
+* Fix check for presence of BackupBuddy to work with BackupBuddy >=4.2.16.0
+* Clean up details views on log pages
+* Add username column to temp and lockouts tables
+* Lockout usernames whether they exist or not
+* Don't duplicate lockouts
+* Fixed malformed lockout error on lockout message
+* Don't display a host lockout when none exists
+* Add Sync integration to release lockouts
+* Improved reliability of brute force user lockouts
 
 = 4.1.5 =
 * Miscelaneous typos and other fixes
@@ -1073,9 +1171,15 @@ This release is a complete rewrite from the ground up. Special thanks to Cory Mi
 
 = 0.1 ALPHA =
 
-* First alpha release including simple featureset.
+* First alpha release including simple feature set.
 
 == Upgrade Notice ==
 
-= 4.1.5 =
-Better WP Security is now iThemes Security with new features and a greatly improved code base. We recommend disabling Better WP Security before upgrading to 4.1.5 if you are not already on 4.0 or greater.
+= 4.2.13 =
+Version 4.2.13 delivers fixes for minor bugs experienced by some users.
+
+= 4.2.8 =
+Version 4.2.8 delivers fixes for minor bugs and some enhancements including the ability to whitelist file types in 404 detection.
+
+= 4.2.6 =
+Better WP Security is now iThemes Security with new features and a greatly improved code base. We recommend disabling Better WP Security before upgrading to 4.2.6 if you are not already on 4.0 or greater.

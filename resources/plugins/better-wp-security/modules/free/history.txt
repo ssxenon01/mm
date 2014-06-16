@@ -108,3 +108,38 @@
 	Improved content filtering in SSL so that more images and other content will link with appropriate protocol.
 	Fixed hide backend in cases where a lockout has expired
 	Miscelaneous typos and other fixes.
+1.2.0 - 2014-05-07 - Chris Wiegman
+    Don't allow empty file types in file change exclusions
+    Add Sync integration for Away Mode
+    Minor typo and other fixes
+1.2.1 - 2014-05-19 - Chris Wiegman
+    Consolidate white lists into one option
+    Fix IP mask calculations
+    Fix NGINX IP range blocking
+    Update modules to use new logging
+    Minor refactoring
+    Add metabox for iThemes Sync
+    Update jQuery version in tweaks
+    Shortened file change array names to save space
+1.2.2 - 2014-05-28 - Chris Wiegman
+    Make sure backup disables itself when other backup solutions are present
+    Fix tweet link
+    Minor fixes and cleanup
+1.2.3 - 2014-06-11 - Chris Wiegman
+    Minor formatting and typo fixes
+    Make sure front-end classes are available only when needed
+    Fixed default types in file change settings
+    Added file type exclusion to 404 settings
+    Allow for Jetpack SSO to function with suspicious queries turned on
+    Use WordPress' PclZip for backup zip
+1.2.4 - 2014-06-12 - Chris Wiegman
+    Don't filter hide backend hash until after schema redirect
+    don't send file change email on first scan
+    Fixed verbage when changing login URL
+    Modified ban users rewrites for apache. Should work with proxy and if setenvif isn't enabled.
+1.2.5 - 2014-06-12 - Chris Wiegman
+    Fixed error on line 55 of class-itsec-four-oh-four.php that could occur under certain circumstances
+1.2.6 - 2014-06-12 - Chris Wiegman
+    Fixed 404 error on https with hide backend.
+1.2.7 - 2014-06-12 - Chris Wiegman
+    Fixed error for missing function in hide backend

@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/PaidListings/IFeatures.php';
 
 class Sabai_Addon_PaidListings extends Sabai_Addon
 {
-    const VERSION = '1.2.30', PACKAGE = 'sabai-directory';
+    const VERSION = '1.2.31', PACKAGE = 'sabai-directory';
     const ORDER_STATUS_PENDING = 1, ORDER_STATUS_PROCESSING = 2, ORDER_STATUS_AWAITING_FULLFILLMENT = 3, ORDER_STATUS_COMPLETE = 4,
         ORDER_STATUS_REFUNDED = 5, ORDER_STATUS_EXPIRED = 6, ORDER_STATUS_FAILED = 7,
         ORDER_ITEM_STATUS_PENDING = 1, ORDER_ITEM_STATUS_DELIVERED = 2, ORDER_ITEM_STATUS_CANCELLED = 3;
