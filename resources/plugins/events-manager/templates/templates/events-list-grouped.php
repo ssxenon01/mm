@@ -51,8 +51,8 @@ $event_count = count($EM_Events);
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <?php foreach($EM_Events as $event):?>
-                    <div class="item active">
+                    <?php $i = 0; foreach($EM_Events as $event): $i ++;?>
+                    <div class="item <?php echo ($i==1)?'active':''; ?>">
                         <?php echo get_the_post_thumbnail($event->ID,'main-slider');?>
                         <div class="carousel-caption">
                             <div class="title">

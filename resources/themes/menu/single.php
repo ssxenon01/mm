@@ -42,10 +42,6 @@ get_header();
                     endif;
                     ?>
 
-                    <div class="comments">
-                        <?php comments_template('', true); ?>
-                    </div>
-
                 <?php endwhile; // end of the loop. ?>
             </div>
             <div class="col-md-4">

@@ -90,23 +90,26 @@ $review = Bunyad::posts()->meta('reviews');
 
     <?php endif; ?>
 
-    <?php if (is_single() && Bunyad::options()->related_posts && ($posts = Bunyad::posts()->get_related(Bunyad::core()->get_sidebar() == 'none' ? 3 : 3))): // && Bunyad::options()->related_posts != false): ?>
+    <?php if (is_single() && Bunyad::options()->related_posts && ($posts = Bunyad::posts()->get_related(6,get_the_ID()))): // && Bunyad::options()->related_posts != false): ?>
 
         <div class="news-foot-tab">
             <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">Холбоотой мэдээлэл</a></li>
-                <li class=""><a href="#profile" data-toggle="tab">Их уншсан</a></li>
+                <li class="active"><a href="#comment" data-toggle="tab">Сэтгэгдэл</a></li>
+                <li><a href="#home" data-toggle="tab">Санал болгох</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade active in" id="home">
+                <div class="tab-pane fade active in" id="comment">
+                    <div class="comments">
+                        <?php comments_template('', true); ?>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="home">
                     <div class="news-swiper">
                         <a class="arrow-left" href="#"></a>
                         <a class="arrow-right" href="#"></a>
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-
                                 <?php foreach ($posts as $post): setup_postdata($post); ?>
-
                                     <div class="swiper-slide">
                                         <?php the_post_thumbnail(
                                             (Bunyad::core()->get_sidebar() == 'none' ? 'main-block' : 'gallery-block'),
@@ -115,36 +118,6 @@ $review = Bunyad::posts()->meta('reviews');
                                     </div>
 
                                 <?php endforeach; wp_reset_postdata(); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="profile">
-                    <div class="news-swiper">
-                        <a class="arrow-left" href="#"></a>
-                        <a class="arrow-right" href="#"></a>
-                        <div class="swiper-container most-news">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="sample/news/coffee.jpg" >
-                                    <div class="title">Дэлхийн хамгийн үнэтэй кофе <span class="published">22 цаг 44 минут</span></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="sample/news/cocktail.jpg">
-                                    <div class="title">Коктейль яагаад өндөр үнэтэй байдаг вэ?<span class="published">22 цаг 44 минут</span></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="sample/news/restaurant.jpg">
-                                    <div class="title">Монголын Saint Germain de Pres <span class="published">22 цаг 44 минут</span></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="sample/news/restaurant.jpg">
-                                    <div class="title">Монголын Saint Germain de Pres <span class="published">22 цаг 44 минут</span></div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="sample/news/restaurant.jpg">
-                                    <div class="title">Монголын Saint Germain de Pres <span class="published">22 цаг 44 минут</span></div>
-                                </div>
                             </div>
                         </div>
                     </div>

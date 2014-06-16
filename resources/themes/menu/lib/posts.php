@@ -260,6 +260,9 @@ class Bunyad_Posts
 		return (array) $related;
 		
 	}
+    public function  get_related_event(){
+           
+    }
 	
 	/**
 	 * Custom pagination
