@@ -17,7 +17,7 @@ $bunyad = Bunyad::core()->init(array(
 	'meta_prefix' => '_bunyad',
 
 	// widgets enabled
-	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr', 'ads', 'latest-reviews', 'bbp-login','city-pulse','footer','slider-posts','player-posts'),
+	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr', 'ads', 'latest-reviews', 'bbp-login','city-pulse','footer','slider-posts','player-posts','multi-slider'),
 	'post_formats' => array('gallery', 'image', 'video', 'audio'),
 
 	'shortcode_config' => array(
@@ -50,6 +50,7 @@ $bunyad = Bunyad::core()->init(array(
 		'flickr' => array('class' => 'Bunyad_Flickr_Widget', 'name' => __('Flickr Images', 'bunyad')),
 		'city-pulse' => array('class' => 'Bunyad_CityPulse_Widget', 'name' => __('CityPulse', 'bunyad')),
 		'slider-post' => array('class' => 'Bunyad_SliderPosts_Widget', 'name' => __('SliderPost', 'bunyad')),
+		'multi-slider' => array('class' => 'Bunyad_MultiSlider_Widget', 'name' => __('MultiSlider', 'bunyad')),
 		'player-post' => array('class' => 'Bunyad_PlayerPosts_Widget', 'name' => __('PlayerPost', 'bunyad')),
 		'footer' => array('class' => 'Bunyad_Footer_Widget', 'name' => __('Footer', 'bunyad')),
 		'ads' => array('class' => 'Bunyad_Ads_Widget', 'name' => __('Advertisement', 'bunyad')),

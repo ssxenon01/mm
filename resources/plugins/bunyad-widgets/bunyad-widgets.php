@@ -20,7 +20,7 @@ class Bunyad_Widgets
 		load_plugin_textdomain('bunyad-widgets', false, basename(dirname(__FILE__)) . '/languages');
 		
 		$widgets = apply_filters('bunyad-active-widgets', array(
-			'about', 'twitter', 'latest-posts', 'social-count', 'popular-posts', 'tabbed-recent', 'flickr' ,'city-pulse','footer','slider-posts','player-posts'
+			'about', 'twitter', 'latest-posts', 'social-count', 'popular-posts', 'tabbed-recent', 'flickr' ,'city-pulse','footer','slider-posts','player-posts','multi-slider'
 		));
 		
 		// activate widgets

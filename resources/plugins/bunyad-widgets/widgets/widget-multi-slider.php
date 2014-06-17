@@ -1,13 +1,13 @@
 <?php
 
-class Bunyad_SliderPosts_Widget extends WP_Widget
+class Bunyad_MultiSlider_Widget extends WP_Widget
 {
 	public function __construct()
 	{
 		parent::__construct(
-			'bunyad-slider-posts-widget',
-			'Bunyad - Recent Posts',
-			array('description' => 'Recent posts with thumbnail.', 'classname' => 'slider-posts')
+			'bunyad-multi-slider-widget',
+			'Bunyad - Multi Slider Posts',
+			array('description' => 'Recent posts with thumbnail.', 'classname' => 'multi-slider')
 		);
 		
 		add_action('save_post', array($this, 'flush_widget_cache'));
@@ -18,7 +18,7 @@ class Bunyad_SliderPosts_Widget extends WP_Widget
 	// code below is modified from default
 	public function widget($args, $instance) 
 	{
-		$cache = get_transient('bunyad_widget_slider_posts');
+		$cache = get_transient('bunyad_widget_multi_slider');
 		
 		if (!is_array($cache)) {
 			$cache = array();
@@ -37,7 +37,7 @@ class Bunyad_SliderPosts_Widget extends WP_Widget
 		ob_start();
 		extract($args);
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Posts', 'bunyad-widgets') : $instance['title'], $instance, $this->id_base);
+		$title = apply_filters('widget_title', empty($instance['title']) ? __('Multi Slider', 'bunyad-widgets') : $instance['title'], $instance, $this->id_base);
 		if (empty($instance['number']) || !$number = absint($instance['number'])) {
  			$number = 5;
 		}
@@ -62,36 +62,37 @@ class Bunyad_SliderPosts_Widget extends WP_Widget
 		elseif ($r->have_posts()):
 ?>
 
-
-
-            <div class="top-news">
-                <div class="feature-title">
-                    <div class="inner">
-                        <h3 class="title"><?php echo $title;?></h3>
-                        <div class="leaf_line"></div>
-                    </div>
+            <div class="feature-recipe">
+                <div class="ftitle">
+                    <?php echo $title;?>
+                    <div class="pagination fs-pagination"></div>
                 </div>
-                <div class="feature-body">
-                    <div class="feature-swiper">
-                        <a class="arrow-left-f1" href="#"></a>
-                        <a class="arrow-right-f1" href="#"></a>
-                        <div class="swiper-container fs1">
-                            <div class="swiper-wrapper">
-                                <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
+                <div class="feature-swiper">
+                    <div class="swiper-container f-swiper">
+                        <div class="swiper-wrapper">
 
-                                    <div class="swiper-slide">
-                                        <div class="type"><?php the_category(); ?></div>
-                                        <?php the_post_thumbnail('slider-small', array('title' => strip_tags(get_the_title()))); ?>
-                                        <a href="<?php the_permalink(); ?>"><div class="title"><?php if (get_the_title()) the_title(); else the_ID(); ?> <span class="published"><?php echo get_the_date(); ?></span></div></a>
+                            <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
+
+                                <div class="swiper-slide clearfix">
+                                    <div class="img-container">
+                                        <div class="bt-bg"><span class="published"><?php echo get_the_date(); ?></span></div>
+                                        <?php the_post_thumbnail('thumbnail', array('title' => strip_tags(get_the_title()))); ?>
                                     </div>
+                                    <div class="info">
+                                        <div class="type"><?php the_category(); ?></div>
+                                        <div class="title"><a href="<?php the_permalink(); ?>"><?php if (get_the_title()) the_title(); else the_ID(); ?></a></div>
+                                        <div class="desc">Том саванд бууцай, вандуй болон оливын тосоо хамт хийж тосоо жигд тартал нь сайтар хутгана. Дараа нь лемоны шүүс, бяслаг болон давс перецээ нэмээд дахин сайн хутгана. </div>
+                                    </div>
+                                </div>
 
-                                <?php endwhile; ?>
-                            </div>
-                            <div class="pagination pagination-f1"></div>
+                            <?php endwhile; ?>
+
                         </div>
                     </div>
                 </div>
             </div>
+
+
 <?php
 		endif;
 		
@@ -100,7 +101,7 @@ class Bunyad_SliderPosts_Widget extends WP_Widget
 
 		$cache[$args['widget_id']] = ob_get_flush();
 		
-		set_transient('bunyad_widget_slider_posts', $cache);
+		set_transient('bunyad_widget_multi_slider', $cache);
 	}
 
 
@@ -118,7 +119,7 @@ class Bunyad_SliderPosts_Widget extends WP_Widget
 
 	public function flush_widget_cache() 
 	{
-		delete_transient('bunyad_widget_slider_posts');
+		delete_transient('bunyad_widget_multi_slider');
 	}
 
 	public function form($instance)

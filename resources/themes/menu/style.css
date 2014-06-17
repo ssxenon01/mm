@@ -716,7 +716,7 @@ strong{
     font-family: 'PT Sans Narrow',arial, sans-serif;
 }
 /* line 391, ../sass/style.scss */
-.wrapper .main-content .feature-swiper .swiper-container .swiper-slide .title {
+.wrapper .main-content .top-news .feature-swiper .swiper-container .swiper-slide .title {
     position: absolute;
     bottom: 10px;
     right: 0px;
