@@ -18,7 +18,7 @@ $event_count = count($EM_Events);
 
 <div class="city-pulse" >
 <div class="row">
-    <?php if($event_count>0):?>
+<!--    --><?php //if($event_count>0):?>
 <div class="col-md-12">
     <div class="feature-title">
         <div class="inner">
@@ -78,7 +78,7 @@ $event_count = count($EM_Events);
     </div>
 </div>
 <div class="clearfix"></div>
-    <?php endif; ?>
+<!--    --><?php //endif; ?>
 <div class="col-md-12">
 <div class="event-container">
 <div class="title">Энэ сард</div>
