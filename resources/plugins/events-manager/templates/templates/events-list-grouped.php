@@ -37,9 +37,9 @@ $event_count = count($EM_Events);
             </div>
             <div class="prev"><a href="#"><span></span></a></div>
             <ol class="carousel-linked-nav eventpagination">
-                <?php for ($x=1; $x<=$event_count; $x++){
+                <?php for ($x=1; $x<=$event_count; $x++)
                     echo "<li class=\"". (($x == 1)?'active':'') ."\"><a href=\"#$x\">$x</a></li>";
-                } ?>
+                ?>
             </ol>
             <div class="next"><a href="#"><span></span></a></div>
         </div>
@@ -93,16 +93,17 @@ $event_count = count($EM_Events);
 
 $format = (!empty($args['date_format'])) ? $args['date_format']:get_option('date_format');
 $events_dates = array();
-foreach($EM_Events as $EM_Event){
+foreach($EM_Events as $EM_Event):
     $start_of_week = get_option('start_of_week');
     $day_of_week = date('w',$EM_Event->start);
     $day_of_week = date('w',$EM_Event->start);
     $offset = $day_of_week - $start_of_week;
-    if($offset<0){ $offset += 7; }
+    if($offset<0)
+        $offset += 7;
     $offset = $offset * 60*60*24; //days in seconds
     $start_day = strtotime($EM_Event->start_date);
     $events_dates[$start_day - $offset][] = $EM_Event;
-}
+endforeach;
 foreach ($events_dates as $event_day_ts => $events): ?>
 <div class="event-list">
     <div class="event-list-title"><a href="#"><?php echo str_replace('#s', date_i18n('M d',$event_day_ts). ' аас ' .date_i18n('M d',$event_day_ts+(60*60*24*6)), '#s');?> <span>(<?php echo count($events)?> эвэнт)</a></a></div>
