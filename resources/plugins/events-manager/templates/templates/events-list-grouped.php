@@ -18,7 +18,7 @@ $event_count = count($EM_Events);
 
 <div class="city-pulse" >
 <div class="row">
-<!--    --><?php //if($event_count>0):?>
+    <?php if($event_count>0):?>
 <div class="col-md-12">
     <div class="feature-title">
         <div class="inner">
@@ -37,9 +37,9 @@ $event_count = count($EM_Events);
             </div>
             <div class="prev"><a href="#"><span></span></a></div>
             <ol class="carousel-linked-nav eventpagination">
-                <?php /*for ($x=1; $x<=$event_count; $x++)
+                <?php for ($x=1; $x<=$event_count; $x++){
                     echo "<li class=\"". (($x == 1)?'active':'') ."\"><a href=\"#$x\">$x</a></li>";
-                */?>
+                } ?>
             </ol>
             <div class="next"><a href="#"><span></span></a></div>
         </div>
@@ -63,7 +63,7 @@ $event_count = count($EM_Events);
                             <div class="date"><?php echo mysql2date( 'H:i', $event->event_start_time );?> - <?php echo mysql2date( 'H:i', $event->event_end_time );?></div>
                         </div>
                     </div>
-                    <? endforeach;?>
+                    <?php endforeach;?>
                 </div>
 
                 <!-- Controls -->
@@ -78,7 +78,7 @@ $event_count = count($EM_Events);
     </div>
 </div>
 <div class="clearfix"></div>
-<!--    --><?php //endif; ?>
+    <?php endif; ?>
 <div class="col-md-12">
 <div class="event-container">
 <div class="title">Энэ сард</div>
@@ -93,17 +93,16 @@ $event_count = count($EM_Events);
 
 $format = (!empty($args['date_format'])) ? $args['date_format']:get_option('date_format');
 $events_dates = array();
-foreach($EM_Events as $EM_Event):
+foreach($EM_Events as $EM_Event){
     $start_of_week = get_option('start_of_week');
     $day_of_week = date('w',$EM_Event->start);
     $day_of_week = date('w',$EM_Event->start);
     $offset = $day_of_week - $start_of_week;
-    if($offset<0)
-        $offset += 7;
+    if($offset<0){ $offset += 7; }
     $offset = $offset * 60*60*24; //days in seconds
     $start_day = strtotime($EM_Event->start_date);
     $events_dates[$start_day - $offset][] = $EM_Event;
-endforeach;
+}
 foreach ($events_dates as $event_day_ts => $events): ?>
 <div class="event-list">
     <div class="event-list-title"><a href="#"><?php echo str_replace('#s', date_i18n('M d',$event_day_ts). ' аас ' .date_i18n('M d',$event_day_ts+(60*60*24*6)), '#s');?> <span>(<?php echo count($events)?> эвэнт)</a></a></div>
@@ -139,3 +138,12 @@ foreach ($events_dates as $event_day_ts => $events): ?>
 </div>
 </div>
 </div>
+<?php
+
+/*$args = apply_filters('em_content_events_args', $args);
+
+if( get_option('dbem_css_evlist') ) echo "<div class='css-events-list'>";
+
+echo EM_Events::output_grouped($args); //note we're grabbing the content, not em_get_events_list_grouped function
+
+if( get_option('dbem_css_evlist') ) echo "</div>";*/
