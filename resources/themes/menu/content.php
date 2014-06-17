@@ -90,7 +90,7 @@ $review = Bunyad::posts()->meta('reviews');
 
     <?php endif; ?>
 
-    <?php if (is_single() && Bunyad::options()->related_posts && ($posts = Bunyad::posts()->get_related(6,get_the_ID()))): // && Bunyad::options()->related_posts != false): ?>
+    <?php $posts = Bunyad::posts()->get_related(6,get_the_ID()): // && Bunyad::options()->related_posts != false): ?>
 
         <div class="news-foot-tab">
             <ul id="myTab" class="nav nav-tabs">
@@ -124,8 +124,6 @@ $review = Bunyad::posts()->meta('reviews');
                 </div>
             </div>
         </div>
-
-    <?php endif; ?>
 
 </div>
 
