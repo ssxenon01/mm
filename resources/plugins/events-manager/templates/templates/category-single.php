@@ -77,7 +77,7 @@ $event_count = count($EM_Events);
                                                 <div class="date"><?php echo mysql2date( 'H:i', $event->event_start_time );?> - <?php echo mysql2date( 'H:i', $event->event_end_time );?></div>
                                             </div>
                                         </div>
-                                    <? endforeach;?>
+                                    <?php endforeach;?>
                                 </div>
 
                                 <!-- Controls -->
