@@ -37,9 +37,9 @@ $event_count = count($EM_Events);
             </div>
             <div class="prev"><a href="#"><span></span></a></div>
             <ol class="carousel-linked-nav eventpagination">
-                <?php for ($x=1; $x<=$event_count; $x++)
+                <?php /*for ($x=1; $x<=$event_count; $x++)
                     echo "<li class=\"". (($x == 1)?'active':'') ."\"><a href=\"#$x\">$x</a></li>";
-                ?>
+                */?>
             </ol>
             <div class="next"><a href="#"><span></span></a></div>
         </div>
