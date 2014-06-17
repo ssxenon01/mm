@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-04-25 11:05+0800\n"
+"PO-Revision-Date: 2014-06-17 16:36+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: Poedit 1.6.4\n"
@@ -106,11 +106,11 @@ msgstr "Сүүлчийн нийтлэлүүдийг харуул"
 
 #: admin/category-meta.php:67
 msgid "Featured slider will display on category listing."
-msgstr ""
+msgstr "Онцлох слайдер нь ангиллын жагсаалтад дүрслэгдэнэ."
 
 #: admin/category-meta.php:73
 msgid "Category Color"
-msgstr ""
+msgstr "Ангилалын өнгө"
 
 #: admin/category-meta.php:76
 msgid ""
@@ -119,17 +119,17 @@ msgstr ""
 
 #: admin/category-meta.php:81
 msgid "Main Site Color"
-msgstr ""
+msgstr "Сайтын үндсэн өнгө"
 
 #: admin/category-meta.php:84
 msgid ""
 "Setting this color will change the entire site's main color when viewing "
 "this category or posts that belong to this category."
-msgstr ""
+msgstr "Энэ тохиргоог оруулснаар сайтын өнгө бүхлээрээ солигдох болно."
 
 #: admin/category-meta.php:90
 msgid "Category Background"
-msgstr ""
+msgstr "Ангиллын арын өнгө"
 
 #: admin/category-meta.php:98 admin/meta/page-options.php:44
 #: admin/meta/post-options.php:48 admin/options.php:93 admin/options.php:105
@@ -146,7 +146,7 @@ msgstr "Хуулах"
 #: admin/category-meta.php:100 admin/meta/page-options.php:46
 #: admin/meta/post-options.php:50 admin/options.php:553
 msgid "Use as Background"
-msgstr ""
+msgstr "Арын өнгө болгон ашиглах"
 
 #: admin/category-meta.php:105
 msgid ""
@@ -177,11 +177,11 @@ msgstr ""
 
 #: admin/meta/page-options.php:29
 msgid "Default Slider - Use Posts Marked as \"Featured Slider Post?\""
-msgstr ""
+msgstr "Үндсэн слайдер - Онцлох нийтлэл"
 
 #: admin/meta/page-options.php:30
 msgid "Default Slider - Use Latest Posts from Whole Site"
-msgstr ""
+msgstr "Үндсэн слайдер - Сүүлд орсон нийтлэл"
 
 #: admin/meta/page-options.php:39 admin/meta/post-options.php:43
 msgid "Custom Background Image"
@@ -189,11 +189,11 @@ msgstr ""
 
 #: admin/meta/post-options.php:6
 msgid "Featured Slider Post?"
-msgstr ""
+msgstr "Онцлох нийтлэл"
 
 #: admin/meta/post-options.php:24
 msgid "Disable Featured?"
-msgstr ""
+msgstr "Онцлох хэсгийг хаах"
 
 #: admin/meta/post-options.php:25
 msgid ""
@@ -211,19 +211,19 @@ msgstr ""
 
 #: admin/meta/post-reviews.php:12
 msgid "Display Position"
-msgstr ""
+msgstr "Дүрслэх байршил"
 
 #: admin/meta/post-reviews.php:16
 msgid "Do not display - Disabled"
-msgstr ""
+msgstr "Дүрслэхгүй"
 
 #: admin/meta/post-reviews.php:17
 msgid "Top"
-msgstr ""
+msgstr "Дээр"
 
 #: admin/meta/post-reviews.php:18
 msgid "Bottom"
-msgstr ""
+msgstr "Доор"
 
 #: admin/meta/post-reviews.php:23
 msgid "Show Rating As"
@@ -271,11 +271,11 @@ msgstr ""
 
 #: admin/meta/post-reviews.php:94
 msgid "Rating:"
-msgstr ""
+msgstr "Үнэлгээ"
 
 #: admin/meta/post-reviews.php:164
 msgid "Rating cannot be greater than 10."
-msgstr ""
+msgstr "Үнэлгээ 10 аас дээш байж болохгүй."
 
 #: admin/options.php:10
 msgid "General Settings"
@@ -289,7 +289,7 @@ msgstr ""
 
 #: admin/options.php:30
 msgid "Default Sidebar"
-msgstr ""
+msgstr "Үндсэн хажуу багана"
 
 #: admin/options.php:32
 msgid ""
@@ -1116,39 +1116,39 @@ msgstr ""
 
 #: admin/template-options.php:41
 msgid "Errors:"
-msgstr ""
+msgstr "Алдаа:"
 
 #: archive.php:40 archive.php:44 archive.php:52
 msgid "Browsing: %s"
-msgstr ""
+msgstr "%s"
 
 #: archive.php:60
 msgid "Search Results: %s (%d)"
-msgstr ""
+msgstr "%s (%d) ын хайлтын илэрц"
 
 #: archive.php:66
 msgid "Daily Archives: %s"
-msgstr ""
+msgstr "Өдрийн архив: %s"
 
 #: archive.php:68
 msgid "Monthly Archives: %s"
-msgstr ""
+msgstr "Сарын архив: %s"
 
 #: archive.php:70
 msgid "Yearly Archives: %s"
-msgstr ""
+msgstr "Жилийн архив: %s"
 
 #: author.php:19
 msgid "Author %s"
-msgstr ""
+msgstr "Нийтлэгч %s"
 
 #: authors.php:63
 msgid "Browse Author Articles"
-msgstr ""
+msgstr "Нийтлэгчийн нийтлэлүүд"
 
 #: authors.php:64
 msgid "%s Articles"
-msgstr ""
+msgstr "%s нийтлэл"
 
 #: bbpress/auth-modal.php:7
 msgid "Sign In"
@@ -1177,7 +1177,7 @@ msgstr "Бүртгэлгүй юу?"
 
 #: bbpress/auth-modal.php:50
 msgid "Register Now!"
-msgstr ""
+msgstr "Одоо бүртгүүлэх"
 
 #: bbpress/auth-modal.php:60 bbpress/auth-modal.php:90
 msgid "Welcome back, "
@@ -1237,7 +1237,7 @@ msgstr ""
 
 #: bbpress/loop-forums.php:26 bbpress/loop-single-topic.php:103
 msgid "Posts"
-msgstr ""
+msgstr "Нийтлэлүүд"
 
 #: bbpress/loop-forums.php:27
 msgid "Freshness"
@@ -1305,16 +1305,16 @@ msgstr ""
 #: blocks/mega-menu-category.php:19
 msgctxt "Categories Mega Menu"
 msgid "Featured"
-msgstr ""
+msgstr "Онцлох"
 
 #: blocks/mega-menu-category.php:53
 msgctxt "Categories Mega Menu"
 msgid "Recent"
-msgstr ""
+msgstr "Шинэхэн"
 
 #: blocks/news-focus.php:102
 msgid "All"
-msgstr ""
+msgstr "Бүгд"
 
 #: blocks/page-builder/blog.php:13
 msgid "Blog/Listing Block"
@@ -1343,27 +1343,27 @@ msgstr ""
 #: blocks/page-builder/blog.php:52 blocks/page-builder/highlights.php:70
 #: blocks/page-builder/news-focus.php:52
 msgid "Published Date"
-msgstr ""
+msgstr "Нийтлэсэн огноо"
 
 #: blocks/page-builder/blog.php:53 blocks/page-builder/highlights.php:71
 #: blocks/page-builder/news-focus.php:53
 msgid "Modified Date"
-msgstr ""
+msgstr "Засварласан огноо"
 
 #: blocks/page-builder/blog.php:54 blocks/page-builder/highlights.php:72
 #: blocks/page-builder/news-focus.php:54
 msgid "Random"
-msgstr ""
+msgstr "Санамсаргүй"
 
 #: blocks/page-builder/blog.php:58 blocks/page-builder/highlights.php:76
 #: blocks/page-builder/news-focus.php:58
 msgid "Latest First - Descending"
-msgstr ""
+msgstr "Шинэ эхэндээ"
 
 #: blocks/page-builder/blog.php:59 blocks/page-builder/highlights.php:77
 #: blocks/page-builder/news-focus.php:59
 msgid "Oldest First - Ascending"
-msgstr ""
+msgstr "Хуучин эхэндээ"
 
 #: blocks/page-builder/blog.php:64
 msgid "Listing Style:"
@@ -1639,11 +1639,11 @@ msgstr ""
 
 #: comments.php:45
 msgid "Your Comment"
-msgstr ""
+msgstr "Таны сэтгэгдэл"
 
 #: comments.php:49
 msgid "Post Comment"
-msgstr ""
+msgstr "Сэтгэгдэл оруулах"
 
 #: comments.php:51
 msgid "Cancel Reply"
@@ -1651,11 +1651,11 @@ msgstr ""
 
 #: comments.php:57
 msgid "Your Name"
-msgstr ""
+msgstr "Таны нэр"
 
 #: comments.php:68
 msgid "Your Website"
-msgstr ""
+msgstr "Таны вебсайт"
 
 #: content.php:70
 msgctxt "Post Meta"
@@ -1673,11 +1673,11 @@ msgstr ""
 
 #: content.php:136
 msgid "Share."
-msgstr ""
+msgstr "Хуваалцах"
 
 #: content.php:140
 msgid "Tweet It"
-msgstr ""
+msgstr "Жиргэх"
 
 #: content.php:141 partial-author.php:21
 msgid "Twitter"
@@ -1685,7 +1685,7 @@ msgstr ""
 
 #: content.php:143
 msgid "Share at Facebook"
-msgstr ""
+msgstr "Фэйсбүүкт хуваалцах"
 
 #: content.php:144 partial-author.php:20
 msgid "Facebook"
@@ -1737,7 +1737,7 @@ msgstr ""
 
 #: content.php:184
 msgid "Related Posts"
-msgstr ""
+msgstr "Холбоотой нийтлэлүүд"
 
 #: functions.php:31
 msgid "Post Options"
