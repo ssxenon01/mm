@@ -20,7 +20,7 @@ $review = Bunyad::posts()->meta('reviews');
                 <?php endif;?>
                 </h1>
                 <div class="news-top-info">
-                    <span class="date"><strong>Огноо:</strong> <?php echo esc_html(get_the_date()); ?></span>
+                    <span class="date" itemprop="datePublished" datetime="<?php echo esc_attr(get_the_time('c')); ?>"><strong>Огноо:</strong> <?php echo esc_html(get_the_date()); ?></span>
                     <span class="news-tag"><strong>Төрөл:</strong> <?php echo get_the_category_list(__(', ', 'bunyad')); ?></span>
                 </div>
                 <div class="news-desc clearfix">
@@ -77,7 +77,7 @@ $review = Bunyad::posts()->meta('reviews');
                     </div>
                 </div>
             </div>
-            <div class="news-body">
+            <div class="news-body" itemprop="articleBody">
                 <?php Bunyad::posts()->the_content(); ?>
             </div>
         </div>

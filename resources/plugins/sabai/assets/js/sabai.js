@@ -1,5 +1,6 @@
 
 (function($) {
+    SABAI = SABAI || {};
     SABAI.console = window.console || {'log': function (msg) {
         alert(msg);
     }};
