@@ -18,67 +18,67 @@ $event_count = count($EM_Events);
 
 <div class="city-pulse" >
 <div class="row">
-    <?php if($event_count>0):?>
-<div class="col-md-12">
-    <div class="feature-title">
-        <div class="inner">
-            <h3 class="title">Event</h3>
-            <div class="leaf_line"></div>
-        </div>
-    </div>
-</div>
-<div class="event-top">
-    <div class="col-md-4 pr0">
-        <div class="event-left">
-            <div class="today">
-                <h1><?php echo date('d');?></h1>
-                <h2><?php echo mysql2date('M',date('M'));?></h2>
-                <h4><?php echo mysql2date('l',date('l'));?></h4>
+<?php if($event_count>0):?>
+    <div class="col-md-12">
+        <div class="feature-title">
+            <div class="inner">
+                <h3 class="title">Event</h3>
+                <div class="leaf_line"></div>
             </div>
-            <div class="prev"><a href="#"><span></span></a></div>
-            <ol class="carousel-linked-nav eventpagination">
-                <?php for ($x=1; $x<=$event_count; $x++){
-                    echo "<li class=\"". (($x == 1)?'active':'') ."\"><a href=\"#$x\">$x</a></li>";
-                } ?>
-            </ol>
-            <div class="next"><a href="#"><span></span></a></div>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="eventswiper">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <?php $i = 0; foreach($EM_Events as $event): $i ++;?>
-                    <div class="item <?php echo ($i==1)?'active':''; ?>">
-                        <?php echo get_the_post_thumbnail($event->ID,'main-slider');?>
-                        <div class="carousel-caption">
-                            <div class="title">
-                                <a href="<?php echo get_the_permalink($event->ID);?>">
-                                    <?php echo get_the_title($event->ID);?>
-                                </a>
-                            </div>
-                            <div class="date"><?php echo mysql2date( 'H:i', $event->event_start_time );?> - <?php echo mysql2date( 'H:i', $event->event_end_time );?></div>
-                        </div>
-                    </div>
-                    <? endforeach;?>
+    <div class="event-top">
+        <div class="col-md-4 pr0">
+            <div class="event-left">
+                <div class="today">
+                    <h1><?php echo date('d');?></h1>
+                    <h2><?php echo mysql2date('M',date('M'));?></h2>
+                    <h4><?php echo mysql2date('l',date('l'));?></h4>
                 </div>
+                <div class="prev"><a href="#"><span></span></a></div>
+                <ol class="carousel-linked-nav eventpagination">
+                    <?php for ($x=1; $x<=$event_count; $x++){
+                        echo "<li class=\"". (($x == 1)?'active':'') ."\"><a href=\"#$x\">$x</a></li>";
+                    } ?>
+                </ol>
+                <div class="next"><a href="#"><span></span></a></div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="eventswiper">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <?php $i = 0; foreach($EM_Events as $event): $i ++;?>
+                        <div class="item <?php echo ($i==1)?'active':''; ?>">
+                            <?php echo get_the_post_thumbnail($event->ID,'main-slider');?>
+                            <div class="carousel-caption">
+                                <div class="title">
+                                    <a href="<?php echo get_the_permalink($event->ID);?>">
+                                        <?php echo get_the_title($event->ID);?>
+                                    </a>
+                                </div>
+                                <div class="date"><?php echo mysql2date( 'H:i', $event->event_start_time );?> - <?php echo mysql2date( 'H:i', $event->event_end_time );?></div>
+                            </div>
+                        </div>
+                        <? endforeach;?>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="clearfix"></div>
-    <?php endif; ?>
+    <div class="clearfix"></div>
+<?php endif; ?>
 <div class="col-md-12">
 <div class="event-container">
 <div class="title">Энэ сард</div>
