@@ -61,6 +61,10 @@ $bunyad = Bunyad::core()->init(array(
 // fire up the theme-specific extra functionality
 $smart_mag = new Bunyad_Theme_SmartMag;
 
+function remove_width_attribute( $html ) {
+    $html = preg_replace( '/(height)="\d*"\s/', "", $html );
+    return $html;
+}
 /**
  * SmartMag Theme!
  * 
@@ -182,7 +186,13 @@ class Bunyad_Theme_SmartMag
 
 
         add_filter('the_excerpt', 'excerpt_ellipse');
+
+//        add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
+        add_filter( 'image_send_to_editor', 'remove_width_attribute', 10 );
 	}
+
+
+
 
     function excerpt_ellipse($text) {
         return str_replace('[...]', ' <a href="'.get_permalink().'">Read more...</a>', $text);
