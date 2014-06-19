@@ -1,13 +1,13 @@
 <?php
 
-class Bunyad_LatestPosts_Widget extends WP_Widget
+class Bunyad_LatestBefore_Widget extends WP_Widget
 {
 	public function __construct()
 	{
 		parent::__construct(
-			'bunyad-latest-posts-widget',
-			'Bunyad - Recent Posts',
-			array('description' => 'Recent posts with thumbnail.', 'classname' => 'latest-posts')
+			'bunyad-latest-before-widget',
+			'Bunyad - Latest Before Posts',
+			array('description' => 'Recent posts with thumbnail on before.', 'classname' => 'latest-before')
 		);
 		
 		add_action('save_post', array($this, 'flush_widget_cache'));
@@ -18,7 +18,7 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
 	// code below is modified from default
 	public function widget($args, $instance) 
 	{
-		$cache = get_transient('bunyad_widget_latest_posts');
+		$cache = get_transient('bunyad_widget_latest_before');
 		
 		if (!is_array($cache)) {
 			$cache = array();
@@ -74,7 +74,7 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
                 <?php  while ($r->have_posts()) : $r->the_post(); global $post; ?>
                     <?php if(has_post_thumbnail( $post->ID )): ?>
                         <div class="news-list clearfix col-md-6">
-                            <div class="img-container">
+                            <div class="img-container before">
                                 <?php the_post_thumbnail('recent-posts', array('title' => strip_tags(get_the_title()))); ?>
                             </div>
                             <div class="news-body with-img">
@@ -102,7 +102,7 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
 
 		$cache[$args['widget_id']] = ob_get_flush();
 		
-		set_transient('bunyad_widget_latest_posts', $cache);
+		set_transient('bunyad_widget_latest_before', $cache);
 	}
 
 	public function update($new, $old) 
@@ -118,7 +118,7 @@ class Bunyad_LatestPosts_Widget extends WP_Widget
 
 	public function flush_widget_cache() 
 	{
-		delete_transient('bunyad_widget_latest_posts');
+		delete_transient('bunyad_widget_latest_before');
 	}
 
 	public function form($instance)

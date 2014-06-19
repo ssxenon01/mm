@@ -8,9 +8,9 @@
 
 <?php if (!Bunyad::options()->disable_footer): ?>
 <div class="footer-section">
-    <div class="container">
+    <div class="">
         <?php if (is_active_sidebar('main-footer')): ?>
-            <div class="row">
+            <div class="row" style="margin:0;">
                 <?php dynamic_sidebar('main-footer'); ?>
             </div>
         <?php endif; ?>

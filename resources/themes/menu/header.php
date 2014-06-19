@@ -91,7 +91,7 @@
 
         <!-- menu -->
         <div class="navbar navbar-default" role="navigation">
-            <div class="container">
+            <div class="container force-reset">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="navbar-brand">

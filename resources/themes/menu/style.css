@@ -355,10 +355,15 @@ strong{
     width: 1170px;
 }
 /* line 72, ../sass/style.scss */
+.wrapper .navbar-default .force-reset {
+    padding: 0 16px 0 0;
+}
 .wrapper .navbar-default {
     background-color: #fff;
     border: none;
     border-radius: 0;
+    border-bottom: 1px solid #ed1c24;
+    margin: 0 15px;
 }
 /* line 76, ../sass/style.scss */
 .wrapper .navbar-default .navbar-brand {
@@ -367,12 +372,30 @@ strong{
 /* line 79, ../sass/style.scss */
 .wrapper .navbar-default .navbar-nav {
     float: right;
-    padding-top: 26px;
+    padding-top: 56px;
 }
 /* line 82, ../sass/style.scss */
-.wrapper .navbar-default .navbar-nav li {
-    padding: 30px 0 20px;
+.wrapper .navbar-default .navbar-nav > li {
+    padding: 3px 0;
+    border-top: 1px solid #f0493f;
 }
+.wrapper .navbar-default .navbar-nav > li a img.cp{
+    margin: -9px -8px 0 -16px;
+    width: 96px;
+}
+.wrapper .navbar-default .navbar-nav > li a img.app{
+    width: 15px;
+    margin: -4px 5px -3px -13px;
+}
+.wrapper .navbar-default .navbar-nav li.current-menu-item  {
+
+    background: #d9616e;
+
+}
+.wrapper .navbar-default .navbar-nav li.current-menu-item a{
+    color: #fff;
+}
+
 /* line 85, ../sass/style.scss */
 .wrapper .navbar-default .navbar-nav li:last-child a {
     border-right: none;
@@ -390,7 +413,7 @@ strong{
     text-transform: uppercase;
     color: #b1b1b1;
     font-weight: 400;
-    border-right: 1px solid #959595;
+    border-right: 1px solid #cdcdcd;
     line-height: 16px;
 }
 /* line 98, ../sass/style.scss */
@@ -419,7 +442,7 @@ strong{
 }
 /* line 124, ../sass/style.scss */
 .wrapper .main-content {
-    margin: 20px 0 0 0;
+    margin: 2px 0 0 0;
 }
 /* line 126, ../sass/style.scss */
 .wrapper .main-content .top-banner {
@@ -491,11 +514,22 @@ strong{
 .wrapper .main-content .top-news .news-list {
     margin-bottom: 20px;
 }
+.wrapper .main-content .top-news .news-list.fill {
+    background: #edeae9;
+    padding-bottom: 15px;
+    padding-top: 12px;
+}
 /* line 190, ../sass/style.scss */
-.wrapper .main-content .top-news .news-list .img-container {
-    float: left;
+.wrapper .main-content .top-news .news-list .img-container.before {
     margin-right: 16px;
+    margin-left: 0;
+    float: left;
+}
+.wrapper .main-content .top-news .news-list .img-container {
+    float: right;
+    margin-left: 16px;
     width: 40%;
+    margin-top: 25px;
     max-width: 300px;
     min-width: 120px;
 }
@@ -504,15 +538,22 @@ strong{
     width: 100%;
 }
 /* line 201, ../sass/style.scss */
+.wrapper .main-content .top-news .news-list .news-body.with-img{
+    float: left;
+    width: 190px;
+}
 .wrapper .main-content .top-news .news-list .news-body h4 {
     margin: 0 0 10px;
-    font-size: 20px;
+    font-size: 16px;
     color: #ee4643;
+}
+.wrapper .main-content .top-news .news-list .news-body.with-img h4 {
+    border-bottom: 1px solid black;
+    width: 192px;
 }
 /* line 206, ../sass/style.scss */
 .wrapper .main-content .top-news .news-list .news-body .body-text {
     font-size: 13px;
-    max-height: 34px;
     overflow: hidden;
     line-height: 17px;
     color: #3c414e;
@@ -528,7 +569,7 @@ strong{
     display: inline-block;
     position: relative;
     padding-right: 13px;
-    float: right;
+    float: left;
 }
 /* line 224, ../sass/style.scss */
 .wrapper .main-content .top-news .news-list .news-body .more span {
@@ -905,7 +946,7 @@ strong{
     position: relative;
     border: 1px solid rgb(197, 197, 197);
     box-shadow: 1px 1px 1px rgba(97, 96, 96, 0.39);
-    padding: 2px;
+    padding: 4px;
 }
 /* line 568, ../sass/style.scss */
 .wrapper .main-content .mymenu-swiper.citypulse {
@@ -1647,6 +1688,9 @@ strong{
     font-family: 'PT Sans Narrow',arial, sans-serif;
 }
 /* line 1187, ../sass/style.scss */
+.wrapper .main-content .right-content .event-list{
+    margin-bottom: 20px;
+}
 .wrapper .main-content .right-content .event-list .event-title {
     position: relative;
     background: #021360;
@@ -1802,9 +1846,7 @@ strong{
 }
 /* line 1307, ../sass/style.scss */
 .wrapper .main-content .footer-section {
-    margin: 45px 0 0 0;
-    margin-bottom: 0;
-    width: 100%;
+    margin: 45px 15px 0 15px;
     background: #eeeae9;
     padding: 40px 0;
 }
@@ -1829,6 +1871,7 @@ strong{
     color: #fff;
     padding: 10px 0;
     text-align: center;
+    margin: 0 15px;
 }
 /* line 1332, ../sass/style.scss */
 .wrapper .main-content .copy-right p {

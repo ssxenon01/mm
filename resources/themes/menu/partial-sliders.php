@@ -40,8 +40,6 @@ $i = $z = 0; // loop counters
         <div class="swiper-wrapper">
             <?php while ($query->have_posts()): $query->the_post(); ?>
             <div class="swiper-slide">
-                <?php $cat = current(get_the_category()); ?>
-                <a href="<?php echo get_category_link($cat->term_id); ?>"><div class="type"><?php echo esc_html($cat->cat_name); ?></div></a>
                 <?php the_post_thumbnail('main-slider', array('alt' => esc_attr(get_the_title()), 'title' => '')); ?>
                 <a href="<?php the_permalink(); ?>"><div class="title"><?php echo esc_attr(get_the_title());?> <span class="published"><?php echo the_date();?></span></div></a>
             </div>
