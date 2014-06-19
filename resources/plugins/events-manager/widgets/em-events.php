@@ -58,7 +58,7 @@ class EM_Widget extends WP_Widget {
 
         <div class="event-list">
             <div class="event-title">
-                <?php echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);?>
+                <span><?php echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);?></span>
             </div>
             <div class="eventlist">
                 <?php foreach($events as $event): ?>
@@ -75,9 +75,12 @@ class EM_Widget extends WP_Widget {
                             </a>
                         </div>
                         <div class="text-intro">
-                            <h3 class="event-t"><?php echo get_the_title($event->ID)?></h3>
-                            <h4><span class="glyphicon glyphicon-map-marker"></span> <?php echo get_the_title($event->get_location())?></h4>
-                            <div class="date"> <span class="glyphicon glyphicon-time"></span>  <?php ?><?php echo mysql2date( 'H:i', $event->event_start_time );?></div>
+                            <div class="event-description">
+                                <?php echo preg_replace("/<a.*<\/a>/", "\n", $event->post_content); ?>
+                            </div>
+                            <!--<h3 class="event-t"><?php /*echo get_the_title($event->ID)*/?></h3>
+                            <h4><span class="glyphicon glyphicon-map-marker"></span> <?php /*echo get_the_title($event->get_location())*/?></h4>
+                            <div class="date"> <span class="glyphicon glyphicon-time"></span>  <?php /**/?><?php /*echo mysql2date( 'H:i', $event->event_start_time );*/?></div>-->
                         </div>
                     </div>
                 <?php endforeach; ?>

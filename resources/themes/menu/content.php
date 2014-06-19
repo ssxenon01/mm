@@ -114,7 +114,7 @@ $review = Bunyad::posts()->meta('reviews');
                                         <?php the_post_thumbnail(
                                             (Bunyad::core()->get_sidebar() == 'none' ? 'main-block' : 'gallery-block'),
                                             array('class' => 'image', 'title' => strip_tags(get_the_title()))); ?>
-                                        <a href="<?php the_permalink(); ?>"><div class="title"><?php get_the_title();?> <span class="published"><?php echo esc_html(get_the_date()); ?></span></div>
+                                        <a href="<?php the_permalink(); ?>"><div class="title"><?php get_the_title();?> <span class="published"><?php echo esc_html(get_the_date()); ?></span></div></a>
                                     </div>
 
                                 <?php endforeach; wp_reset_postdata(); ?>

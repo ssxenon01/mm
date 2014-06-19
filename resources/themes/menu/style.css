@@ -903,6 +903,9 @@ strong{
 /* line 566, ../sass/style.scss */
 .wrapper .main-content .mymenu-swiper {
     position: relative;
+    border: 1px solid rgb(197, 197, 197);
+    box-shadow: 1px 1px 1px rgba(97, 96, 96, 0.39);
+    padding: 2px;
 }
 /* line 568, ../sass/style.scss */
 .wrapper .main-content .mymenu-swiper.citypulse {
@@ -1484,18 +1487,15 @@ strong{
 /* line 1050, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event {
     margin-bottom: 20px;
+    background: #176476;
+    padding-bottom: 10px;
 }
 /* line 1052, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event .event-title {
     position: relative;
-    background: #d5d5d5;
-    border-bottom: 4px solid #ef4744;
-    padding: 5px 10px;
+    padding: 0 10px;
     color: #ef4744;
-    text-transform: uppercase;
-    font-weight: 700;
-    text-shadow: 0px 0px 0px #FFF;
-    font-family: 'PT Sans Narrow',arial, sans-serif;
+    height: 76px;
 }
 /* line 1062, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event .event-title .pagination {
@@ -1530,6 +1530,20 @@ strong{
 /* line 1089, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event .event-swiper {
     position: relative;
+    margin: 0 11px;
+    border: 3px solid white;
+}
+.wrapper .main-content .right-content .menu-event .pulse-thumbs{
+    margin: 10px;
+}
+.wrapper .main-content .right-content .menu-event .pulse-thumbs .col-md-4{
+    padding: 2px;
+}
+.wrapper .main-content .right-content .menu-event .pulse-thumbs .col-md-4 img{
+    width: 66px;
+    height: 66px;
+    border: 3px solid white;
+    box-shadow: 1px 1px 1px rgb(119, 119, 119);
 }
 /* line 1091, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event .event-swiper .event-arrow-left {
@@ -1562,7 +1576,7 @@ strong{
 /* line 1118, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event .event-swiper .swiper-container {
     width: 100%;
-    height: 360px;
+    height: 265px;
     color: #fff;
     text-align: center;
 }
@@ -1620,7 +1634,7 @@ strong{
 /* line 1167, ../sass/style.scss */
 .wrapper .main-content .right-content .menu-event .event-swiper .swiper-container .swiper-slide .title {
     position: absolute;
-    bottom: 50px;
+    bottom: 12px;
     right: 0px;
     margin-bottom: 0;
     font-weight: normal;
@@ -1629,24 +1643,28 @@ strong{
     color: #fff;
     background: rgba(0, 0, 0, 0.5);
     padding: 6px 10px 15px 10px;
-    text-align: right;
+    /* text-align: right; */
     font-family: 'PT Sans Narrow',arial, sans-serif;
 }
 /* line 1187, ../sass/style.scss */
 .wrapper .main-content .right-content .event-list .event-title {
     position: relative;
-    background: #d5d5d5;
-    border-bottom: 4px solid #ef4744;
-    padding: 5px 10px;
-    color: #ef4744;
+    background: #021360;
+    /*border-bottom: 4px solid #ef4744;*/
+    padding: 10px 10px 0;
+    color: #fff;
     text-transform: uppercase;
-    font-weight: 700;
-    text-shadow: 0px 0px 0px #FFF;
+    /*font-weight: 700;*/
+    text-shadow: 0 0 0 #FFF;
     font-family: 'PT Sans Narrow',arial, sans-serif;
+}
+.wrapper .main-content .right-content .event-list .event-title span{
+    background: #ff0000;
+    padding: 0 7px;
 }
 /* line 1198, ../sass/style.scss */
 .wrapper .main-content .right-content .event-list .eventlist {
-    background: #F0F0F0;
+    background: #021360;
     padding: 15px 10px;
 }
 /* line 1201, ../sass/style.scss */
@@ -1693,21 +1711,20 @@ strong{
     width: 3px;
     height: 30px;
     background: #fff;
-    left: 40px;
+    left: 42px;
     bottom: -25px;
 }
 /* line 1235, ../sass/style.scss */
 .wrapper .main-content .right-content .event-list .eventlist .event .img-over .event-date {
     color: #fff;
-    text-transform: none;
     position: absolute;
     display: block;
-    position: absolute;
     bottom: 15px;
-    left: 30px;
+    left: 27px;
     text-align: center;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
+
 }
 /* line 1246, ../sass/style.scss */
 .wrapper .main-content .right-content .event-list .eventlist .event .img-over .event-date .text {
@@ -1725,6 +1742,15 @@ strong{
     overflow: hidden;
     font-family: 'PT Sans Narrow',arial, sans-serif;
 }
+.wrapper .main-content .right-content .event-list .eventlist .event .text-intro .event-description {
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    height: 65px;
+    overflow: hidden;
+    margin: 10px 0px;
+}
+
 /* line 1261, ../sass/style.scss */
 .wrapper .main-content .right-content .event-list .eventlist .event .text-intro h3 {
     font-size: 14px;

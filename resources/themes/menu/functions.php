@@ -107,7 +107,7 @@ class Bunyad_Theme_SmartMag
 		
 		add_image_size('slider-small', 360, 200, true); // small thumb for slider
 		add_image_size('recent-posts', 300, 200, true); // small thumb for slider
-		add_image_size('gallery-block', 230, 360, true); // small thumb for slider
+		add_image_size('gallery-block', 202, 265, true); // small thumb for slider
 
 		// i18n
 		load_theme_textdomain('bunyad', get_template_directory() . '/languages');

@@ -81,7 +81,7 @@ class Bunyad_MultiSlider_Widget extends WP_Widget
                                     <div class="info">
                                         <div class="type"><?php the_category(); ?></div>
                                         <div class="title"><a href="<?php the_permalink(); ?>"><?php if (get_the_title()) the_title(); else the_ID(); ?></a></div>
-                                        <div class="desc">Том саванд бууцай, вандуй болон оливын тосоо хамт хийж тосоо жигд тартал нь сайтар хутгана. Дараа нь лемоны шүүс, бяслаг болон давс перецээ нэмээд дахин сайн хутгана. </div>
+                                        <div class="desc"><?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?> </div>
                                     </div>
                                 </div>
 
