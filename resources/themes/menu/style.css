@@ -1728,7 +1728,7 @@ strong{
 .wrapper .main-content .right-content .event-list .eventlist .event .img-over img {
     max-width: 86px;
     display: inline-block;
-    max-height: 94px;
+    max-height: 86px;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     -ms-border-radius: 50px;
@@ -1752,7 +1752,7 @@ strong{
 /* line 1227, ../sass/style.scss */
 .wrapper .main-content .right-content .event-list .eventlist .event .img-over .line {
     position: absolute;
-    width: 3px;
+    width: 1px;
     height: 30px;
     background: #fff;
     left: 42px;

@@ -61,7 +61,11 @@ class EM_Widget extends WP_Widget {
                 <span><?php echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);?></span>
             </div>
             <div class="eventlist">
-                <?php foreach($events as $event): ?>
+                <?php
+                $i = 0;
+                foreach($events as $event):
+                    $i++;
+                    ?>
                     <div class="event">
                         <div class="img-over">
                             <a href="<?php echo get_permalink($event->ID);?>">
@@ -71,7 +75,7 @@ class EM_Widget extends WP_Widget {
                                     <div class="text"><?php echo mysql2date( 'M', $event->start );?></div>
                                     <div class="count"><?php echo mysql2date( 'd', $event->start );?></div>
                                 </div>
-                                <div class="line"></div>
+                                <?php if(count($events) != $i):?><div class="line"></div><?php endif;?>
                             </a>
                         </div>
                         <div class="text-intro">

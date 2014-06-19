@@ -627,6 +627,7 @@ jQuery(function($) {
     var menuSwiper = new Swiper('.swiper-container', {
         pagination: '.pagination',
         loop: true,
+        autoplay:6000,
         paginationClickable: true
     });
 
