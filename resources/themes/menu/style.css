@@ -12,6 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,800,700&subset=latin,cyrillic-ext,cyrillic);
 @import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700&subset=latin,cyrillic-ext,cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Condensed&subset=latin,cyrillic-ext,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100);
 /* line 17, ../../../../../Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -2045,4 +2046,100 @@ Pagination Styles
     text-transform: uppercase;
     margin-bottom: 28px;
     margin-top: 35px;
+}
+.masonry-loop{
+    margin: 0 10px;
+}
+.masonry-loop [class^="col-md"]{
+    padding: 0 5px;
+}
+.masonry-loop .thumb-box{
+    height: 200px;
+    position: relative;
+}
+.masonry-loop .thumb-box .thumb img{
+    width: 100%;
+}
+.masonry-loop .red-box{
+    padding: 20px;
+    background:#e25f5f;
+    height: 350px;
+}
+/*ribbon*/
+.masonry-loop .thumb-box .ribbon {
+    width: 190px;
+    bottom: 55px;
+    margin: -5px;
+    position: absolute;
+    text-align: center;
+    font-size: 27px!important;
+    background: rgba(16, 173, 183, 0.8);
+    -webkit-box-shadow: rgba(000,000,000,0.3) 0 1px 1px;
+    -moz-box-shadow: rgba(000,000,000,0.3) 0 1px 1px;
+    box-shadow: rgba(000,000,000,0.3) 0 1px 1px;
+    font-family: 'Helvetica Neue',Helvetica, sans-serif;
+}
+.masonry-loop .thumb-box .ribbon h1 {
+    font-size: 14px;
+    color: #FFFFFF;
+    margin: 0px;
+    padding: 10px 10px;
+}
+
+.masonry-loop .thumb-box .ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
+    border-color: #0c5e75 transparent transparent transparent;
+    position: absolute;
+    display: block;
+    border-style: solid;
+    bottom: -5px;
+    content: '';
+}
+.masonry-loop .thumb-box .ribbon .ribbon-content:before {
+    left: 0;
+    border-width: 5px 0 0 5px;
+}
+.masonry-loop .thumb-box .ribbon .ribbon-content:after {
+    right: 0;
+    border-width: 5px 5px 0 0;
+}
+.masonry-loop .thumb-box .ribbon-stitches-top {
+    margin-top:2px;
+    border-top: 0px dashed rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+}
+.masonry-loop .thumb-box .ribbon-stitches-bottom {
+    margin-bottom:2px;
+    border-top: 0px dashed rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.3);
+}
+/*ribbon end*/
+.masonry-loop .red-box .thumb{
+}
+.masonry-loop .red-box .thumb img{
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 1px rgb(197, 197, 197);
+}
+.masonry-loop .red-box .title{
+    font-size: 16px;
+    line-height: 18px;
+    color:#fff;
+    font-family: 'Open Sans';
+    margin: 0 0 10px 0;
+    font-weight: 300;
+}
+.masonry-loop .red-box .description{
+    font-family: 'Open sans';
+    font-size: 11px;
+    line-height: 13px;
+    font-weight: 300;
+    color: white;
+    height: 92px;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: hidden;
 }

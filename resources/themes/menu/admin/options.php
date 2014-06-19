@@ -63,8 +63,8 @@ return array(
 						'desc'    => __('This style is used while browsing author page, searching, default blog format, date archives etc.', 'bunyad'),
 						'type'    => 'select',
 						'options' =>  array(
-							'modern' => __('Modern Style - 2 Column', 'bunyad'),
-							'alt' => __('Blog Style', 'bunyad')
+							'modern' => __('Masonry Style', 'bunyad'),
+							'alt' => __('CityPulse Style', 'bunyad')
 						)
 					),
 					

@@ -24,8 +24,8 @@
     <?php while ($bunyad_loop->have_posts()): $bunyad_loop->the_post(); ?>
         <article <?php post_class('highlights'); ?> itemscope itemtype="http://schema.org/Article">
             <div class="news-list clearfix">
-                <div class="img-container">
-                    <?php the_post_thumbnail('recent-posts', array('title' => strip_tags(get_the_title()))); ?>
+                <div class="img-container before">
+                    <?php the_post_thumbnail('slider-small', array('title' => strip_tags(get_the_title()))); ?>
                 </div>
                 <div class="news-body">
                     <a href="<?php the_permalink() ?>"><h4><?php if (get_the_title()) the_title(); else the_ID(); ?></h4></a>

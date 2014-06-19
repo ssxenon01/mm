@@ -24,8 +24,8 @@ $render = Bunyad::factory('admin/option-renderer'); /* @var $render Bunyad_Admin
 				'name' => 'meta[template]',
 				'options' => array(
 					0 => __('Default Style (In Theme Settings)', 'bunyad'),
-					'modern' => __('Modern Style - 2 Column', 'bunyad'),
-					'alt' => __('Blog Style', 'bunyad'),
+					'modern' => __('Masonry Style', 'bunyad'),
+					'alt' => __('City Pulse Style', 'bunyad'),
 					'timeline' => __('Timeline Style', 'bunyad'),
 					
 				),
