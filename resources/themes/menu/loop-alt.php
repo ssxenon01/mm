@@ -16,7 +16,7 @@ if ($bunyad_loop->have_posts()):
 
 <div class="city-pulse" >
     <div class="row">
-        <?php get_template_part('city-pulse-sliders');?>
+        <?php get_template_part('partial-coverflow');?>
         <div class="clearfix"></div>
         <div id="city-pulse">
             <?php while ($bunyad_loop->have_posts()): $bunyad_loop->the_post(); ?>

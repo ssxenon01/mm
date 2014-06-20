@@ -2204,3 +2204,30 @@ Pagination Styles
     font-size: 12px;
     font-family: Arial;
 }
+#preview img {
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(black), color-stop(.1, black), to(transparent));
+}
+#preview {
+    padding:20px 0 40px;
+    position: relative;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #08080b),
+        color-stop(0.87, #3a3c4a)
+    );
+    background-image: -o-linear-gradient(bottom, #08080b 0%, #3a3c4a 87%);
+    background-image: -moz-linear-gradient(bottom, #08080b 0%, #3a3c4a 87%);
+    background-image: -webkit-linear-gradient(bottom, #08080b 0%, #3a3c4a 87%);
+    background-image: -ms-linear-gradient(bottom, #08080b 0%, #3a3c4a 87%);
+    background-image: linear-gradient(to bottom, #08080b 0%, #3a3c4a 87%);
+}
+#preview-coverflow .cover {
+    cursor:		pointer;
+    width:		320px;
+    height:		240px;
+    box-shadow:	0 0 4em 1em rgba(26, 26, 26, 0.55);;
+}
