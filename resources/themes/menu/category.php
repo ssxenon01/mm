@@ -26,12 +26,12 @@ if ($cat_meta['template'] == 'alt') {
 // timeline template
 else if ($cat_meta['template'] == 'timeline') {
 	
-	$bunyad_loop_template = 'loop-timeline';
+	$bunyad_loop_template = 'loop';
 	
-	$category = get_category(get_query_var('cat'), false);
+	/*$category = get_category(get_query_var('cat'), false);
 	$cat_meta = Bunyad::options()->get('cat_meta_' . $category->term_id);
 	
-	query_posts(array('cat' => $category->term_id, 'posts_per_page' => -1));
+	query_posts(array('cat' => $category->term_id, 'posts_per_page' => -1));*/
 }
 elseif($cat_meta['template'] == 'modern'){
     $bunyad_loop_template = 'loop-masonry';
