@@ -33,6 +33,9 @@ else if ($cat_meta['template'] == 'timeline') {
 	
 	query_posts(array('cat' => $category->term_id, 'posts_per_page' => -1));
 }
+elseif($cat_meta['template'] == 'modern'){
+    $bunyad_loop_template = 'loop-masonry';
+}
 // default modern template
 else {
 	$bunyad_loop_template = 'loop';

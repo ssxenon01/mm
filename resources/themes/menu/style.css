@@ -393,7 +393,7 @@ strong{
     background: #d9616e;
 
 }
-.wrapper .navbar-default .navbar-nav li.current-menu-item a{
+.wrapper .navbar-default .navbar-nav > li.current-menu-item > a{
     color: #fff;
 }
 
@@ -2052,18 +2052,53 @@ Pagination Styles
 }
 .masonry-loop [class^="col-md"]{
     padding: 0 5px;
+    margin-bottom: 10px;
+}
+.masonry-loop .yellow-box{
+    background: #ece491;
+    padding: 20px;
+    height: 200px;
+    overflow: hidden;
+}
+.masonry-loop .yellow-box .title{
+    font-size: 16px;
+    color: #ee4643;
+    margin: 0 0 15px;
+}
+.masonry-loop .yellow-box .description{
+    font-size: 12px;
+    color: #9a634c;
+    font-family: 'Open Sans';
+}
+.masonry-loop .yellow-box .thumb{
+    height: 129px;
+    margin-right: 15px;
+}
+.masonry-loop .yellow-box .thumb img{
+    height: 100%;
+    border: 3px solid white;
+    box-shadow: 1px 1px 1px rgba(158, 158, 158, 0.62);
+    -moz-box-shadow: 1px 1px 1px rgba(158, 158, 158, 0.62);
+    -webkit-box-shadow: 1px 1px 1px rgba(158, 158, 158, 0.62);
 }
 .masonry-loop .thumb-box{
     height: 200px;
     position: relative;
 }
+.masonry-loop .thumb-box .thumb{
+    height: 200px;
+}
 .masonry-loop .thumb-box .thumb img{
     width: 100%;
+    height: 100%;
 }
 .masonry-loop .red-box{
     padding: 20px;
     background:#e25f5f;
-    height: 350px;
+    height: 360px;
+}
+.masonry-loop .red-box.different{
+    background:#10acb7;
 }
 /*ribbon*/
 .masonry-loop .thumb-box .ribbon {
@@ -2123,6 +2158,7 @@ Pagination Styles
     width: 100%;
     margin-bottom: 20px;
     box-shadow: 1px 1px 1px rgb(197, 197, 197);
+    border: 3px solid white;
 }
 .masonry-loop .red-box .title{
     font-size: 16px;
@@ -2142,4 +2178,29 @@ Pagination Styles
     text-overflow: ellipsis;
     white-space: normal;
     overflow: hidden;
+}
+
+.masonry-loop .trans-box {
+    height: 150px;
+}
+.masonry-loop .trans-box .thumb {
+    margin-left: -15px;
+    padding-right: 0;
+}
+.masonry-loop .trans-box img{
+    height: 150px;
+    width: 100%;
+}
+.masonry-loop .trans-box .title{
+    color: white;
+    font-size: 16px;
+    background: #e25f5f;
+    margin: 0 0 10px 10px;
+    float: right;
+    padding: 10px;
+}
+.masonry-loop .trans-box .description{
+    color: #969696;
+    font-size: 12px;
+    font-family: Arial;
 }

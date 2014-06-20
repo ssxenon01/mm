@@ -16,7 +16,8 @@ get_header();
 
 if (empty($bunyad_loop_template) && Bunyad::options()->archive_loop_template == 'alt') {
     $bunyad_loop_template = 'loop-alt';
-}elseif(Bunyad::options()->archive_loop_template == 'modern'){
+}
+if (empty($bunyad_loop_template) && Bunyad::options()->archive_loop_template == 'modern'){
     $bunyad_loop_template = 'loop-masonry';
 }
 
@@ -40,51 +41,6 @@ if (empty($bunyad_loop_template) && Bunyad::options()->archive_loop_template == 
                 ?>
 
                 <div class="top-news">
-                    <div class="feature-title">
-                        <div class="inner">
-
-
-                <?php if (is_tag()): ?>
-
-                    <h3 class="title"><?php printf(__('Browsing: %s', 'bunyad'), '<strong>' . single_tag_title( '', false ) . '</strong>'); ?></h3>
-
-                <?php elseif (is_category()): // category page ?>
-
-                    <h3 class="title"><?php printf(__('Browsing: %s', 'bunyad'), '<strong>' . single_cat_title('', false) . '</strong>'); ?></h3>
-
-                    <?php if (category_description()): ?>
-                        <p class="post-content"><?php echo do_shortcode(category_description()); ?></p>
-                    <?php endif; ?>
-
-                <?php elseif (is_tax()): // custom taxonomies ?>
-
-                    <h3 class="title"><?php printf(__('Browsing: %s', 'bunyad'), '<strong>' . single_term_title('', false) . '</strong>'); ?></h3>
-
-                    <?php if (term_description()): ?>
-                        <p class="post-content"><?php echo do_shortcode(term_description()); ?></p>
-                    <?php endif; ?>
-
-                <?php elseif (is_search()): // search page ?>
-                    <?php $results = $wp_query->found_posts; ?>
-                    <h3 class="title"><?php printf(__('Search Results: %s (%d)', 'bunyad'),  get_search_query(), $results); ?></h3>
-
-                <?php elseif (is_archive()): ?>
-                    <h3 class="title"><?php
-
-                        if (is_day()):
-                            printf(__('Daily Archives: %s', 'bunyad'), '<strong>' . get_the_date() . '</strong>');
-                        elseif (is_month()):
-                            printf(__('Monthly Archives: %s', 'bunyad'), '<strong>' . get_the_date('F, Y') . '</strong>');
-                        elseif (is_year()):
-                            printf(__('Yearly Archives: %s', 'bunyad'), '<strong>' . get_the_date('Y') . '</strong>');
-                        endif;
-
-                        ?></h3>
-                <?php endif; ?>
-
-                            <div class="leaf_line"></div>
-                        </div>
-                    </div>
                     <?php get_template_part(($bunyad_loop_template ? $bunyad_loop_template : 'loop')); ?>
                 </div>
 
