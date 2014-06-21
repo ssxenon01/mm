@@ -36,8 +36,10 @@ get_header();
                         get_template_part('content', 'builder');
 
                     else:
-
-                        get_template_part('content', 'single');
+                        if(get_post_type()=="event"){
+                            get_template_part('event', 'single');
+                        }else
+                            get_template_part('content', 'single');
 
                     endif;
                     ?>

@@ -123,7 +123,23 @@ foreach ($events_dates as $event_day_ts => $events): ?>
                         <ul>
                             <li><span class="glyphicon glyphicon-time"></span><span><?php echo mysql2date('M d,l',$event->start)?> <?php echo mysql2date('H:i',$event->event_start_time)?> </span></</li>
                             <li><span class="glyphicon glyphicon-map-marker"></span><span><?php echo get_the_title($event->get_location())?></span></</li>
-                            <li><span class="glyphicon glyphicon glyphicon-tag"></span><span>Beach Party</span></</li>
+                            <li><span class="glyphicon glyphicon glyphicon-tag"></span><span>
+                                    <?php
+
+                                    $tags = get_the_terms($event->post_id, EM_TAXONOMY_TAG);
+                                    if( is_array($tags) && count($tags) > 0 ){
+                                        $tags_list = array();
+                                        foreach($tags as $tag){
+                                            $link = get_term_link($tag->slug, EM_TAXONOMY_TAG);
+                                            if ( is_wp_error($link) ) $link = '';
+                                            $tags_list[] = '<a href="'. $link .'">'. $tag->name .'</a>';
+                                        }
+                                        echo implode(', ', $tags_list);
+                                    }
+
+                                    ?>
+
+                                </span></</li>
                         </ul>
                     </div>
                 </div>

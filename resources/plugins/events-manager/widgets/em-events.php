@@ -69,7 +69,11 @@ class EM_Widget extends WP_Widget {
                     <div class="event">
                         <div class="img-over">
                             <a href="<?php echo get_permalink($event->ID);?>">
-                                <?php echo get_the_post_thumbnail($event->ID,'thumbnail', array('title' => strip_tags(get_the_title()), 'itemprop' => 'image' , 'class' => 'media-object')); ?>
+                                <?php if(has_post_thumbnail($event->ID))
+                                    echo get_the_post_thumbnail($event->ID,'thumbnail', array('title' => strip_tags(get_the_title()), 'itemprop' => 'image' , 'class' => 'media-object'));
+                                    else
+                                        echo '<div class="empty"></div>'
+                                ?>
                                 <div class="datebg"></div>
                                 <div class="event-date">
                                     <div class="text"><?php echo mysql2date( 'M', $event->start );?></div>

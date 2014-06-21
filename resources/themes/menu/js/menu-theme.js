@@ -1264,6 +1264,7 @@ jQuery(function($) {
         animateStep:	function(event, cover, offset, isVisible, isMiddle, sin, cos) {
             if (isVisible) {
                 if (isMiddle) {
+                    $('#preview h1').html($(cover).attr('name'))
                     $(cover).css({
                         'filter':			'none',
                         '-webkit-filter':	'none'

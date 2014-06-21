@@ -35,9 +35,10 @@ $i = $z = 0; // loop counters
     <div id="preview">
         <div id="preview-coverflow">
             <?php while ($query->have_posts()): $query->the_post(); ?>
-                <?php the_post_thumbnail('cover-flow', array('alt' => esc_attr(get_the_title()), 'title' => '', 'class' => 'cover')); ?>
+                <?php the_post_thumbnail('cover-flow', array('alt' => esc_attr(get_the_title()), 'title' => '', 'class' => 'cover','name'=>get_the_title())); ?>
             <?php endwhile; ?>
         </div>
+        <h1></h1>
     </div>
 </div>
 
