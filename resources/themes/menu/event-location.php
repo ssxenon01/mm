@@ -1,7 +1,7 @@
 <?php
-/*
-	Template Name: Homepage & Blocks (Advanced)
-*/
+/**
+ * Default Page Template
+ */
 
 get_header();
 
@@ -25,28 +25,7 @@ get_header();
 
                 ?>
 
-                <?php while (have_posts()) : the_post(); ?>
-
-                    <?php
-
-                    $panels = get_post_meta(get_the_ID(), 'panels_data', true);
-
-                    if (!empty($panels) && !empty($panels['grid'])):
-
-                        get_template_part('content', 'builder');
-
-                    else:
-                        if(get_post_type()=="event"){
-                            get_template_part('event', 'single');
-                        }else if(get_post_type()=="location")
-                            get_template_part('event-location', 'single');
-                        else
-                            get_template_part('content', 'single');
-
-                    endif;
-                    ?>
-
-                <?php endwhile; // end of the loop. ?>
+                <?php Bunyad::posts()->the_content(); ?>
             </div>
             <div class="col-md-4">
                 <div class="right-content">
@@ -73,5 +52,3 @@ get_header();
     </div>
 
     <?php get_footer(); ?>
-
-
