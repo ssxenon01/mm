@@ -46,7 +46,10 @@ class Walker_Nav_Menu extends Walker {
 	 */
 	function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$indent = str_repeat("\t", $depth);
-		$output .= "\n$indent<ul class=\"dropdown-menu\">\n";
+        if($depth>=1)
+            $output .= "\n$indent<ul class=\"dropdown-menu sub-menu\">\n";
+        else
+		    $output .= "\n$indent<ul class=\"dropdown-menu\">\n";
 	}
 
 	/**
@@ -146,10 +149,7 @@ class Walker_Nav_Menu extends Walker {
 		foreach ( $atts as $attr => $value ) {
 			if ( ! empty( $value ) ) {
 				$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-                if($attr === 'href' && $value =='#')
-                    $attributes .= ' ' . $attr . '="' . $value . '" data-toggle="dropdown"';
-                else
-				    $attributes .= ' ' . $attr . '="' . $value . '"';
+                    $attributes .= ' ' . $attr . '="' . $value . '"';
 			}
 		}
 
