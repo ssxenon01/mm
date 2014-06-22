@@ -44,6 +44,8 @@ return array(
 							'modern' => __('Modern Style - 2 Column', 'bunyad'),
 							'alt' => __('Blog Style', 'bunyad'), 
 							'timeline' => __('Timeline Style', 'bunyad'),
+							'fun' => __('Fun Style', 'bunyad'),
+							'health' => __('Health Style', 'bunyad'),
 						)
 					),
 					

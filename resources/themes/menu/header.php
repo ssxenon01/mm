@@ -85,8 +85,11 @@
         </div>
     </section>
     <!--End top nav-->
-<?php endif; ?>
-<section class="wrapper">
+<?php endif;
+$category = get_category( get_query_var( 'cat' ) );
+$cat_id = $category->cat_ID;
+?>
+<section class="wrapper <?php echo('cat-'.$cat_id)?>">
     <div class="m-container">
 
         <!-- menu -->
@@ -119,7 +122,11 @@
                             </button>
                         </div>
                         <?php wp_nav_menu(array('theme_location' => 'main', 'fallback_cb' => '', 'walker' =>  'Bunyad_Menu_Walker','container_class' => 'collapse navbar-collapse','menu_class'=>'nav navbar-nav')); ?>
+                        <?php if (!Bunyad::options()->disable_breadcrumbs): ?>
+                            <?php Bunyad::core()->breadcrumbs(); ?>
+                        <?php endif; ?>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -373,7 +373,7 @@ class Bunyad_Core
 					'current_before' => $before,
 					'current_after'  => $after,
 				));
-			
+
 			if ($bbp_crumbs) {
 				echo $bbp_crumbs;
 				return;

@@ -324,16 +324,16 @@ class Bunyad_Core
 		$defaults = array(
 			'show_current' => 1, // 1 - show current post/page title in breadcrumbs, 0 - don't show
 			'show_on_home' => 0, // 1 - show breadcrumbs on the homepage, 0 - don't show
-			'delimiter' => '<span class="delim">&raquo;</span>',
-			'before' => '<span class="current">',
-			'after' => '</span>',
+//			'delimiter' => '<span class="delim">&raquo;</span>',
+			'before' => '<li class="active">',
+			'after' => '</li>',
 			
-			'home_before' => '<span class="location">'. __('You are at:', 'bunyad') .'</span>',
+			'home_before' => '',
 			'home_after' => '',
 			'home_link' => home_url() . '/',
 
-			'link_before' => '<span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">',
-			'link_after'  => '</span>',
+			'link_before' => '<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">',
+			'link_after'  => '</li>',
 			'link_attr'   => ' itemprop="url" ',
 			'link_in_before' => '<span itemprop="title">',
 			'link_in_after'  => '</span>'
@@ -368,8 +368,8 @@ class Bunyad_Core
 					'sep_before' => '',
 					'sep_after'  => '',
 					'pad_sep' => 0,
-					'before' => '<div class="breadcrumbs">' . $home_before,
-					'after' => $home_after . '</div>',
+					'before' => '<ol class="breadcrumb">' . $home_before,
+					'after' => $home_after . '</ol>',
 					'current_before' => $before,
 					'current_after'  => $after,
 				));
@@ -384,12 +384,12 @@ class Bunyad_Core
 		if ((is_home() || is_front_page())) {
 			
 			if ($show_on_home == 1) {
-				echo '<div class="breadcrumbs">'. $home_before . '<a href="' . $home_link . '">' . $text['home'] . '</a>'. $home_after .'</div>';
+				echo '<ol class="breadcrumb">'. $home_before . '<a href="' . $home_link . '">' . $text['home'] . '</a>'. $home_after .'</ol>';
 			}
 	
 		} else {
 	
-			echo '<div class="breadcrumbs">' . $home_before . sprintf($link, $home_link, $text['home']) . $home_after . $delimiter;
+			echo '<ol class="breadcrumb">' . $home_before . sprintf($link, $home_link, $text['home']) . $home_after . $delimiter;
 			
 			if (is_category() || is_tax()) 
 			{
@@ -544,7 +544,7 @@ class Bunyad_Core
 				}
 			}
 	
-			echo '</div>';
+			echo '</ol>';
 	
 		}
 	

@@ -192,6 +192,8 @@ class Bunyad_Theme_SmartMag
 
 //        add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
         add_filter( 'image_send_to_editor', 'remove_width_attribute', 10 );
+
+        update_option('image_default_link_type' , '');
 	}
 
 
@@ -442,7 +444,7 @@ class Bunyad_Theme_SmartMag
 			$the_css = 'background: url("' . esc_attr(Bunyad::posts()->meta('bg_image')) . '");';
 			
 			if (!empty($bg_type)) {
-				
+
 				if ($bg_type == 'cover') {
 					$the_css .= 'background-repeat: no-repeat; background-attachment: fixed; background-position: center center; '  
 			 		. '-webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover; background-size: cover;';

@@ -27,7 +27,8 @@ $render = Bunyad::factory('admin/option-renderer'); /* @var $render Bunyad_Admin
 					'modern' => __('Masonry Style', 'bunyad'),
 					'alt' => __('City Pulse Style', 'bunyad'),
 					'timeline' => __('Timeline Style', 'bunyad'),
-					
+					'fun' => __('Fun Style', 'bunyad'),
+					'health' => __('Health Style', 'bunyad')
 				),
 				'value' => $meta['template'],
 			));
@@ -85,7 +86,6 @@ $render = Bunyad::factory('admin/option-renderer'); /* @var $render Bunyad_Admin
 	</td>
 </tr>
 
-<?php if (Bunyad::options()->layout_style == 'boxed'): ?>
 <tr class="form-field">
 	<th scope="row" valign="top"><label for="meta[bg_image]"><?php _e('Category Background', 'bunyad'); ?></label></th>
 	<td>
@@ -106,4 +106,3 @@ $render = Bunyad::factory('admin/option-renderer'); /* @var $render Bunyad_Admin
 	</td>
 </tr>
 
-<?php endif; ?>

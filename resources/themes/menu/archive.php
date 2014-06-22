@@ -14,13 +14,6 @@ global $bunyad_loop_template;
 
 get_header();
 
-if (empty($bunyad_loop_template) && Bunyad::options()->archive_loop_template == 'alt') {
-    $bunyad_loop_template = 'loop-alt';
-}
-if (empty($bunyad_loop_template) && Bunyad::options()->archive_loop_template == 'modern'){
-    $bunyad_loop_template = 'loop-masonry';
-}
-
 ?>
 
 

@@ -354,6 +354,7 @@ strong{
     border-left: 1px solid #d5d5d5;
     min-height: 800px;
     width: 1170px;
+    background: #fff;
 }
 /* line 72, ../sass/style.scss */
 .wrapper .navbar-default .force-reset {
@@ -2311,4 +2312,43 @@ Pagination Styles
 }
 .event-calendar .single-event .content{
     padding: 15px 0;
+}
+
+.fun-preview {
+    margin: 0 15px;
+    border: 5px solid #f7f6f1;
+    height: 290px;
+    overflow: hidden;
+}
+.fun-preview .thumb img{
+    width: 100%;
+}
+.fun-preview .content .thumb{
+    margin: 20px 0 20px 20px;
+}
+.fun-preview .content .thumb img{
+    width: 200px;
+    height: 200px;
+}
+.fun-preview .content .title{
+    font-size: 30px;
+    padding: 10px;
+    line-height: 40px;
+    color: #78675c;
+}
+.fun-preview .content .description{
+    color: #c35283;
+    font-size: 13px;
+    padding: 10px;
+}
+.fun-preview .slides{
+    padding: 10px 10px 2px;
+    background: #e2d9de;
+}
+.fun-preview .slides .thumb{
+    margin-bottom: 8px;
+}
+.breadcrumb{
+     padding: 0;
+     background-color: transparent;
 }

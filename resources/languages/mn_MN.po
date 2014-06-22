@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress 3.0-alpha\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-05-06 16:25+0800\n"
+"PO-Revision-Date: 2014-06-22 13:56+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: Mongolian Translation Team <ntsetsbold@gmail.com>\n"
 "Language: mn_MN\n"
@@ -16422,6 +16422,10 @@ msgstr "[бага]"
 #: wp-admin/includes/template.php:1060 wp-admin/includes/template.php:1069
 msgid "Allow"
 msgstr "Зөвшөөрөх"
+
+#: wp-admin/includes/media-templates:678
+msgid "DISPLAY SETTINGS"
+msgstr "Дүрслэх тохиргоо"
 
 #: wp-admin/includes/template.php:1061 wp-admin/includes/template.php:1070
 msgid "Do not allow"
