@@ -38,7 +38,9 @@ get_header();
                     else:
                         if(get_post_type()=="event"){
                             get_template_part('event', 'single');
-                        }else
+                        }else if(get_post_type()=="location")
+                            get_template_part('page', 'single');
+                        else
                             get_template_part('content', 'single');
 
                     endif;

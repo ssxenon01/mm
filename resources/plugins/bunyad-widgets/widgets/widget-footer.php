@@ -14,10 +14,6 @@ class Bunyad_Footer_Widget extends WP_Widget {
             'Xenon - Footer',
             array('description' => 'Footer Items.', 'classname' => 'footer')
         );
-
-        add_action('save_post', array($this, 'flush_widget_cache'));
-        add_action('deleted_post', array($this, 'flush_widget_cache'));
-        add_action('switch_theme', array($this, 'flush_widget_cache'));
     }
 
     function widget( $args, $instance ) {
