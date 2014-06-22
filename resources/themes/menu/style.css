@@ -2313,20 +2313,23 @@ Pagination Styles
 }
 
 .fun-preview {
-    margin: 0 15px;
+    margin: 0 15px 10px;
     border: 5px solid #f7f6f1;
-    height: 290px;
+    height: 342px;
     overflow: hidden;
 }
 .fun-preview .thumb img{
     width: 100%;
+    height:150px;
 }
 .fun-preview .content .thumb{
-    margin: 20px 0 20px 20px;
+    margin: 0;
+    padding: 0;
 }
 .fun-preview .content .thumb img{
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    padding: 20px;
+    height: 220px;
 }
 .fun-preview .content .title{
     font-size: 30px;
@@ -2369,4 +2372,27 @@ Pagination Styles
 
 .nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar .dropdown-menu {
     margin-top: 0;
+}
+.news-break{
+    margin: 15px;
+}
+.news-break .title{
+    color: #7fb8c2;
+    padding: 4px;
+    border-bottom: 1px solid #7fb8c2;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.news-break .row{
+    margin: 0;
+}
+.news-break .green-box{
+    background: #c9e263;
+    padding: 5px;
+}
+.news-break .green-box .thumb{
+    margin-right: 15px;
+}
+.news-break .green-box .description{
+    padding: 30px 15px;
 }

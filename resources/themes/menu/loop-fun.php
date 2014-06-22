@@ -43,6 +43,21 @@ if ($bunyad_loop->have_posts()):
         </div>
 
         <div class="clearfix"></div>
+        <div class="news-break">
+            <div class="title">Сонин хачин</div>
+            <div class="row">
+                <div class="col-md-6 green-box">
+                        <div class="thumb pull-left"><img src="http://localhost:8888/mymenu/resources/uploads/2014/06/fruit-yoghurt-dessert-150x150.jpg" width="200" height="160"></div>
+                        <div class="description"><span>Nam ornare, erat eget porttitor tristique, nunc ante euismod diam, eu facilisis turpis nunc in odio</span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="thumb"><img src="http://localhost:8888/mymenu/resources/uploads/2014/06/fruit-yoghurt-dessert-150x150.jpg"></div>
+                </div>
+                <div class="col-md-6">asd</div>
+                <div class="col-md-6">asd</div>
+            </div>
+
+        </div>
         <div>
             <div class="masonry-loop">
 
