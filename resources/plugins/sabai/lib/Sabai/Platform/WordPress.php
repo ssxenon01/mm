@@ -1129,8 +1129,8 @@ class %s extends Sabai_Platform_WordPress_Widget {
     background-image:url(%3$s) !important;
 }',
                     str_replace('/', '-', $route),
-                    $this->getSiteUrl() . '/' . (isset($menu['icon_dark']) ? $menu['icon_dark'] : $menu['icon']),
-                    $this->getSiteUrl() . '/' . $menu['icon']
+                    (isset($menu['icon_dark']) ? $menu['icon_dark'] : $menu['icon']),
+                    $menu['icon']
                 );
             }
         }
