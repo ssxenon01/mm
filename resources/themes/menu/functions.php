@@ -451,18 +451,17 @@ class Bunyad_Theme_SmartMag
 			if (!empty($bg_type)) {
 
 				if ($bg_type == 'cover') {
-					$the_css .= 'background-repeat: no-repeat; background-attachment: fixed; background-position: center center; '  
-			 		. '-webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover; background-size: cover;';
+					$the_css .= 'background-repeat: no-repeat; background-size: 100% auto; ';
 				}
 				else {
-					$the_css .= 'background-repeat: ' . esc_attr($bg_type) .';';
+					$the_css .= 'background-repeat: ' . esc_attr($bg_type) .'; background-size: 100% auto;';
 				}
 			}
 						
 			// enqueue it for inline css
 			Bunyad::core()->enqueue_css(
 				(wp_style_is('custom-css', 'enqueued') ? 'custom-css' : 'mymenu-core'),
-				'body.boxed { ' . $the_css . ' }'
+				'section.wrapper { ' . $the_css . ' }'
 			);
 		}
 	}

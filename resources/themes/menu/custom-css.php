@@ -290,7 +290,7 @@ EOF;
 			
 			// background image?
 			if (!empty($cat['bg_image'])) {
-				$this->css[] = 'section.wrapper.cat-'. esc_attr($key) .' { background: url('. esc_attr($cat['bg_image']) .') no-repeat; ';
+				$this->css[] = 'section.wrapper.cat-'. esc_attr($key) .' { background: url('. esc_attr($cat['bg_image']) .') no-repeat; background-size: 100% auto;';
 			}
 			
 		}

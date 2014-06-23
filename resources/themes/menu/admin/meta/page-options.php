@@ -31,24 +31,20 @@ $options = array(
 		),
 		'value' => '' // default
 	),
+    array(
+        'label' => __('Custom Background Image', 'bunyad'),
+        'name'  => 'bg_image',
+        'type' => 'upload',
+        'options' => array(
+            'type'  => 'image',
+            'title' => __('Upload This Picture', 'bunyad'),
+            'button_label' => __('Upload',  'bunyad'),
+            'insert_label' => __('Use as Background',  'bunyad')
+        ),
+        'value' => '', // default
+        'bg_type' => array('value' => 'cover'),
+    )
 );
-
-if (Bunyad::options()->layout_style == 'boxed') {
-	
-	$options[] = array(
-		'label' => __('Custom Background Image', 'bunyad'),
-		'name'  => 'bg_image',
-		'type' => 'upload',
-		'options' => array(
-				'type'  => 'image',
-				'title' => __('Upload This Picture', 'bunyad'), 
-				'button_label' => __('Upload',  'bunyad'),
-				'insert_label' => __('Use as Background',  'bunyad')
-		),	
-		'value' => '', // default
-		'bg_type' => array('value' => 'cover'),
-	);
-}
 
 $options = $this->options($options);
 
