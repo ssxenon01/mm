@@ -2341,7 +2341,6 @@ Pagination Styles
     margin-top: 0;
 }
 .news-break{
-    margin: 15px;
 }
 .news-break [class^="col-md"]{
     margin-bottom: 20px;
@@ -2361,6 +2360,10 @@ Pagination Styles
 .news-break .green-box .thumb{
     margin-right: 15px;
     position: relative;
+}
+.news-break .green-box .thumb img{
+    width: 200px;
+    height: 160px;
 }
 .news-break .green-box .thumb .c-title{
     position: absolute;

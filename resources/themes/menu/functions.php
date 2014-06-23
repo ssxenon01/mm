@@ -17,7 +17,9 @@ $bunyad = Bunyad::core()->init(array(
 	'meta_prefix' => '_bunyad',
 
 	// widgets enabled
-	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr', 'ads', 'latest-reviews', 'bbp-login','city-pulse','footer','slider-posts','player-posts','multi-slider','latest-before'),
+	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr',
+        'ads', 'latest-reviews', 'bbp-login','city-pulse','footer','slider-posts','player-posts','multi-slider',
+        'latest-before','fun-freetime','fun-holiday','fun-eventcalendar'),
 	'post_formats' => array('gallery', 'image', 'video', 'audio'),
 
 	'shortcode_config' => array(
@@ -55,6 +57,9 @@ $bunyad = Bunyad::core()->init(array(
 		'footer' => array('class' => 'Bunyad_Footer_Widget', 'name' => __('Footer', 'bunyad')),
 		'ads' => array('class' => 'Bunyad_Ads_Widget', 'name' => __('Advertisement', 'bunyad')),
 		'latest-reviews' => array('class' => 'Bunyad_LatestReviews_Widget', 'name' => __('Latest Reviews', 'bunyad')),
+		'fun-freetime' => array('class' => 'Bunyad_FunFreetime_Widget', 'name' => __('Fun Freetime', 'bunyad')),
+		'fun-holiday' => array('class' => 'Bunyad_FunHoliday_Widget', 'name' => __('Fun Holiday', 'bunyad')),
+		'fun-eventcalendar' => array('class' => 'Bunyad_FunEventcalendar_Widget', 'name' => __('Fun Event Calendar', 'bunyad')),
 		'latest-before' => array('class' => 'Bunyad_LatestBefore_Widget', 'name' => __('Latest Posts: before', 'bunyad'))
 	),
 

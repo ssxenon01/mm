@@ -27,7 +27,8 @@ $render = Bunyad::factory('admin/option-renderer'); /* @var $render Bunyad_Admin
 					'modern' => __('Masonry Style', 'bunyad'),
 					'alt' => __('City Pulse Style', 'bunyad'),
 					'timeline' => __('Timeline Style', 'bunyad'),
-					'fun' => __('Fun Style', 'bunyad'),
+					'fun-freetime' => __('Fun Freetime Style', 'bunyad'),
+					'fun-holiday' => __('Fun holiday Style', 'bunyad'),
 					'health' => __('Health Style', 'bunyad')
 				),
 				'value' => $meta['template'],

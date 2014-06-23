@@ -35,8 +35,10 @@ else if ($cat_meta['template'] == 'timeline') {
 }
 elseif($cat_meta['template'] == 'modern'){
     $bunyad_loop_template = 'loop-masonry';
-}elseif($cat_meta['template'] == 'fun'){
-    $bunyad_loop_template = 'loop-fun';
+}elseif($cat_meta['template'] == 'fun-holiday'){
+    $bunyad_loop_template = 'loop-fun-holiday';
+}elseif($cat_meta['template'] == 'fun-freetime'){
+    $bunyad_loop_template = 'loop-fun-freetime';
 }elseif($cat_meta['template'] == 'health'){
     $bunyad_loop_template = 'loop-health';
 }
