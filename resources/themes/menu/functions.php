@@ -451,10 +451,11 @@ class Bunyad_Theme_SmartMag
 			if (!empty($bg_type)) {
 
 				if ($bg_type == 'cover') {
-					$the_css .= 'background-repeat: no-repeat; background-size: 100% auto; ';
+					$the_css .= 'background-repeat: no-repeat; background-attachment: fixed; background-position: center center; '
+			 		. '-webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover; background-size: cover;';
 				}
 				else {
-					$the_css .= 'background-repeat: ' . esc_attr($bg_type) .'; background-size: 100% auto;';
+					$the_css .= 'background-repeat: ' . esc_attr($bg_type) .';';
 				}
 			}
 						

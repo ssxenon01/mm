@@ -1012,8 +1012,8 @@ strong{
     font-weight: normal;
     font-size: 18px;
     text-transform: uppercase;
-    color: #ef4744;
-    background: rgba(247, 251, 251, 0.95);
+    color: rgb(210,33,42);;
+    background: rgba(247, 251, 251, 0.75);
     padding: 6px 10px 15px 10px;
     text-align: right;
     font-family: 'PT Sans Narrow',arial, sans-serif;

@@ -283,11 +283,6 @@ EOF;
 					$this->css[] = $the_css ." }";
 				}
 			}
-			
-			if (!empty($cat['color'])) {
-				$this->css[] = str_replace(array('%key%', '%color%'), array($key, esc_attr($cat['color'])), $cat_css);		
-			}
-			
 			// background image?
 			if (!empty($cat['bg_image'])) {
 				$this->css[] = 'section.wrapper.cat-'. esc_attr($key) .' { background: url('. esc_attr($cat['bg_image']) .') no-repeat center center fixed; '
