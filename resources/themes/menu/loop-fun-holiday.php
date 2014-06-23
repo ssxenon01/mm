@@ -13,7 +13,7 @@ if ($bunyad_loop->have_posts()):
     <div class="row" >
         <div class="news-break" style="margin:15px">
             <div class="title">Амралт, баяр ёслол</div>
-            <div class="row">
+            <div class="row" style="margin: 0 -27px;">
                 <?php
                 while ($bunyad_loop->have_posts()) : $bunyad_loop->the_post(); global $post;
                     ?>
