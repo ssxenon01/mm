@@ -2462,6 +2462,7 @@ Pagination Styles
 
 .health-loop{
     background: #fbfbfb;
+    padding: 15px 0;
 }
 .health-loop .trans-box{
     border-bottom: 2px solid #ededed;
