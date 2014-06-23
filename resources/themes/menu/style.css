@@ -380,6 +380,10 @@ strong{
     padding: 3px 0;
     border-top: 1px solid #f0493f;
 }
+/* line 82, ../sass/style.scss */
+.wrapper .navbar-default .navbar-nav > li > a{
+    height: 16px;
+}
 .wrapper .navbar-default .navbar-nav > li a img.cp{
     margin: -9px -8px 0 -16px;
     width: 96px;
