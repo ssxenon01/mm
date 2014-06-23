@@ -13,78 +13,38 @@ if (!is_object($bunyad_loop)) {
 if ($bunyad_loop->have_posts()):
 
 ?>
+
+
+
 <div class="city-pulse" >
     <div class="row">
-        <?php get_template_part('city-pulse-sliders');?>
+        <?php get_template_part('health-sliders');?>
         <div class="clearfix"></div>
         <div>
-            <div class="masonry-loop">
+            <div class="col-md-12">
+                <div class="health-loop">
+                    <?php
+                    while ($bunyad_loop->have_posts()) : $bunyad_loop->the_post(); global $post;
+                        ?>
 
-                <?php
-                $counter=0;
-                    while ($bunyad_loop->have_posts()): $bunyad_loop->the_post(); ?>
-
-                        <?php if (Bunyad::posts()->meta('featured_video')): // featured video available? ?>
-
-                            <div class="col-md-6 m-item" >
-                                <div class="video-box">
-                                    <iframe src="<?php echo Bunyad::posts()->meta('featured_video');?>" width="100%" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <div class="col-md-6">
+                            <div class="trans-box">
+                                <div class="thumb pull-left">
+                                    <?php the_post_thumbnail('recent-posts', array('title' => strip_tags(get_the_title()))); ?>
+                                    <a class="btn btn-default" href="<?php the_permalink() ?>">Дэлгэрэнгүй</a>
                                 </div>
+                                <h1><?php the_title();?></h1>
+                                <div class="description"><?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?></div>
                             </div>
-                        <?php else: // normal featured image ?>
+                        </div>
 
+                    <?php endwhile; ?>
 
-                            <?php
-                            $counter++;
-                            if($counter%5==1):?>
-                                <div class="col-md-3 m-item" >
-                                    <a href="<?php the_permalink() ?>"><div class="red-box">
-                                            <div class="thumb"><?php the_post_thumbnail('thumbnail', array('title' => strip_tags(get_the_title()),'class'=>'photo', 'itemprop' => 'image')); ?></div>
-                                            <div class="title"><?php the_title();?></div>
-                                            <div class="description" ><?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?></div>
-                                        </div></a>
-                                </div>
-                            <?php elseif($counter%5==2): ?>
-                                <div class="col-md-3 m-item" >
-                                    <a href="<?php the_permalink() ?>"><div class="thumb-box">
-                                            <div class="thumb"><?php the_post_thumbnail('thumbnail', array('title' => strip_tags(get_the_title()),'class'=>'photo', 'itemprop' => 'image')); ?></div>
-                                            <div class="ribbon"><div class="ribbon-stitches-top"></div><strong class="ribbon-content"><h1><?php the_title();?></h1></strong><div class="ribbon-stitches-bottom"></div></div>
-                                        </div></a>
-                                </div>
-                            <?php elseif($counter%5==3):?>
-                                <div class="col-md-6 m-item" >
-                                    <a href="<?php the_permalink() ?>"><div class="yellow-box">
-                                            <div class="title"><?php the_title();?></div>
-                                            <div class="thumb pull-left"><?php the_post_thumbnail('thumbnail', array('title' => strip_tags(get_the_title()),'class'=>'photo', 'itemprop' => 'image')); ?></div>
-                                            <div class="description" ><?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?></div>
-                                            <div class="clearfix"></div>
-                                        </div></a>
-                                </div>
-                            <?php elseif($counter%5==4):?>
-                                <div class="col-md-6 m-item" >
-                                    <a href="<?php the_permalink() ?>"><div class="trans-box">
-                                            <div class="thumb pull-left col-md-4"><?php the_post_thumbnail('thumbnail', array('title' => strip_tags(get_the_title()),'class'=>'photo', 'itemprop' => 'image')); ?></div>
-                                            <div class="title col-md-8"><?php the_title();?></div>
-                                            <div class="description col-md-8" ><?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?></div>
-                                            <div class="clearfix"></div>
-                                        </div></a>
-                                </div>
-                            <?php else:?>
-                                <div class="col-md-3 m-item" >
-                                    <a href="<?php the_permalink() ?>"><div class="red-box different">
-                                            <div class="thumb"><?php the_post_thumbnail('thumbnail', array('title' => strip_tags(get_the_title()),'class'=>'photo', 'itemprop' => 'image')); ?></div>
-                                            <div class="title"><?php the_title();?></div>
-                                            <div class="description" ><?php echo preg_replace("/<a.*<\/a>/", "\n", wp_trim_excerpt()); ?></div>
-                                        </div></a>
-                                </div>
-                            <?php endif;?>
-                    <?php endif;?>
-                <?php endwhile; ?>
-
-
-
-
+                    <div class="clearfix"></div>
+                </div>
             </div>
+
+
         </div>
     </div>
 </div>

@@ -2459,3 +2459,42 @@ Pagination Styles
     text-transform: uppercase;
     margin-bottom: 5px;
 }
+
+.health-loop{
+    background: #fbfbfb;
+}
+.health-loop .trans-box{
+    border-bottom: 2px solid #ededed;
+    padding-bottom: 20px;
+    height: 235px;
+    overflow: hidden;
+}
+.health-loop .trans-box .thumb{
+    width: 150px;
+    margin-right: 20px;
+}
+.health-loop .trans-box h1{
+    color: #857e7a;
+    font-family: "Open sans";
+    font-size: 20px;
+    padding: 0 0 16px;
+}
+.health-loop .trans-box .description{
+    height: 120px;
+    overflow: hidden;
+    color: rgb(148, 148, 148);
+    font-size: 12px;
+    font-family: 'Open Sans';
+}
+.health-loop .trans-box .thumb .btn{
+    width: 150px;
+    border: 1px solid #b3e6ef;
+    background: #72d2e5;
+    color: #fff;
+    border-radius: 0;
+}
+.health-loop .trans-box .thumb img{
+    width: 150px;
+    height: 170px;
+    border: 5px solid #e6e6e6;
+}
