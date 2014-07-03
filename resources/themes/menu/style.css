@@ -393,10 +393,10 @@ strong{
     margin: -4px 5px -3px -13px;
 }
 .wrapper .navbar-default .navbar-nav li.current-menu-item  {
-    background: #d9616e;
+    background: #ed1f24;
 }
 .wrapper .navbar-default .navbar-nav li:hover  {
-    background: #d9616e;
+    background: #ed1f24;
     color: #fff;
 }
 .wrapper .navbar-default .navbar-nav > li.current-menu-item > a{
@@ -426,7 +426,7 @@ strong{
 /* line 98, ../sass/style.scss */
 .wrapper .navbar-default .navbar-nav li a:hover, .wrapper .navbar-default .navbar-nav li a:focus {
     color: #fff;
-    background-color: #d9616e;
+    background-color: #ed1f24;
 }
 /* line 102, ../sass/style.scss */
 .wrapper .navbar-default .navbar-nav li a.active {
@@ -1865,13 +1865,11 @@ strong{
 /* line 1301, ../sass/style.scss */
 .wrapper .main-content .footer-banner {
     width: 100%;
-    margin: 20px 0;
-    background: #d2d2d2;
     text-align: center;
 }
 /* line 1307, ../sass/style.scss */
 .wrapper .main-content .footer-section {
-    margin: 45px 15px 0 15px;
+    margin: 5px 15px 0 15px;
     background: #eeeae9;
     padding: 40px 0;
 }
@@ -2501,4 +2499,14 @@ Pagination Styles
     width: 150px;
     height: 170px;
     border: 5px solid #e6e6e6;
+}
+.mid-banner img{
+    border: 1px solid rgb(197, 197, 197);
+    box-shadow: 1px 1px 1px rgba(97, 96, 96, 0.39);
+    padding: 4px;
+}
+.footer-banner img{
+    border: 1px solid rgb(197, 197, 197);
+    box-shadow: 1px 1px 1px rgba(97, 96, 96, 0.39);
+    padding: 4px;
 }
