@@ -63,7 +63,6 @@ class Bunyad_CityPulse_Widget extends WP_Widget
             <div class="menu-event">
                 <div class="event-title">
                     <img src="http://mymenu.mn/resources/themes/menu/images/city-pulse.jpg" width="210" >
-                    <div class="pagination pagination-event"></div>
                 </div>
                 <div class="event-swiper">
                     <a class="event-arrow-left" href="#"></a>
