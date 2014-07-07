@@ -313,8 +313,8 @@ class Bunyad_Core
 		
 		global $post;
 	
-		$text['home']     = _x('Home', 'breadcrumbs', 'bunyad'); // text for the 'Home' link
-		$text['category'] = __('Category: "%s"', 'bunyad'); // text for a category page
+		$text['home']     = _x('www.mymenu.mn', 'breadcrumbs', 'bunyad'); // text for the 'Home' link
+		$text['category'] = __('%s', 'bunyad'); // text for a category page
 		$text['tax'] 	  = __('Archive for "%s"', 'bunyad'); // text for a taxonomy page
 		$text['search']   = __('Search Results for "%s" Query', 'bunyad'); // text for a search results page
 		$text['tag']      = __('Posts Tagged "%s"', 'bunyad'); // text for a tag page

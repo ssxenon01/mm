@@ -2323,10 +2323,15 @@ Pagination Styles
 }
 
 .breadcrumb{
-     padding: 0;
-     background-color: transparent;
+    padding: 0;
+    background-color: transparent;
+    font-size:14px;
+    font-family: 'PT Sans Narrow',arial, sans-serif;
 }
 
+.breadcrumb>li+li:before{
+    content: ">";
+}
 
 .dropdown-menu .sub-menu {
     left: 100%;

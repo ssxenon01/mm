@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Events Manager v5.5.2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-06-21 17:52+0800\n"
+"PO-Revision-Date: 2014-07-07 14:03+0800\n"
 "Last-Translator: Gundsambuu Natsagdorj <ssxenon01@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -147,32 +147,32 @@ msgstr "Шалгасан захиалга алга."
 # @ dbem
 #: admin/bookings/em-events.php:13 em-functions.php:207
 msgid "Past events"
-msgstr "Өнгөрсөн үйл явдал"
+msgstr "Өнгөрсөн эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:14 em-functions.php:205
 msgid "All events"
-msgstr "Бүх үйл явдал"
+msgstr "Бүх эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:15 em-functions.php:206
 msgid "Future events"
-msgstr "Ирээдүйд боло үйл явдал"
+msgstr "Ирээдүйд болох эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:29 templates/tables/events.php:26
 msgid "Past Events"
-msgstr "Өнгөрсөн үйл явдал"
+msgstr "Өнгөрсөн эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:32
 msgid "All Events"
-msgstr "Бүх үйл явдал"
+msgstr "Бүх эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:35
 msgid "Future Events"
-msgstr "Ирээдүйд боло үйл явдал"
+msgstr "Ирээдүйд боло эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:55 templates/tables/locations.php:21
@@ -182,7 +182,7 @@ msgstr "Сонгосныг устгах"
 # @ default
 #: admin/bookings/em-events.php:57 templates/tables/locations.php:23
 msgid "Apply"
-msgstr ""
+msgstr "Хадгалах"
 
 # @ default
 #: admin/bookings/em-events.php:69 classes/em-bookings-table.php:404
@@ -192,7 +192,7 @@ msgstr "Шүүх"
 # @ dbem
 #: admin/bookings/em-events.php:87
 msgid "no events"
-msgstr "Үйл явдал алга"
+msgstr "Эвент алга"
 
 # @ dbem
 #: admin/bookings/em-events.php:94 admin/bookings/em-pending.php:101
@@ -212,7 +212,7 @@ msgstr "Үйл явдал алга"
 #: em-actions.php:601 em-install.php:420 em-install.php:467 em-posts.php:145
 #: templates/forms/event-editor.php:12 templates/templates/my-bookings.php:39
 msgid "Event"
-msgstr "Үйл явдал"
+msgstr "Эвент"
 
 # @ dbem
 #: admin/bookings/em-events.php:95 templates/buddypress/group-events.php:45
@@ -263,7 +263,7 @@ msgstr "Захиалга"
 # @ dbem
 #: admin/em-admin.php:40
 msgid "Events Manager Settings"
-msgstr "Үйл явдлын тохиргоо"
+msgstr "Эвентийн тохиргоо"
 
 # @ dbem
 #: admin/em-admin.php:40 admin/em-admin.php:213
@@ -390,7 +390,7 @@ msgstr ""
 #: em-install.php:575 em-install.php:946 em-posts.php:141 em-posts.php:144
 #: em-posts.php:146 em-template-tags.php:140 widgets/em-events.php:13
 msgid "Events"
-msgstr "Үйл явдлууд"
+msgstr "Эвентүүд"
 
 # @ dbem
 #: admin/em-admin.php:220 admin/em-options.php:2195
@@ -410,7 +410,7 @@ msgstr "Шинэхэн захиалга"
 # @ dbem
 #: admin/em-bookings.php:75
 msgid "Events With Bookings Enabled"
-msgstr "Захиалга авах үйл явдалууд"
+msgstr "Захиалга авах эвентүүд"
 
 # @ dbem
 #: admin/em-bookings.php:91 admin/em-bookings.php:152
@@ -453,7 +453,7 @@ msgstr ""
 #: admin/em-bookings.php:113 admin/em-options.php:1118
 #: templates/forms/event-editor.php:43
 msgid "Event Name"
-msgstr "Үйл явдлын нэр"
+msgstr "Эвентийн нэр"
 
 # @ dbem
 #: admin/em-bookings.php:115
@@ -463,12 +463,12 @@ msgstr ""
 # @ dbem
 #: admin/em-bookings.php:116
 msgid "Spaces confirmed"
-msgstr ""
+msgstr "Зайг шалгасан."
 
 # @ dbem
 #: admin/em-bookings.php:118
 msgid "Available spaces"
-msgstr ""
+msgstr "Боломжит зай"
 
 # @ dbem
 #: admin/em-bookings.php:122 templates/templates/my-bookings.php:40
@@ -505,7 +505,7 @@ msgstr "%s ийн тасалбар"
 # @ dbem
 #: admin/em-bookings.php:163
 msgid "View/Edit Event"
-msgstr "Үйл явдалыг харах/засварлах"
+msgstr "Эвентийг харах/засварлах"
 
 # @ dbem
 #: admin/em-bookings.php:164
@@ -569,7 +569,7 @@ msgstr "Захиалгыг засварлах"
 # @ dbem
 #: admin/em-bookings.php:215
 msgid "Event Details"
-msgstr "Үйл явдлын дэлгэрэнгүй"
+msgstr "Эвентийн дэлгэрэнгүй"
 
 # @ dbem
 #: admin/em-bookings.php:226 admin/em-options.php:1299 em-install.php:419
@@ -637,7 +637,7 @@ msgstr "Тасалбарын төрөл"
 #: admin/em-bookings.php:365
 #, php-format
 msgid "%d Spaces"
-msgstr ""
+msgstr "%d зай"
 
 # @ dbem
 #: admin/em-bookings.php:379
@@ -678,7 +678,7 @@ msgid ""
 "You can add private notes below for internal reference that only event "
 "managers will see."
 msgstr ""
-"Та зөвхөн үйл явдлыг удирдаж буй хүнд харагдахаар тэмдэглэл оруулж болно."
+"Та зөвхөн эвентийг удирдаж буй хүнд харагдахаар тэмдэглэл оруулж болно."
 
 # @ dbem
 #: admin/em-bookings.php:467
@@ -688,7 +688,7 @@ msgstr "Бичих"
 # @ dbem
 #: admin/em-bookings.php:513
 msgid "Manage Person's Booking"
-msgstr ""
+msgstr "Хэрэглэгчийн захиалгыг засварлах"
 
 # @ dbem
 #: admin/em-bookings.php:515
@@ -758,7 +758,7 @@ msgstr "Байршил засварлах"
 # @ dbem
 #: admin/em-ms-options.php:6
 msgid "Update Network"
-msgstr ""
+msgstr "Сүлжээг шинэчлэх"
 
 # @ dbem
 #: admin/em-ms-options.php:31
@@ -897,12 +897,12 @@ msgstr ""
 #: admin/em-options.php:1710 admin/em-options.php:1724
 #, php-format
 msgid "%s Options"
-msgstr ""
+msgstr "%s ын тохиргоо"
 
 # @ dbem
 #: admin/em-ms-options.php:156
 msgid "Display global events on main blog?"
-msgstr ""
+msgstr "Үндсэн блогт нийтийн эвентийг харуул?"
 
 # @ dbem
 #: admin/em-ms-options.php:156 admin/em-ms-options.php:157
@@ -920,7 +920,7 @@ msgstr ""
 #: events-manager.php:431 events-manager.php:432 events-manager.php:433
 #: events-manager.php:434 events-manager.php:435
 msgid "events"
-msgstr ""
+msgstr "Эвентүүд"
 
 # @ dbem
 #: admin/em-ms-options.php:157 admin/em-ms-options.php:166
@@ -936,23 +936,23 @@ msgstr ""
 #: classes/em-event-post-admin.php:110 classes/em-event.php:736
 #: classes/em-event.php:750
 msgid "event"
-msgstr ""
+msgstr "Эвент"
 
 # @ dbem
 #: admin/em-ms-options.php:158 admin/em-ms-options.php:167
 #, php-format
 msgid "Global %s slug"
-msgstr ""
+msgstr "Ерөнхий %s slug"
 
 # @ dbem
 #: admin/em-ms-options.php:158 admin/em-ms-options.php:167
 msgid "Example:"
-msgstr ""
+msgstr "Жишээ:"
 
 # @ dbem
 #: admin/em-ms-options.php:160
 msgid "Locations on main blog?"
-msgstr ""
+msgstr "Блог дахь байршил?"
 
 # @ dbem
 #: admin/em-ms-options.php:160 admin/em-ms-options.php:165
@@ -970,7 +970,7 @@ msgstr ""
 #: events-manager.php:447 events-manager.php:448 events-manager.php:449
 #: events-manager.php:450
 msgid "locations"
-msgstr ""
+msgstr "Байршилууд"
 
 # @ dbem
 #: admin/em-ms-options.php:160
@@ -1012,7 +1012,7 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:69
 msgid "Changes saved."
-msgstr ""
+msgstr "Өөрчлөлт хадгалагдсан."
 
 # @ dbem
 #: admin/em-options.php:141
@@ -1047,12 +1047,12 @@ msgstr ""
 #: admin/em-options.php:191
 #, php-format
 msgid "Email sent succesfully to %s"
-msgstr ""
+msgstr "%s рүү имэйл ийг амжилттай илгээлээ."
 
 # @ dbem
 #: admin/em-options.php:196
 msgid "Email not sent."
-msgstr ""
+msgstr "Имэйл илгээж чадсангүй"
 
 # @ dbem
 #: admin/em-options.php:210 admin/em-options.php:214
@@ -1105,7 +1105,7 @@ msgstr ""
 # @ default
 #: admin/em-options.php:275 admin/em-options.php:566
 msgid "Pages"
-msgstr ""
+msgstr "Хуудасууд"
 
 # @ dbem
 #: admin/em-options.php:276
@@ -1115,17 +1115,17 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:280
 msgid "Emails"
-msgstr ""
+msgstr "Имэйлүүд"
 
 # @ dbem
 #: admin/em-options.php:293
 msgid "General Options"
-msgstr ""
+msgstr "Ерөнхий тохиргоо"
 
 # @ dbem
 #: admin/em-options.php:296
 msgid "Disable thumbnails?"
-msgstr ""
+msgstr "Хумсан зургыг идэвхгүй болгох?"
 
 # @ dbem
 #: admin/em-options.php:296
@@ -1138,7 +1138,7 @@ msgstr ""
 #: admin/em-options.php:299 admin/em-options.php:347 admin/em-options.php:364
 #, php-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s тохиргоо"
 
 # @ dbem
 #: admin/em-options.php:303
@@ -1153,7 +1153,7 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:304
 msgid "Enable bookings?"
-msgstr ""
+msgstr "Захиалга идэвхижүүлэх?"
 
 # @ dbem
 #: admin/em-options.php:304
@@ -1183,12 +1183,12 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:311
 msgid "no default category"
-msgstr ""
+msgstr "өгөгдмөл ангилал алга"
 
 # @ dbem
 #: admin/em-options.php:316
 msgid "Default Category"
-msgstr ""
+msgstr "Өгөгдмөл ангилал"
 
 # @ dbem
 #: admin/em-options.php:317 admin/em-options.php:1107
@@ -1355,7 +1355,7 @@ msgstr ""
 #: admin/em-options.php:364 admin/em-options.php:1090
 #: admin/em-options.php:2102
 msgid "Other"
-msgstr ""
+msgstr "Бусад"
 
 # @ dbem
 #: admin/em-options.php:368
@@ -1805,7 +1805,7 @@ msgstr ""
 #: admin/em-options.php:893 admin/em-options.php:1440 em-posts.php:91
 #: em-posts.php:94
 msgid "Event Categories"
-msgstr ""
+msgstr "Эвентийн ангилалууд"
 
 # @ dbem
 # @ default
@@ -1813,19 +1813,19 @@ msgstr ""
 #: admin/em-options.php:995 admin/em-options.php:1481 em-posts.php:54
 #: em-posts.php:57
 msgid "Event Tags"
-msgstr ""
+msgstr "Эвентийн шошго"
 
 # @ dbem
 #: admin/em-options.php:591 admin/em-options.php:749 admin/em-options.php:1090
 #, php-format
 msgid "%s Pages"
-msgstr ""
+msgstr "%s Хуудас"
 
 # @ dbem
 #: admin/em-options.php:596 admin/em-options.php:754
 #, php-format
 msgid "Display %s as"
-msgstr ""
+msgstr "%s ыг дүрслэхдээ"
 
 # @ dbem
 #: admin/em-options.php:597 admin/em-options.php:755
@@ -2203,7 +2203,7 @@ msgstr ""
 #: classes/em-location-posts-admin.php:58 em-install.php:377
 #: templates/tables/locations.php:39 templates/tables/locations.php:48
 msgid "Country"
-msgstr ""
+msgstr "Улс"
 
 # @ dbem
 #: admin/em-options.php:801 admin/em-options.php:851
@@ -2301,7 +2301,7 @@ msgstr ""
 #: admin/em-options.php:1455 admin/em-options.php:1456
 #: admin/em-options.php:1470
 msgid "category"
-msgstr ""
+msgstr "ангилал"
 
 # @ dbem
 #: admin/em-options.php:948 admin/em-options.php:1049
@@ -2312,7 +2312,7 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:949 admin/em-options.php:1050
 msgid "Count"
-msgstr ""
+msgstr "Тоо хэмжээ"
 
 # @ dbem
 #: admin/em-options.php:951 admin/em-options.php:1052
@@ -2322,7 +2322,7 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:976
 msgid "When listing categories, this order is applied."
-msgstr ""
+msgstr "Ангилалын жагсаалтад энэ эрэмбэ хамаарагдана."
 
 # @ dbem
 #: admin/em-options.php:981
@@ -2382,7 +2382,7 @@ msgstr ""
 #: buddypress/bp-em-notifications.php:43 em-install.php:682 em-install.php:995
 #: em-install.php:1048
 msgid "My Bookings"
-msgstr ""
+msgstr "Миний захиалга"
 
 # @ dbem
 #: admin/em-options.php:1100
@@ -2394,27 +2394,27 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:1104
 msgid "My bookings"
-msgstr ""
+msgstr "Миний захиалгууд"
 
 # @ dbem
 #: admin/em-options.php:1109
 msgid "Users can view their bookings for other events on this page."
-msgstr ""
+msgstr "Хэрэглэгч бусад эвентийн захиалгаа энэ хуудаснаас харах боломжтой."
 
 # @ dbem
 #: admin/em-options.php:1109 events-manager.php:427 events-manager.php:428
 msgid "bookings"
-msgstr ""
+msgstr "захиалгууд"
 
 # @ dbem
 #: admin/em-options.php:1119
 msgid "Start Date"
-msgstr ""
+msgstr "Эхлэх огноо"
 
 # @ dbem
 #: admin/em-options.php:1120 classes/em-bookings-table.php:86
 msgid "Booking Date"
-msgstr ""
+msgstr "Захиалгын огноо"
 
 # @ dbem
 #: admin/em-options.php:1148
@@ -2431,23 +2431,23 @@ msgstr ""
 # @ dbem
 #: admin/em-options.php:1153
 msgid "Edit events"
-msgstr ""
+msgstr "Эвентийг засварлах"
 
 # @ dbem
 #: admin/em-options.php:1157 admin/em-options.php:1165
 #, php-format
 msgid "Users can view, add and edit their %s on this page."
-msgstr ""
+msgstr "Хэрэглэгчид энэ хуудсан дахь %s ээ засварлах боломжтой "
 
 # @ dbem
 #: admin/em-options.php:1161
 msgid "Edit locations"
-msgstr ""
+msgstr "Байршил засварлах"
 
 # @ dbem
 #: admin/em-options.php:1169
 msgid "Manage bookings"
-msgstr ""
+msgstr "Захиалгын удирдлага"
 
 # @ dbem
 #: admin/em-options.php:1173
@@ -2459,7 +2459,7 @@ msgstr ""
 #: admin/em-options.php:1446 admin/em-options.php:1484
 #, php-format
 msgid "%s Page"
-msgstr ""
+msgstr "%s Хуудас"
 
 # @ dbem
 #: admin/em-options.php:1193
@@ -2473,30 +2473,30 @@ msgstr ""
 #: admin/em-options.php:1196 templates/forms/event/recurring-when.php:13
 #: templates/forms/event/when-with-recurring.php:35
 msgid "Yearly"
-msgstr ""
+msgstr "Жилээр"
 
 # @ dbem
 #: admin/em-options.php:1196 templates/forms/event/recurring-when.php:13
 #: templates/forms/event/when-with-recurring.php:35
 msgid "Monthly"
-msgstr ""
+msgstr "Сараар"
 
 # @ dbem
 #: admin/em-options.php:1196 templates/forms/event/recurring-when.php:13
 #: templates/forms/event/when-with-recurring.php:35
 msgid "Weekly"
-msgstr ""
+msgstr "Долоо хоногоор"
 
 # @ dbem
 #: admin/em-options.php:1196 templates/forms/event/recurring-when.php:13
 #: templates/forms/event/when-with-recurring.php:35
 msgid "Daily"
-msgstr ""
+msgstr "Өдрөөр"
 
 # @ dbem
 #: admin/em-options.php:1197
 msgid "Events page grouping"
-msgstr ""
+msgstr "Эвентийн хуудсын грүплэлт"
 
 # @ dbem
 #: admin/em-options.php:1197
@@ -5091,24 +5091,24 @@ msgstr ""
 #: buddypress/screens/my-events.php:49 classes/em-event.php:1516
 #: em-events.php:180 em-posts.php:150
 msgid "Edit Event"
-msgstr ""
+msgstr "Эвент засварлах"
 
 # @ dbem
 #: buddypress/screens/my-events.php:52 em-events.php:183 em-posts.php:147
 #: templates/buddypress/profile.php:22
 msgid "Add Event"
-msgstr ""
+msgstr "Эвент нэмэх"
 
 # @ dbem
 #: buddypress/screens/my-locations.php:46 em-events.php:189 em-posts.php:242
 msgid "Add Location"
-msgstr ""
+msgstr "Байршил нэмэх"
 
 # @ dbem
 #: buddypress/screens/my-locations.php:48 classes/em-location.php:863
 #: em-events.php:191 em-posts.php:245
 msgid "Edit Location"
-msgstr ""
+msgstr "Байршил засварлах"
 
 # @ dbem
 #: buddypress/screens/profile.php:11
@@ -5120,18 +5120,18 @@ msgstr ""
 # @ dbem
 #: classes/em-booking.php:133 classes/em-event.php:268
 msgid "Approved"
-msgstr ""
+msgstr "Зөвшөөрсөн"
 
 # @ dbem
 #: classes/em-booking.php:134 classes/em-bookings-table.php:57
 msgid "Rejected"
-msgstr ""
+msgstr "Цуцлагдсан"
 
 # @ dbem
 #: classes/em-booking.php:135 classes/em-bookings-table.php:56
 #: em-install.php:632 em-install.php:654
 msgid "Cancelled"
-msgstr ""
+msgstr "Буцаасан"
 
 # @ dbem
 #: classes/em-booking.php:136
@@ -5147,37 +5147,37 @@ msgstr ""
 #: classes/em-booking.php:186 classes/em-ticket-booking.php:69
 #: classes/em-ticket.php:116
 msgid "Changes saved"
-msgstr ""
+msgstr "Өөрчлөлт хадгалагдсан"
 
 # @ dbem
 #: classes/em-booking.php:194
 msgid "Your booking has been recorded"
-msgstr ""
+msgstr "Таны захиалга бүртгэгдсэн"
 
 # @ dbem
 #: classes/em-booking.php:198 classes/em-booking.php:199
 #: classes/em-booking.php:207 classes/em-booking.php:218
 #: classes/em-tickets-bookings.php:69 classes/em-tickets-bookings.php:70
 msgid "There was a problem saving the booking."
-msgstr ""
+msgstr "Захиалга бүртгэхэд алдаа гарлаа"
 
 # @ dbem
 #: classes/em-booking.php:220
 #, php-format
 msgid "You cannot manage this %s."
-msgstr ""
+msgstr "Та %s ыг удирдах боломжгүй."
 
 # @ dbem
 #: classes/em-booking.php:220 classes/em-booking.php:741
 #: classes/em-booking.php:743 classes/em-bookings.php:110
 #: classes/em-tickets-bookings.php:165 em-install.php:648 em-install.php:650
 msgid "Booking"
-msgstr ""
+msgstr "Захиалга"
 
 # @ dbem
 #: classes/em-booking.php:273
 msgid "You are trying to book a non-existent ticket for this event."
-msgstr ""
+msgstr "Та тасалбаргүй эвентийг захиалах гэж байна."
 
 # @ dbem
 #: classes/em-booking.php:622 classes/em-booking.php:630
@@ -5192,46 +5192,46 @@ msgstr ""
 # @ dbem
 #: classes/em-booking.php:648 em-functions.php:419
 msgid "<strong>ERROR</strong>: Please type your e-mail address."
-msgstr ""
+msgstr "<strong>Алдаа</strong>: имэйл хаягаа оруулна уу."
 
 # @ dbem
 #: classes/em-booking.php:651 em-functions.php:421
 msgid "<strong>ERROR</strong>: The email address isn&#8217;t correct."
-msgstr ""
+msgstr "<strong>Алдаа</strong>: имэйл хаяг буруу байна."
 
 # @ dbem
 #: classes/em-booking.php:688
 msgid "Personal details have successfully been modified."
-msgstr ""
+msgstr "Хувийн мэдээлэл амжилттай шинэчлэгдсэн."
 
 # @ dbem
 #: classes/em-booking.php:710 classes/em-person.php:93
 #: templates/forms/event-editor.php:37
 msgid "Email"
-msgstr ""
+msgstr "Имэйл"
 
 # @ dbem
 #: classes/em-booking.php:711 classes/em-people.php:35
 #: classes/em-person.php:94 templates/forms/bookingform/booking-fields.php:16
 msgid "Phone"
-msgstr ""
+msgstr "Утас"
 
 # @ dbem
 #: classes/em-booking.php:741
 #, php-format
 msgid "%s deleted"
-msgstr ""
+msgstr "%s усгагдсан"
 
 # @ dbem
 #: classes/em-booking.php:743
 #, php-format
 msgid "%s could not be deleted"
-msgstr ""
+msgstr "%s ыг устгаж чадсангүй"
 
 # @ dbem
 #: classes/em-booking.php:789
 msgid "Not approved, spaces full."
-msgstr ""
+msgstr "Зөвшөөрөхгүй. Дууссан байна."
 
 # @ dbem
 #: classes/em-booking.php:798
@@ -5242,13 +5242,13 @@ msgstr ""
 # @ dbem
 #: classes/em-booking.php:801 em-actions.php:394 em-actions.php:417
 msgid "Email Sent."
-msgstr ""
+msgstr "Имэйл илгээсэн."
 
 # @ dbem
 #: classes/em-booking.php:804 classes/em-booking.php:805 em-actions.php:399
 #: em-actions.php:426
 msgid "ERROR : Email Not Sent."
-msgstr ""
+msgstr "Алдаа: Имэйл илгээж чадсангүй."
 
 # @ dbem
 #: classes/em-booking.php:810 classes/em-booking.php:811
@@ -5547,18 +5547,18 @@ msgstr ""
 #: classes/em-location-post-admin.php:150 em-actions.php:602
 #: templates/forms/event-editor.php:65
 msgid "Where"
-msgstr ""
+msgstr "Хаана"
 
 # @ dbem
 #: classes/em-event-post-admin.php:216 classes/em-event-post-admin.php:416
 #: templates/forms/event-editor.php:97
 msgid "Bookings/Registration"
-msgstr ""
+msgstr "Захиалга/Бүртгэл"
 
 # @ dbem
 #: classes/em-event-post-admin.php:218
 msgid "Bookings Stats"
-msgstr ""
+msgstr "Захиалгын стат"
 
 # @ dbem
 #: classes/em-event-post-admin.php:222 classes/em-event-post-admin.php:419
@@ -5634,12 +5634,12 @@ msgstr ""
 # @ default
 #: classes/em-event-posts-admin.php:175 classes/em-event-posts-admin.php:312
 msgid "Date and Time"
-msgstr ""
+msgstr "Огноо"
 
 # @ dbem
 #: classes/em-event-posts-admin.php:176 classes/em-event-posts-admin.php:313
 msgid "Owner"
-msgstr ""
+msgstr "Эзэмшигч"
 
 # @ dbem
 #: classes/em-event-posts-admin.php:219
@@ -5647,7 +5647,7 @@ msgstr ""
 #: templates/buddypress/my-group-events.php:87 templates/tables/events.php:103
 #: templates/templates/bookings-event-printable.php:44
 msgid "Booked"
-msgstr ""
+msgstr "Захиалагдсан"
 
 # @ dbem
 #: classes/em-event-posts-admin.php:226
@@ -5678,12 +5678,12 @@ msgstr ""
 #: classes/em-event-posts-admin.php:245
 #, php-format
 msgid "Duplicate %s"
-msgstr ""
+msgstr "%s ыг хуулбарлах"
 
 # @ dbem
 #: classes/em-event-posts-admin.php:245
 msgid "Duplicate"
-msgstr ""
+msgstr "Хуулбарлах"
 
 # @ dbem
 #: classes/em-event-posts-admin.php:277
@@ -6828,91 +6828,91 @@ msgstr ""
 # @ dbem
 #: em-posts.php:148
 msgid "Add New Event"
-msgstr ""
+msgstr "Шинэ эвент нэмэх"
 
 # @ dbem
 #: em-posts.php:149 em-posts.php:196 em-posts.php:244
 #: templates/forms/event/bookings.php:64
 msgid "Edit"
-msgstr ""
+msgstr "Засварлах"
 
 # @ dbem
 #: em-posts.php:151
 msgid "New Event"
-msgstr ""
+msgstr "Шинэ эвент"
 
 # @ dbem
 # @ default
 #: em-posts.php:152 em-posts.php:199 em-posts.php:247
 #: templates/tables/locations.php:65
 msgid "View"
-msgstr ""
+msgstr "Харах"
 
 # @ dbem
 #: em-posts.php:153
 msgid "View Event"
-msgstr ""
+msgstr "Эвентийг харах"
 
 # @ dbem
 #: em-posts.php:154 templates/tables/events.php:29
 #: templates/tables/events.php:34
 msgid "Search Events"
-msgstr ""
+msgstr "Эвент хайх"
 
 # @ dbem
 #: em-posts.php:155
 msgid "No Events Found"
-msgstr ""
+msgstr "Эвент олдсонгүй"
 
 # @ dbem
 #: em-posts.php:156
 msgid "No Events Found in Trash"
-msgstr ""
+msgstr "Хогийн саванд эвент алга."
 
 # @ dbem
 #: em-posts.php:157
 msgid "Parent Event"
-msgstr ""
+msgstr "Эцэг эвент"
 
 # @ dbem
 #: em-posts.php:188 em-posts.php:191 em-posts.php:193
 msgid "Recurring Events"
-msgstr ""
+msgstr "Нийтлэг эвент"
 
 # @ dbem
 #: em-posts.php:189
 msgid "Recurring Events Template"
-msgstr ""
+msgstr "Нийтлэг эвентийн загвар"
 
 # @ dbem
 #: em-posts.php:194 em-posts.php:200
 msgid "Add Recurring Event"
-msgstr ""
+msgstr "Нийтлэг эвент нэмэх"
 
 # @ dbem
 #: em-posts.php:195
 msgid "Add New Recurring Event"
-msgstr ""
+msgstr "Шинэ нийтлэг эвент нэмэх"
 
 # @ dbem
 #: em-posts.php:197
 msgid "Edit Recurring Event"
-msgstr ""
+msgstr "Нийтлэг эвентийг засварлах"
 
 # @ dbem
 #: em-posts.php:198
 msgid "New Recurring Event"
-msgstr ""
+msgstr "Шинэ Нийтлэг эвент"
 
 # @ dbem
 #: em-posts.php:201
 msgid "Search Recurring Events"
-msgstr ""
+msgstr "Нийтлэг эвент хайх"
 
 # @ dbem
 #: em-posts.php:202
 msgid "No Recurring Events Found"
-msgstr ""
+msgstr "Нийтлэг эвент олдсонгүй"
 
 # @ dbem
 #: em-posts.php:203
@@ -7512,33 +7512,33 @@ msgstr ""
 # @ dbem
 #: templates/forms/event/location.php:9
 msgid "This event does not have a physical location."
-msgstr ""
+msgstr "Энэ эвентэд байршил байхгүй."
 
 # @ dbem
 #: templates/forms/event/location.php:32
 msgid "Location:"
-msgstr ""
+msgstr "Байршил:"
 
 # @ dbem
 #: templates/forms/event/location.php:35
 msgid "No Location"
-msgstr ""
+msgstr "Байршилгүй"
 
 # @ dbem
 #: templates/forms/event/location.php:65
 msgid "Location Name:"
-msgstr ""
+msgstr "Байршлын Нэр:"
 
 # @ dbem
 #: templates/forms/event/location.php:70
 msgid ""
 "Create a location or start typing to search a previously created location."
-msgstr ""
+msgstr "Байршил үүсгэх, эсвэл бичиж эхэлснээр өмнөх байршлуудаас хайна."
 
 # @ dbem
 #: templates/forms/event/location.php:71
 msgid "You cannot edit saved locations here."
-msgstr ""
+msgstr "Та хадгалсан байршдыг эндээс өөрчлөх боломжгүй."
 
 # @ dbem
 #: templates/forms/event/location.php:71
@@ -7548,17 +7548,17 @@ msgstr ""
 # @ dbem
 #: templates/forms/event/location.php:75 templates/forms/location/where.php:11
 msgid "Address:"
-msgstr ""
+msgstr "Хаяг:"
 
 # @ dbem
 #: templates/forms/event/location.php:81 templates/forms/location/where.php:17
 msgid "City/Town:"
-msgstr ""
+msgstr "Хот/Аймаг:"
 
 # @ dbem
 #: templates/forms/event/location.php:87 templates/forms/location/where.php:23
 msgid "State/County:"
-msgstr ""
+msgstr "Улс:"
 
 # @ dbem
 #: templates/forms/event/location.php:93 templates/forms/location/where.php:29
@@ -7574,7 +7574,7 @@ msgstr ""
 #: templates/forms/event/location.php:105
 #: templates/forms/location/where.php:42
 msgid "Country:"
-msgstr ""
+msgstr "Улс:"
 
 # @ dbem
 #: templates/forms/event/location.php:108
@@ -7598,13 +7598,13 @@ msgstr ""
 #: templates/forms/event/recurring-when.php:19
 #: templates/forms/event/when-with-recurring.php:41
 msgid "day"
-msgstr ""
+msgstr "өдөр"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:20
 #: templates/forms/event/when-with-recurring.php:42
 msgid "days"
-msgstr ""
+msgstr "өдөр"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:21
@@ -7634,43 +7634,43 @@ msgstr ""
 #: templates/forms/event/recurring-when.php:25
 #: templates/forms/event/when-with-recurring.php:47
 msgid "year"
-msgstr ""
+msgstr "жил"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:26
 #: templates/forms/event/when-with-recurring.php:48
 msgid "years"
-msgstr ""
+msgstr "жил"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:36
 #: templates/forms/event/when-with-recurring.php:59
 msgid "first"
-msgstr ""
+msgstr "эхний"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:36
 #: templates/forms/event/when-with-recurring.php:59
 msgid "second"
-msgstr ""
+msgstr "хоёр дахь"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:36
 #: templates/forms/event/when-with-recurring.php:59
 msgid "third"
-msgstr ""
+msgstr "гурав дахь"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:36
 #: templates/forms/event/when-with-recurring.php:59
 msgid "fourth"
-msgstr ""
+msgstr "дөрөв дэх"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:36
 #: templates/forms/event/when-with-recurring.php:59
 msgid "last"
-msgstr ""
+msgstr "сүүлчийн"
 
 # @ dbem
 #: templates/forms/event/recurring-when.php:43
@@ -7774,12 +7774,12 @@ msgstr ""
 # @ dbem
 #: templates/forms/event-editor.php:89
 msgid "Event Image"
-msgstr ""
+msgstr "Эвентийн зураг"
 
 # @ dbem
 #: templates/forms/event-editor.php:107
 msgid "Submit Event"
-msgstr ""
+msgstr "Эвентийг оруулах"
 
 # @ dbem
 #: templates/forms/location/attributes.php:43
@@ -7815,43 +7815,43 @@ msgstr ""
 # @ dbem
 #: templates/forms/location-editor.php:25
 msgid "Location Name"
-msgstr ""
+msgstr "Байршлын нэр"
 
 # @ dbem
 #: templates/forms/location-editor.php:29
 msgid "The name of the location"
-msgstr ""
+msgstr "байршлын нэр"
 
 # @ dbem
 #: templates/forms/location-editor.php:44
 msgid "Details about the location."
-msgstr ""
+msgstr "Байршлын дэлгэрэнгүй"
 
 # @ dbem
 #: templates/forms/location-editor.php:44
 msgid "HTML Allowed."
-msgstr ""
+msgstr "HTML Зөвшөөрсөн."
 
 # @ dbem
 #: templates/forms/location-editor.php:52
 msgid "Location Image"
-msgstr ""
+msgstr "Байршлын зураг"
 
 # @ dbem
 #: templates/forms/location-editor.php:63
 msgid "Update location"
-msgstr ""
+msgstr "Байршил засварлах"
 
 # @ dbem
 #: templates/forms/map-container.php:3
 msgid "Location not found"
-msgstr ""
+msgstr "Байршил олдсонгүй"
 
 # @ dbem
 #: templates/placeholders/locationmap.php:21
 #: templates/templates/map-global.php:13
 msgid "Loading Map...."
-msgstr ""
+msgstr "Газрын зургийг уншиж байна..."
 
 # @ dbem
 #: templates/placeholders/locationmap.php:35
@@ -7861,29 +7861,29 @@ msgstr "Газрын зураг байхгүй"
 # @ dbem
 #: templates/tables/events.php:12 templates/tables/locations.php:4
 msgid "Add New"
-msgstr ""
+msgstr "Шинээр нэмэх"
 
 # @ dbem
 #: templates/tables/events.php:19
 msgid "Upcoming"
-msgstr ""
+msgstr "Ирж буй"
 
 # @ dbem
 #: templates/tables/events.php:24
 msgid "Draft"
-msgstr ""
+msgstr "ноорог"
 
 # @ dbem
 #: templates/tables/locations.php:10
 #, php-format
 msgid "My %s"
-msgstr ""
+msgstr "Миний %s"
 
 # @ dbem
 #: templates/tables/locations.php:13
 #, php-format
 msgid "All %s"
-msgstr ""
+msgstr "Бүх %s"
 
 # @ dbem
 #: templates/tables/locations.php:77
