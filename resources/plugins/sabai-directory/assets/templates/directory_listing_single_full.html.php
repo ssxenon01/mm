@@ -141,7 +141,7 @@
                     </tr>
                     <tr>
                         <td>Алкохол: <?php echo in_array('drinks',$field_what)?'YES':'NO' ?></td>
-                        <td>Дундаж үнэ: <?php echo '₮'.$entity->getFieldValues()['field_price'] ?></td>
+                        <td>Дундаж үнэ: <?php echo '₮'.$entity->getFieldValues()['field_price'][0] ?></td>
                     </tr>
                     <tr>
                         <td>Амьд тоглолт: <?php echo in_array('livemusic',$tenant_feature)?'YES':'NO' ?></td>
@@ -151,17 +151,11 @@
                         <td>Гадаа суудал: <?php echo in_array('outdoors',$tenant_feature)?'YES':'NO' ?></td>
                         <td>Цагаан хоолтой: <?php echo in_array('veterian',$tenant_feature)?'YES':'NO' ?> </td>
                     </tr>
-
                 </table>
-
-
-
-
             </div>
             <!--<div class="sabai-directory-custom-fields">
                 <?php /*$this->renderTemplate('directory_custom_fields', array('entity' => $entity));*/?>
             </div>-->
-
         </div>
     </div>
     <div class="sabai-entity-links sabai-btn-group">
