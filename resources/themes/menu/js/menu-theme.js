@@ -1156,7 +1156,6 @@ jQuery(function($) {
 
 
     var eventSwiper = new Swiper('.e-swiper', {
-        pagination: '.pagination-event',
         loop: true,
         paginationClickable: true
     });
