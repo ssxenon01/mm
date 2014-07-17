@@ -15,7 +15,7 @@ get_header('app');
 
         <div class="row">
 
-            <div class="col-md-12">
+            <div class="col-md-12" style=" padding: 0; padding-top: 20px;">
 
                 <?php while (have_posts()) : the_post(); ?>
 

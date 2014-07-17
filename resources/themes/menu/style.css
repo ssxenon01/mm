@@ -2538,3 +2538,22 @@ Pagination Styles
     box-shadow: 1px 1px 1px rgba(97, 96, 96, 0.39);
     padding: 4px;
 }
+.app-header.wrapper .navbar-default{
+    background: #000;
+    margin: 0;
+}
+.app-header.wrapper .navbar-nav{
+    padding-top: 15px;
+}
+
+.app-header.wrapper .navbar-default .navbar-nav li a{
+    color: #b2b2b2;
+}
+.app-header.wrapper .m-container{
+    position: relative;
+    margin-top: -170px;
+}
+.feature.table td{
+    font-weight: bold;
+    padding: 4px;
+}

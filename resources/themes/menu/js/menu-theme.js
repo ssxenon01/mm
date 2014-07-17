@@ -1139,7 +1139,7 @@ Swiper.prototype={plugins:{},wrapperTransitionEnd:function(f,b){function g(){f(h
 
 jQuery(function($) {
     var menuSwiper = new Swiper('.swiper-container', {
-        pagination: '.pagination',
+//        pagination: '.pagination',
         loop: true,
         autoplay:6000,
         paginationClickable: true
@@ -1156,6 +1156,7 @@ jQuery(function($) {
 
 
     var eventSwiper = new Swiper('.e-swiper', {
+//        pagination: '.pagination-event',
         loop: true,
         paginationClickable: true
     });

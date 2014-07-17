@@ -73,9 +73,9 @@
 $category = get_category( get_query_var( 'cat' ) );
 $cat_id = $category->cat_ID;
 ?>
-<section class="wrapper <?php echo('cat-'.$cat_id)?>">
+<section class="wrapper <?php echo('cat-'.$cat_id)?> app-header">
     <!-- menu -->
-    <div class="navbar navbar-default" role="navigation" style="margin-right: auto;">
+    <div class="navbar navbar-default" role="navigation" style="margin-right: auto; height: 450px;">
         <div class="container force-reset">
             <div class="row">
                 <div class="col-md-12">
@@ -105,8 +105,9 @@ $cat_id = $category->cat_ID;
                     </div>
 
                     <img class="hidden-xs col-md-10" src="http://mymenu.mn/beta/sample/banner.jpg" style="
-    float: right;
-    padding: 15px;
+   float: right;
+padding: 15px 0;
+margin-right: -30px;
 ">
                     <?php wp_nav_menu(array('theme_location' => 'main', 'fallback_cb' => '', 'walker' =>  'Bunyad_Menu_Walker','container_class' => 'collapse navbar-collapse','menu_class'=>'nav navbar-nav')); ?>
                     <?php if (!Bunyad::options()->disable_breadcrumbs): ?>
