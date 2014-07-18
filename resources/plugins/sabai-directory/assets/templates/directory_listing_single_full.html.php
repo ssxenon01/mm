@@ -75,7 +75,7 @@
             <img src="<?php echo $this->NoImageUrl();?>" alt="" />
 <?php endif;?>
         </div>
-        <div class="sabai-span6" style="margin-top: -115px;">
+        <div class="sabai-span6" style="margin-top: -30px;">
 <?php if ($listing_body = $this->Content_RenderBody($entity)):?>
             <div class="sabai-directory-body" itemprop="description">
                 <?php echo $listing_body;?>
