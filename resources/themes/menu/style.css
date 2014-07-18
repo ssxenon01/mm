@@ -2557,3 +2557,13 @@ Pagination Styles
     font-weight: bold;
     padding: 4px;
 }
+.app-header.wrapper .navbar-default .navbar-nav li.current-menu-item {
+    background: none !important;
+    border: 1px solid #ffa903;
+}
+.app-header.wrapper .navbar-default .navbar-nav > li {
+    border-top: none;
+}
+.app-header.wrapper .navbar-default .navbar-nav li a{
+    border-right: 1px solid #ffa903;
+}
