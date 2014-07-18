@@ -2567,3 +2567,6 @@ Pagination Styles
 .app-header.wrapper .navbar-default .navbar-nav li a{
     border-right: 1px solid #ffa903;
 }
+.sabai-entity a{
+    color: #e75255;
+}

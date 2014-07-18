@@ -75,7 +75,7 @@
             <img src="<?php echo $this->NoImageUrl();?>" alt="" />
 <?php endif;?>
         </div>
-        <div class="sabai-span6">
+        <div class="sabai-span6" style="margin-top: -115px;">
 <?php if ($listing_body = $this->Content_RenderBody($entity)):?>
             <div class="sabai-directory-body" itemprop="description">
                 <?php echo $listing_body;?>
@@ -113,6 +113,16 @@
             </div>
             <div class="clearfix"></div>
             <div class="sabai-span4" style="margin-left: 0 !important;">
+                <h1>Цагийн хуваарь</h1>
+                <div>
+                    <?php foreach($entity->getFieldValues()['field_hours'] as $hours): ?>
+                        <p><?php echo $hours;?></p>
+                    <?php endforeach; ?>
+
+
+                    <?php $this->renderTemplate('directory_custom_fields', array('entity' => $entity));?>
+                </div>
+
             </div>
             <div class="sabai-span8">
                 <?php $tenant_feature = $entity->getFieldValues()['field_tenant_feature']; ?>
