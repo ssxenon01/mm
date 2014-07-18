@@ -136,7 +136,7 @@
                         <td>Олуулаа очиход тохиромжтой: <?php echo in_array('biggroup',$tenant_feature)?'YES':'NO' ?></td>
                     </tr>
                     <tr>
-                        <td>Нэг дор хүлээн авах: <?php echo $entity->getFieldValues()['field_limit'] ?></td>
+                        <td>Нэг дор хүлээн авах: <?php echo $entity->getFieldValues()['field_limit'][0] ?></td>
                         <td>Катеринг үйлчилгээ: <?php echo in_array('catering',$tenant_feature)?'YES':'NO' ?></td>
                     </tr>
                     <tr>
