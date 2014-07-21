@@ -56,7 +56,7 @@ $images = get_posts(array(
     <div id="magazine" class="animate">
         <?php foreach ($images as $attachment): ?>
 
-            <div style="background-image:url(<?php echo wp_get_attachment_image_src($attachment->ID, 'magazine-slider')[0]; ?>); background-repeat: no-repeat; background-size: contain;"></div>
+            <div style="background-image:url(<?php echo wp_get_attachment_image_src($attachment->ID, 'magazine-slider')[0]; ?>); background-repeat: no-repeat; background-size: cover;"></div>
 
         <?php endforeach; // no reset query needed; get_posts() uses a new instance ?>
     </div>
