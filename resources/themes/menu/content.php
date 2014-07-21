@@ -45,15 +45,16 @@ $review = Bunyad::posts()->meta('reviews');
                 </div>
             </div>
             <div class="news-body" itemprop="articleBody">
+                <?php if (get_post_format() == 'aside'): // get gallery template ?>
 
-                <?php if (get_post_format() == 'gallery'): // get gallery template ?>
+                    <?php get_template_part('partial-single-magazine'); ?>
 
-                    <?php get_template_part('partial-single-coverflow'); ?>
-
-
+                <?php else :?>
+                    <?php if (get_post_format() == 'gallery'): // get gallery template ?>
+                        <?php get_template_part('partial-single-coverflow'); ?>
+                    <?php endif; // normal featured image ?>
+                    <?php Bunyad::posts()->the_content(); ?>
                 <?php endif; // normal featured image ?>
-
-                <?php Bunyad::posts()->the_content(); ?>
             </div>
         </div>
     </article>

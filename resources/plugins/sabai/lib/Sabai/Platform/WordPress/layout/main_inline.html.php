@@ -51,7 +51,7 @@
 <?php echo $CONTENT;?>
 </div>
 <?php if (!empty($INLINE_TABS)):?>
-<div id="sabai-inline">
+<div id="sabai-inline" class="col-md-10">
   <div id="sabai-inline-nav">
     <ul class="sabai-nav sabai-nav-tabs">
 <?php   foreach ($INLINE_TABS as $_INLINE_TAB_NAME => $_INLINE_TAB): $attr = empty($_INLINE_TAB['class']) ? array() : array('class' => $_INLINE_TAB['class']);?>
@@ -69,4 +69,9 @@
     <?php echo $this->ImportRoute('#sabai-inline-content', $INLINE_TABS[$INLINE_TAB_CURRENT]['route'], $CONTEXT);?>
   </div>
 </div>
+    <?php if (is_active_sidebar('app-banner-sidebar')): ?>
+        <div class="mid-banner">
+            <?php dynamic_sidebar('app-banner-sidebar'); ?>
+        </div>
+    <?php endif; ?>
 <?php endif;?>

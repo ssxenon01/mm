@@ -14,8 +14,7 @@ get_header();
     <div class="container">
 
         <div class="row">
-
-            <div class="col-md-8">
+            <div class="col-md-<?php echo (get_post_format() == 'aside')?'12':'8'; ?>">
 
                 <?php
 
@@ -48,27 +47,32 @@ get_header();
 
                 <?php endwhile; // end of the loop. ?>
             </div>
-            <div class="col-md-4">
-                <div class="right-content">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?php if (is_active_sidebar('banner-sidebar')): ?>
-                                <div class="mid-banner">
-                                    <?php dynamic_sidebar('banner-sidebar'); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+            <?php if (get_post_format() != 'aside'): // get gallery template ?>
 
-                        <div class="col-md-8">
-                            <?php if (is_active_sidebar('primary-sidebar')): ?>
+                <div class="col-md-4">
+                    <div class="right-content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php if (is_active_sidebar('banner-sidebar')): ?>
+                                    <div class="mid-banner">
+                                        <?php dynamic_sidebar('banner-sidebar'); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
 
-                                <?php dynamic_sidebar('primary-sidebar'); ?>
+                            <div class="col-md-8">
+                                <?php if (is_active_sidebar('primary-sidebar')): ?>
 
-                            <?php endif; ?>
+                                    <?php dynamic_sidebar('primary-sidebar'); ?>
+
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+            <?php endif;?>
+
         </div>
     </div>
 

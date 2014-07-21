@@ -20,7 +20,7 @@ $bunyad = Bunyad::core()->init(array(
 	'widgets'    => array('about', 'latest-posts', 'popular-posts', 'tabbed-recent', 'flickr',
         'ads', 'latest-reviews', 'bbp-login','city-pulse','footer','slider-posts','player-posts','multi-slider',
         'latest-before','fun-freetime','fun-holiday','fun-eventcalendar'),
-	'post_formats' => array('gallery', 'image', 'video', 'audio'),
+	'post_formats' => array('gallery', 'image', 'video', 'audio','aside'),
 
 	'shortcode_config' => array(
 		'font_icons' => true,
@@ -110,7 +110,8 @@ class Bunyad_Theme_SmartMag
 		// 1280x612 images for no cropping of featured and slider image
 		add_image_size('main-full', 1078, 516, true); // main post image in full width
 		add_image_size('main-slider', 750, 393, true);
-		
+		add_image_size('magazine-slider', 559, 790, false);
+
 		add_image_size('slider-small', 360, 200, true); // small thumb for slider
 		add_image_size('recent-posts', 138, 200, true); // small thumb for slider
 		add_image_size('gallery-block', 202, 265, true); // small thumb for slider
