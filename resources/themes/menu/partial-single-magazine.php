@@ -53,7 +53,7 @@ $images = get_posts(array(
 </style>
 
 
-    <div id="magazine" class="animate">
+    <div id="magazine" class="animate magazine">
         <?php foreach ($images as $attachment): ?>
 
             <div style="background-image:url(<?php echo wp_get_attachment_image_src($attachment->ID, 'magazine-slider')[0]; ?>); background-repeat: no-repeat; background-size: cover;"></div>
