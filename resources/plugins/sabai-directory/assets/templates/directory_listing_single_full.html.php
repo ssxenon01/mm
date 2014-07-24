@@ -146,16 +146,14 @@
                         <td>Олуулаа очиход тохиромжтой: <?php echo in_array('biggroup',$tenant_feature)?'YES':'NO' ?></td>
                     </tr>
                     <tr>
-                        <td>Нэг дор хүлээн авах: <?php echo $entity->getFieldValues()['field_limit'][0] ?></td>
-                        <td>Катеринг үйлчилгээ: <?php echo in_array('catering',$tenant_feature)?'YES':'NO' ?></td>
-                    </tr>
-                    <tr>
                         <td>Алкохол: <?php echo in_array('drinks',$field_what)?'YES':'NO' ?></td>
-                        <td>Дундаж үнэ: <?php echo '₮'.$entity->getFieldValues()['field_price'][0] ?></td>
+                        <td>Нэг дор хүлээн авах: <?php echo $entity->getFieldValues()['field_limit'][0] ?></td>
+
+                        <!--                        <td>Дундаж үнэ: --><?php //echo '₮'.$entity->getFieldValues()['field_price'][0] ?><!--</td>-->
                     </tr>
                     <tr>
                         <td>Амьд тоглолт: <?php echo in_array('livemusic',$tenant_feature)?'YES':'NO' ?></td>
-                        <td>Орчин: </td>
+                        <td>Орчин: <?php echo $entity->getFieldValues()['field_environment'][0] ?></td>
                     </tr>
                     <tr>
                         <td>Гадаа суудал: <?php echo in_array('outdoors',$tenant_feature)?'YES':'NO' ?></td>
