@@ -44,10 +44,13 @@ class Walker_Nav_Menu extends Walker {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   An array of arguments. @see wp_nav_menu()
 	 */
-	function start_lvl( &$output, $depth = 0, $args = array() ) {
-		$indent = str_repeat("\t", $depth);
-		$output .= "\n$indent<ul class=\"sub-menu\">\n";
-	}
+    function start_lvl( &$output, $depth = 0, $args = array() ) {
+        $indent = str_repeat("\t", $depth);
+        if($depth>=1)
+            $output .= "\n$indent<ul class=\"dropdown-menu sub-menu\">\n";
+        else
+            $output .= "\n$indent<ul class=\"dropdown-menu\">\n";
+    }
 
 	/**
 	 * Ends the list of after the elements are added.
@@ -342,7 +345,7 @@ function wp_nav_menu( $args = array() ) {
 	if ( $menu_items_with_children ) {
 		foreach ( $sorted_menu_items as &$menu_item ) {
 			if ( isset( $menu_items_with_children[ $menu_item->ID ] ) )
-				$menu_item->classes[] = 'menu-item-has-children';
+				$menu_item->classes[] = 'dropdown';
 		}
 	}
 
