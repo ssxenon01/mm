@@ -99,7 +99,7 @@ class ITSEC_File_Change_Admin {
 					'no_changes'           => __( 'No changes were detected.', 'it-l10n-better-wp-security' ),
 					'changes'              => __( 'Changes were detected. Please check the log page for details.', 'it-l10n-better-wp-security' ),
 					'error'                => __( 'An error occured. Please try again later', 'it-l10n-better-wp-security' ),
-					'ABSPATH'              => ABSPATH,
+					'ABSPATH'              =>ITSEC_Lib::get_home_path(),
 					'nonce'                => wp_create_nonce( 'itsec_do_file_check' ),
 				)
 			);
@@ -318,9 +318,10 @@ class ITSEC_File_Change_Admin {
 
 			echo '<form id="itsec_one_time_file_check" method="post" action="">';
 			echo wp_nonce_field( 'itsec_do_file_check', 'wp_nonce' );
-			echo '<input type="hidden" name="itsec_file_change_origin" value="' . sanitize_text_field( $origin ) . '"><div id="itsec_file_change_status"></div>';
+			echo '<input type="hidden" name="itsec_file_change_origin" value="' . sanitize_text_field( $origin ) . '">';
 			echo '<p>' . __( "Press the button below to scan your site's files for changes. Note that if changes are found this will take you to the logs page for details.", 'it-l10n-better-wp-security' ) . '</p>';
 			echo '<p><input type="submit" id="itsec_one_time_file_check_submit" class="button-primary" value="' . ( isset( $this->settings['split'] ) && $this->settings['split'] === true ? __( 'Scan Next File Chunk', 'it-l10n-better-wp-security' ) : __( 'Scan Files Now', 'it-l10n-better-wp-security' ) ) . '" /></p>';
+			echo '<div id="itsec_file_change_status"><p></p></div>';
 			echo '</form>';
 
 		}
@@ -363,7 +364,7 @@ class ITSEC_File_Change_Admin {
 		$content .= '<div class="file_list">';
 		$content .= '<div class="file_chooser"><div class="jquery_file_tree"></div></div>';
 		$content .= '<div class="list_field">';
-		$content .= '<textarea id="itsec_file_change_file_list" name="itsec_file_change[file_list]" wrap="off">' . $file_list . '</textarea>';
+		$content .= '<textarea id="itsec_file_change_file_list" name="itsec_file_change[file_list]" wrap="off">' . $file_list . PHP_EOL . '</textarea>';
 		$content .= '</div></div>';
 
 		echo $content;
@@ -488,7 +489,7 @@ class ITSEC_File_Change_Admin {
 			) );
 		}
 
-		$content = '<textarea id="itsec_file_change_types" name="itsec_file_change[types]" wrap="off" cols="20" rows="10">' . $types . '</textarea><br />';
+		$content = '<textarea id="itsec_file_change_types" name="itsec_file_change[types]" wrap="off" cols="20" rows="10">' . $types . PHP_EOL . '</textarea><br />';
 		$content .= '<label for="itsec_file_change_types"> ' . __( 'File types listed here will not be checked for changes. While it is possible to change files such as images it is quite rare and nearly all known WordPress attacks exploit php, js and other text files.', 'it-l10n-better-wp-security' ) . '</label>';
 
 		echo $content;
@@ -637,6 +638,8 @@ class ITSEC_File_Change_Admin {
 			if ( count( $files ) > 2 ) { /* The 2 accounts for . and .. */
 
 				echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
+
+				//two loops keep directories sorted before files
 
 				// All dirs
 				foreach ( $files as $file ) {

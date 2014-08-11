@@ -103,14 +103,14 @@ add_action( 'in_admin_header', 'wp_admin_bar_render', 0 );
  * @param WP_Admin_Bar $wp_admin_bar
  */
 function wp_admin_bar_wp_menu( $wp_admin_bar ) {
-	/*$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( array(
 		'id'    => 'wp-logo',
 		'title' => '<span class="ab-icon"></span>',
 		'href'  => self_admin_url( 'about.php' ),
 		'meta'  => array(
 			'title' => __('About WordPress'),
 		),
-	) );*/
+	) );
 
 	if ( is_user_logged_in() ) {
 		// Add "About WordPress" link
@@ -123,36 +123,36 @@ function wp_admin_bar_wp_menu( $wp_admin_bar ) {
 	}
 
 	// Add WordPress.org link
-	/*$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( array(
 		'parent'    => 'wp-logo-external',
 		'id'        => 'wporg',
 		'title'     => __('WordPress.org'),
 		'href'      => __('https://wordpress.org/'),
-	) );*/
+	) );
 
 	// Add codex link
-	/*$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( array(
 		'parent'    => 'wp-logo-external',
 		'id'        => 'documentation',
 		'title'     => __('Documentation'),
 		'href'      => __('http://codex.wordpress.org/'),
-	) );*/
+	) );
 
 	// Add forums link
-	/*$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( array(
 		'parent'    => 'wp-logo-external',
 		'id'        => 'support-forums',
 		'title'     => __('Support Forums'),
 		'href'      => __('https://wordpress.org/support/'),
-	) );*/
+	) );
 
 	// Add feedback link
-	/*$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( array(
 		'parent'    => 'wp-logo-external',
 		'id'        => 'feedback',
 		'title'     => __('Feedback'),
 		'href'      => __('https://wordpress.org/support/forum/requests-and-feedback'),
-	) );*/
+	) );
 }
 
 /**
