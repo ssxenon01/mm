@@ -1,32 +1,10 @@
 <?php
-class JSON_API_Sabai_Controller {
+/*
+Controller name: BD
+Controller description: Directory API
+*/
 
-    private  function posts_result($posts) {
-
-        global $wp_query;
-        return array(
-            'count' => count($posts),
-            'count_total' => (int) $wp_query->found_posts,
-            'pages' => $wp_query->max_num_pages,
-            'posts' => $posts
-        );
-    }
-    public function all(){
-        global $json_api;
-        $url = parse_url($_SERVER['REQUEST_URI']);
-        $defaults = array(
-            'ignore_sticky_posts' => true,
-            'post_type' => 'wpbdp_listing'
-        );
-        $query = wp_parse_args($url['query']);
-        unset($query['json']);
-        unset($query['post_status']);
-        $query = array_merge($defaults, $query);
-        $posts = $json_api->introspector->get_posts($query);
-        $result = $this->posts_result($posts);
-        $result['query'] = $query;
-        return $result;
-    }
+class JSON_API_Bd_Controller {
 
     public function tenant(){
 
@@ -63,7 +41,7 @@ class JSON_API_Sabai_Controller {
                 LEFT JOIN (menu_sabai_entity_field_directory_category cat) ON (cat.bundle_id = 7 AND cat.entity_id = a.post_id )
                 WHERE a.post_status="published"
                 AND a.post_entity_bundle_name = "directory_listing" GROUP BY a.post_id'
-                    );
+            );
             wp_cache_set( 'tenant_list', $result );
         }
         return array(
@@ -86,7 +64,7 @@ class JSON_API_Sabai_Controller {
         );
 
     }
-
+  
 }
 
 ?>
