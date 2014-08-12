@@ -12,8 +12,8 @@ class Sabai_Addon_Directory extends Sabai_Addon
                Sabai_Addon_System_IMainMenus
 {
     const VERSION = '1.2.31', PACKAGE = 'sabai-directory';
-    
-    private static $_gmapLoaded = false;    
+
+    private static $_gmapLoaded = false;
     protected $_path, $_listingBundleName, $_reviewBundleName, $_leadBundleName, $_photoBundleName, $_categoryBundleName;
     
     function _init()
