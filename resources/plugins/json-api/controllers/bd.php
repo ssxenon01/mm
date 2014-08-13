@@ -10,8 +10,8 @@ class JSON_API_Bd_Controller {
 
         global $wpdb;
 
-        $result = wp_cache_get( 'tenant_list' );
-        if ( false === $result ) {
+       /* $result = wp_cache_get( 'tenant_list' );
+        if ( false === $result ) {*/
             $result = $wpdb->get_results('SELECT a.post_title as title, a.post_published as published, a.post_views as view_count, a.post_id as id , d.value as description , f.value as featured,
                   /*contact*/ co.phone , co.mobile , co.fax, co.email , co.website,
                   /*address*/ l.address , l.lat , l.lng, fl.value as fl, rating.average as rating,
@@ -45,16 +45,22 @@ class JSON_API_Bd_Controller {
                 AND a.post_entity_bundle_name = "directory_listing" GROUP BY a.post_id'
             );
             foreach($result as $single){
-                $single->hours = $wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_field_hours a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
-                $single->tf = $wpdb->get_results("SELECT a.value FROM menu_sabai_entity_field_field_tenant_feature a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
-                $single->wt = $wpdb->get_results("SELECT a.value FROM menu_sabai_entity_field_field_what a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
-                $single->wh = $wpdb->get_results("SELECT a.value FROM menu_sabai_entity_field_field_with_whom a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
-                $single->photos = $wpdb->get_results("SELECT a.entity_id as val FROM menu_sabai_entity_field_content_parent a WHERE a.bundle_id = 9 AND a.value = $single->id");
-                $single->category = $wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_directory_category a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
+                $single->hours = $this->toArray($wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_field_hours a WHERE a.bundle_id = 7 AND a.entity_id = $single->id"));
+                $single->tf = $this->toArray($wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_field_tenant_feature a WHERE a.bundle_id = 7 AND a.entity_id = $single->id"));
+                $single->wt = $this->toArray($wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_field_what a WHERE a.bundle_id = 7 AND a.entity_id = $single->id"));
+                $single->wh = $this->toArray($wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_field_with_whom a WHERE a.bundle_id = 7 AND a.entity_id = $single->id"));
+                $single->photos = $this->toArray($wpdb->get_results("SELECT a.entity_id as val FROM menu_sabai_entity_field_content_parent a WHERE a.bundle_id = 9 AND a.value = $single->id"));
+                $single->category = $this->toArray($wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_directory_category a WHERE a.bundle_id = 7 AND a.entity_id = $single->id"));
+                $single->comments = $wpdb->get_results("SELECT a.post_title as title, FROM_UNIXTIME(a.post_created) as dateCreated, b.value as description, u.display_name as username, um.meta_value as thumbnail FROM menu_sabai_content_post a
+                  INNER JOIN (menu_sabai_entity_field_content_parent p) ON (p.entity_id = a.post_id AND p.value = $single->id)
+                  LEFT JOIN (menu_sabai_entity_field_content_body b) ON (b.bundle_id = 8 AND b.entity_id = a.post_id)
+                  LEFT JOIN (menu_users u) ON (a.post_user_id = u.id)
+                  LEFT JOIN (menu_usermeta um) ON (a.post_user_id = um.user_id AND meta_key = 'facebookall_user_thumbnail')
+                  WHERE a.post_status='published' AND a.post_entity_bundle_name = 'directory_listing_review' ORDER BY a.post_created DESC LIMIT 10");
             }
 
-             wp_cache_set( 'tenant_list', $result );
-        }
+            /* wp_cache_set( 'tenant_list', $result );
+        }*/
         return array(
             'count' => count($result),
             'data' => $result
@@ -74,6 +80,18 @@ class JSON_API_Bd_Controller {
             'data' => $result
         );
 
+    }
+
+    private function toArray($array)
+    {
+        $nArray = [];
+
+        foreach ($array as $value)
+        {
+            array_push($nArray,$value->val);
+        }
+
+        return $nArray;
     }
   
 }

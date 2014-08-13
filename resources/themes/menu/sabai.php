@@ -4,7 +4,9 @@
 */
 $img = $_GET['img_id'];
 if(!$img)
-    http_response_code(204);
+
+    header("Location: http://localhost:8888/mymenu/resources/plugins/sabai/assets/images/no_image_small.png");
+
 else{
 
     global $wpdb;
@@ -12,9 +14,13 @@ else{
 
     $id = $wpdb->get_row("SELECT f.file_name as id FROM menu_sabai_entity_field_file_image a , menu_sabai_file_file f WHERE f.file_id = a.file_id AND a.entity_id = $img " , OBJECT)->id;
 
-
-    header("Location: http://mymenu.mn/resources/sabai/File/thumbnails/$id");
-    die();
+    if($id){
+        header("Location: http://localhost:8888/mymenu/resources/sabai/File/thumbnails/$id");
+        die();
+    }else{
+        header("Location: http://localhost:8888/mymenu/resources/plugins/sabai/assets/images/no_image_small.png");
+        die();
+    }
 
 }
 
