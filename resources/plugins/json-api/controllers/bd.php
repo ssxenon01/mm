@@ -13,10 +13,12 @@ class JSON_API_Bd_Controller {
         $result = wp_cache_get( 'tenant_list' );
         if ( false === $result ) {
             $result = $wpdb->get_results('SELECT a.post_title as title, a.post_published as published, a.post_views as view_count, a.post_id as id , d.value as description , f.value as featured,
-                  /*contact*/ co.phone , co.mobile , co.fax, co.email , co.website, GROUP_CONCAT(DISTINCT cat.value) as category,
-                  /*address*/ l.address , l.lat , l.lng, GROUP_CONCAT(DISTINCT wt.value) as wt,GROUP_CONCAT(DISTINCT wh.value) as wh,fl.value as fl, rating.average as rating,
-                  /*social*/ s.twitter , s.facebook , s.googleplus, GROUP_CONCAT(DISTINCT parent.entity_id) as photos, rc.value as review_count,pc.value as photo_count,
-                  /*custom fields*/ deal.value as deal, environment.value as environment, feature.value as feature , GROUP_CONCAT(DISTINCT hours.value) as hours , lmt.value as lmt , parking.value as parking , price.value as price ,GROUP_CONCAT(DISTINCT tf.value) AS tf
+                  /*contact*/ co.phone , co.mobile , co.fax, co.email , co.website,
+                  /*address*/ l.address , l.lat , l.lng, fl.value as fl, rating.average as rating,
+                  /*social*/ s.twitter , s.facebook , s.googleplus,  rc.value as review_count,pc.value as photo_count,
+                  /*custom fields*/ deal.value as deal, environment.value as environment, feature.value as feature ,  lmt.value as lmt , parking.value as parking , price.value as price
+
+                  /*GROUP_CONCAT(DISTINCT tf.value) AS tf,GROUP_CONCAT(DISTINCT wh.value) as wh,GROUP_CONCAT(DISTINCT cat.value) as category,GROUP_CONCAT(DISTINCT wt.value) as wt,GROUP_CONCAT(DISTINCT parent.entity_id) as photos,GROUP_CONCAT(DISTINCT hours.value) as hours*/
                 FROM menu_sabai_content_post a
                 LEFT JOIN (menu_sabai_entity_field_content_body d) ON (d.bundle_id = 7 AND d.entity_id = a.post_id )
                 LEFT JOIN (menu_sabai_entity_field_content_featured f) ON (f.bundle_id = 7 AND f.entity_id = a.post_id )
@@ -27,22 +29,31 @@ class JSON_API_Bd_Controller {
                 LEFT JOIN (menu_sabai_entity_field_field_environment environment) ON (environment.bundle_id = 7 AND environment.entity_id = a.post_id )
                 LEFT JOIN (menu_sabai_entity_field_field_feature feature) ON (feature.bundle_id = 7 AND feature.entity_id = a.post_id )
                 LEFT JOIN (menu_sabai_entity_field_field_limit lmt) ON (lmt.bundle_id = 7 AND lmt.entity_id = a.post_id )
-                LEFT JOIN (menu_sabai_entity_field_field_hours hours) ON (hours.bundle_id = 7 AND hours.entity_id = a.post_id )
+                /*LEFT JOIN (menu_sabai_entity_field_field_hours hours) ON (hours.bundle_id = 7 AND hours.entity_id = a.post_id )*/
                 LEFT JOIN (menu_sabai_entity_field_field_parking parking) ON (parking.bundle_id = 7 AND parking.entity_id = a.post_id )
                 LEFT JOIN (menu_sabai_entity_field_field_price price) ON (price.bundle_id = 7 AND price.entity_id = a.post_id )
-                LEFT JOIN (menu_sabai_entity_field_field_tenant_feature tf) ON (tf.bundle_id = 7 AND tf.entity_id = a.post_id )
-                LEFT JOIN (menu_sabai_entity_field_field_what wt) ON (wt.bundle_id = 7 AND wt.entity_id = a.post_id )
-                LEFT JOIN (menu_sabai_entity_field_field_with_whom wh) ON (wh.bundle_id = 7 AND wh.entity_id = a.post_id )
+                /*LEFT JOIN (menu_sabai_entity_field_field_tenant_feature tf) ON (tf.bundle_id = 7 AND tf.entity_id = a.post_id )*/
+                /*LEFT JOIN (menu_sabai_entity_field_field_what wt) ON (wt.bundle_id = 7 AND wt.entity_id = a.post_id )*/
+                /*LEFT JOIN (menu_sabai_entity_field_field_with_whom wh) ON (wh.bundle_id = 7 AND wh.entity_id = a.post_id )*/
                 LEFT JOIN (menu_sabai_entity_field_field_location fl) ON (fl.bundle_id = 7 AND fl.entity_id = a.post_id )
-                LEFT JOIN (menu_sabai_entity_field_content_parent parent) ON (parent.bundle_id = 9 AND parent.value = a.post_id )
+                /*LEFT JOIN (menu_sabai_entity_field_content_parent parent) ON (parent.bundle_id = 9 AND parent.value = a.post_id )*/
                 LEFT JOIN (menu_sabai_entity_field_content_children_count rc) ON (rc.bundle_id = 7 AND rc.entity_id = a.post_id AND rc.child_bundle_name = "directory_listing_review" )
                 LEFT JOIN (menu_sabai_entity_field_content_children_count pc) ON (pc.bundle_id = 7 AND pc.entity_id = a.post_id AND pc.child_bundle_name = "directory_listing_photo" )
                 LEFT JOIN (menu_sabai_entity_field_voting_rating rating) ON (rating.bundle_id = 7 AND rating.entity_id = a.post_id )
-                LEFT JOIN (menu_sabai_entity_field_directory_category cat) ON (cat.bundle_id = 7 AND cat.entity_id = a.post_id )
+                /*LEFT JOIN (menu_sabai_entity_field_directory_category cat) ON (cat.bundle_id = 7 AND cat.entity_id = a.post_id )*/
                 WHERE a.post_status="published"
                 AND a.post_entity_bundle_name = "directory_listing" GROUP BY a.post_id'
             );
-            wp_cache_set( 'tenant_list', $result );
+            foreach($result as $single){
+                $single->hours = $wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_field_hours a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
+                $single->tf = $wpdb->get_results("SELECT a.value FROM menu_sabai_entity_field_field_tenant_feature a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
+                $single->wt = $wpdb->get_results("SELECT a.value FROM menu_sabai_entity_field_field_what a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
+                $single->wh = $wpdb->get_results("SELECT a.value FROM menu_sabai_entity_field_field_with_whom a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
+                $single->photos = $wpdb->get_results("SELECT a.entity_id as val FROM menu_sabai_entity_field_content_parent a WHERE a.bundle_id = 9 AND a.value = $single->id");
+                $single->category = $wpdb->get_results("SELECT a.value as val FROM menu_sabai_entity_field_directory_category a WHERE a.bundle_id = 7 AND a.entity_id = $single->id");
+            }
+
+             wp_cache_set( 'tenant_list', $result );
         }
         return array(
             'count' => count($result),
