@@ -53,6 +53,8 @@ get_header();
                                 <div class="mid-banner">
                                     <?php dynamic_sidebar('banner-sidebar'); ?>
                                 </div>
+                                <div class="clearfix"></div>
+
                             <?php endif; ?>
                         </div>
 

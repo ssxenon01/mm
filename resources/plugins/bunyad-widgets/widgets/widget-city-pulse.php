@@ -60,7 +60,7 @@ class Bunyad_CityPulse_Widget extends WP_Widget
         elseif ($r->have_posts()):
             ?>
 
-            <div class="menu-event">
+            <div class="menu-event" align="middle">
                 <div class="event-title">
                     <img src="http://mymenu.mn/resources/themes/menu/images/city-pulse.jpg" width="210" >
                 </div>
