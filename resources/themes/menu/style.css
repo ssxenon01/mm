@@ -362,6 +362,11 @@ strong{
         width: 768px;
     }
 
+}@media (max-width: 415px) {
+    .hidden-xxs{
+        display: none!important;
+    }
+
 }
 @media (max-width: 415px) , (max-width: 1200px) and (min-width: 990px) {
     .wrapper .main-content .top-news .news-list .news-body.with-img{

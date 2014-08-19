@@ -97,7 +97,7 @@ $cat_id = $category->cat_ID;
             <div class="container force-reset">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="navbar-brand hidden-xs">
+                        <div class="navbar-brand hidden-xxs">
                             <a href="<?php echo esc_url(home_url('/')); ?>" title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" rel="home">
                                 <?php if (Bunyad::options()->image_logo): // custom logo ?>
 
