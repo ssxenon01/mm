@@ -82,15 +82,75 @@ class JSON_API_Bd_Controller {
 
     }
 
+    public function addComment(){
+        global $wpdb,$json_api;
+        $q = $json_api->query;
+
+        if(!$q->userId || !$q->tenant || !$q->title || !$q->body || !$q->score){
+            return 'no';
+        }else{
+            $wpdb->insert(
+                'menu_sabai_content_post',
+                array(
+                    'post_title' => $q->title,
+                    'post_status' => 'published',
+                    'post_published' => current_time( 'timestamp', 1 ),
+                    'post_entity_bundle_name' => 'directory_listing_review',
+                    'post_entity_bundle_type' => 'directory_listing_review',
+                    'post_created' => current_time( 'timestamp', 1 ),
+                    'post_user_id' => $q->userId,
+                )
+            );
+
+            $comment_id = $wpdb->insert_id;
+
+            $wpdb->insert(
+                'menu_sabai_entity_field_content_body',
+                array(
+                    'entity_type' => 'content',
+                    'bundle_id' => 8,
+                    'entity_id' => $comment_id,
+                    'value' => $q->body,
+                    'filtered_value' => $q->body
+                )
+            );
+
+            $wpdb->insert(
+                'menu_sabai_entity_field_content_parent',
+                array(
+                    'entity_type' => 'content',
+                    'bundle_id' => 8,
+                    'entity_id' => $comment_id,
+                    'weight' => 0,
+                    'value' => $q->tenant
+                )
+            );
+            $wpdb->insert(
+                'menu_sabai_entity_field_directory_rating',
+                array(
+                    'entity_type' => 'content',
+                    'bundle_id' => 8,
+                    'entity_id' => $comment_id,
+                    'weight' => 0,
+                    'value' => $q->score
+                )
+            );
+
+            $wpdb->query("UPDATE menu_sabai_entity_field_content_children_count ct SET ct.value = ct.value + 1 WHERE entity_id = $q->tenant AND bundle_id = 7 AND child_bundle_name = 'directory_listing_review' ");
+            $wpdb->query("UPDATE menu_sabai_entity_field_voting_rating r SET r.count = r.count + 1  , r.sum = r.sum + $q->score , r.average = (r.sum/r.count) WHERE entity_id = $q->tenant AND bundle_id = 7 AND entity_type = 'content' ");
+
+            $wpdb->delete( 'menu_sabai_entity_fieldcache', array( 'fieldcache_entity_id' => $q->tenant , 'fieldcache_bundle_id' => 7) );
+            return 'ko';
+        }
+    }
+
     private function toArray($array)
     {
         $nArray = [];
-
         foreach ($array as $value)
         {
             array_push($nArray,$value->val);
         }
-
         return $nArray;
     }
   
