@@ -140,7 +140,21 @@ class JSON_API_Bd_Controller {
             $wpdb->query("UPDATE menu_sabai_entity_field_voting_rating r SET r.count = r.count + 1  , r.sum = r.sum + $q->score , r.average = (r.sum/r.count) WHERE entity_id = $q->tenant AND bundle_id = 7 AND entity_type = 'content' ");
 
             $wpdb->delete( 'menu_sabai_entity_fieldcache', array( 'fieldcache_entity_id' => $q->tenant , 'fieldcache_bundle_id' => 7) );
-            return 'ko';
+
+
+            $user = $wpdb->get_row("SELECT u.display_name as username, um.meta_value as thumbnail from menu_users u LEFT JOIN (menu_usermeta um) ON (u.id = um.user_id AND meta_key = 'facebookall_user_thumbnail') WHERE u.id = $q->userId",OBJECT);
+
+            header("Access-Control-Allow-Origin: *");
+
+            return array(
+                'title' => $q->title,
+                'description' => $q->body,
+                'dateCreated' => current_time( 'mysql'),
+                'username' => $user->username,
+                'thumbnail' => $user->thumbnail
+            );
+
+
         }
     }
 
