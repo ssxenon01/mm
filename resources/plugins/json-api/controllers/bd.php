@@ -185,6 +185,7 @@ class JSON_API_Bd_Controller {
                     array_push($images, wp_get_attachment_image_src( $img_id, 'large')[0]);
                 }
                 array_push($mags, array(
+                    'id' => $aside->ID,
                     'title' => get_the_title( $aside->ID ),
                     'images' => $images
                 ));
