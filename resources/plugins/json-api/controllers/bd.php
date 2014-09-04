@@ -182,7 +182,7 @@ class JSON_API_Bd_Controller {
                 /* Loop through all the image and output them one by one */
                 foreach(explode(',',$gallery['ids']) AS $img_id )
                 {
-                    array_push($images, wp_get_attachment_image_src( $img_id, 'large')[0]);
+                    array_push($images, wp_get_attachment_image_src( $img_id, 'large',true)[0]);
                 }
                 array_push($mags, array(
                     'id' => $aside->ID,
