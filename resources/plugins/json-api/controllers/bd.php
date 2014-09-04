@@ -191,7 +191,7 @@ class JSON_API_Bd_Controller {
                 ));
             }
         }
-        return $mags;
+        return array('status' => 'ok', 'count' => count($mags) , 'data' => $mags);
     }
 
     private function toArray($array)
