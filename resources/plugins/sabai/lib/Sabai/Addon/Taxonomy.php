@@ -8,7 +8,7 @@ class Sabai_Addon_Taxonomy extends Sabai_Addon
                Sabai_Addon_System_IPermissionCategories,
                Sabai_Addon_System_IPermissions
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai';
+    const VERSION = '1.2.32', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {

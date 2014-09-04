@@ -31,9 +31,9 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                 '#size' => 5,
                 '#integer' => true,
                 '#required' => true,
-                '#max_value' => 100,
+                '#max_value' => 500,
                 '#min_value' => 1,
-                '#field_suffix' => sprintf(__('(max. limit %d)', 'sabai-directory'), 100),
+                '#field_suffix' => sprintf(__('(max. limit %d)', 'sabai-directory'), 500),
             ),
             'review_perpage' => array(
                 '#type' => 'textfield',
@@ -342,7 +342,7 @@ class Sabai_Addon_Directory_Controller_Admin_Settings extends Sabai_Addon_Form_C
                     '#url' => true,
                     '#default_value' => @$config['map']['options']['marker_cluster_imgurl'],
                     '#title' => __('Custom marker cluster image directory URL', 'sabai-directory'),
-                    '#description' => sprintf(__('Default: %s'), 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer'),
+                    '#description' => sprintf(__('Default: %s'), 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images'),
                     '#size' => 60,
                     '#states' => array(
                         'visible' => array(

@@ -264,7 +264,7 @@ class Sabai_Addon_File_Uploader
         }
 
         // Check if the file mime type corresponds with the allowed mime types for the file extension
-        $file_mime = $file['type'];
+        $file_mime = stripslashes($file['type']);
         if (function_exists('finfo_open')) {
             if ($finfo = @finfo_open(defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_NONE)) { // FILEINFO_MIME_TYPE only available from php 5.3.0
                 if ($file_finfo_mime = finfo_file($finfo, $file['tmp_name'])) {

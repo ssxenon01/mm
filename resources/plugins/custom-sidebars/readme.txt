@@ -11,6 +11,8 @@ Create your own widgetized areas and choose on which pages they show up - "Easy 
 
 If you'd like to show different widgets on the sidebars or footers of any area of your site - then this is the plugin for you.
 
+[youtube https://www.youtube.com/watch?v=J9ys4LtB7HY]
+
 Custom Sidebars allows you to create all the widgetized areas you need, your own custom sidebars, configure them adding widgets, and replace the default sidebars on the posts or pages you want in just few clicks.
 
 Find out why it's the most popular widget extension plugin for WordPress available today with over 400,000 downloads.
@@ -68,6 +70,8 @@ Once you have the plugin activated you will find all new features inside your "W
 
 Find more functionality and usage information on the [Custom Sidebars Pro page](http://premium.wpmudev.org/project/custom-sidebars-pro/).
 
+[youtube https://www.youtube.com/watch?v=q05O9OFEYHM]
+
 == Frequently Asked Questions ==
 
 = How do I begin working with this plugin? =
@@ -86,9 +90,9 @@ You have a sidebar box when editing a entry. Also you can define default sidebar
 
 You can create all the sidebars you want, but you need some sidebars of your theme to be replaced by the ones that you have created. You have to select which sidebars from your theme are suitable to be replaced in the Custom Sidebars settings page and you will have them available to switch.
 
-= Everything is working properly on Admin area, but the site is not displayin the sidebars. Why? =
+= Everything is working properly on Admin area, but the custom sidebars are not displayed on the site. Why? =
 
- You probably are using a theme that don’t load dynamic sidebars properly or don’t use the wp_head() function in its header. The plugin replace the sidebars inside that function, and many others plugins hook there, so it is [more than recommended to use it](http://josephscott.org/archives/2009/04/wordpress-theme-authors-dont-forget-the-wp_head-function/).
+ You are probably using a theme that doesn’t load dynamic sidebars properly or doesn’t use the wp_head() function in its header. The plugin replaces the sidebars inside that function, and many other plugins hook there, so it is [more than recommended to use it](http://josephscott.org/archives/2009/04/wordpress-theme-authors-dont-forget-the-wp_head-function/).
 
 = It appears that only an Admin can choose to add a sidebar. How can Editors (or any other role) edit customs sidebars? =
 
@@ -114,6 +118,27 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 4. screenshot-4.png Or finetune the sidebars by selecting them directly for a special post or page!
 
 == Changelog ==
+
+= 2.0.9.6 =
+*		Fix: In some browsers the "Add sidebar" popup was partially hidden.
+*		Fix: Sometimes the dropdown list of a multiselect list stayed open.
+*		Fix: Plugin now correctly loads the .po files to translate to other languages.
+*		Some other small improvements.
+
+= 2.0.9.4 =
+*		Fix: For some users the plugin was not loading anymore after updating to 2.0.9.1.
+
+= 2.0.9.3 =
+*		Fix: Z-index issue in Dashboard where wide widgets where covered by the main-menu.
+*		Fix: Added compatibility for static front-page sidebars with version 2.0.9
+
+= 2.0.9.2 =
+*		Fix: Sidebar Locations "Front Page" and "Post Index" now work correctly.
+
+= 2.0.9.1 =
+*		Fix: Sidebars now support unicode-text in name/description.
+*		Minor: New debugging output that explains why a sidebar/widget is displayed.
+
 
 = 2.0.9 =
 *		Fix: Fixed issue with WP sidebar chooser right after creating a new sidebar.

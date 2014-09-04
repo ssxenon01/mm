@@ -9,6 +9,7 @@ $this->WordPressTemplate()
     ->set('siteName', $this->_application->getPlatform()->getSiteName())
     ->set('pageUrl', $CONTENT_URL)
     ->set('pageSummary', $CONTENT_SUMMARY)
+    ->set('pageContent', $CONTENT)
     ->render();
 ?>
 <?php if (!empty($FLASH)):?>

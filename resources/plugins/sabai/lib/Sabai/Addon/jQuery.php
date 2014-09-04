@@ -2,7 +2,7 @@
 class Sabai_Addon_jQuery extends Sabai_Addon
     implements Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai';
+    const VERSION = '1.2.32', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {

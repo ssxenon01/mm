@@ -6,7 +6,7 @@ Author: onokazu
 Author URI: http://codecanyon.net/user/onokazu/portfolio?ref=onokazu
 Text Domain: sabai
 Domain Path: /languages
-Version: 1.2.31
+Version: 1.2.32
 */
 
 function sabai_wordpress_run()
@@ -34,4 +34,13 @@ if (is_admin()) {
         }
     }
     register_uninstall_hook(__FILE__, 'sabai_wordpress_uninstall_hook');
+}
+
+function is_sabai()
+{
+    return is_page()
+        && isset($GLOBALS['post'])
+        && ($slugs = get_option('sabai_sabai_page_slugs', false))
+        && is_array($slugs[2])
+        && array_search($GLOBALS['post']->ID, $slugs[2]);
 }

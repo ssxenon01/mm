@@ -4,7 +4,6 @@ require_once 'SabaiFramework/Application/Http.php';
 abstract class Sabai extends SabaiFramework_Application_Http
 {
     public static $p;
-    public static $sabai;
     private static $_instances = array();
     private $_isRunning = false, $_db,
         $_eventDispatcher, $_platform, $_user, $_currentAddonName = 'System',
@@ -50,11 +49,10 @@ abstract class Sabai extends SabaiFramework_Application_Http
 
     public static function create(Sabai_Platform $platform, $class = 'Sabai_Web')
     {
-
         $sabai = new $class($platform);
         $sabai->_init();
         self::$_instances[$platform->getSabaiName()] = $sabai;
-        Sabai::$sabai = $sabai;
+
         return $sabai;
     }
 

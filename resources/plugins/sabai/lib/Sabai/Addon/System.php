@@ -4,7 +4,7 @@ class Sabai_Addon_System extends Sabai_Addon
                Sabai_Addon_System_IAdminRouter,
                Sabai_Addon_System_IAdminMenus
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai'; 
+    const VERSION = '1.2.32', PACKAGE = 'sabai'; 
                 
     public function isUninstallable($currentVersion)
     {

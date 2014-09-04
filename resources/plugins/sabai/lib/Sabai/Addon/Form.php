@@ -2,7 +2,7 @@
 class Sabai_Addon_Form extends Sabai_Addon
     implements Sabai_Addon_Form_IFields
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai';
+    const VERSION = '1.2.32', PACKAGE = 'sabai';
     const FORM_BUILD_ID_NAME = '_sabai_form_build_id', FORM_SUBMIT_BUTTON_NAME = '_sabai_form_submit';
 
     private static $_forms = array();

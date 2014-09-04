@@ -6,7 +6,7 @@ class Sabai_Addon_Voting extends Sabai_Addon
                Sabai_Addon_Content_IPermissions,
                Sabai_Addon_Form_IFields
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai';
+    const VERSION = '1.2.32', PACKAGE = 'sabai';
     
     const FLAG_VALUE_SPAM = 5, FLAG_VALUE_OFFENSIVE = 6, FLAG_VALUE_OFFTOPIC = 2, FLAG_VALUE_OTHER = 0;
                 

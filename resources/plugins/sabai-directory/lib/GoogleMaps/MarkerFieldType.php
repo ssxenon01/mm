@@ -79,7 +79,6 @@ class Sabai_Addon_GoogleMaps_MarkerFieldType implements Sabai_Addon_Field_IType
         $ret = array();
         foreach ($values as $weight => $value) {
             if (!is_array($value)
-                || strlen((string)$value['address']) === 0
                 || strlen((string)$value['lat']) === 0
                 || strlen((string)$value['lng']) === 0
             ) continue;

@@ -3,7 +3,7 @@ class Sabai_Addon_WordPress extends Sabai_Addon
     implements Sabai_Addon_System_IAdminRouter,
                Sabai_Addon_Field_IWidgets
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai';
+    const VERSION = '1.2.32', PACKAGE = 'sabai';
                 
     public function isUninstallable($currentVersion)
     {

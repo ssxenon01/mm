@@ -74,11 +74,16 @@ class Sabai_Addon_Field_Widget_Textfield extends Sabai_Addon_Field_Widget_Abstra
             case 'number':
                 $form['#field_prefix'] = isset($field_settings['prefix']) && strlen($field_settings['prefix']) ? $field_settings['prefix'] : null;
                 $form['#field_suffix'] = isset($field_settings['suffix']) && strlen($field_settings['suffix']) ? $field_settings['suffix'] : null;
-                $form['#min_value'] = isset($field_settings['min']) && strlen($field_settings['min']) ? $field_settings['min'] : null;
-                $form['#max_value'] = isset($field_settings['max']) && strlen($field_settings['max']) ? $field_settings['max'] : null;
-                $form['#integer'] = true;
-                $form['#min_value'] = isset($field_settings['min']) ? intval($field_settings['min']) : null;
-                $form['#max_value'] = isset($field_settings['max']) ? intval($field_settings['max']) : null;
+                if ($field_settings['decimals'] > 0) {
+                    $form['#numeric'] = true;
+                    $form['#min_value'] = isset($field_settings['min']) && is_numeric($field_settings['min']) ? $field_settings['min'] : null;
+                    $form['#max_value'] = isset($field_settings['max']) && is_numeric($field_settings['max']) ? $field_settings['max'] : null;
+                    $form['#step'] = $field_settings['decimals'] == 1 ? 0.1 : 0.01;
+                } else {
+                    $form['#integer'] = true;
+                    $form['#min_value'] = isset($field_settings['min']) ? intval($field_settings['min']) : null;
+                    $form['#max_value'] = isset($field_settings['max']) ? intval($field_settings['max']) : null;
+                }
                 if (!isset($form['#size'])) {
                     $form['#size'] = 20;
                 }

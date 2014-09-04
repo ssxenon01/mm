@@ -1,7 +1,7 @@
 <?php
 class Sabai_Platform_WordPress_Template
 {
-    private $_title, $_pageSummary, $_pageUrl, $_pageBreadcrumbs, $_css = '', $_js = '', $_htmlHead = '', $_htmlHeadTitle, $_siteName = '',
+    private $_title, $_pageSummary, $_pageContent, $_pageUrl, $_pageBreadcrumbs, $_css = '', $_js = '', $_htmlHead = '', $_htmlHeadTitle, $_siteName = '',
         $_isFilteringSabaiPage;
 
     // The following is required which is to be set by the add_filter method
@@ -17,25 +17,31 @@ class Sabai_Platform_WordPress_Template
     public function render()
     {
         add_filter('wp_title', array($this, 'onWpTitleFilter'), 1, 3);
-        add_filter('the_title', array($this, 'onTheTitleFilter'), 99, 2);
-        add_action('wp_head', array($this, 'onWpHeadAction'), 99);
-        add_filter('page_link', array($this, 'onPageLinkFilter'), 99, 3);  
-        add_filter('the_permalink', array($this, 'onThePermaLinkFilter'), 99, 3);   
+        add_filter('the_title', array($this, 'onTheTitleFilter'), 99999, 2);
+        add_action('wp_head', array($this, 'onWpHeadAction'), 99999);
+        add_filter('page_link', array($this, 'onPageLinkFilter'), 99999, 3);  
+        add_filter('the_permalink', array($this, 'onThePermaLinkFilter'), 99999, 3);   
         $replace_canonical = true;
         if (defined('WPSEO_VERSION')) { 
-            add_filter('wpseo_title', array($this, 'onWpSeoTitleFilter'), 99);
-            add_filter('wpseo_metadesc', array($this, 'onWpSeoMetaDescFilter'), 99);
-            add_filter('wpseo_breadcrumb_links', array($this, 'onWpSeoBreadcrumbLinksFilter'), 99, 1);
-            add_filter('wpseo_canonical', array($this, 'onCanonicalFilter'), 99);
+            add_filter('wpseo_title', array($this, 'onWpSeoTitleFilter'), 99999);
+            add_filter('wpseo_metadesc', array($this, 'onWpSeoMetaDescFilter'), 99999);
+            add_filter('wpseo_breadcrumb_links', array($this, 'onWpSeoBreadcrumbLinksFilter'), 99999, 1);
+            add_filter('wpseo_canonical', array($this, 'onCanonicalFilter'), 99999);
+            add_filter('wpseo_pre_analysis_post_content', array($this, 'onWpSeoPreAnalysisPostContent'), 99999);
+            $replace_canonical = false;
         }
         if (defined('AIOSEOP_VERSION')) {
-            add_filter('aioseop_title_page', array($this, 'onAioSeoPTitlePageFilter'), 99);
-            add_filter('aioseop_description', array($this, 'onAioSeoPDescFilter'), 99);
-            add_filter('aioseop_canonical_url', array($this, 'onCanonicalFilter'), 99);
+            add_filter('aioseop_title_page', array($this, 'onAioSeoPTitlePageFilter'), 99999);
+            add_filter('aioseop_description', array($this, 'onAioSeoPDescFilter'), 99999);
+            add_filter('aioseop_canonical_url', array($this, 'onCanonicalFilter'), 99999);
+            $replace_canonical = false;
+        }
+        if (defined('SU_MINIMUM_WP_VER')) { // SEO Ultimate
+            remove_all_actions('su_head');
         }
         if ($replace_canonical) {
             remove_action('wp_head', 'rel_canonical');
-            add_action('wp_head', array($this, 'onWpHeadActionCanonical'), 99);
+            add_action('wp_head', array($this, 'onWpHeadActionCanonical'), 99999);
         }
     }
  
@@ -49,7 +55,7 @@ class Sabai_Platform_WordPress_Template
         echo '<link rel="canonical" href="' . (string)$this->_pageUrl . '" />';
     }
 
-    public function onWpTitleFilter($title, $sep, $seplocation)
+    public function onWpTitleFilter($title, $sep = '', $seplocation = '')
     {
         if (!isset($this->_htmlHeadTitle) || false === $this->_htmlHeadTitle) {
             return $title;
@@ -118,9 +124,10 @@ class Sabai_Platform_WordPress_Template
         
         $options = get_option('wpseo_titles');
         if (!isset($options['title-page']) || !strlen($options['title-page'])) return $this->_htmlHeadTitle;
-        
-        global $wp_query;
-        $page = $wp_query->get_queried_object();
+
+        if (!$page = get_queried_object()) {
+            $page = new stdClass(); // not really why but get_queried_object() returns null on certain occasions
+        }
         $page->post_title = $this->_htmlHeadTitle;
         return wpseo_replace_vars($options['title-page'], $page);
     }
@@ -139,6 +146,13 @@ class Sabai_Platform_WordPress_Template
         return isset($this->_pageSummary) && strlen($this->_pageSummary)
             ? $this->_pageSummary // for taxonomy pages
             : $desc;
+    }
+
+    public function onWpSeoPreAnalysisPostContent($content)
+    {
+        return isset($this->_pageContent) && strlen($this->_pageContent)
+            ? $this->_pageContent
+            : $content;
     }
     
     public function onCanonicalFilter($url)

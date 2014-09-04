@@ -3,7 +3,7 @@
 Plugin Name: Custom Sidebars
 Plugin URI:  http://premium.wpmudev.org/project/custom-sidebars/
 Description: Allows you to create widgetized areas and custom sidebars. Replace whole sidebars or single widgets for specific posts and pages.
-Version:     2.0.9
+Version:     2.0.9.6
 Author:      WPMU DEV
 Author URI:  http://premium.wpmudev.org/
 Textdomain:  custom-sidebars
@@ -33,7 +33,17 @@ This plugin was originally developed by Javier Marquez.
 http://arqex.com/
 */
 
-if ( ! class_exists( 'CustomSidebars' ) ) {
+add_action(
+	'plugins_loaded',
+	'inc_sidebars_free_init'
+);
+
+function inc_sidebars_free_init() {
+	// Check if the PRO plugin is present and activated.
+	if ( class_exists( 'CustomSidebars' ) ) {
+		return false;
+	}
+
 	// used for more readable i18n functions: __( 'text', CSB_LANG );
 	define( 'CSB_LANG', 'custom-sidebars' );
 
@@ -47,16 +57,19 @@ if ( ! class_exists( 'CustomSidebars' ) ) {
 	define( 'CSB_CSS_URL', $plugin_url . 'css/' );
 
 	// Load the actual core.
-	require_once 'inc/class-custom-sidebars.php';
-}
+	require_once CSB_INC_DIR . 'class-custom-sidebars.php';
 
-// Include function library
-if ( file_exists( CSB_INC_DIR . 'external/wpmu-lib/core.php' ) ) {
-	require_once CSB_INC_DIR . 'external/wpmu-lib/core.php';
-}
+	// Include function library
+	if ( file_exists( CSB_INC_DIR . 'external/wpmu-lib/core.php' ) ) {
+		require_once CSB_INC_DIR . 'external/wpmu-lib/core.php';
+	}
 
-// Initialize the plugin
-add_action( 'set_current_user', array( 'CustomSidebars', 'instance' ) );
+	// Load the text domain for the plugin
+	WDev()->translate_plugin( CSB_LANG, CSB_LANG_DIR );
+
+	// Initialize the plugin
+	CustomSidebars::instance();
+}
 
 if ( ! class_exists( 'CustomSidebarsEmptyPlugin' ) ) {
 	class CustomSidebarsEmptyPlugin extends WP_Widget {

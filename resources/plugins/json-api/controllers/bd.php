@@ -158,6 +158,41 @@ class JSON_API_Bd_Controller {
         }
     }
 
+
+    public function gallery(){
+
+        $args = array(
+            'post_type'=> 'post',
+            'post_status' => 'publish',
+            'order' => 'DESC',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'post_format',
+                    'field' => 'slug',
+                    'terms' => array( 'post-format-aside' )
+                )
+            )
+        );
+        $mags = [];
+        $asides = get_posts( $args );
+        if ( count($asides) ) {
+            foreach ( $asides as $aside ) {
+                $images = [];
+                $gallery = get_post_gallery( $aside->ID, false );
+                /* Loop through all the image and output them one by one */
+                foreach(explode(',',$gallery['ids']) AS $img_id )
+                {
+                    array_push($images, wp_get_attachment_image_src( $img_id, 'large')[0]);
+                }
+                array_push($mags, array(
+                    'title' => get_the_title( $aside->ID ),
+                    'images' => $images
+                ));
+            }
+        }
+        return $mags;
+    }
+
     private function toArray($array)
     {
         $nArray = [];
@@ -167,7 +202,9 @@ class JSON_API_Bd_Controller {
         }
         return $nArray;
     }
-  
+
+
+
 }
 
 ?>

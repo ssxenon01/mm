@@ -42,7 +42,11 @@
         
         // Add markers
         if (options.marker_clusters) {
-            markerCluster = new MarkerClusterer(gmap, [], options.marker_cluster_imgurl ? {imagePath: options.marker_cluster_imgurl + '/m'} : null);
+            var marker_cluster_options = {maxZoom: 17};
+            if (options.marker_cluster_imgurl) {
+                marker_cluster_options.imagePath = options.marker_cluster_imgurl + '/m';
+            }
+            markerCluster = new MarkerClusterer(gmap, [], marker_cluster_options);
         }
         for (i = 0; i < markers.length; i++) {
             markerPosition = new google.maps.LatLng(markers[i].lat, markers[i].lng);

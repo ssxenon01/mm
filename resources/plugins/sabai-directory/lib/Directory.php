@@ -11,12 +11,12 @@ class Sabai_Addon_Directory extends Sabai_Addon
                Sabai_Addon_Widgets_IWidgets,
                Sabai_Addon_System_IMainMenus
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai-directory';
-
-    private static $_gmapLoaded = false;
+    const VERSION = '1.2.32', PACKAGE = 'sabai-directory';
+    
+    private static $_gmapLoaded = false;    
     protected $_path, $_listingBundleName, $_reviewBundleName, $_leadBundleName, $_photoBundleName, $_categoryBundleName;
     
-    function _init()
+    protected function _init()
     {
         $this->_path = $this->_application->Path(dirname(__FILE__) . '/Directory');
         $this->_listingBundleName = $this->_config['listing_name'];
@@ -24,7 +24,7 @@ class Sabai_Addon_Directory extends Sabai_Addon
         $this->_photoBundleName = $this->_config['listing_name'] . '_photo';
         $this->_leadBundleName = $this->_config['listing_name'] . '_lead';
         $this->_categoryBundleName = $this->_config['listing_name'] . '_category';
-        $GLOBALS['sabadon'] = $this;
+        
         return $this;
     }
         

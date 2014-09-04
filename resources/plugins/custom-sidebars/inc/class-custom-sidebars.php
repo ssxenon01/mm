@@ -4,6 +4,7 @@
 require_once CSB_INC_DIR . 'class-custom-sidebars-widgets.php';
 require_once CSB_INC_DIR . 'class-custom-sidebars-editor.php';
 require_once CSB_INC_DIR . 'class-custom-sidebars-replacer.php';
+require_once CSB_INC_DIR . 'class-custom-sidebars-explain.php';
 
 
 /**
@@ -48,6 +49,13 @@ class CustomSidebars {
 	static public function instance() {
 		static $Inst = null;
 
+		// We can initialize the plugin once we know the current user:
+		// The WDev()->pointer() notification is based on current user...
+		if ( ! did_action( 'set_current_user' ) ) {
+			add_action( 'set_current_user', array( __CLASS__, 'instance' ) );
+			return null;
+		}
+
 		if ( null === $Inst ) {
 			$Inst = new CustomSidebars();
 		}
@@ -70,7 +78,7 @@ class CustomSidebars {
 		 *  Description:  Create and edit custom sidebars in your widget screen!
 		 * -------------------------------------------------------------------------
 		 */
-		TheLib::pointer(
+		WDev()->pointer(
 			'wpmudcs1',                               // Internal Pointer-ID
 			'#menu-appearance',                       // Point at
 			__( 'Custom Sidebars', CSB_LANG ),    // Title
@@ -83,16 +91,13 @@ class CustomSidebars {
 			)                                         // Body
 		);
 
-		// Load the text domain for the plugin
-		TheLib::translate_plugin( CSB_LANG, CSB_LANG_DIR );
-
 		// Find out if the page is loaded in accessibility mode.
 		$flag = isset( $_GET['widgets-access'] ) ? $_GET['widgets-access'] : get_user_setting( 'widgets_access' );
 		self::$accessibility_mode = ( 'on' == $flag );
 
 		// We don't support accessibility mode. Display a note to the user.
 		if ( true === self::$accessibility_mode ) {
-			TheLib::message(
+			WDev()->message(
 				sprintf(
 					__(
 						'<strong>Accessibility mode is not supported by the
@@ -108,11 +113,11 @@ class CustomSidebars {
 			);
 		} else {
 			// Load javascripts/css files
-			TheLib::add_ui( 'core', 'widgets.php' );
-			TheLib::add_ui( 'scrollbar', 'widgets.php' );
-			TheLib::add_ui( 'select', 'widgets.php' );
-			TheLib::add_ui( CSB_JS_URL . 'cs.min.js', 'widgets.php' );
-			TheLib::add_ui( CSB_CSS_URL . 'cs.css', 'widgets.php' );
+			WDev()->add_ui( 'core', 'widgets.php' );
+			WDev()->add_ui( 'scrollbar', 'widgets.php' );
+			WDev()->add_ui( 'select', 'widgets.php' );
+			WDev()->add_ui( CSB_JS_URL . 'cs.min.js', 'widgets.php' );
+			WDev()->add_ui( CSB_CSS_URL . 'cs.css', 'widgets.php' );
 
 			// AJAX actions
 			add_action( 'wp_ajax_cs-ajax', array( $this, 'ajax_handler' ) );
@@ -121,9 +126,9 @@ class CustomSidebars {
 			do_action( 'cs_init' );
 
 			// Display a message after import.
-			if ( isset( $_GET['cs-msg'] ) ) {
+			if ( ! empty( $_GET['cs-msg'] ) ) {
 				$msg = base64_decode( $_GET['cs-msg'] );
-				TheLib::message( $msg );
+				WDev()->message( $msg );
 			}
 
 			// Free version only
@@ -750,7 +755,7 @@ class CustomSidebars {
 		while ( 0 < ob_get_level() ) { ob_end_clean(); }
 
 		header( 'Content-Type: text/plain' );
-		echo $data;
+		echo '' . $data;
 		die();
 	}
 

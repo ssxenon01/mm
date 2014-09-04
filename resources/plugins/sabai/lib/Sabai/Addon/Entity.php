@@ -4,7 +4,7 @@ class Sabai_Addon_Entity extends Sabai_Addon
                Sabai_Addon_Entity_IFieldCache,
                Sabai_Addon_System_IAdminRouter
 {
-    const VERSION = '1.2.31', PACKAGE = 'sabai';
+    const VERSION = '1.2.32', PACKAGE = 'sabai';
     const FIELD_REALM_ALL = 0, FIELD_REALM_ENTITY_TYPE_DEFAULT = 1, FIELD_REALM_BUNDLE_DEFAULT = 2;
 
     private static $_reservedBundleNames = array('users', 'my', 'flagged', 'add', 'comments', 'vote');
