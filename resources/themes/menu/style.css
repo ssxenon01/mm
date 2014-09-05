@@ -2310,8 +2310,8 @@ Pagination Styles
 }
 #preview {
     padding:20px 0 40px;
+    margin: 25px -25px;
     position: relative;
-    margin-bottom: 10px;
     overflow: hidden;
     background-image: -webkit-gradient(
         linear,
