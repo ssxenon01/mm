@@ -187,11 +187,12 @@ class JSON_API_Bd_Controller {
                 array_push($mags, array(
                     'id' => $aside->ID,
                     'title' => get_the_title( $aside->ID ),
-                    'images' => $images
-                ));
+                    'images' => $images,
+                    'thumb' => wp_get_attachment_image_src( $aside->ID, 'thumbnail',true)[0])
+                );
             }
         }
-        return array('status' => 'ok', 'count' => count($mags) , 'data' => $mags);
+        return array('status' => 'ok', 'count' => count($mags) , 'data' => $mags );
     }
 
     private function toArray($array)
