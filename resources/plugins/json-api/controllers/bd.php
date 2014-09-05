@@ -188,7 +188,7 @@ class JSON_API_Bd_Controller {
                     'id' => $aside->ID,
                     'title' => get_the_title( $aside->ID ),
                     'images' => $images,
-                    'thumb' => wp_get_attachment_image_src( $aside->ID, 'thumbnail',true)[0])
+                    'thumb' => get_the_post_thumbnail( $aside->ID, 'thumbnail',true)[0])
                 );
             }
         }

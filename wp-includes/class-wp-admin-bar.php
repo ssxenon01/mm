@@ -16,11 +16,10 @@ class WP_Admin_Bar {
 		switch ( $name ) {
 			case 'proto' :
 				return is_ssl() ? 'https://' : 'http://';
-				break;
+
 			case 'menu' :
 				_deprecated_argument( 'WP_Admin_Bar', '3.3', 'Modify admin bar nodes with WP_Admin_Bar::get_node(), WP_Admin_Bar::add_node(), and WP_Admin_Bar::remove_node(), not the <code>menu</code> property.' );
 				return array(); // Sorry, folks.
-				break;
 		}
 	}
 
@@ -494,7 +493,7 @@ class WP_Admin_Bar {
 
 		// Site related.
 		add_action( 'admin_bar_menu', 'wp_admin_bar_sidebar_toggle', 0 );
-		add_action( 'admin_bar_menu', 'wp_admin_bar_wp_menu', 10 );
+//		add_action( 'admin_bar_menu', 'wp_admin_bar_wp_menu', 10 );
 		add_action( 'admin_bar_menu', 'wp_admin_bar_my_sites_menu', 20 );
 		add_action( 'admin_bar_menu', 'wp_admin_bar_site_menu', 30 );
 		add_action( 'admin_bar_menu', 'wp_admin_bar_updates_menu', 40 );
